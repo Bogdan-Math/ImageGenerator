@@ -17,6 +17,7 @@
     <properties>
         <maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
         <java.project.version>1.8</java.project.version>
+        <junit.version>4.12</junit.version>
     </properties>
 
     <!--build properties-->
@@ -35,7 +36,17 @@
         </plugins>
     </build>
 
+    <!--project dependencies-->
     <dependencies>
+
+        <!--unit tests - junit framework-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
 </project>
