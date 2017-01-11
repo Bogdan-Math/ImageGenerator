@@ -4,9 +4,38 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <!--project version properties-->
     <groupId>ImageGenerator</groupId>
     <artifactId>ImageGenerator</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <!--packaging properties-->
+    <name>ImageGenerator</name>
+    <packaging>jar</packaging>
+
+    <!--project properties and versions of modules-->
+    <properties>
+        <maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
+        <java.project.version>1.8</java.project.version>
+    </properties>
+
+    <!--build properties-->
+    <build>
+        <finalName>ImageGenerator</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <source>${java.project.version}</source>
+                    <target>${java.project.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+    </dependencies>
 
 </project>
