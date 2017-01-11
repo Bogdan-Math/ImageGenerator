@@ -6,7 +6,7 @@ public class Creator {
         this.name = name;
     }
 
-    public String getDescribtion() {
+    public String getDescription() {
         return String.format("Hello, I'm %s - creator of ImageGenerator!", name);
     }
 

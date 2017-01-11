@@ -16,7 +16,7 @@ public class CreatorTest {
         Creator creator = new Creator(creatorName);
 
         //"A" - Assert
-        assertEquals(expectedDescription, creator.getDescribtion());
+        assertEquals(expectedDescription, creator.getDescription());
     }
 
 }
