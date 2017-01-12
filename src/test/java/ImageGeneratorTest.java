@@ -8,10 +8,16 @@ import static org.junit.Assert.*;
 
 public class ImageGeneratorTest {
 
-    private File resourceFolder = createFile("images/");
+    private String folderName = "images/";
+    private File resourceFolder = createFile(folderName);
 
-    private File originalImage = createFile("images/image.jpg");
-    private File generateImage = createFile("images/new_image.jpg");
+    private String originalImageName = "original_image";
+    private String originalImageExtension = "jpg";
+    private File originalImage = createFile(folderName + originalImageName + "." + originalImageExtension);
+
+    private String generateImageName = "generate_image";
+    private String generateImageExtension = "jpg";
+    private File generateImage = createFile(folderName + generateImageName + "." + generateImageExtension);
 
     @Before
     public void setUp() throws Exception {

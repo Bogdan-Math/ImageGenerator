@@ -4,11 +4,11 @@ import java.io.*;
 
 public class ImageGenerator {
 
-    public void copy(String formatName, File from, File to) {
+    public void copy(String formatName, File fromFile, File toFile) {
         try {
 
             byte[] imageInByte;
-            BufferedImage originalImage = ImageIO.read(from);
+            BufferedImage originalImage = ImageIO.read(fromFile);
 
             // convert BufferedImage to byte array
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -21,7 +21,7 @@ public class ImageGenerator {
             InputStream in = new ByteArrayInputStream(imageInByte);
             BufferedImage bImageFromConvert = ImageIO.read(in);
 
-            ImageIO.write(bImageFromConvert, formatName, to);
+            ImageIO.write(bImageFromConvert, formatName, toFile);
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
