@@ -33,7 +33,7 @@ public class ImageGeneratorTest {
     @Test
     public void copyImage() throws Exception {
         assertEquals(1, resourceFolder.list().length);
-        imageGenerator.copyImage(originalImage, generateImage, "jpg");
+        imageGenerator.copyImage(originalImage, generateImage, format);
         assertEquals(2, resourceFolder.list().length);
     }
 
@@ -53,6 +53,13 @@ public class ImageGeneratorTest {
         assertNotNull(imageGenerator
                 .byteArrayToBufferedImage(imageGenerator
                         .bufferedImageToByteArray(imageGenerator.fileToBufferedImage(originalImage), format)));
+    }
+
+    @Test
+    public void createHalfImage() throws Exception {
+        assertEquals(1, resourceFolder.list().length);
+        imageGenerator.copyHalfImage(originalImage, generateImage, format);
+        assertEquals(2, resourceFolder.list().length);
     }
 
     private File createFile(String resourceName) {

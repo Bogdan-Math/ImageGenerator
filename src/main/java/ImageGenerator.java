@@ -24,4 +24,11 @@ public class ImageGenerator {
     public BufferedImage byteArrayToBufferedImage(byte[] imageInBytes) throws IOException {
         return ImageIO.read(new ByteArrayInputStream(imageInBytes));
     }
+
+    public void copyHalfImage(File fromFile, File toFile, String outputFormat) throws IOException {
+        BufferedImage bufferedImage = fileToBufferedImage(fromFile);
+        int width = bufferedImage.getWidth();
+        int height = bufferedImage.getHeight();
+        ImageIO.write(bufferedImage.getSubimage(0, 0, width / 2, height / 2), outputFormat, toFile);
+    }
 }
