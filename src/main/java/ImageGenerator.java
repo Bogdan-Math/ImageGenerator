@@ -4,27 +4,24 @@ import java.io.*;
 
 public class ImageGenerator {
 
-    public void copy(String formatName, File fromFile, File toFile) {
-        try {
+    public void copy(String format, File fromFile, File toFile) throws IOException {
+            ImageIO.write(fileToBufferedImage(fromFile), format, toFile);
+    }
 
-            byte[] imageInByte;
-            BufferedImage originalImage = ImageIO.read(fromFile);
+    private BufferedImage fileToBufferedImage(File fromFile) throws IOException {
+        return ImageIO.read(fromFile);
+    }
 
-            // convert BufferedImage to byte array
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(originalImage, formatName, baos);
-            baos.flush();
-            imageInByte = baos.toByteArray();
-            baos.close();
+    private byte[] bufferedImageToByteArray(BufferedImage bufferedImage, String format) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, format, baos);
+        baos.flush();
+        byte[] imageInBytes = baos.toByteArray();
+        baos.close();
+        return imageInBytes;
+    }
 
-            // convert byte array back to BufferedImage
-            InputStream in = new ByteArrayInputStream(imageInByte);
-            BufferedImage bImageFromConvert = ImageIO.read(in);
-
-            ImageIO.write(bImageFromConvert, formatName, toFile);
-
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    private BufferedImage byteArrayToBufferedImage(byte[] imageInBytes) throws IOException {
+        return ImageIO.read(new ByteArrayInputStream(imageInBytes));
     }
 }

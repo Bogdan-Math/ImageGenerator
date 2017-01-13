@@ -31,7 +31,7 @@ public class ImageGeneratorTest {
     }
 
     @Test
-    public void testCreate() throws Exception {
+    public void testCopy() throws Exception {
         assertEquals(1, resourceFolder.list().length);
         new ImageGenerator().copy("jpg", originalImage, generateImage);
         assertEquals(2, resourceFolder.list().length);
