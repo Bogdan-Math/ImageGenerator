@@ -4,15 +4,15 @@ import java.io.*;
 
 public class ImageGenerator {
 
-    public void copy(String format, File fromFile, File toFile) throws IOException {
-            ImageIO.write(fileToBufferedImage(fromFile), format, toFile);
+    public void copyImage(File fromFile, File toFile, String outputFormat) throws IOException {
+            ImageIO.write(fileToBufferedImage(fromFile), outputFormat, toFile);
     }
 
-    private BufferedImage fileToBufferedImage(File fromFile) throws IOException {
+    public BufferedImage fileToBufferedImage(File fromFile) throws IOException {
         return ImageIO.read(fromFile);
     }
 
-    private byte[] bufferedImageToByteArray(BufferedImage bufferedImage, String format) throws IOException {
+    public byte[] bufferedImageToByteArray(BufferedImage bufferedImage, String format) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(bufferedImage, format, baos);
         baos.flush();
@@ -21,7 +21,7 @@ public class ImageGenerator {
         return imageInBytes;
     }
 
-    private BufferedImage byteArrayToBufferedImage(byte[] imageInBytes) throws IOException {
+    public BufferedImage byteArrayToBufferedImage(byte[] imageInBytes) throws IOException {
         return ImageIO.read(new ByteArrayInputStream(imageInBytes));
     }
 }

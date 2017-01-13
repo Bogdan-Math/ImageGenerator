@@ -8,33 +8,51 @@ import static org.junit.Assert.*;
 
 public class ImageGeneratorTest {
 
+    private String format = "jpg";
     private String folderName = "images/";
-    private File resourceFolder = createFile(folderName);
 
     private String originalImageName = "original_image";
-    private String originalImageExtension = "jpg";
-    private File originalImage = createFile(folderName + originalImageName + "." + originalImageExtension);
+    private File originalImage = createFile(folderName + originalImageName + "." + format);
 
     private String generateImageName = "generate_image";
-    private String generateImageExtension = "jpg";
-    private File generateImage = createFile(folderName + generateImageName + "." + generateImageExtension);
+    private File generateImage = createFile(folderName + generateImageName + "." + format);
+
+    private File resourceFolder = createFile(folderName);
+
+    private ImageGenerator imageGenerator = new ImageGenerator();
 
     @Before
     public void setUp() throws Exception {
-
     }
 
     @After
     public void tearDown() throws Exception {
-        originalImage.delete();
         generateImage.delete();
     }
 
     @Test
-    public void testCopy() throws Exception {
+    public void copyImage() throws Exception {
         assertEquals(1, resourceFolder.list().length);
-        new ImageGenerator().copy("jpg", originalImage, generateImage);
+        imageGenerator.copyImage(originalImage, generateImage, "jpg");
         assertEquals(2, resourceFolder.list().length);
+    }
+
+    @Test
+    public void fileToBufferedImage() throws Exception {
+        assertNotNull(imageGenerator.fileToBufferedImage(originalImage));
+    }
+
+    @Test
+    public void bufferedImageToByteArray() throws Exception {
+        assertNotNull(imageGenerator
+                .bufferedImageToByteArray(imageGenerator.fileToBufferedImage(originalImage), format));
+    }
+
+    @Test
+    public void byteArrayToBufferedImage() throws Exception {
+        assertNotNull(imageGenerator
+                .byteArrayToBufferedImage(imageGenerator
+                        .bufferedImageToByteArray(imageGenerator.fileToBufferedImage(originalImage), format)));
     }
 
     private File createFile(String resourceName) {
