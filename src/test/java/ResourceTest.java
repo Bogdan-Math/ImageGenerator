@@ -4,8 +4,7 @@ import org.junit.Test;
 
 import java.io.File;
 
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.*;
 
 public class ResourceTest {
 
@@ -24,13 +23,18 @@ public class ResourceTest {
     }
 
     @Test
-    public void isFolder() throws Exception {
-        assertFalse(resource.isFolder());
+    public void getFullName() {
+        assertEquals("original_image.jpg", resource.getFullName());
     }
 
     @Test
-    public void isFile() throws Exception {
-        assertTrue(resource.isFile());
+    public void getExtension() throws Exception {
+        assertEquals("jpg", resource.getExtension());
+    }
+
+    @Test
+    public void getName() {
+        assertEquals("original_image", resource.getName());
     }
 
     private File createFile(String resourceName) {

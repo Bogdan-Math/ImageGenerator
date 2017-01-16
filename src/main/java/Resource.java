@@ -8,11 +8,17 @@ public class Resource {
         this.resource = resource;
     }
 
-    public boolean isFolder() {
-        return resource.isDirectory();
+    public String getFullName() {
+        return resource.getName();
     }
 
-    public boolean isFile() {
-        return resource.isFile();
+    public String getExtension() {
+        String fullName = resource.getName();
+        return fullName.substring(1 + fullName.lastIndexOf("."));
+    }
+
+    public String getName() {
+        String fullName = resource.getName();
+        return fullName.substring(0, fullName.lastIndexOf("."));
     }
 }
