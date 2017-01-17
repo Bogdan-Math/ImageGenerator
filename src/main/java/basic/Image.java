@@ -16,7 +16,7 @@ public class Image {
         return image;
     }
 
-    public BufferedImage getCopy(){
+    public BufferedImage getCopy() {
         BufferedImage b = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
         Graphics g = b.getGraphics();
         g.drawImage(image, 0, 0, null);
@@ -28,4 +28,35 @@ public class Image {
         return image.getSubimage(x, y, width, height);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Image image = (Image) o;
+        BufferedImage comparedImage = image.getOriginalImage();
+        BufferedImage thisImage = this.getOriginalImage();
+
+        if (thisImage.getWidth() == comparedImage.getWidth() && thisImage.getHeight() == comparedImage.getHeight()) {
+            int width = thisImage.getWidth();
+            int height = thisImage.getHeight();
+
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    if (thisImage.getRGB(x, y) != comparedImage.getRGB(x, y)) {
+                        return false;
+                    }
+                }
+            }
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return image != null ? image.hashCode() : 0;
+    }
 }
