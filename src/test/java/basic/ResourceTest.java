@@ -1,3 +1,6 @@
+package basic;
+
+import basic.Resource;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

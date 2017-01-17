@@ -1,3 +1,5 @@
+package basic;
+
 public class Creator {
 
     private String name;
@@ -7,7 +9,7 @@ public class Creator {
     }
 
     public String getDescription() {
-        return String.format("Hello, I'm %s - creator of ImageGenerator!", name);
+        return String.format("Hello, I'm %s - creator of basic.ImageGenerator!", name);
     }
 
 }

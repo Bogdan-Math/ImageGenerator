@@ -1,3 +1,5 @@
+package basic;
+
 import java.io.File;
 
 public class Resource {

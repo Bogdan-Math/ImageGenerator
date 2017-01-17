@@ -1,3 +1,6 @@
+package basic;
+
+import basic.ImageGenerator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
