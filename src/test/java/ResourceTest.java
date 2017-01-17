@@ -24,17 +24,17 @@ public class ResourceTest {
 
     @Test
     public void getFullName() {
-        assertEquals("original_image.jpg", resource.getFullName());
-    }
-
-    @Test
-    public void getExtension() throws Exception {
-        assertEquals("jpg", resource.getExtension());
+        assertEquals("original_image.jpg", resource.getNameWithExtension());
     }
 
     @Test
     public void getName() {
         assertEquals("original_image", resource.getName());
+    }
+
+    @Test
+    public void getExtension() throws Exception {
+        assertEquals("jpg", resource.getExtension());
     }
 
     private File createFile(String resourceName) {
