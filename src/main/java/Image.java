@@ -10,6 +10,10 @@ public class Image {
         this.image = image;
     }
 
+    public BufferedImage getOriginalImage() {
+        return image;
+    }
+
     public BufferedImage getCopy(){
         BufferedImage b = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
         Graphics g = b.getGraphics();

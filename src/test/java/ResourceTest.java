@@ -8,14 +8,11 @@ import static org.junit.Assert.*;
 
 public class ResourceTest {
 
-    private String folderName = "images/";
-    private String originalImageName = "original_image";
-    private String format = "jpg";
-
-    private Resource resource = new Resource(createFile(folderName + originalImageName + "." + format));
+    private Resource resource;
 
     @Before
     public void setUp() throws Exception {
+        this.resource  = new Resource(createFile("images/original_image.jpg"));
     }
 
     @After

@@ -8,21 +8,19 @@ import static org.junit.Assert.*;
 
 public class ImageGeneratorTest {
 
-    private String format = "jpg";
-    private String folderName = "images/";
+    private File originalImage;
+    private File generateImage;
+    private File resourceFolder;
 
-    private String originalImageName = "original_image";
-    private File originalImage = createFile(folderName + originalImageName + "." + format);
-
-    private String generateImageName = "generate_image";
-    private File generateImage = createFile(folderName + generateImageName + "." + format);
-
-    private File resourceFolder = createFile(folderName);
-
-    private ImageGenerator imageGenerator = new ImageGenerator();
+    private ImageGenerator imageGenerator;
 
     @Before
     public void setUp() throws Exception {
+        this.originalImage = createFile("images/original_image.jpg");
+        this.generateImage = createFile("images/generate_image.jpg");
+        this.resourceFolder = createFile("images/");
+
+        this.imageGenerator = new ImageGenerator();
     }
 
     @After
@@ -33,7 +31,7 @@ public class ImageGeneratorTest {
     @Test
     public void copyImage() throws Exception {
         assertEquals(1, resourceFolder.list().length);
-        imageGenerator.copyImage(originalImage, generateImage, format);
+        imageGenerator.copyImage(originalImage, generateImage, "jpg");
         assertEquals(2, resourceFolder.list().length);
     }
 
@@ -45,21 +43,14 @@ public class ImageGeneratorTest {
     @Test
     public void bufferedImageToByteArray() throws Exception {
         assertNotNull(imageGenerator
-                .bufferedImageToByteArray(imageGenerator.fileToBufferedImage(originalImage), format));
+                .bufferedImageToByteArray(imageGenerator.fileToBufferedImage(originalImage), "jpg"));
     }
 
     @Test
     public void byteArrayToBufferedImage() throws Exception {
         assertNotNull(imageGenerator
                 .byteArrayToBufferedImage(imageGenerator
-                        .bufferedImageToByteArray(imageGenerator.fileToBufferedImage(originalImage), format)));
-    }
-
-    @Test
-    public void createHalfImage() throws Exception {
-        assertEquals(1, resourceFolder.list().length);
-        imageGenerator.copyHalfImage(originalImage, generateImage, format);
-        assertEquals(2, resourceFolder.list().length);
+                        .bufferedImageToByteArray(imageGenerator.fileToBufferedImage(originalImage), "jpg")));
     }
 
     private File createFile(String resourceName) {
