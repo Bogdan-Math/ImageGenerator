@@ -26,16 +26,42 @@ public class ImageTest {
     }
 
     @Test
-    public void getOriginalImage() throws Exception {
-        assertEquals(bufferedImage, originalImage.getOriginalImage());
+    public void getBufferedImage() throws Exception {
+        assertEquals(bufferedImage, originalImage.getBufferedImage());
     }
 
-    @Test//TODO: add test
+    @Test
     public void getCopy() throws Exception {
+
+        BufferedImage original = originalImage.getBufferedImage();
+        BufferedImage compared = originalImage.getCopy().getBufferedImage();
+
+        assertNotEquals(original, compared);
+        assertEquals(original.getWidth(), compared.getWidth());
+        assertEquals(original.getWidth(), compared.getWidth());
+
+        for (int y = 0; y < original.getHeight(); y++) {
+            for (int x = 0; x < original.getWidth(); x++) {
+                assertEquals(original.getRGB(x, y), compared.getRGB(x, y));
+            }
+        }
     }
 
-    @Test//TODO: add test
+    @Test
     public void getSubImage() throws Exception {
+
+        BufferedImage original = originalImage.getBufferedImage();
+        BufferedImage compared = originalImage.getSubImage(0, 0, 25, 25);
+
+        assertNotEquals(original, compared);
+        assertNotEquals(original.getWidth(), compared.getWidth());
+        assertNotEquals(original.getWidth(), compared.getWidth());
+
+        for (int y = 0; y < compared.getHeight(); y++) {
+            for (int x = 0; x < compared.getWidth(); x++) {
+                assertEquals(original.getRGB(x, y), compared.getRGB(x, y));
+            }
+        }
     }
 
     private File createFile(String resourceName) {
