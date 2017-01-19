@@ -7,6 +7,9 @@ import org.junit.Test;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -23,6 +26,9 @@ public class ImageTest {
 
     @After
     public void tearDown() throws Exception {
+        Arrays.stream(createFile("images/").listFiles())
+                .filter(file -> !file.getName().equals("original_image.jpg"))
+                .forEach(File::delete);
     }
 
     @Test
@@ -64,6 +70,21 @@ public class ImageTest {
         }
 
         copied.getRGB(original.getWidth(), original.getHeight());
+    }
+
+    @Test
+    public void likeMatrix() {
+        List<List<BufferedImage>> matrix = originalImage.likeMatrix(21, 45);
+        //TODO: add condition to check existing files
+        matrix.forEach(rows -> rows.forEach(square -> {
+            try {
+                ImageIO.write(square,
+                        "jpg",
+                        createFile("images/generate_image(" + rows.indexOf(square) + "," + matrix.indexOf(rows) + ").jpg"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }));
     }
 
     private File createFile(String resourceName) {

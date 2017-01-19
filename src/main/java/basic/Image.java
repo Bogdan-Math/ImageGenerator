@@ -1,8 +1,10 @@
 package basic;
 
-import java.awt.*;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Image {
 
@@ -26,6 +28,24 @@ public class Image {
 
     public BufferedImage getSubImage(int x, int y, int width, int height) throws IOException {
         return image.getSubimage(x, y, width, height);
+    }
+
+    public List<List<BufferedImage>> likeMatrix(int rows, int columns) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        int squareWidth = width / columns;
+        int squareHeight = height / rows;
+
+        List<List<BufferedImage>> matrix = new ArrayList<>();
+        for (int i = 0; i < columns; i++) {
+            List<BufferedImage> matrixRow = new ArrayList<>();
+            for (int j = 0; j < rows; j++) {
+                matrixRow.add(image.getSubimage(i * squareWidth, j * squareHeight, squareWidth, squareHeight));
+            }
+            matrix.add(matrixRow);
+        }
+
+        return matrix;
     }
 
 }
