@@ -47,21 +47,23 @@ public class ImageTest {
         }
     }
 
-    @Test
+    @Test(expected = IndexOutOfBoundsException.class)
     public void getSubImage() throws Exception {
 
         BufferedImage original = originalImage.getBufferedImage();
-        BufferedImage compared = originalImage.getSubImage(0, 0, 25, 25);
+        BufferedImage copied = originalImage.getSubImage(0, 0, 25, 25);
 
-        assertNotEquals(original, compared);
-        assertNotEquals(original.getWidth(), compared.getWidth());
-        assertNotEquals(original.getWidth(), compared.getWidth());
+        assertNotEquals(original, copied);
+        assertNotEquals(original.getWidth(), copied.getWidth());
+        assertNotEquals(original.getWidth(), copied.getWidth());
 
-        for (int y = 0; y < compared.getHeight(); y++) {
-            for (int x = 0; x < compared.getWidth(); x++) {
-                assertEquals(original.getRGB(x, y), compared.getRGB(x, y));
+        for (int y = 0; y < copied.getHeight(); y++) {
+            for (int x = 0; x < copied.getWidth(); x++) {
+                assertEquals(original.getRGB(x, y), copied.getRGB(x, y));
             }
         }
+
+        copied.getRGB(original.getWidth(), original.getHeight());
     }
 
     private File createFile(String resourceName) {
