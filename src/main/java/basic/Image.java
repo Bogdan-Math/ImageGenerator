@@ -30,7 +30,7 @@ public class Image {
         return image.getSubimage(x, y, width, height);
     }
 
-    public List<List<BufferedImage>> likeMatrix(int rows, int columns) {
+    public List<List<BufferedImage>> likeMatrix(int columns, int rows) {
         int width = image.getWidth();
         int height = image.getHeight();
         int squareWidth = width / columns;

@@ -74,8 +74,16 @@ public class ImageTest {
 
     @Test
     public void likeMatrix() {
-        List<List<BufferedImage>> matrix = originalImage.likeMatrix(21, 45);
-        //TODO: add condition to check existing files
+        int x = 10;
+        int y = 10;
+
+        List<List<BufferedImage>> matrix = originalImage.likeMatrix(x, y);
+
+        assertEquals(x, matrix.size());
+        assertEquals(y, matrix.get(0).size());
+        assertEquals(x * y, matrix.size() * matrix.get(0).size());
+
+        //TODO: add more conditions to check existing files
         matrix.forEach(rows -> rows.forEach(square -> {
             try {
                 ImageIO.write(square,
