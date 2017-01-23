@@ -16,11 +16,21 @@ import static org.junit.Assert.*;
 public class ImageTest {
 
     private BufferedImage bufferedImage;
+
+    private Image redlImage;
+    private Image greenImage;
+    private Image blueImage;
     private Image originalImage;
 
     @Before
     public void setUp() throws Exception {
         this.bufferedImage = ImageIO.read(createFile("images/original_image.jpg"));
+
+        this.redlImage = new Image(ImageIO.read(createFile("images/rgb/red.jpg")));
+/*
+        this.greenImage = new Image(ImageIO.read(createFile("images/rgb/green.jpg")));
+        this.blueImage = new Image(ImageIO.read(createFile("images/rgb/blue.jpg")));
+*/
         this.originalImage = new Image(bufferedImage);
     }
 
@@ -74,8 +84,8 @@ public class ImageTest {
 
     @Test
     public void likeMatrix() {
-        int x = 10;
-        int y = 10;
+        int x = 3;
+        int y = 7;
 
         List<List<BufferedImage>> matrix = originalImage.likeMatrix(x, y);
 
@@ -93,6 +103,40 @@ public class ImageTest {
                 e.printStackTrace();
             }
         }));
+    }
+
+    @Test
+    public void averageRGB() {
+
+        BufferedImage redImg = originalImage.getRedImg(800, 600);
+        int rgb = new Image(redImg).averageRGB();
+
+        int  r = (rgb & 0x00ff0000) >> 16;
+        int  g = (rgb & 0x0000ff00) >> 8;
+        int  b =  rgb & 0x000000ff;
+        System.out.println(r + ", " + g + ", " + b);
+    }
+
+    @Test
+    public void averageRGBMatrix() {
+
+        try {
+            ImageIO.write(originalImage.getRedImg(800, 600), "jpg", createFile("images/rgb/red.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        originalImage.averageRGBMatrix(3, 7)
+                .forEach(row -> {row
+                        .forEach(averageRGB -> {
+                            int r = (averageRGB>>16)&0xFF;
+                            int g = (averageRGB>>8)&0xFF;
+                            int b = (averageRGB>>0)&0xFF;
+                            System.out.print("(" + r + ", " + g + ", " + b + ")");
+                        });
+                    System.out.println();
+                });
     }
 
     private File createFile(String resourceName) {
