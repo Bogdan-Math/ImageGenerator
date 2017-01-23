@@ -15,20 +15,12 @@ public class Image {
     private int greenColor = (255<<8);
     private int blueColor  = (255);
 
-    public Image(BufferedImage image) {
-        this.image = image;
-    }
-
-    public BufferedImage getBufferedImage() {
-        return image;
-    }
-
     public Image getCopy() {
         BufferedImage b = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
         Graphics g = b.getGraphics();
         g.drawImage(image, 0, 0, null);
         g.dispose();
-        return new Image(b);
+        return new Image().handle(b);
     }
 
     public BufferedImage getSubImage(int x, int y, int width, int height) throws IOException {
@@ -91,7 +83,7 @@ public class Image {
     public List<List<Integer>> averageRGBMatrix(int columns, int rows) {
         return likeMatrix(columns, rows).stream()
                 .map(row -> row.stream()
-                        .map(img -> new Image(img).averageRGB())
+                        .map(img -> new Image().handle(img).averageRGB())
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
     }
@@ -105,6 +97,37 @@ public class Image {
             }
         }
         return redImg;
+    }
+
+    public BufferedImage getGreenImg(int width, int height) {
+        BufferedImage redImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+        for (int i = 0; i < redImg.getWidth(); i++) {
+            for (int j = 0; j < redImg.getHeight(); j++) {
+                redImg.setRGB(i, j, (0<<16) | (255<<8) | 0);
+            }
+        }
+        return redImg;
+    }
+
+    public BufferedImage getBlueImg(int width, int height) {
+        BufferedImage redImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+        for (int i = 0; i < redImg.getWidth(); i++) {
+            for (int j = 0; j < redImg.getHeight(); j++) {
+                redImg.setRGB(i, j, (0<<16) | (0<<8) | 255);
+            }
+        }
+        return redImg;
+    }
+
+    public BufferedImage getBufferedImage() {
+        return image;
+    }
+
+    public Image handle(BufferedImage image) {
+        this.image = image;
+        return this;
     }
 
 }

@@ -17,21 +17,12 @@ public class ImageTest {
 
     private BufferedImage bufferedImage;
 
-    private Image redlImage;
-    private Image greenImage;
-    private Image blueImage;
     private Image originalImage;
 
     @Before
     public void setUp() throws Exception {
         this.bufferedImage = ImageIO.read(createFile("images/original_image.jpg"));
-
-        this.redlImage = new Image(ImageIO.read(createFile("images/rgb/red.jpg")));
-/*
-        this.greenImage = new Image(ImageIO.read(createFile("images/rgb/green.jpg")));
-        this.blueImage = new Image(ImageIO.read(createFile("images/rgb/blue.jpg")));
-*/
-        this.originalImage = new Image(bufferedImage);
+        this.originalImage = new Image().handle(bufferedImage);
     }
 
     @After
@@ -107,10 +98,8 @@ public class ImageTest {
 
     @Test
     public void averageRGB() {
-
-        BufferedImage redImg = originalImage.getRedImg(800, 600);
-        int rgb = new Image(redImg).averageRGB();
-
+        BufferedImage bufferedImage = originalImage.getRedImg(100, 100);
+        int rgb = originalImage.averageRGB();
         int  r = (rgb & 0x00ff0000) >> 16;
         int  g = (rgb & 0x0000ff00) >> 8;
         int  b =  rgb & 0x000000ff;
@@ -119,13 +108,6 @@ public class ImageTest {
 
     @Test
     public void averageRGBMatrix() {
-
-        try {
-            ImageIO.write(originalImage.getRedImg(800, 600), "jpg", createFile("images/rgb/red.jpg"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
 
         originalImage.averageRGBMatrix(3, 7)
                 .forEach(row -> {row
