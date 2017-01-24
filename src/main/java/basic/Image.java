@@ -98,25 +98,39 @@ public class Image {
     }
 
     public BufferedImage createRedImg(int width, int height) {
-        return createOneColorImg(width, height, new Color(255, 0, 0));
+        return createOneColorImg(width, height, RED_IN_INT);
     }
 
     public BufferedImage createGreenImg(int width, int height) {
-        return createOneColorImg(width, height, new Color(0, 255, 0));
+        return createOneColorImg(width, height, GREEN_IN_INT);
     }
 
     public BufferedImage createBlueImg(int width, int height) {
-        return createOneColorImg(width, height, new Color(0, 0, 255));
+        return createOneColorImg(width, height, BLUE_IN_INT);
     }
 
-    private BufferedImage createOneColorImg(int width, int height, Color color) {
+    private BufferedImage createOneColorImg(int width, int height, Integer rgbInInt) {
         BufferedImage redImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         for (int i = 0; i < redImg.getWidth(); i++) {
             for (int j = 0; j < redImg.getHeight(); j++) {
-                redImg.setRGB(i, j, (color.getRed() << 16) | (color.getGreen() << 8) | color.getBlue());
+                redImg.setRGB(i, j, rgbInInt);
             }
         }
         return redImg;
     }
+
+    public List<List<BufferedImage>> averageImgMatrix(int columns, int rows) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        int squareWidth = width / columns;
+        int squareHeight = height / rows;
+
+        return averageRGBMatrix(columns, rows).stream()
+                .map(row -> row.stream()
+                        .map(averageRGB -> createOneColorImg(squareWidth, squareHeight, averageRGB))
+                        .collect(Collectors.toList()))
+                .collect(Collectors.toList());
+    }
+
 }

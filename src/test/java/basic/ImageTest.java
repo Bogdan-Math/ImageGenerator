@@ -21,15 +21,17 @@ public class ImageTest {
 
     @Before
     public void setUp() throws Exception {
-        this.bufferedImage = ImageIO.read(createFile("images/original_image.jpg"));
+        this.bufferedImage = ImageIO.read(createFile("images/test_image.jpg"));
         this.originalImage = new Image().workOn(bufferedImage);
     }
 
     @After
     public void tearDown() throws Exception {
+/*
         Arrays.stream(createFile("images/").listFiles())
                 .filter(file -> !file.getName().equals("original_image.jpg"))
                 .forEach(File::delete);
+*/
     }
 
     @Test
@@ -132,6 +134,22 @@ public class ImageTest {
     @Test
     public void createBlueImg() {
         assertEquals(255, (originalImage.createBlueImg(1, 1).getRGB(0,0) & 0x000000ff));
+    }
+
+    @Test
+    public void averageImgMatrix() {
+        List<List<BufferedImage>> averageImgMatrix = originalImage.averageImgMatrix(8, 8);
+        //TODO: add more conditions to check existing files
+        averageImgMatrix.forEach(rows -> rows.forEach(square -> {
+            try {
+                ImageIO.write(square,
+                        "jpg",
+                        createFile("images/generate_image(" + rows.indexOf(square) + "," + averageImgMatrix.indexOf(rows) + ").jpg"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }));
+
     }
 
     private File createFile(String resourceName) {
