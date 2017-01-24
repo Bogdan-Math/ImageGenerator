@@ -27,11 +27,9 @@ public class ImageTest {
 
     @After
     public void tearDown() throws Exception {
-/*
         Arrays.stream(createFile("images/").listFiles())
-                .filter(file -> !file.getName().equals("original_image.jpg"))
+                .filter(file -> !(file.getName().equals("original_image.jpg") || file.getName().equals("generate_image.jpg") ))
                 .forEach(File::delete);
-*/
     }
 
     @Test
