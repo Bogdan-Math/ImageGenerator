@@ -133,4 +133,22 @@ public class Image {
                 .collect(Collectors.toList());
     }
 
+    public BufferedImage averageImage(int columns, int rows) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        int squareWidth = width / columns;
+        int squareHeight = height / rows;
+
+        BufferedImage averageImg = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+        List<List<BufferedImage>> imgMatrix = averageImgMatrix(columns, rows);
+
+        for (int i = 0; i < columns; i++) {
+            for (int j = 0; j < rows; j++) {
+                Graphics graphics = averageImg.getGraphics();
+                graphics.drawImage(imgMatrix.get(i).get(j), i * squareWidth, j * squareHeight, null);
+            }
+        }
+
+        return averageImg;
+    }
 }

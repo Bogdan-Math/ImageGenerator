@@ -21,7 +21,7 @@ public class ImageTest {
 
     @Before
     public void setUp() throws Exception {
-        this.bufferedImage = ImageIO.read(createFile("images/test_image.jpg"));
+        this.bufferedImage = ImageIO.read(createFile("images/original_image.jpg"));
         this.originalImage = new Image().workOn(bufferedImage);
     }
 
@@ -150,6 +150,17 @@ public class ImageTest {
             }
         }));
 
+    }
+
+    @Test
+    public void averageImage() {
+        try {
+            ImageIO.write(originalImage.averageImage(72, 41),
+                    "jpg",
+                    createFile("images/generate_image.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private File createFile(String resourceName) {
