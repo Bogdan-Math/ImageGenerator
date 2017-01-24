@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
@@ -18,9 +19,9 @@ public class ImageGeneratorTest {
 
     @Before
     public void setUp() throws Exception {
-        this.originalImage = createFile("images/original_image.jpg");
-        this.generateImage = createFile("images/generate_image.jpg");
-        this.resourceFolder = createFile("images/");
+        this.originalImage = createFile("original_image.jpg");
+        this.generateImage = createFile("generate_image.jpg");
+        this.resourceFolder = createFile("");
 
         this.imageGenerator = new ImageGenerator();
     }
@@ -32,9 +33,9 @@ public class ImageGeneratorTest {
 
     @Test
     public void copyImage() throws Exception {
-        assertEquals(1, resourceFolder.list().length);
+        assertEquals(new Long(1), getFilesCount());
         imageGenerator.copyImage(originalImage, generateImage, "jpg");
-        assertEquals(2, resourceFolder.list().length);
+        assertEquals(new Long(2), getFilesCount());
     }
 
     @Test
@@ -55,8 +56,12 @@ public class ImageGeneratorTest {
                         .bufferedImageToByteArray(imageGenerator.fileToBufferedImage(originalImage), "jpg")));
     }
 
+    private Long getFilesCount() {
+        return Arrays.stream(resourceFolder.list()).filter(resource -> createFile(resource).isFile()).count();
+    }
+
     private File createFile(String resourceName) {
         ClassLoader classLoader = getClass().getClassLoader();
-        return new File(classLoader.getResource("").getPath() + resourceName);
+        return new File(classLoader.getResource("images/").getPath() + resourceName);
     }
 }

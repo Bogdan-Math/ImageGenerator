@@ -22,7 +22,7 @@ public class ImageTest {
     @Before
     public void setUp() throws Exception {
         this.bufferedImage = ImageIO.read(createFile("images/original_image.jpg"));
-        this.originalImage = new Image().handle(bufferedImage);
+        this.originalImage = new Image().workOn(bufferedImage);
     }
 
     @After
@@ -98,27 +98,40 @@ public class ImageTest {
 
     @Test
     public void averageRGB() {
-        BufferedImage bufferedImage = originalImage.getRedImg(100, 100);
-        int rgb = originalImage.averageRGB();
-        int  r = (rgb & 0x00ff0000) >> 16;
-        int  g = (rgb & 0x0000ff00) >> 8;
-        int  b =  rgb & 0x000000ff;
-        System.out.println(r + ", " + g + ", " + b);
+        assertEquals(Image.RED_IN_INT, originalImage.workOn(originalImage.createRedImg(1, 1)).averageRGB());
+        assertEquals(Image.GREEN_IN_INT, originalImage.workOn(originalImage.createGreenImg(1, 1)).averageRGB());
+        assertEquals(Image.BLUE_IN_INT, originalImage.workOn(originalImage.createBlueImg(1, 1)).averageRGB());
     }
 
     @Test
     public void averageRGBMatrix() {
 
-        originalImage.averageRGBMatrix(3, 7)
+        //TODO: add more conditions to check existing files
+        originalImage.averageRGBMatrix(3, 3)
                 .forEach(row -> {row
                         .forEach(averageRGB -> {
                             int r = (averageRGB>>16)&0xFF;
                             int g = (averageRGB>>8)&0xFF;
-                            int b = (averageRGB>>0)&0xFF;
+                            int b = (averageRGB)&0xFF;
                             System.out.print("(" + r + ", " + g + ", " + b + ")");
                         });
                     System.out.println();
                 });
+    }
+
+    @Test
+    public void createRedImg() {
+        assertEquals(255, (originalImage.createRedImg(1, 1).getRGB(0,0) & 0x00ff0000) >> 16);
+    }
+
+    @Test
+    public void createGreenImg() {
+        assertEquals(255, (originalImage.createGreenImg(1, 1).getRGB(0,0) & 0x0000ff00) >> 8);
+    }
+
+    @Test
+    public void createBlueImg() {
+        assertEquals(255, (originalImage.createBlueImg(1, 1).getRGB(0,0) & 0x000000ff));
     }
 
     private File createFile(String resourceName) {
