@@ -3,15 +3,11 @@ package basic;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Image {
-
-    public static final int RED_IN_INT = (255 << 16);
-    public static final int GREEN_IN_INT = (255 << 8);
-    public static final int BLUE_IN_INT = (255);
 
     private BufferedImage image;
 
@@ -54,7 +50,7 @@ public class Image {
         return matrix;
     }
 
-    public int averageRGB() {
+    public Color averageRGB() {
         int width = image.getWidth();
         int height = image.getHeight();
         int pixels = width * height;
@@ -86,10 +82,10 @@ public class Image {
             avrB = sumB / pixels;
         }
 
-        return (avrR<<16) | (avrG<<8) | avrB;
+        return new Color(avrR, avrG, avrB);
     }
 
-    public List<List<Integer>> averageRGBMatrix(int columns, int rows) {
+    public List<List<Color>> averageRGBMatrix(int columns, int rows) {
         return likeMatrix(columns, rows).stream()
                 .map(row -> row.stream()
                         .map(img -> new Image().workOn(img).averageRGB())
@@ -98,23 +94,23 @@ public class Image {
     }
 
     public BufferedImage createRedImg(int width, int height) {
-        return createOneColorImg(width, height, RED_IN_INT);
+        return createOneColorImg(width, height, Color.red);
     }
 
     public BufferedImage createGreenImg(int width, int height) {
-        return createOneColorImg(width, height, GREEN_IN_INT);
+        return createOneColorImg(width, height, Color.green);
     }
 
     public BufferedImage createBlueImg(int width, int height) {
-        return createOneColorImg(width, height, BLUE_IN_INT);
+        return createOneColorImg(width, height, Color.blue);
     }
 
-    private BufferedImage createOneColorImg(int width, int height, Integer rgbInInt) {
+    private BufferedImage createOneColorImg(int width, int height, Color color) {
         BufferedImage redImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         for (int i = 0; i < redImg.getWidth(); i++) {
             for (int j = 0; j < redImg.getHeight(); j++) {
-                redImg.setRGB(i, j, rgbInInt);
+                redImg.setRGB(i, j, ( color.getRed()<<16 | color.getGreen()<<8 | color.getBlue() ));
             }
         }
         return redImg;
@@ -151,4 +147,42 @@ public class Image {
 
         return averageImg;
     }
+
+    public BufferedImage generateImageFrom(List<List<BufferedImage>> imgMatrix) {
+        int columns = imgMatrix.size();
+        int rows = imgMatrix.get(0).size();
+
+        BufferedImage imageWithMaxSize = imageWithMaxSize(imgMatrix);
+        int width = imageWithMaxSize.getWidth() * columns;
+        int height = imageWithMaxSize.getHeight() * rows;
+
+        int squareWidth = width / columns;
+        int squareHeight = height / rows;
+
+        BufferedImage averageImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+        for (int i = 0; i < columns; i++) {
+            for (int j = 0; j < rows; j++) {
+
+                //resizing
+                BufferedImage resizedImg = new BufferedImage(imageWithMaxSize.getWidth(), imageWithMaxSize.getHeight(), BufferedImage.TYPE_INT_RGB);
+                Graphics2D graphics2D = resizedImg.createGraphics();
+                graphics2D.drawImage(imgMatrix.get(i).get(j), 0, 0, resizedImg.getWidth(), resizedImg.getHeight(), null);
+
+                Graphics graphics = averageImg.getGraphics();
+                graphics.drawImage(resizedImg, i * squareWidth, j * squareHeight, null);
+            }
+        }
+
+        return averageImg;
+    }
+
+    private BufferedImage imageWithMaxSize(List<List<BufferedImage>> imgMatrix) {
+        return imgMatrix.stream()
+                .map(row -> row.stream()
+                        .max(Comparator.comparing(img -> img.getWidth() * img.getHeight())).get())
+                .collect(Collectors.toList()).stream()
+                .max(Comparator.comparing(img -> img.getWidth() * img.getHeight())).get();
+    }
+
 }

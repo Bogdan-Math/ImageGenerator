@@ -5,10 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -16,19 +17,43 @@ import static org.junit.Assert.*;
 public class ImageTest {
 
     private BufferedImage bufferedImage;
-
     private Image originalImage;
+
+    private Image chineseGarden;
+    private Image musicMan;
+    private Image puppy;
+    private Image smile;
+    private Image testImage;
+    private Image wallyAndEva;
 
     @Before
     public void setUp() throws Exception {
-        this.bufferedImage = ImageIO.read(createFile("images/original_image.jpg"));
+        this.bufferedImage = ImageIO.read(createFile("images/chinese_garden.jpg"));
         this.originalImage = new Image().workOn(bufferedImage);
+
+        this.chineseGarden = new Image().workOn(ImageIO.read(createFile("images/chinese_garden.jpg")));
+        this.musicMan = new Image().workOn(ImageIO.read(createFile("images/music_man.jpg")));
+        this.puppy = new Image().workOn(ImageIO.read(createFile("images/puppy.jpg")));
+        this.smile = new Image().workOn(ImageIO.read(createFile("images/smile.jpg")));
+        this.testImage = new Image().workOn(ImageIO.read(createFile("images/test_image.jpg")));
+        this.wallyAndEva = new Image().workOn(ImageIO.read(createFile("images/wally_and_eva.jpg")));
     }
 
     @After
     public void tearDown() throws Exception {
         Arrays.stream(createFile("images/").listFiles())
-                .filter(file -> !(file.getName().equals("original_image.jpg") || file.getName().equals("generate_image.jpg") ))
+                .filter(file -> !(file.getName().equals("chinese_garden.jpg") || file.getName().equals("generate_image.jpg") ||
+
+                                  file.getName().equals("chinese_garden.jpg") || file.getName().equals("chinese_garden_GEN.jpg") ||
+                                  file.getName().equals("music_man.jpg") || file.getName().equals("music_man_GEN.jpg") ||
+                                  file.getName().equals("puppy.jpg") || file.getName().equals("puppy_GEN.jpg") ||
+                                  file.getName().equals("smile.jpg") || file.getName().equals("smile_GEN.jpg") ||
+                                  file.getName().equals("test_image.jpg") || file.getName().equals("test_image_GEN.jpg") ||
+                                  file.getName().equals("wally_and_eva.jpg") || file.getName().equals("wally_and_eva_GEN.jpg") ||
+                                  file.getName().equals("black.jpg") || file.getName().equals("black_GEN.jpg") ||
+                                  file.getName().equals("me.jpg") || file.getName().equals("me_GEN.jpg")
+
+                ))
                 .forEach(File::delete);
     }
 
@@ -98,9 +123,10 @@ public class ImageTest {
 
     @Test
     public void averageRGB() {
-        assertEquals(Image.RED_IN_INT, originalImage.workOn(originalImage.createRedImg(1, 1)).averageRGB());
-        assertEquals(Image.GREEN_IN_INT, originalImage.workOn(originalImage.createGreenImg(1, 1)).averageRGB());
-        assertEquals(Image.BLUE_IN_INT, originalImage.workOn(originalImage.createBlueImg(1, 1)).averageRGB());
+
+        assertEquals(Color.red, originalImage.workOn(originalImage.createRedImg(1, 1)).averageRGB());
+        assertEquals(Color.green, originalImage.workOn(originalImage.createGreenImg(1, 1)).averageRGB());
+        assertEquals(Color.blue, originalImage.workOn(originalImage.createBlueImg(1, 1)).averageRGB());
     }
 
     @Test
@@ -110,9 +136,9 @@ public class ImageTest {
         originalImage.averageRGBMatrix(3, 3)
                 .forEach(row -> {row
                         .forEach(averageRGB -> {
-                            int r = (averageRGB>>16)&0xFF;
-                            int g = (averageRGB>>8)&0xFF;
-                            int b = (averageRGB)&0xFF;
+                            int r = averageRGB.getRed();
+                            int g = averageRGB.getGreen();
+                            int b = averageRGB.getBlue();
                             System.out.print("(" + r + ", " + g + ", " + b + ")");
                         });
                     System.out.println();
@@ -153,13 +179,109 @@ public class ImageTest {
     @Test
     public void averageImage() {
         try {
-            ImageIO.write(originalImage.averageImage(72, 41),
+            ImageIO.write(originalImage.averageImage(100, 100),
                     "jpg",
                     createFile("images/generate_image.jpg"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void generateImages() throws Exception {
+        generateImage(chineseGarden, "images/chinese_garden_GEN.jpg");
+        generateImage(musicMan, "images/music_man_GEN.jpg");
+        generateImage(puppy, "images/puppy_GEN.jpg");
+        generateImage(smile, "images/smile_GEN.jpg");
+        generateImage(testImage, "images/test_image_GEN.jpg");
+        generateImage(wallyAndEva, "images/wally_and_eva_GEN.jpg");
+    }
+
+    private void generateImage(Image inputImage, String outputName) throws IOException {
+        List<List<Color>> matrix = inputImage
+                .averageRGBMatrix(100, 100);
+        Map<Color, BufferedImage> map = flags();
+
+        List<List<BufferedImage>> result = new ArrayList<>();
+        for (List<Color> colors : matrix) {
+
+            List<BufferedImage> resultRows = new ArrayList<>();
+            for (Color color : colors) {
+                int minColor = Integer.MAX_VALUE;
+                BufferedImage minImg = null;
+                for (Color pColor : map.keySet()) {
+                    int dColor = Math.abs(color.getRed() - pColor.getRed()) +
+                             Math.abs(color.getGreen() - pColor.getGreen()) +
+                             Math.abs(color.getBlue() - pColor.getBlue());
+                    if (dColor < minColor) {
+                        minColor = dColor;
+                        minImg = map.get(pColor);
+                    }
+                }
+
+                resultRows.add(minImg);
+            }
+            result.add(resultRows);
+        }
+
+        ImageIO.write(originalImage.generateImageFrom(result), "jpg",
+                    createFile(outputName));
+    }
+
+    public  Map<Color, BufferedImage> flags() {
+        Map<Color, BufferedImage> map = new HashMap<>();
+        Image image = new Image();
+        ImageGenerator imageGenerator = new ImageGenerator();
+        Arrays.stream(createFile("images/flags/").listFiles())
+                .filter(File::isFile)
+                .forEach(flag -> {
+                    Color color = null;
+                    BufferedImage bufferedImage = null;
+                    try {
+                        bufferedImage = imageGenerator.fileToBufferedImage(flag);
+                        color = image.workOn(bufferedImage).averageRGB();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    map.put(color, bufferedImage);
+                });
+        return map;
+    }
+
+
+    private Map<Color, BufferedImage> patterns() {
+        Map<Color, BufferedImage> map = new HashMap<>();
+        Image image = new Image();
+
+        try {
+            BufferedImage p1 = ImageIO.read(createFile("images/patterns/p1.jpg"));
+            BufferedImage p2 = ImageIO.read(createFile("images/patterns/p2.jpg"));
+            BufferedImage p3 = ImageIO.read(createFile("images/patterns/p3.jpg"));
+            BufferedImage p4 = ImageIO.read(createFile("images/patterns/p4.jpg"));
+            BufferedImage p5 = ImageIO.read(createFile("images/patterns/p5.jpg"));
+            BufferedImage p6 = ImageIO.read(createFile("images/patterns/p6.jpg"));
+            BufferedImage p7 = ImageIO.read(createFile("images/patterns/p7.jpg"));
+            BufferedImage p8 = ImageIO.read(createFile("images/patterns/p8.jpg"));
+            BufferedImage p9 = ImageIO.read(createFile("images/patterns/p9.jpg"));
+            BufferedImage p10 = ImageIO.read(createFile("images/patterns/p10.jpg"));
+
+            map.put(image.workOn(p1).averageRGB(), p1);
+            map.put(image.workOn(p2).averageRGB(), p2);
+            map.put(image.workOn(p3).averageRGB(), p3);
+            map.put(image.workOn(p4).averageRGB(), p4);
+            map.put(image.workOn(p5).averageRGB(), p5);
+            map.put(image.workOn(p6).averageRGB(), p6);
+            map.put(image.workOn(p7).averageRGB(), p7);
+            map.put(image.workOn(p8).averageRGB(), p8);
+            map.put(image.workOn(p9).averageRGB(), p9);
+            map.put(image.workOn(p10).averageRGB(), p10);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
+
 
     private File createFile(String resourceName) {
         ClassLoader classLoader = getClass().getClassLoader();

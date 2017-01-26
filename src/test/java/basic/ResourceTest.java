@@ -14,7 +14,7 @@ public class ResourceTest {
 
     @Before
     public void setUp() throws Exception {
-        this.resource  = new Resource(createFile("images/original_image.jpg"));
+        this.resource  = new Resource(createFile("images/puppy.jpg"));
     }
 
     @After
@@ -23,7 +23,7 @@ public class ResourceTest {
 
     @Test
     public void getFullName() {
-        assertEquals("original_image.jpg", resource.getNameWithExtension());
+        assertEquals("puppy.jpg", resource.getNameWithExtension());
     }
 
     @Test

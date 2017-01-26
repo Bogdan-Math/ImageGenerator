@@ -19,7 +19,7 @@ public class ImageGeneratorTest {
 
     @Before
     public void setUp() throws Exception {
-        this.originalImage = createFile("original_image.jpg");
+        this.originalImage = createFile("puppy.jpg");
         this.generateImage = createFile("generate_image.jpg");
         this.resourceFolder = createFile("");
 
