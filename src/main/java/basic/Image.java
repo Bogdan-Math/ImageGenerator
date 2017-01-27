@@ -38,6 +38,15 @@ public class Image {
         int squareWidth = width / columns;
         int squareHeight = height / rows;
 
+        while (width - squareWidth * columns >= squareWidth ) {
+            columns++;
+        }
+
+        while (height - squareHeight * rows >= squareHeight ) {
+            rows++;
+        }
+        System.out.println(columns + ":" + rows);
+
         List<List<BufferedImage>> matrix = new ArrayList<>();
         for (int i = 0; i < columns; i++) {
             List<BufferedImage> matrixRow = new ArrayList<>();
@@ -75,7 +84,6 @@ public class Image {
                 sumG += g;
                 sumB += b;
             }
-
 
             avrR = sumR / pixels;
             avrG = sumG / pixels;
@@ -180,9 +188,9 @@ public class Image {
     private BufferedImage imageWithMaxSize(List<List<BufferedImage>> imgMatrix) {
         return imgMatrix.stream()
                 .map(row -> row.stream()
-                        .max(Comparator.comparing(img -> img.getWidth() * img.getHeight())).get())
+                        .max(Comparator.comparing(img -> img.getWidth() * img.getHeight())).orElse(null))
                 .collect(Collectors.toList()).stream()
-                .max(Comparator.comparing(img -> img.getWidth() * img.getHeight())).get();
+                .max(Comparator.comparing(img -> img.getWidth() * img.getHeight())).orElse(null);
     }
 
 }

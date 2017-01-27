@@ -197,9 +197,14 @@ public class ImageTest {
         generateImage(wallyAndEva, "images/wally_and_eva_GEN.jpg");
     }
 
+    @Test
+    public void generateImage1() throws Exception {
+        generateImage(puppy, "images/puppy_GEN.jpg");
+    }
+
     private void generateImage(Image inputImage, String outputName) throws IOException {
         List<List<Color>> matrix = inputImage
-                .averageRGBMatrix(100, 100);
+                .averageRGBMatrix(200, 200);
         Map<Color, BufferedImage> map = flags();
 
         List<List<BufferedImage>> result = new ArrayList<>();
@@ -224,7 +229,7 @@ public class ImageTest {
             result.add(resultRows);
         }
 
-        ImageIO.write(originalImage.generateImageFrom(result), "jpg",
+        ImageIO.write(originalImage.workOn(inputImage.getBufferedImage()).generateImageFrom(result), "jpg",
                     createFile(outputName));
     }
 
