@@ -199,12 +199,14 @@ public class ImageTest {
 
     @Test
     public void generateImage1() throws Exception {
+        BufferedImage image = flags().values().stream().max(Comparator.comparing(img -> img.getWidth() * img.getHeight())).orElse(null);
+        System.out.println(image.getWidth() + ":" + image.getHeight());
         generateImage(puppy, "images/puppy_GEN.jpg");
     }
 
     private void generateImage(Image inputImage, String outputName) throws IOException {
         List<List<Color>> matrix = inputImage
-                .averageRGBMatrix(200, 200);
+                .averageRGBMatrix(100, 100);
         Map<Color, BufferedImage> map = flags();
 
         List<List<BufferedImage>> result = new ArrayList<>();
@@ -216,8 +218,8 @@ public class ImageTest {
                 BufferedImage minImg = null;
                 for (Color pColor : map.keySet()) {
                     int dColor = Math.abs(color.getRed() - pColor.getRed()) +
-                             Math.abs(color.getGreen() - pColor.getGreen()) +
-                             Math.abs(color.getBlue() - pColor.getBlue());
+                                 Math.abs(color.getGreen() - pColor.getGreen()) +
+                                 Math.abs(color.getBlue() - pColor.getBlue());
                     if (dColor < minColor) {
                         minColor = dColor;
                         minImg = map.get(pColor);

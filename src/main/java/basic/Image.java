@@ -33,10 +33,15 @@ public class Image {
     }
 
     public List<List<BufferedImage>> likeMatrix(int columns, int rows) {
+
+        //TODO: clear magic number
+        int flagWidth = 40;
+        int flagHeight = 20;
+
         int width = image.getWidth();
         int height = image.getHeight();
         int squareWidth = width / columns;
-        int squareHeight = height / rows;
+        int squareHeight = squareWidth * flagHeight / flagWidth;
 
         while (width - squareWidth * columns >= squareWidth ) {
             columns++;
@@ -45,6 +50,8 @@ public class Image {
         while (height - squareHeight * rows >= squareHeight ) {
             rows++;
         }
+
+        //TODO: clear sout
         System.out.println(columns + ":" + rows);
 
         List<List<BufferedImage>> matrix = new ArrayList<>();
@@ -185,12 +192,12 @@ public class Image {
         return averageImg;
     }
 
-    private BufferedImage imageWithMaxSize(List<List<BufferedImage>> imgMatrix) {
-        return imgMatrix.stream()
-                .map(row -> row.stream()
-                        .max(Comparator.comparing(img -> img.getWidth() * img.getHeight())).orElse(null))
-                .collect(Collectors.toList()).stream()
-                .max(Comparator.comparing(img -> img.getWidth() * img.getHeight())).orElse(null);
+    public void printFlagWithMaxSizeIn(List<List<BufferedImage>> imgMatrix) {
+        BufferedImage bufferedImage = imageWithMaxSize(imgMatrix);
+        System.out.println(bufferedImage.getWidth() + ":" + bufferedImage.getHeight());
     }
 
+    private BufferedImage imageWithMaxSize(List<List<BufferedImage>> imgMatrix) {
+        return imgMatrix.stream().flatMap(List::stream).max(Comparator.comparing(img -> img.getWidth() * img.getHeight())).orElse(null);
+    }
 }
