@@ -14,12 +14,12 @@ public class Resource {
         return resource.getName();
     }
 
-    public String getName() {
+    public String getOnlyName() {
         String fullName = resource.getName();
         return fullName.substring(0, fullName.lastIndexOf("."));
     }
 
-    public String getExtension() {
+    public String getOnlyExtension() {
         String fullName = resource.getName();
         return fullName.substring(1 + fullName.lastIndexOf("."));
     }

@@ -27,13 +27,13 @@ public class ResourceTest {
     }
 
     @Test
-    public void getName() {
-        assertEquals("original_image", resource.getName());
+    public void getOnlyName() {
+        assertEquals("original_image", resource.getOnlyName());
     }
 
     @Test
-    public void getExtension() throws Exception {
-        assertEquals("jpg", resource.getExtension());
+    public void getOnlyExtension() throws Exception {
+        assertEquals("jpg", resource.getOnlyExtension());
     }
 
     private File createFile(String resourceName) {
