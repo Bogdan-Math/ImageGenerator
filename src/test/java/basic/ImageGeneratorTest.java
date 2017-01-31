@@ -11,18 +11,28 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
 public class ImageGeneratorTest {
 
-    private BufferedImage canonicalImage;
     private ImageGenerator imageGenerator;
+
+    private BufferedImage canonicalImage;
+    private Map<Color, BufferedImage> patterns;
+    private Integer expectedColumnsNumber;
 
     @Before
     public void setUp() throws Exception {
         this.canonicalImage = ImageIO.read(createFile("images/canonical.jpg"));
-        this.imageGenerator = new ImageGenerator().workOn(canonicalImage);
+        this.patterns = patterns("images/flags");
+        this.expectedColumnsNumber = 100;
+
+        this.imageGenerator = new ImageGenerator()
+                .setImage(canonicalImage)
+                .setPatterns(patterns)
+                .setExpectedColumnsNumber(expectedColumnsNumber);
     }
 
     @After
@@ -32,32 +42,10 @@ public class ImageGeneratorTest {
                 .forEach(File::delete);
     }
 
-    @Test
-    public void getBufferedImage() throws Exception {
-        assertEquals(canonicalImage, imageGenerator.workOn(canonicalImage).getBufferedImage());
-    }
-
-    @Test
-    public void getCopy() throws Exception {
-
-        BufferedImage original = imageGenerator.getBufferedImage();
-        BufferedImage compared = imageGenerator.getCopy().getBufferedImage();
-
-        assertNotEquals(original, compared);
-        assertEquals(original.getWidth(), compared.getWidth());
-        assertEquals(original.getWidth(), compared.getWidth());
-
-        for (int y = 0; y < original.getHeight(); y++) {
-            for (int x = 0; x < original.getWidth(); x++) {
-                assertEquals(original.getRGB(x, y), compared.getRGB(x, y));
-            }
-        }
-    }
-
     @Test(expected = IndexOutOfBoundsException.class)
     public void getSubImage() throws Exception {
 
-        BufferedImage original = imageGenerator.getBufferedImage();
+        BufferedImage original = imageGenerator.getImage();
         BufferedImage copied = imageGenerator.getSubImage(0, 0, 25, 25);
 
         assertNotEquals(original, copied);
@@ -78,7 +66,7 @@ public class ImageGeneratorTest {
         int x = 3;
         int y = 7;
 
-        List<List<BufferedImage>> matrix = imageGenerator.workOn(canonicalImage).likeMatrix(x, y);
+        List<List<BufferedImage>> matrix = imageGenerator.setImage(canonicalImage).likeMatrix(x, y);
 
 /*
         assertTrue(x <= matrix.size());
@@ -100,9 +88,9 @@ public class ImageGeneratorTest {
 
     @Test
     public void averageRGB() {
-        assertEquals(Color.red, imageGenerator.workOn(imageGenerator.createRedImg(1, 1)).averageRGB());
-        assertEquals(Color.green, imageGenerator.workOn(imageGenerator.createGreenImg(1, 1)).averageRGB());
-        assertEquals(Color.blue, imageGenerator.workOn(imageGenerator.createBlueImg(1, 1)).averageRGB());
+        assertEquals(Color.red, imageGenerator.setImage(imageGenerator.createRedImg(1, 1)).averageRGB());
+        assertEquals(Color.green, imageGenerator.setImage(imageGenerator.createGreenImg(1, 1)).averageRGB());
+        assertEquals(Color.blue, imageGenerator.setImage(imageGenerator.createBlueImg(1, 1)).averageRGB());
     }
 
     @Test
@@ -161,28 +149,29 @@ public class ImageGeneratorTest {
 
     @Test
     public void generateImages() throws Exception {
-        generateImage(imageGenerator.workOn(ImageIO.read(createFile("images/chinese_garden.jpg"))), "images/chinese_garden_GEN.jpg");
-        generateImage(imageGenerator.workOn(ImageIO.read(createFile("images/cubes.jpg"))), "images/cubes_GEN.jpg");
-        generateImage(imageGenerator.workOn(ImageIO.read(createFile("images/jedi_sword.jpg"))), "images/jedi_sword_GEN.jpg");
-        generateImage(imageGenerator.workOn(ImageIO.read(createFile("images/music_man.jpg"))), "images/music_man_GEN.jpg");
-        generateImage(imageGenerator.workOn(ImageIO.read(createFile("images/puppy.jpg"))), "images/puppy_GEN.jpg");
-        generateImage(imageGenerator.workOn(ImageIO.read(createFile("images/skyline.jpg"))), "images/skyline_GEN.jpg");
-        generateImage(imageGenerator.workOn(ImageIO.read(createFile("images/smile.jpg"))), "images/smile_GEN.jpg");
-        generateImage(imageGenerator.workOn(ImageIO.read(createFile("images/test_image.jpg"))), "images/test_image_GEN.jpg");
-        generateImage(imageGenerator.workOn(ImageIO.read(createFile("images/wally_and_eva.jpg"))), "images/wally_and_eva_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(createFile("images/chinese_garden.jpg"))), "images/chinese_garden_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(createFile("images/cubes.jpg"))), "images/cubes_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(createFile("images/jedi_sword.jpg"))), "images/jedi_sword_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(createFile("images/music_man.jpg"))), "images/music_man_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(createFile("images/puppy.jpg"))), "images/puppy_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(createFile("images/skyline.jpg"))), "images/skyline_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(createFile("images/smile.jpg"))), "images/smile_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(createFile("images/test_image.jpg"))), "images/test_image_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(createFile("images/wally_and_eva.jpg"))), "images/wally_and_eva_GEN.jpg");
     }
 
     @Test
-    public void generateImage1() throws Exception {
-        BufferedImage image = flags().values().stream().max(Comparator.comparing(img -> img.getWidth() * img.getHeight())).orElse(null);
+    public void generateSomeImage() throws Exception {
+        BufferedImage image = patterns("images/flags/").values().stream().max(Comparator.comparing(img -> img.getWidth() * img.getHeight())).orElse(null);
         System.out.println(image.getWidth() + ":" + image.getHeight());
-        generateImage(imageGenerator.workOn(ImageIO.read(createFile("images/canonical.jpg"))), "images/canonical_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(createFile("images/canonical.jpg"))), "images/canonical_GEN.jpg");
     }
 
+    //TODO: bring it method to ImageGenerator
     private void generateImage(ImageGenerator inputImageGenerator, String outputName) throws IOException {
         List<List<Color>> matrix = inputImageGenerator
-                .averageRGBMatrix(250, 300);
-        Map<Color, BufferedImage> map = flags();
+                .averageRGBMatrix(124, 300);
+        Map<Color, BufferedImage> map = patterns("images/flags");
 
         List<List<BufferedImage>> result = new ArrayList<>();
         for (List<Color> colors : matrix) {
@@ -206,64 +195,45 @@ public class ImageGeneratorTest {
             result.add(resultRows);
         }
 
-        ImageIO.write(imageGenerator.workOn(inputImageGenerator.getBufferedImage()).generateImageFrom(result), "jpg",
+        ImageIO.write(imageGenerator.setImage(inputImageGenerator.getImage()).generateImageFrom(result), "jpg",
                     createFile(outputName));
     }
 
-    public  Map<Color, BufferedImage> flags() {
-        Map<Color, BufferedImage> map = new HashMap<>();
+    @Test
+    public void getAndSetImage() throws Exception {
+        assertEquals(canonicalImage, imageGenerator.setImage(canonicalImage).getImage());
+    }
+
+    @Test
+    public void getAndSetPatterns() throws Exception {
+        assertEquals(patterns, imageGenerator.setPatterns(patterns).getPatterns());
+    }
+
+    @Test
+    public void getAndSetExpectedColumnsNumber() throws Exception {
+        assertEquals(expectedColumnsNumber, imageGenerator.setExpectedColumnsNumber(expectedColumnsNumber).getExpectedColumnsNumber());
+    }
+
+    private Map<Color, BufferedImage> patterns(String resourcePath) {
         ImageGenerator imageGenerator = new ImageGenerator();
         ObjectTypeConverter objectTypeConverter = new ObjectTypeConverter();
-        Arrays.stream(createFile("images/flags/").listFiles())
+
+        return Arrays.stream(createFile(resourcePath).listFiles())
                 .filter(File::isFile)
-                .forEach(flag -> {
-                    Color color = null;
-                    BufferedImage bufferedImage = null;
-                    try {
-                        bufferedImage = objectTypeConverter.bufferedImageFromFile(flag);
-                        color = imageGenerator.workOn(bufferedImage).averageRGB();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    map.put(color, bufferedImage);
-                });
-        return map;
+                .collect(Collectors
+                        .toMap(
+                                file -> imageGenerator.setImage(objectTypeConverter.bufferedImageFromFile(file)).averageRGB(),
+                                objectTypeConverter::bufferedImageFromFile,
+                                (img_color_1, img_color_2) -> {
+                                    System.out.println("Two same average color:");
+                                    System.out.println(img_color_1);
+                                    System.out.println(img_color_2);
+
+                                    return img_color_1;
+                                }
+                        )
+                );
     }
-
-
-    private Map<Color, BufferedImage> patterns() {
-        Map<Color, BufferedImage> map = new HashMap<>();
-        ImageGenerator imageGenerator = new ImageGenerator();
-
-        try {
-            BufferedImage p1 = ImageIO.read(createFile("images/patterns/p1.jpg"));
-            BufferedImage p2 = ImageIO.read(createFile("images/patterns/p2.jpg"));
-            BufferedImage p3 = ImageIO.read(createFile("images/patterns/p3.jpg"));
-            BufferedImage p4 = ImageIO.read(createFile("images/patterns/p4.jpg"));
-            BufferedImage p5 = ImageIO.read(createFile("images/patterns/p5.jpg"));
-            BufferedImage p6 = ImageIO.read(createFile("images/patterns/p6.jpg"));
-            BufferedImage p7 = ImageIO.read(createFile("images/patterns/p7.jpg"));
-            BufferedImage p8 = ImageIO.read(createFile("images/patterns/p8.jpg"));
-            BufferedImage p9 = ImageIO.read(createFile("images/patterns/p9.jpg"));
-            BufferedImage p10 = ImageIO.read(createFile("images/patterns/p10.jpg"));
-
-            map.put(imageGenerator.workOn(p1).averageRGB(), p1);
-            map.put(imageGenerator.workOn(p2).averageRGB(), p2);
-            map.put(imageGenerator.workOn(p3).averageRGB(), p3);
-            map.put(imageGenerator.workOn(p4).averageRGB(), p4);
-            map.put(imageGenerator.workOn(p5).averageRGB(), p5);
-            map.put(imageGenerator.workOn(p6).averageRGB(), p6);
-            map.put(imageGenerator.workOn(p7).averageRGB(), p7);
-            map.put(imageGenerator.workOn(p8).averageRGB(), p8);
-            map.put(imageGenerator.workOn(p9).averageRGB(), p9);
-            map.put(imageGenerator.workOn(p10).averageRGB(), p10);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        return map;
-    }
-
 
     private File createFile(String resourceName) {
         ClassLoader classLoader = getClass().getClassLoader();

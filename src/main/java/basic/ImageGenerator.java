@@ -2,7 +2,6 @@ package basic;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,25 +9,10 @@ import java.util.stream.Collectors;
 public class ImageGenerator {
 
     private BufferedImage image;
+    private Map<Color, BufferedImage> patterns;
+    private Integer expectedColumnsNumber;
 
-    public ImageGenerator workOn(BufferedImage image) {
-        this.image = image;
-        return this;
-    }
-
-    public BufferedImage getBufferedImage() {
-        return image;
-    }
-
-    public ImageGenerator getCopy() {
-        BufferedImage b = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
-        Graphics g = b.getGraphics();
-        g.drawImage(image, 0, 0, null);
-        g.dispose();
-        return new ImageGenerator().workOn(b);
-    }
-
-    public BufferedImage getSubImage(int x, int y, int width, int height) throws IOException {
+    public BufferedImage getSubImage(int x, int y, int width, int height) {
         return image.getSubimage(x, y, width, height);
     }
 
@@ -107,7 +91,7 @@ public class ImageGenerator {
     public List<List<Color>> averageRGBMatrix(int columns, int rows) {
         return likeMatrix(columns, rows).stream()
                 .map(row -> row.stream()
-                        .map(img -> new ImageGenerator().workOn(img).averageRGB())
+                        .map(img -> new ImageGenerator().setImage(img).averageRGB())
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
     }
@@ -171,7 +155,7 @@ public class ImageGenerator {
         int columns = imgMatrix.size();
         int rows = imgMatrix.get(0).size();
 
-        BufferedImage imageWithMaxSize = imageWithMaxSize(imgMatrix);
+        BufferedImage imageWithMaxSize = findImageWithMaxSize(imgMatrix);
         int width = imageWithMaxSize.getWidth() * columns;
         int height = imageWithMaxSize.getHeight() * rows;
 
@@ -196,12 +180,35 @@ public class ImageGenerator {
         return averageImg;
     }
 
-    public void printFlagWithMaxSizeIn(List<List<BufferedImage>> imgMatrix) {
-        BufferedImage bufferedImage = imageWithMaxSize(imgMatrix);
-        System.out.println(bufferedImage.getWidth() + ":" + bufferedImage.getHeight());
-    }
-
-    private BufferedImage imageWithMaxSize(List<List<BufferedImage>> imgMatrix) {
+    private BufferedImage findImageWithMaxSize(List<List<BufferedImage>> imgMatrix) {
         return imgMatrix.stream().flatMap(List::stream).max(Comparator.comparing(img -> img.getWidth() * img.getHeight())).orElse(null);
     }
+
+    public ImageGenerator setImage(BufferedImage image) {
+        this.image = image;
+        return this;
+    }
+
+    public ImageGenerator setPatterns(Map<Color, BufferedImage> patterns) {
+        this.patterns = patterns;
+        return this;
+    }
+
+    public ImageGenerator setExpectedColumnsNumber(Integer expectedColumnsNumber) {
+        this.expectedColumnsNumber = expectedColumnsNumber;
+        return this;
+    }
+
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public Map<Color, BufferedImage> getPatterns() {
+        return patterns;
+    }
+
+    public Integer getExpectedColumnsNumber() {
+        return expectedColumnsNumber;
+    }
+
 }
