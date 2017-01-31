@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -13,29 +15,29 @@ public class ObjectTypeConverterTest {
 
     private File originalImage;
     private File generateImage;
-    private File resourceFolder;
 
     private ObjectTypeConverter objectTypeConverter;
 
     @Before
     public void setUp() throws Exception {
-        this.originalImage = createFile("puppy.jpg");
-        this.generateImage = createFile("generate_image.jpg");
-        this.resourceFolder = createFile("");
+        this.originalImage = createFile("images/canonical.jpg");
+        this.generateImage = createFile("images/canonical_GEN.jpg");
 
         this.objectTypeConverter = new ObjectTypeConverter();
     }
 
     @After
     public void tearDown() throws Exception {
-        generateImage.delete();
+        Arrays.stream(createFile("images/").listFiles())
+                .filter(file -> ("canonical_GEN.jpg".equals(file.getName())))
+                .forEach(File::delete);
     }
 
     @Test
     public void copyImage() throws Exception {
-        assertEquals(new Long(1), getFilesCount());
+        assertEquals(1, allFilesIn().stream().filter(file -> (file.getName().matches("^canonical.+"))).count());
         objectTypeConverter.copyImage(originalImage, generateImage, "jpg");
-        assertEquals(new Long(2), getFilesCount());
+        assertEquals(2, allFilesIn().stream().filter(file -> (file.getName().matches("^canonical.+"))).count());
     }
 
     @Test
@@ -56,12 +58,14 @@ public class ObjectTypeConverterTest {
                         .byteArrayFromBufferedImage(objectTypeConverter.bufferedImageFromFile(originalImage), "jpg")));
     }
 
-    private Long getFilesCount() {
-        return Arrays.stream(resourceFolder.list()).filter(resource -> createFile(resource).isFile()).count();
+    private List<File> allFilesIn() {
+        return Arrays.stream(createFile("images/").listFiles())
+                .filter(File::isFile)
+                .collect(Collectors.toList());
     }
 
     private File createFile(String resourceName) {
         ClassLoader classLoader = getClass().getClassLoader();
-        return new File(classLoader.getResource("images/").getPath() + resourceName);
+        return new File(classLoader.getResource("").getPath() + resourceName);
     }
 }
