@@ -3,6 +3,7 @@ package basic;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import utility.FileReader;
 
 import java.io.File;
 
@@ -10,11 +11,14 @@ import static org.junit.Assert.*;
 
 public class ResourceTest {
 
+    private FileReader fileReader;
+
     private Resource resource;
 
     @Before
     public void setUp() throws Exception {
-        this.resource  = new Resource(createFile("images/canonical.jpg"));
+        this.fileReader = new FileReader();
+        this.resource  = new Resource(fileReader.read("images/canonical.jpg"));
     }
 
     @After
@@ -34,11 +38,6 @@ public class ResourceTest {
     @Test
     public void getOnlyExtension() throws Exception {
         assertEquals("jpg", resource.getOnlyExtension());
-    }
-
-    private File createFile(String resourceName) {
-        ClassLoader classLoader = getClass().getClassLoader();
-        return new File(classLoader.getResource("").getPath() + resourceName);
     }
 
 }

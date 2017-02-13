@@ -1,5 +1,6 @@
 package basic;
 
+import utility.FileReader;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +18,8 @@ import static org.junit.Assert.*;
 
 public class ImageGeneratorTest {
 
+    private FileReader fileReader;
+
     private ImageGenerator imageGenerator;
 
     private BufferedImage canonicalImage;
@@ -25,7 +28,8 @@ public class ImageGeneratorTest {
 
     @Before
     public void setUp() throws Exception {
-        this.canonicalImage = ImageIO.read(createFile("images/canonical.jpg"));
+        this.fileReader = new FileReader();
+        this.canonicalImage = ImageIO.read(fileReader.read("images/canonical.jpg"));
         this.patterns = patterns("images/flags");
         this.expectedColumnsNumber = 100;
 
@@ -37,7 +41,7 @@ public class ImageGeneratorTest {
 
     @After
     public void tearDown() throws Exception {
-        Arrays.stream(createFile("images/").listFiles())
+        Arrays.stream(fileReader.read("images/").listFiles())
                 .filter(file -> (file.getName().matches("^generate_image.+")))
                 .forEach(File::delete);
     }
@@ -79,7 +83,7 @@ public class ImageGeneratorTest {
             try {
                 ImageIO.write(square,
                         "jpg",
-                        createFile("images/generate_image(" + rows.indexOf(square) + "," + matrix.indexOf(rows) + ").jpg"));
+                        fileReader.read("images/generate_image(" + rows.indexOf(square) + "," + matrix.indexOf(rows) + ").jpg"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -132,7 +136,7 @@ public class ImageGeneratorTest {
             try {
                 ImageIO.write(square,
                         "jpg",
-                        createFile("images/generate_image(" + rows.indexOf(square) + "," + averageImgMatrix.indexOf(rows) + ").jpg"));
+                        fileReader.read("images/generate_image(" + rows.indexOf(square) + "," + averageImgMatrix.indexOf(rows) + ").jpg"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -144,27 +148,27 @@ public class ImageGeneratorTest {
     public void averageImage() throws Exception {
             ImageIO.write(imageGenerator.averageImage(100, 100),
                     "jpg",
-                    createFile("images/generate_image.jpg"));
+                    fileReader.read("images/generate_image.jpg"));
     }
 
     @Test
     public void generateImages() throws Exception {
-        generateImage(imageGenerator.setImage(ImageIO.read(createFile("images/chinese_garden.jpg"))), "images/chinese_garden_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(createFile("images/cubes.jpg"))), "images/cubes_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(createFile("images/jedi_sword.jpg"))), "images/jedi_sword_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(createFile("images/music_man.jpg"))), "images/music_man_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(createFile("images/puppy.jpg"))), "images/puppy_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(createFile("images/skyline.jpg"))), "images/skyline_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(createFile("images/smile.jpg"))), "images/smile_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(createFile("images/test_image.jpg"))), "images/test_image_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(createFile("images/wally_and_eva.jpg"))), "images/wally_and_eva_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/chinese_garden.jpg"))), "images/chinese_garden_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/cubes.jpg"))), "images/cubes_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/jedi_sword.jpg"))), "images/jedi_sword_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/music_man.jpg"))), "images/music_man_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/puppy.jpg"))), "images/puppy_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/skyline.jpg"))), "images/skyline_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/smile.jpg"))), "images/smile_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/test_image.jpg"))), "images/test_image_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/wally_and_eva.jpg"))), "images/wally_and_eva_GEN.jpg");
     }
 
     @Test
     public void generateSomeImage() throws Exception {
         BufferedImage image = patterns("images/flags/").values().stream().max(Comparator.comparing(img -> img.getWidth() * img.getHeight())).orElse(null);
         System.out.println(image.getWidth() + ":" + image.getHeight());
-        generateImage(imageGenerator.setImage(ImageIO.read(createFile("images/canonical.jpg"))), "images/canonical_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/canonical.jpg"))), "images/canonical_GEN.jpg");
     }
 
     //TODO: bring it method to ImageGenerator
@@ -196,7 +200,7 @@ public class ImageGeneratorTest {
         }
 
         ImageIO.write(imageGenerator.setImage(inputImageGenerator.getImage()).generateImageFrom(result), "jpg",
-                    createFile(outputName));
+                fileReader.read(outputName));
     }
 
     @Test
@@ -218,7 +222,7 @@ public class ImageGeneratorTest {
         ImageGenerator imageGenerator = new ImageGenerator();
         ObjectTypeConverter objectTypeConverter = new ObjectTypeConverter();
 
-        return Arrays.stream(createFile(resourcePath).listFiles())
+        return Arrays.stream(fileReader.read(resourcePath).listFiles())
                 .filter(File::isFile)
                 .collect(Collectors
                         .toMap(
@@ -233,10 +237,5 @@ public class ImageGeneratorTest {
                                 }
                         )
                 );
-    }
-
-    private File createFile(String resourceName) {
-        ClassLoader classLoader = getClass().getClassLoader();
-        return new File(classLoader.getResource("").getPath() + resourceName);
     }
 }

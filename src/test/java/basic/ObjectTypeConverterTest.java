@@ -3,6 +3,7 @@ package basic;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import utility.FileReader;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -14,6 +15,8 @@ import static org.junit.Assert.*;
 
 public class ObjectTypeConverterTest {
 
+    private FileReader fileReader;
+
     private File originalImage;
     private File generateImage;
 
@@ -21,15 +24,16 @@ public class ObjectTypeConverterTest {
 
     @Before
     public void setUp() throws Exception {
-        this.originalImage = createFile("images/canonical.jpg");
-        this.generateImage = createFile("images/canonical_GEN.jpg");
+        this.fileReader = new FileReader();
+        this.originalImage = fileReader.read("images/canonical.jpg");
+        this.generateImage = fileReader.read("images/canonical_GEN.jpg");
 
         this.objectTypeConverter = new ObjectTypeConverter();
     }
 
     @After
     public void tearDown() throws Exception {
-        Arrays.stream(createFile("images/").listFiles())
+        Arrays.stream(fileReader.read("images/").listFiles())
                 .filter(file -> ("canonical_GEN.jpg".equals(file.getName())))
                 .forEach(File::delete);
     }
@@ -82,13 +86,8 @@ public class ObjectTypeConverterTest {
     }
 
     private List<File> allFilesIn() {
-        return Arrays.stream(createFile("images/").listFiles())
+        return Arrays.stream(fileReader.read("images/").listFiles())
                 .filter(File::isFile)
                 .collect(Collectors.toList());
-    }
-
-    private File createFile(String resourceName) {
-        ClassLoader classLoader = getClass().getClassLoader();
-        return new File(classLoader.getResource("").getPath() + resourceName);
     }
 }
