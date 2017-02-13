@@ -31,7 +31,7 @@ public class ImageGeneratorTest {
         this.fileReader = new FileReader();
         this.canonicalImage = ImageIO.read(fileReader.read("images/canonical.jpg"));
         this.patterns = patterns("images/colors");
-        this.expectedColumnsNumber = 300;
+        this.expectedColumnsNumber = 200;
 
         this.imageGenerator = new ImageGenerator()
                 .setImage(canonicalImage)
