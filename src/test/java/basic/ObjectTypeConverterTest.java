@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import utility.FileReader;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
