@@ -30,7 +30,7 @@ public class ImageGeneratorTest {
     public void setUp() throws Exception {
         this.fileReader = new FileReader();
         this.canonicalImage = ImageIO.read(fileReader.read("images/canonical.jpg"));
-        this.patterns = patterns("images/flags");
+        this.patterns = patterns("images/colors");
         this.expectedColumnsNumber = 100;
 
         this.imageGenerator = new ImageGenerator()
@@ -68,15 +68,10 @@ public class ImageGeneratorTest {
     @Test
     public void likeMatrix() {
         int x = 3;
-        int y = 7;
 
-        List<List<BufferedImage>> matrix = imageGenerator.setImage(canonicalImage).likeMatrix(x, y);
+        List<List<BufferedImage>> matrix = imageGenerator.setImage(canonicalImage).likeMatrix(x);
 
-/*
         assertTrue(x <= matrix.size());
-        assertTrue(y <= matrix.get(0).size());
-        assertEquals(x * y, matrix.size() * matrix.get(0).size());
-*/
 
         //TODO: add more conditions to check existing files
         matrix.forEach(rows -> rows.forEach(square -> {
@@ -101,7 +96,7 @@ public class ImageGeneratorTest {
     public void averageRGBMatrix() {
 
         //TODO: add more conditions to check existing files
-        imageGenerator.averageRGBMatrix(3, 3)
+        imageGenerator.averageRGBMatrix(3)
                 .forEach(row -> {row
                         .forEach(averageRGB -> {
                             int r = averageRGB.getRed();
@@ -172,15 +167,14 @@ public class ImageGeneratorTest {
     }
 
     //TODO: bring it method to ImageGenerator
-    private void generateImage(ImageGenerator inputImageGenerator, String outputName) throws IOException {
-        List<List<Color>> matrix = inputImageGenerator
-                .averageRGBMatrix(200, 1);
-        Map<Color, BufferedImage> map = patterns("images/flags");
-
+    private void generateImage(ImageGenerator imageGenerator, String outputName) throws IOException {
+        List<List<Color>> matrix         = imageGenerator.averageRGBMatrix(200);
+        Map<Color, BufferedImage> map    = imageGenerator.getPatterns();
         List<List<BufferedImage>> result = new ArrayList<>();
-        for (List<Color> colors : matrix) {
 
+        for (List<Color> colors : matrix) {
             List<BufferedImage> resultRows = new ArrayList<>();
+
             for (Color color : colors) {
                 int minColor = Integer.MAX_VALUE;
                 BufferedImage minImg = null;
@@ -193,13 +187,12 @@ public class ImageGeneratorTest {
                         minImg = map.get(pColor);
                     }
                 }
-
                 resultRows.add(minImg);
+
             }
             result.add(resultRows);
         }
-
-        ImageIO.write(imageGenerator.setImage(inputImageGenerator.getImage()).generateImageFrom(result), "jpg",
+        ImageIO.write(this.imageGenerator.setImage(imageGenerator.getImage()).generateImageFrom(result), "jpg",
                 fileReader.read(outputName));
     }
 
