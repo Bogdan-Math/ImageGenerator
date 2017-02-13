@@ -239,6 +239,4 @@ public class ImageGeneratorTest {
         ClassLoader classLoader = getClass().getClassLoader();
         return new File(classLoader.getResource("").getPath() + resourceName);
     }
-
-
 }

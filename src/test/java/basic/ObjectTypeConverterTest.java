@@ -40,9 +40,19 @@ public class ObjectTypeConverterTest {
         assertEquals(2, allFilesIn().stream().filter(file -> (file.getName().matches("^canonical.+"))).count());
     }
 
+    @Test(expected = RuntimeException.class)
+    public void copyImageException() throws Exception {
+        objectTypeConverter.copyImage(new File("WRONG_PATH"), new File("WRONG_PATH"), "jpg");
+    }
+
     @Test
     public void bufferedImageFromFile() throws Exception {
         assertNotNull(objectTypeConverter.bufferedImageFromFile(originalImage));
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void bufferedImageFromFileException() throws Exception {
+        assertNotNull(objectTypeConverter.bufferedImageFromFile(new File("WRONG_PATH")));
     }
 
     @Test
@@ -51,11 +61,24 @@ public class ObjectTypeConverterTest {
                 .byteArrayFromBufferedImage(objectTypeConverter.bufferedImageFromFile(originalImage), "jpg"));
     }
 
+    @Test(expected = RuntimeException.class)
+    public void byteArrayFromBufferedImageException() throws Exception {
+        assertNotNull(objectTypeConverter
+                .byteArrayFromBufferedImage(objectTypeConverter.bufferedImageFromFile(new File("WRONG_PATH")), "jpg"));
+    }
+
     @Test
     public void bufferedImageFromByteArray() throws Exception {
         assertNotNull(objectTypeConverter
                 .bufferedImageFromByteArray(objectTypeConverter
                         .byteArrayFromBufferedImage(objectTypeConverter.bufferedImageFromFile(originalImage), "jpg")));
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void bufferedImageFromByteArrayException() throws Exception {
+        assertNotNull(objectTypeConverter
+                .bufferedImageFromByteArray(objectTypeConverter
+                        .byteArrayFromBufferedImage(objectTypeConverter.bufferedImageFromFile(new File("WRONG_PATH")), "jpg")));
     }
 
     private List<File> allFilesIn() {
