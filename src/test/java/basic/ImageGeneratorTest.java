@@ -170,7 +170,7 @@ public class ImageGeneratorTest {
     //TODO: bring it method to ImageGenerator
     private void generateImage(ImageGenerator inputImageGenerator, String outputName) throws IOException {
         List<List<Color>> matrix = inputImageGenerator
-                .averageRGBMatrix(124, 300);
+                .averageRGBMatrix(200, 1);
         Map<Color, BufferedImage> map = patterns("images/flags");
 
         List<List<BufferedImage>> result = new ArrayList<>();

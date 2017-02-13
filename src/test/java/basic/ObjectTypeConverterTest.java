@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -64,7 +65,7 @@ public class ObjectTypeConverterTest {
     @Test(expected = RuntimeException.class)
     public void byteArrayFromBufferedImageException() throws Exception {
         assertNotNull(objectTypeConverter
-                .byteArrayFromBufferedImage(objectTypeConverter.bufferedImageFromFile(new File("WRONG_PATH")), "jpg"));
+                .byteArrayFromBufferedImage(null, "jpg"));
     }
 
     @Test
@@ -77,8 +78,7 @@ public class ObjectTypeConverterTest {
     @Test(expected = RuntimeException.class)
     public void bufferedImageFromByteArrayException() throws Exception {
         assertNotNull(objectTypeConverter
-                .bufferedImageFromByteArray(objectTypeConverter
-                        .byteArrayFromBufferedImage(objectTypeConverter.bufferedImageFromFile(new File("WRONG_PATH")), "jpg")));
+                .bufferedImageFromByteArray(null));
     }
 
     private List<File> allFilesIn() {
