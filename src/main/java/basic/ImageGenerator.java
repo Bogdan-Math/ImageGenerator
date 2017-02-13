@@ -12,41 +12,6 @@ public class ImageGenerator {
     private Map<Color, BufferedImage> patterns;
     private Integer expectedColumnsNumber;
 
-    public BufferedImage getSubImage(int x, int y, int width, int height) {
-        return image.getSubimage(x, y, width, height);
-    }
-
-    public List<List<BufferedImage>> likeMatrix(int columns) {
-
-        int width = image.getWidth();
-        int height = image.getHeight();
-
-        int squareWidth = width / columns;
-
-        int squareHeight = squareWidth * ImageSize.HEIGHT / ImageSize.WIDTH;
-        squareHeight = (squareHeight != 0) ? squareHeight : 1;
-
-        while (width - squareWidth * columns >= squareWidth ) {
-            columns++;
-        }
-
-        int rows = 0;
-        while (height - squareHeight * rows >= squareHeight ) {
-            rows++;
-        }
-
-        List<List<BufferedImage>> matrix = new ArrayList<>();
-        for (int i = 0; i < columns; i++) {
-            List<BufferedImage> matrixRow = new ArrayList<>();
-            for (int j = 0; j < rows; j++) {
-                matrixRow.add(image.getSubimage(i * squareWidth, j * squareHeight, squareWidth, squareHeight));
-            }
-            matrix.add(matrixRow);
-        }
-
-        return matrix;
-    }
-
     public Color averageRGB() {
         int width = image.getWidth();
         int height = image.getHeight();
@@ -81,13 +46,72 @@ public class ImageGenerator {
         return new Color(avrR, avrG, avrB);
     }
 
-    public List<List<Color>> averageRGBMatrix(int columns) {
-        return likeMatrix(columns).stream()
+    public List<List<BufferedImage>> likeMatrix(int columns) {
+
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        int squareWidth = width / columns;
+
+        int squareHeight = squareWidth * ImageSize.HEIGHT / ImageSize.WIDTH;
+        squareHeight = (squareHeight != 0) ? squareHeight : 1;
+
+        while (width - squareWidth * columns >= squareWidth ) {
+            columns++;
+        }
+
+        int rows = 0;
+        while (height - squareHeight * rows >= squareHeight ) {
+            rows++;
+        }
+
+        List<List<BufferedImage>> matrix = new ArrayList<>();
+        for (int i = 0; i < columns; i++) {
+            List<BufferedImage> matrixRow = new ArrayList<>();
+            for (int j = 0; j < rows; j++) {
+                matrixRow.add(image.getSubimage(i * squareWidth, j * squareHeight, squareWidth, squareHeight));
+            }
+            matrix.add(matrixRow);
+        }
+
+        return matrix;
+    }
+
+    public List<List<Color>> averageRGBMatrix() {
+        return likeMatrix(this.expectedColumnsNumber).stream()
                 .map(row -> row.stream()
                         .map(img -> new ImageGenerator().setImage(img).averageRGB())
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
     }
+
+    public BufferedImage generateImageFrom(List<List<BufferedImage>> imgMatrix) {
+        int columns = imgMatrix.size();
+        int rows = imgMatrix.get(0).size();
+
+        BufferedImage imageWithMaxSize = findImageWithMaxSize(imgMatrix);
+        int width = imageWithMaxSize.getWidth() * columns;
+        int height = imageWithMaxSize.getHeight() * rows;
+
+        int squareWidth = width / columns;
+        int squareHeight = height / rows;
+
+        BufferedImage averageImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+        for (int i = 0; i < columns; i++) {
+            for (int j = 0; j < rows; j++) {
+
+                Graphics graphics = averageImg.getGraphics();
+                graphics.drawImage(resize(imgMatrix.get(i).get(j), imageWithMaxSize.getWidth(), imageWithMaxSize.getHeight()),
+                        i * squareWidth,
+                        j * squareHeight,
+                        null);
+            }
+        }
+
+        return averageImg;
+    }
+
 
     public BufferedImage createRedImg(int width, int height) {
         return createOneColorImg(width, height, Color.red);
@@ -110,65 +134,6 @@ public class ImageGenerator {
             }
         }
         return redImg;
-    }
-
-    public List<List<BufferedImage>> averageImgMatrix(int columns, int rows) {
-        int width = image.getWidth();
-        int height = image.getHeight();
-        int squareWidth = width / columns;
-        int squareHeight = height / rows;
-
-        return averageRGBMatrix(columns).stream()
-                .map(row -> row.stream()
-                        .map(averageRGB -> createOneColorImg(squareWidth, squareHeight, averageRGB))
-                        .collect(Collectors.toList()))
-                .collect(Collectors.toList());
-    }
-
-    public BufferedImage averageImage(int columns, int rows) {
-        int width = image.getWidth();
-        int height = image.getHeight();
-        int squareWidth = width / columns;
-        int squareHeight = height / rows;
-
-        BufferedImage averageImg = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
-        List<List<BufferedImage>> imgMatrix = averageImgMatrix(columns, rows);
-
-        for (int i = 0; i < columns; i++) {
-            for (int j = 0; j < rows; j++) {
-                Graphics graphics = averageImg.getGraphics();
-                graphics.drawImage(imgMatrix.get(i).get(j), i * squareWidth, j * squareHeight, null);
-            }
-        }
-
-        return averageImg;
-    }
-
-    public BufferedImage generateImageFrom(List<List<BufferedImage>> imgMatrix) {
-        int columns = imgMatrix.size();
-        int rows = imgMatrix.get(0).size();
-
-        BufferedImage imageWithMaxSize = findImageWithMaxSize(imgMatrix);
-        int width = imageWithMaxSize.getWidth() * columns;
-        int height = imageWithMaxSize.getHeight() * rows;
-
-        int squareWidth = width / columns;
-        int squareHeight = height / rows;
-
-        BufferedImage averageImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-
-        for (int i = 0; i < columns; i++) {
-            for (int j = 0; j < rows; j++) {
-
-                Graphics graphics = averageImg.getGraphics();
-                graphics.drawImage(resize(imgMatrix.get(i).get(j), imageWithMaxSize.getWidth(), imageWithMaxSize.getHeight()),
-                                  i * squareWidth,
-                                  j * squareHeight,
-                                  null);
-            }
-        }
-
-        return averageImg;
     }
 
     private BufferedImage resize(BufferedImage oldImage, int newWidth, int newHeight) {
