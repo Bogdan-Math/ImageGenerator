@@ -12,7 +12,7 @@ public class ImageGenerator {
     private Map<Color, BufferedImage> patterns;
     private Integer expectedColumnsNumber;
 
-    public Color averageRGB() {
+    public Color averagedColor() {
         int width = image.getWidth();
         int height = image.getHeight();
         int pixels = width * height;
@@ -46,10 +46,11 @@ public class ImageGenerator {
         return new Color(avrR, avrG, avrB);
     }
 
+    //TODO: add descriptive comments to this method
     public List<List<BufferedImage>> likeMatrix(int expectedColumns) {
                                                 int expectedRows = 0;
 
-        int width = image.getWidth();
+        int width  = image.getWidth();
         int height = image.getHeight();
 
         if (expectedColumns > width) {
@@ -57,7 +58,7 @@ public class ImageGenerator {
                     .format("Number of expected columns (is %s) could not be more than image width (is %s).", expectedColumns, width));
         }
 
-        int squareWidth = width / expectedColumns;
+        int squareWidth  = width / expectedColumns;
         int squareHeight = squareWidth * ImageSize.HEIGHT / ImageSize.WIDTH;
 
         squareHeight = (squareHeight != 0) ? squareHeight : 1;
@@ -82,10 +83,10 @@ public class ImageGenerator {
         return matrix;
     }
 
-    public List<List<Color>> averageRGBMatrix() {
+    public List<List<Color>> averagedColorsMatrix() {
         return likeMatrix(this.expectedColumnsNumber).stream()
                 .map(row -> row.stream()
-                        .map(img -> new ImageGenerator().setImage(img).averageRGB())
+                        .map(img -> new ImageGenerator().setImage(img).averagedColor())
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
     }

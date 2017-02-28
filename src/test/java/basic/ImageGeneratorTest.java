@@ -48,9 +48,9 @@ public class ImageGeneratorTest {
 
     @Test
     public void averageRGB() {
-        assertEquals(Color.red, imageGenerator.setImage(imageGenerator.createRedImg(1, 1)).averageRGB());
-        assertEquals(Color.green, imageGenerator.setImage(imageGenerator.createGreenImg(1, 1)).averageRGB());
-        assertEquals(Color.blue, imageGenerator.setImage(imageGenerator.createBlueImg(1, 1)).averageRGB());
+        assertEquals(Color.red, imageGenerator.setImage(imageGenerator.createRedImg(1, 1)).averagedColor());
+        assertEquals(Color.green, imageGenerator.setImage(imageGenerator.createGreenImg(1, 1)).averagedColor());
+        assertEquals(Color.blue, imageGenerator.setImage(imageGenerator.createBlueImg(1, 1)).averagedColor());
     }
 
     @Test
@@ -74,10 +74,10 @@ public class ImageGeneratorTest {
     }
 
     @Test
-    public void averageRGBMatrix() {
+    public void averagedColorsMatrix() {
 
         //TODO: add more conditions to check existing files
-        imageGenerator.averageRGBMatrix()
+        imageGenerator.averagedColorsMatrix()
                 .forEach(row -> {row
                         .forEach(averageRGB -> {
                             int r = averageRGB.getRed();
@@ -124,7 +124,7 @@ public class ImageGeneratorTest {
 
     //TODO: bring it method to ImageGenerator
     private void generateImage(ImageGenerator imageGenerator, String outputName) throws IOException {
-        List<List<Color>> matrix         = imageGenerator.averageRGBMatrix();
+        List<List<Color>> matrix         = imageGenerator.averagedColorsMatrix();
         Map<Color, BufferedImage> map    = imageGenerator.getPatterns();
         List<List<BufferedImage>> result = new ArrayList<>();
 
@@ -176,7 +176,7 @@ public class ImageGeneratorTest {
                 .filter(File::isFile)
                 .collect(Collectors
                         .toMap(
-                                file -> imageGenerator.setImage(objectTypeConverter.bufferedImageFromFile(file)).averageRGB(),
+                                file -> imageGenerator.setImage(objectTypeConverter.bufferedImageFromFile(file)).averagedColor(),
                                 objectTypeConverter::bufferedImageFromFile,
                                 (img_color_1, img_color_2) -> {
                                     System.out.println("Two same average color:");
