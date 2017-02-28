@@ -11,15 +11,4 @@ public class ImageSizeTest {
         assertNotNull(new ImageSize());
     }
 
-
-    @Test
-    public void widthTest() {
-        assertEquals(25, ImageSize.WIDTH);
-    }
-
-    @Test
-    public void heightTest() {
-        assertEquals(25, ImageSize.HEIGHT);
-    }
-
 }

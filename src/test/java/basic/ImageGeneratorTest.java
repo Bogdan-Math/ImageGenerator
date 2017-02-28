@@ -111,6 +111,7 @@ public class ImageGeneratorTest {
 
     @Test
     public void generateImages() throws Exception {
+        imageGenerator.setExpectedColumnsNumber(200);
         generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/chinese_garden.jpg"))), "images/chinese_garden_GEN.jpg");
         generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/cubes.jpg"))), "images/cubes_GEN.jpg");
         generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/jedi_sword.jpg"))), "images/jedi_sword_GEN.jpg");
@@ -122,34 +123,8 @@ public class ImageGeneratorTest {
         generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/wally_and_eva.jpg"))), "images/wally_and_eva_GEN.jpg");
     }
 
-    //TODO: bring it method to ImageGenerator
     private void generateImage(ImageGenerator imageGenerator, String outputName) throws IOException {
-        List<List<Color>> matrix         = imageGenerator.averagedColorsMatrix();
-        Map<Color, BufferedImage> map    = imageGenerator.getPatterns();
-        List<List<BufferedImage>> result = new ArrayList<>();
-
-        for (List<Color> colors : matrix) {
-            List<BufferedImage> resultRows = new ArrayList<>();
-
-            for (Color color : colors) {
-                BufferedImage minImg = null;
-                int minColor         = Integer.MAX_VALUE;
-
-                for (Color pColor : map.keySet()) {
-                    int dColor = Math.abs(color.getRed()   - pColor.getRed())   +
-                                 Math.abs(color.getGreen() - pColor.getGreen()) +
-                                 Math.abs(color.getBlue()  - pColor.getBlue());
-                    if (dColor < minColor) {
-                        minColor = dColor;
-                        minImg   = map.get(pColor);
-                    }
-                }
-                resultRows.add(minImg);
-
-            }
-            result.add(resultRows);
-        }
-        ImageIO.write(this.imageGenerator.setImage(imageGenerator.getImage()).generateImageFrom(result), "jpg",
+        ImageIO.write(imageGenerator.makeImageFrom(imageGenerator.generateResultMatrix()), "jpg",
                 fileReader.read(outputName));
     }
 
