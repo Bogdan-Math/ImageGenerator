@@ -46,29 +46,34 @@ public class ImageGenerator {
         return new Color(avrR, avrG, avrB);
     }
 
-    public List<List<BufferedImage>> likeMatrix(int columns) {
+    public List<List<BufferedImage>> likeMatrix(int expectedColumns) {
+                                                int expectedRows = 0;
 
         int width = image.getWidth();
         int height = image.getHeight();
 
-        int squareWidth = width / columns;
-
-        int squareHeight = squareWidth * ImageSize.HEIGHT / ImageSize.WIDTH;
-        squareHeight = (squareHeight != 0) ? squareHeight : 1;
-
-        while (width - squareWidth * columns >= squareWidth ) {
-            columns++;
+        if (expectedColumns > width) {
+            throw new ExpectedMatrixSizeException(String
+                    .format("Number of expected columns (is %s) could not be more than image width (is %s).", expectedColumns, width));
         }
 
-        int rows = 0;
-        while (height - squareHeight * rows >= squareHeight ) {
-            rows++;
+        int squareWidth = width / expectedColumns;
+        int squareHeight = squareWidth * ImageSize.HEIGHT / ImageSize.WIDTH;
+
+        squareHeight = (squareHeight != 0) ? squareHeight : 1;
+
+        while (width - squareWidth * expectedColumns >= squareWidth ) {
+            expectedColumns++;
+        }
+
+        while (height - squareHeight * expectedRows >= squareHeight ) {
+            expectedRows++;
         }
 
         List<List<BufferedImage>> matrix = new ArrayList<>();
-        for (int i = 0; i < columns; i++) {
+        for (int i = 0; i < expectedColumns; i++) {
             List<BufferedImage> matrixRow = new ArrayList<>();
-            for (int j = 0; j < rows; j++) {
+            for (int j = 0; j < expectedRows; j++) {
                 matrixRow.add(image.getSubimage(i * squareWidth, j * squareHeight, squareWidth, squareHeight));
             }
             matrix.add(matrixRow);
