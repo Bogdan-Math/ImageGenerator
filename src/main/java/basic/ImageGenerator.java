@@ -20,7 +20,7 @@ public class ImageGenerator {
 
     //TODO: add descriptive comments to this method
     public List<List<BufferedImage>> likeMatrix(int columns) {
-                                                int rows = 0;
+        int rows = 0;
 
         int width  = image.getWidth();
         int height = image.getHeight();
