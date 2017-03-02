@@ -12,7 +12,7 @@ public class ObjectTypeConverter {
         }
         catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Something happened !!!", e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -21,7 +21,7 @@ public class ObjectTypeConverter {
             return ImageIO.read(fromFile);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Something happened !!!", e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -36,7 +36,7 @@ public class ObjectTypeConverter {
         }
         catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Something happened !!!", e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -46,7 +46,7 @@ public class ObjectTypeConverter {
         }
         catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Something happened !!!", e);
+            throw new RuntimeException(e);
         }
     }
 
