@@ -1,20 +1,23 @@
 package basic;
 
-import utility.FileReader;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import utility.FileReader;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ImageGeneratorTest {
 
@@ -23,13 +26,22 @@ public class ImageGeneratorTest {
     private ImageGenerator imageGenerator;
 
     private BufferedImage canonicalImage;
+    private BufferedImage whiteImage;
+    private BufferedImage grayImage;
+    private BufferedImage blackImage;
+
     private Map<Color, BufferedImage> patterns;
     private Integer expectedColumnsNumber;
 
     @Before
     public void setUp() throws Exception {
         this.fileReader = new FileReader();
+
         this.canonicalImage = ImageIO.read(fileReader.read("images/canonical.jpg"));
+        this.whiteImage = ImageIO.read(fileReader.read("images/colors/1-white.jpg"));
+        this.grayImage = ImageIO.read(fileReader.read("images/colors/2-grey.jpg"));
+        this.blackImage = ImageIO.read(fileReader.read("images/colors/3-black.jpg"));
+
         this.patterns = patterns("images/colors");
         this.expectedColumnsNumber = 300;
 
@@ -49,9 +61,9 @@ public class ImageGeneratorTest {
 
     @Test
     public void averagedColor() throws Exception {
-        assertEquals(Color.WHITE, imageGenerator.setImage(ImageIO.read(fileReader.read("images/colors/1-white.jpg"))).averagedColor());
-        assertEquals(Color.GRAY, imageGenerator.setImage(ImageIO.read(fileReader.read("images/colors/2-grey.jpg"))).averagedColor());
-        assertEquals(Color.BLACK, imageGenerator.setImage(ImageIO.read(fileReader.read("images/colors/3-black.jpg"))).averagedColor());
+        assertEquals(Color.WHITE, imageGenerator.setImage(whiteImage).averagedColor());
+        assertEquals(Color.GRAY, imageGenerator.setImage(grayImage).averagedColor());
+        assertEquals(Color.BLACK, imageGenerator.setImage(blackImage).averagedColor());
     }
 
     @Test(expected = ExpectedMatrixSizeException.class)
@@ -72,19 +84,15 @@ public class ImageGeneratorTest {
 
     @Test
     public void averagedColorsMatrix() {
-
-        //TODO: add more conditions to check existing files
-        imageGenerator.averagedColorsMatrix()
-                .forEach(row -> {
-                    row
-                            .forEach(averageRGB -> {
-                                int r = averageRGB.getRed();
-                                int g = averageRGB.getGreen();
-                                int b = averageRGB.getBlue();
-                                System.out.print("(" + r + ", " + g + ", " + b + ")");
-                            });
-                    System.out.println();
-                });
+        int white = 255;
+        imageGenerator.setImage(whiteImage).setExpectedColumnsNumber(20)
+                .averagedColorsMatrix()
+                .forEach(row -> row
+                        .forEach(averageRGB -> {
+                            assertEquals(white, averageRGB.getRed());
+                            assertEquals(white, averageRGB.getGreen());
+                            assertEquals(white, averageRGB.getBlue());
+                        }));
     }
 
     @Test
@@ -131,14 +139,14 @@ public class ImageGeneratorTest {
         ObjectTypeConverter objectTypeConverter = new ObjectTypeConverter();
 
         return Arrays.stream(Optional.ofNullable(fileReader.read(resourcePath).listFiles())
-                .orElseThrow(() -> new RuntimeException("Directory is not exist or directory is empty.")))
+                .orElseThrow(() -> new RuntimeException("Directory \'" + resourcePath + "\': is not exist or empty.")))
                 .filter(File::isFile)
                 .collect(Collectors
                         .toMap(
                                 file -> imageGenerator.setImage(objectTypeConverter.bufferedImageFromFile(file)).averagedColor(),
                                 objectTypeConverter::bufferedImageFromFile,
                                 (img_color_1, img_color_2) -> {
-                                    System.out.println("Two same average color:");
+                                    System.out.println("Two same average color: ");
                                     System.out.println(img_color_1);
                                     System.out.println(img_color_2);
 
