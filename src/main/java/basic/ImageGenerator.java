@@ -4,8 +4,10 @@ import exceptions.ExpectedMatrixSizeException;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ImageGenerator {
@@ -19,35 +21,38 @@ public class ImageGenerator {
     }
 
     //TODO: add descriptive comments to this method
-    public List<List<BufferedImage>> likeMatrix(int columns) {
-        int rows = 0;
+    public List<List<BufferedImage>> likeMatrix(int expectedColumns) {
+                                                int expectedRows = 0;
 
         int width  = image.getWidth();
         int height = image.getHeight();
 
-        if (columns > width) {
+        if (expectedColumns > width) {
             throw new ExpectedMatrixSizeException(String
-                    .format("Number of expected columns (is %s) could not be more than image width (is %s).", columns, width));
+                    .format("Number of expected columns (is %s) could not be more than image width (is %s).", expectedColumns, width));
         }
 
-        int squareWidth  = width / columns;
+        int realColumnsNumber = expectedColumns;
+        int realRowsNumber    = expectedRows;
+
+        int squareWidth  = width / realColumnsNumber;
         int squareHeight = squareWidth * ImageSize.HEIGHT / ImageSize.WIDTH;
 
         squareHeight = (squareHeight != 0) ? squareHeight : 1;
 
-        while (width - squareWidth * columns >= squareWidth ) {
-            columns++;
+        while (width - squareWidth * realColumnsNumber >= squareWidth ) {
+            realColumnsNumber++;
         }
 
-        while (height - squareHeight * rows >= squareHeight ) {
-            rows++;
+        while (height - squareHeight * realRowsNumber >= squareHeight ) {
+            realRowsNumber++;
         }
 
         List<List<BufferedImage>> matrix = new ArrayList<>();
-        for (int i = 0; i < columns; i++) {
+        for (int i = 0; i < realColumnsNumber; i++) {
 
             List<BufferedImage> matrixRow = new ArrayList<>();
-            for (int j = 0; j < rows; j++) {
+            for (int j = 0; j < realRowsNumber; j++) {
                 matrixRow.add(image.getSubimage(i * squareWidth, j * squareHeight, squareWidth, squareHeight));
             }
 
