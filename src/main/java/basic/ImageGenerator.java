@@ -152,30 +152,6 @@ public class ImageGenerator {
         return averageImg;
     }
 
-
-    public BufferedImage createRedImg(int width, int height) {
-        return createOneColorImg(width, height, Color.red);
-    }
-
-    public BufferedImage createGreenImg(int width, int height) {
-        return createOneColorImg(width, height, Color.green);
-    }
-
-    public BufferedImage createBlueImg(int width, int height) {
-        return createOneColorImg(width, height, Color.blue);
-    }
-
-    private BufferedImage createOneColorImg(int width, int height, Color color) {
-        BufferedImage redImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-
-        for (int i = 0; i < redImg.getWidth(); i++) {
-            for (int j = 0; j < redImg.getHeight(); j++) {
-                redImg.setRGB(i, j, ( color.getRed()<<16 | color.getGreen()<<8 | color.getBlue() ));
-            }
-        }
-        return redImg;
-    }
-
     private BufferedImage resize(BufferedImage oldImage, int newWidth, int newHeight) {
         BufferedImage resizedImg = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics2D    = resizedImg.createGraphics();

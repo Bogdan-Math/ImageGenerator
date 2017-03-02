@@ -31,7 +31,7 @@ public class ImageGeneratorTest {
         this.fileReader = new FileReader();
         this.canonicalImage = ImageIO.read(fileReader.read("images/canonical.jpg"));
         this.patterns = patterns("images/colors");
-        this.expectedColumnsNumber = 200;
+        this.expectedColumnsNumber = 300;
 
         this.imageGenerator = new ImageGenerator()
                 .setImage(canonicalImage)
@@ -41,36 +41,33 @@ public class ImageGeneratorTest {
 
     @After
     public void tearDown() throws Exception {
-        Arrays.stream(fileReader.read("images/").listFiles())
-                .filter(file -> (file.getName().matches("^generate_image.+")))
-                .forEach(File::delete);
+        Optional.ofNullable(fileReader.read("images/").listFiles())
+                .ifPresent(filesArr -> Arrays.stream(filesArr)
+                        .filter(file -> (file.getName().matches("^generate_image.+")))
+                        .forEach(File::delete));
     }
 
     @Test
-    public void averageRGB() {
-        assertEquals(Color.red, imageGenerator.setImage(imageGenerator.createRedImg(1, 1)).averagedColor());
-        assertEquals(Color.green, imageGenerator.setImage(imageGenerator.createGreenImg(1, 1)).averagedColor());
-        assertEquals(Color.blue, imageGenerator.setImage(imageGenerator.createBlueImg(1, 1)).averagedColor());
+    public void averagedColor() throws Exception {
+        assertEquals(Color.WHITE, imageGenerator.setImage(ImageIO.read(fileReader.read("images/colors/1-white.jpg"))).averagedColor());
+        assertEquals(Color.GRAY, imageGenerator.setImage(ImageIO.read(fileReader.read("images/colors/2-grey.jpg"))).averagedColor());
+        assertEquals(Color.BLACK, imageGenerator.setImage(ImageIO.read(fileReader.read("images/colors/3-black.jpg"))).averagedColor());
     }
 
-    @Test
-    public void likeMatrix() {
-        int x = 3;
+    @Test(expected = ExpectedMatrixSizeException.class)
+    public void likeMatrix() throws Exception {
+        int expectedColumn = 100;
 
-        List<List<BufferedImage>> matrix = imageGenerator.setImage(canonicalImage).likeMatrix(x);
+        List<List<BufferedImage>> matrix = imageGenerator.setImage(canonicalImage).likeMatrix(expectedColumn);
+        int matrixWidth = matrix.size();
+        int matrixHeight = matrix.get(0).size();
 
-        assertTrue(x <= matrix.size());
+        assertTrue(expectedColumn <= matrixWidth); // matrix width SHOULD BE more or equals then expected columns number.
+        assertTrue(expectedColumn >= matrixHeight); // matrix height SHOULD BE less or equals then expected columns number.
+        assertTrue(matrixWidth <= canonicalImage.getWidth()); // matrix width CAN NOT be more then image width.
+        assertTrue(matrixHeight <= canonicalImage.getHeight()); // matrix height CAN NOT be more then image height.
 
-        //TODO: add more conditions to check existing files
-        matrix.forEach(rows -> rows.forEach(square -> {
-            try {
-                ImageIO.write(square,
-                        "jpg",
-                        fileReader.read("images/generate_image(" + rows.indexOf(square) + "," + matrix.indexOf(rows) + ").jpg"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }));
+        imageGenerator.setImage(canonicalImage).likeMatrix(2000);
     }
 
     @Test
@@ -78,13 +75,14 @@ public class ImageGeneratorTest {
 
         //TODO: add more conditions to check existing files
         imageGenerator.averagedColorsMatrix()
-                .forEach(row -> {row
-                        .forEach(averageRGB -> {
-                            int r = averageRGB.getRed();
-                            int g = averageRGB.getGreen();
-                            int b = averageRGB.getBlue();
-                            System.out.print("(" + r + ", " + g + ", " + b + ")");
-                        });
+                .forEach(row -> {
+                    row
+                            .forEach(averageRGB -> {
+                                int r = averageRGB.getRed();
+                                int g = averageRGB.getGreen();
+                                int b = averageRGB.getBlue();
+                                System.out.print("(" + r + ", " + g + ", " + b + ")");
+                            });
                     System.out.println();
                 });
     }
@@ -92,21 +90,6 @@ public class ImageGeneratorTest {
     @Test
     public void generateImageFrom() throws Exception {
         //TODO: add test
-    }
-
-    @Test
-    public void createRedImg() {
-        assertEquals(255, (imageGenerator.createRedImg(1, 1).getRGB(0,0) & 0x00ff0000) >> 16);
-    }
-
-    @Test
-    public void createGreenImg() {
-        assertEquals(255, (imageGenerator.createGreenImg(1, 1).getRGB(0,0) & 0x0000ff00) >> 8);
-    }
-
-    @Test
-    public void createBlueImg() {
-        assertEquals(255, (imageGenerator.createBlueImg(1, 1).getRGB(0,0) & 0x000000ff));
     }
 
     @Test
@@ -147,7 +130,8 @@ public class ImageGeneratorTest {
         ImageGenerator imageGenerator = new ImageGenerator();
         ObjectTypeConverter objectTypeConverter = new ObjectTypeConverter();
 
-        return Arrays.stream(fileReader.read(resourcePath).listFiles())
+        return Arrays.stream(Optional.ofNullable(fileReader.read(resourcePath).listFiles())
+                .orElseThrow(() -> new RuntimeException("Directory is not exist or directory is empty.")))
                 .filter(File::isFile)
                 .collect(Collectors
                         .toMap(
