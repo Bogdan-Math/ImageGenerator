@@ -117,7 +117,7 @@ public class ImageGeneratorTest {
 
     @Test
     public void generateImages() throws Exception {
-        imageGenerator.setExpectedColumnsNumber(200);
+        imageGenerator.setExpectedColumnsNumber(250);
         assertTrue(generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/chinese_garden.jpg"))), "images/chinese_garden_GEN.jpg"));
         assertTrue(generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/cubes.jpg"))), "images/cubes_GEN.jpg"));
         assertTrue(generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/jedi_sword.jpg"))), "images/jedi_sword_GEN.jpg"));
