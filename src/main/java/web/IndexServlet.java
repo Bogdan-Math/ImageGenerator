@@ -10,6 +10,7 @@ public class IndexServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().print("Index is working!");
+        req.setAttribute("qwerty", "!!! !!! !!!");
+        req.getRequestDispatcher("/index.jsp").forward(req, resp);
     }
 }
