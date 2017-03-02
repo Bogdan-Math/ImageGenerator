@@ -1,11 +1,10 @@
 package basic;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import utility.FileReader;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ResourceTest {
 
@@ -14,10 +13,6 @@ public class ResourceTest {
     @Before
     public void setUp() throws Exception {
         this.resource  = new Resource(new FileReader().getFileObject("images/canonical.jpg"));
-    }
-
-    @After
-    public void tearDown() throws Exception {
     }
 
     @Test
