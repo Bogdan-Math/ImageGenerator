@@ -10,18 +10,18 @@ public class ObjectTypeConverter {
         try {
             ImageIO.write(bufferedImageFromFile(fromFile), outputFormat, toFile);
         }
-        catch (Exception e) {
+        catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException(e);
         }
     }
 
     public BufferedImage bufferedImageFromFile(File fromFile) {
         try {
             return ImageIO.read(fromFile);
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException(e);
         }
     }
 
@@ -34,9 +34,9 @@ public class ObjectTypeConverter {
             baos.close();
             return imageInBytes;
         }
-        catch (Exception e) {
+        catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException(e);
         }
     }
 
@@ -44,9 +44,9 @@ public class ObjectTypeConverter {
         try {
             return ImageIO.read(new ByteArrayInputStream(imageInBytes));
         }
-        catch (Exception e) {
+        catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException(e);
         }
     }
 
