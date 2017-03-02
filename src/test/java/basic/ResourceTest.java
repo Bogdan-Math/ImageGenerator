@@ -9,14 +9,11 @@ import static org.junit.Assert.*;
 
 public class ResourceTest {
 
-    private FileReader fileReader;
-
     private Resource resource;
 
     @Before
     public void setUp() throws Exception {
-        this.fileReader = new FileReader();
-        this.resource  = new Resource(fileReader.getFileObject("images/canonical.jpg"));
+        this.resource  = new Resource(new FileReader().getFileObject("images/canonical.jpg"));
     }
 
     @After

@@ -118,19 +118,20 @@ public class ImageGeneratorTest {
     @Test
     public void generateImages() throws Exception {
         imageGenerator.setExpectedColumnsNumber(200);
-        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/chinese_garden.jpg"))), "images/chinese_garden_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/cubes.jpg"))), "images/cubes_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/jedi_sword.jpg"))), "images/jedi_sword_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/music_man.jpg"))), "images/music_man_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/puppy.jpg"))), "images/puppy_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/skyline.jpg"))), "images/skyline_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/smile.jpg"))), "images/smile_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/test_image.jpg"))), "images/test_image_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/wally_and_eva.jpg"))), "images/wally_and_eva_GEN.jpg");
+        assertTrue(generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/chinese_garden.jpg"))), "images/chinese_garden_GEN.jpg"));
+        assertTrue(generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/cubes.jpg"))), "images/cubes_GEN.jpg"));
+        assertTrue(generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/jedi_sword.jpg"))), "images/jedi_sword_GEN.jpg"));
+        assertTrue(generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/music_man.jpg"))), "images/music_man_GEN.jpg"));
+        assertTrue(generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/puppy.jpg"))), "images/puppy_GEN.jpg"));
+        assertTrue(generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/skyline.jpg"))), "images/skyline_GEN.jpg"));
+        assertTrue(generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/smile.jpg"))), "images/smile_GEN.jpg"));
+        assertTrue(generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/test_image.jpg"))), "images/test_image_GEN.jpg"));
+        assertTrue(generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/wally_and_eva.jpg"))), "images/wally_and_eva_GEN.jpg"));
     }
 
-    private void generateImage(ImageGenerator imageGenerator, String outputName) throws IOException {
+    private boolean generateImage(ImageGenerator imageGenerator, String outputName) throws IOException {
         ImageIO.write(imageGenerator.makeImage(), "jpg", fileReader.getFileObject(outputName));
+        return true;
     }
 
     @Test
