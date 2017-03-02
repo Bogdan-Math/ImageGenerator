@@ -1,5 +1,6 @@
 package basic;
 
+import exceptions.ExpectedMatrixSizeException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class ImageGeneratorTest {
@@ -37,10 +39,10 @@ public class ImageGeneratorTest {
     public void setUp() throws Exception {
         this.fileReader = new FileReader();
 
-        this.canonicalImage = ImageIO.read(fileReader.read("images/canonical.jpg"));
-        this.whiteImage = ImageIO.read(fileReader.read("images/colors/1-white.jpg"));
-        this.grayImage = ImageIO.read(fileReader.read("images/colors/2-grey.jpg"));
-        this.blackImage = ImageIO.read(fileReader.read("images/colors/3-black.jpg"));
+        this.canonicalImage = ImageIO.read(fileReader.getFileObject("images/canonical.jpg"));
+        this.whiteImage = ImageIO.read(fileReader.getFileObject("images/colors/1-white.jpg"));
+        this.grayImage = ImageIO.read(fileReader.getFileObject("images/colors/2-grey.jpg"));
+        this.blackImage = ImageIO.read(fileReader.getFileObject("images/colors/3-black.jpg"));
 
         this.patterns = patterns("images/colors");
         this.expectedColumnsNumber = 300;
@@ -53,7 +55,7 @@ public class ImageGeneratorTest {
 
     @After
     public void tearDown() throws Exception {
-        Optional.ofNullable(fileReader.read("images/").listFiles())
+        Optional.ofNullable(fileReader.getFileObject("images/").listFiles())
                 .ifPresent(filesArr -> Arrays.stream(filesArr)
                         .filter(file -> (file.getName().matches("^generate_image.+")))
                         .forEach(File::delete));
@@ -83,9 +85,9 @@ public class ImageGeneratorTest {
     }
 
     @Test
-    public void averagedColorsMatrix() {
+    public void averagedColorsMatrix() throws Exception {
         int white = 255;
-        imageGenerator.setImage(whiteImage).setExpectedColumnsNumber(20)
+        imageGenerator.setImage(whiteImage).setExpectedColumnsNumber(10)
                 .averagedColorsMatrix()
                 .forEach(row -> row
                         .forEach(averageRGB -> {
@@ -96,27 +98,39 @@ public class ImageGeneratorTest {
     }
 
     @Test
-    public void generateImageFrom() throws Exception {
-        //TODO: add test
+    public void generateResultMatrix() throws Exception {
+        imageGenerator.setExpectedColumnsNumber(1000)
+                .generateResultMatrix()
+                .forEach(row -> row
+                        .forEach(patternImg -> {
+                            assertTrue(patterns.values().contains(patternImg));
+                        }));
+    }
+
+    @Test
+    public void makeImage() throws Exception {
+        BufferedImage generatedImage = imageGenerator.setImage(whiteImage).setExpectedColumnsNumber(10).makeImage();
+        assertNotEquals(whiteImage, generatedImage);
+        assertTrue(generatedImage.getWidth() >= whiteImage.getWidth());
+        assertTrue(generatedImage.getHeight() >= whiteImage.getHeight());
     }
 
     @Test
     public void generateImages() throws Exception {
         imageGenerator.setExpectedColumnsNumber(200);
-        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/chinese_garden.jpg"))), "images/chinese_garden_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/cubes.jpg"))), "images/cubes_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/jedi_sword.jpg"))), "images/jedi_sword_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/music_man.jpg"))), "images/music_man_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/puppy.jpg"))), "images/puppy_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/skyline.jpg"))), "images/skyline_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/smile.jpg"))), "images/smile_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/test_image.jpg"))), "images/test_image_GEN.jpg");
-        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.read("images/wally_and_eva.jpg"))), "images/wally_and_eva_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/chinese_garden.jpg"))), "images/chinese_garden_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/cubes.jpg"))), "images/cubes_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/jedi_sword.jpg"))), "images/jedi_sword_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/music_man.jpg"))), "images/music_man_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/puppy.jpg"))), "images/puppy_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/skyline.jpg"))), "images/skyline_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/smile.jpg"))), "images/smile_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/test_image.jpg"))), "images/test_image_GEN.jpg");
+        generateImage(imageGenerator.setImage(ImageIO.read(fileReader.getFileObject("images/wally_and_eva.jpg"))), "images/wally_and_eva_GEN.jpg");
     }
 
     private void generateImage(ImageGenerator imageGenerator, String outputName) throws IOException {
-        ImageIO.write(imageGenerator.makeImageFrom(imageGenerator.generateResultMatrix()), "jpg",
-                fileReader.read(outputName));
+        ImageIO.write(imageGenerator.makeImage(), "jpg", fileReader.getFileObject(outputName));
     }
 
     @Test
@@ -138,7 +152,7 @@ public class ImageGeneratorTest {
         ImageGenerator imageGenerator = new ImageGenerator();
         ObjectTypeConverter objectTypeConverter = new ObjectTypeConverter();
 
-        return Arrays.stream(Optional.ofNullable(fileReader.read(resourcePath).listFiles())
+        return Arrays.stream(Optional.ofNullable(fileReader.getFileObject(resourcePath).listFiles())
                 .orElseThrow(() -> new RuntimeException("Directory \'" + resourcePath + "\': is not exist or empty.")))
                 .filter(File::isFile)
                 .collect(Collectors

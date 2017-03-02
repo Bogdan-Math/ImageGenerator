@@ -16,9 +16,9 @@ public class FileReaderTest {
 
     @Test
     public void read() throws Exception {
-        assertTrue(fileReader.read("images/canonical.jpg").exists());
-        assertTrue(fileReader.read("images/canonical.jpg").isFile());
-        assertFalse(fileReader.read("images/canonical.jpg").isDirectory());
+        assertTrue(fileReader.getFileObject("images/canonical.jpg").exists());
+        assertTrue(fileReader.getFileObject("images/canonical.jpg").isFile());
+        assertFalse(fileReader.getFileObject("images/canonical.jpg").isDirectory());
     }
 
 }

@@ -16,7 +16,7 @@ public class ResourceTest {
     @Before
     public void setUp() throws Exception {
         this.fileReader = new FileReader();
-        this.resource  = new Resource(fileReader.read("images/canonical.jpg"));
+        this.resource  = new Resource(fileReader.getFileObject("images/canonical.jpg"));
     }
 
     @After

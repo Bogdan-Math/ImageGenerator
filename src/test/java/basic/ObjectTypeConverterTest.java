@@ -24,15 +24,15 @@ public class ObjectTypeConverterTest {
     @Before
     public void setUp() throws Exception {
         this.fileReader = new FileReader();
-        this.originalImage = fileReader.read("images/canonical.jpg");
-        this.generateImage = fileReader.read("images/canonical_GEN.jpg");
+        this.originalImage = fileReader.getFileObject("images/canonical.jpg");
+        this.generateImage = fileReader.getFileObject("images/canonical_GEN.jpg");
 
         this.objectTypeConverter = new ObjectTypeConverter();
     }
 
     @After
     public void tearDown() throws Exception {
-        Arrays.stream(fileReader.read("images/").listFiles())
+        Arrays.stream(fileReader.getFileObject("images/").listFiles())
                 .filter(file -> ("canonical_GEN.jpg".equals(file.getName())))
                 .forEach(File::delete);
     }
@@ -85,7 +85,7 @@ public class ObjectTypeConverterTest {
     }
 
     private List<File> allFilesIn() {
-        return Arrays.stream(fileReader.read("images/").listFiles())
+        return Arrays.stream(fileReader.getFileObject("images/").listFiles())
                 .filter(File::isFile)
                 .collect(Collectors.toList());
     }

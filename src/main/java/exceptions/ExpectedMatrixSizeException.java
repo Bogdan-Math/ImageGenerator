@@ -1,4 +1,4 @@
-package basic;
+package exceptions;
 
 public class ExpectedMatrixSizeException extends RuntimeException {
 

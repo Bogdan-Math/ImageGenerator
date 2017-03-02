@@ -1,5 +1,7 @@
 package basic;
 
+import exceptions.ExpectedMatrixSizeException;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.*;
@@ -93,7 +95,9 @@ public class ImageGenerator {
         return result;
     }
 
-    public BufferedImage makeImageFrom(List<List<BufferedImage>> resultMatrix) {
+    public BufferedImage makeImage() {
+        List<List<BufferedImage>> resultMatrix = generateResultMatrix();
+
         int columns = resultMatrix.size();
         int rows = resultMatrix.get(0).size();
 
