@@ -6,11 +6,11 @@
          version="3.1">
 
     <servlet>
-        <servlet-name>Index</servlet-name>
+        <servlet-name>IndexPage</servlet-name>
         <servlet-class>web.IndexServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Index</servlet-name>
+        <servlet-name>IndexPage</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
