@@ -6,12 +6,16 @@
          version="3.1">
 
     <servlet>
-        <servlet-name>IndexPage</servlet-name>
-        <servlet-class>web.IndexServlet</servlet-class>
+        <servlet-name>VaadinServlet</servlet-name>
+        <servlet-class>com.vaadin.server.VaadinServlet</servlet-class>
+        <init-param>
+            <param-name>ui</param-name>
+            <param-value>vaadin.MyUI</param-value>
+        </init-param>
     </servlet>
     <servlet-mapping>
-        <servlet-name>IndexPage</servlet-name>
-        <url-pattern>/</url-pattern>
+        <servlet-name>VaadinServlet</servlet-name>
+        <url-pattern>/*</url-pattern>
     </servlet-mapping>
 
 </web-app>
