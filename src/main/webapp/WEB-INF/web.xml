@@ -10,7 +10,7 @@
         <servlet-class>com.vaadin.server.VaadinServlet</servlet-class>
         <init-param>
             <param-name>ui</param-name>
-            <param-value>vaadin.MyUI</param-value>
+            <param-value>web.vaadin.MyUI</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>

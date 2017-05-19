@@ -1,6 +1,6 @@
 package basic;
 
-import exceptions.ExpectedMatrixSizeException;
+import exceptions.MatrixSizeException;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -28,7 +28,7 @@ public class ImageGenerator {
         int height = image.getHeight();
 
         if (expectedColumns > width) {
-            throw new ExpectedMatrixSizeException(String
+            throw new MatrixSizeException(String
                     .format("Number of expected columns (is %s) could not be more than image width (is %s).", expectedColumns, width));
         }
 

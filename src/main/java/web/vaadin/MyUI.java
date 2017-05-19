@@ -1,4 +1,4 @@
-package vaadin;
+package web.vaadin;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
@@ -10,7 +10,6 @@ public class MyUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        System.out.println("111");
         setContent(new Label("VAADIN"));
     }
 

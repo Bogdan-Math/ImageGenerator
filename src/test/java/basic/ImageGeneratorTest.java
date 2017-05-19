@@ -1,6 +1,6 @@
 package basic;
 
-import exceptions.ExpectedMatrixSizeException;
+import exceptions.MatrixSizeException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -68,7 +68,7 @@ public class ImageGeneratorTest {
         assertEquals(Color.BLACK, imageGenerator.setImage(blackImage).averagedColor());
     }
 
-    @Test(expected = ExpectedMatrixSizeException.class)
+    @Test(expected = MatrixSizeException.class)
     public void likeMatrix() throws Exception {
         int expectedColumn = 100;
 
