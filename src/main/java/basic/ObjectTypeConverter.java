@@ -2,10 +2,7 @@ package basic;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class ObjectTypeConverter {
 
@@ -28,14 +25,14 @@ public class ObjectTypeConverter {
         }
     }
 
-    public byte[] byteArrayFromBufferedImage(BufferedImage bufferedImage, String format) {
+    public InputStream inputStreamFromBufferedImage(BufferedImage bufferedImage, String format) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(bufferedImage, format, baos);
             baos.flush();
             byte[] imageInBytes = baos.toByteArray();
             baos.close();
-            return imageInBytes;
+            return new ByteArrayInputStream(imageInBytes);
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -43,14 +40,16 @@ public class ObjectTypeConverter {
         }
     }
 
-    public BufferedImage bufferedImageFromByteArray(byte[] imageInBytes) {
+    public BufferedImage bufferedImageFromInputStream(InputStream inputStream) {
         try {
-            return ImageIO.read(new ByteArrayInputStream(imageInBytes));
+            return ImageIO.read(inputStream);
         }
         catch (IOException e) {
             e.printStackTrace();
             throw new IllegalArgumentException(e);
         }
     }
+
+
 
 }

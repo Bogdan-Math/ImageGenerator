@@ -60,28 +60,28 @@ public class ObjectTypeConverterTest {
     }
 
     @Test
-    public void byteArrayFromBufferedImage() throws Exception {
+    public void inputStreamFromBufferedImage() throws Exception {
         assertNotNull(objectTypeConverter
-                .byteArrayFromBufferedImage(objectTypeConverter.bufferedImageFromFile(originalImage), "jpg"));
+                .inputStreamFromBufferedImage(objectTypeConverter.bufferedImageFromFile(originalImage), "jpg"));
     }
 
     @Test(expected = RuntimeException.class)
-    public void byteArrayFromBufferedImageException() throws Exception {
+    public void inputStreamFromBufferedImageException() throws Exception {
         assertNotNull(objectTypeConverter
-                .byteArrayFromBufferedImage(null, "jpg"));
+                .inputStreamFromBufferedImage(null, "jpg"));
     }
 
     @Test
     public void bufferedImageFromByteArray() throws Exception {
         assertNotNull(objectTypeConverter
-                .bufferedImageFromByteArray(objectTypeConverter
-                        .byteArrayFromBufferedImage(objectTypeConverter.bufferedImageFromFile(originalImage), "jpg")));
+                .bufferedImageFromInputStream(objectTypeConverter
+                        .inputStreamFromBufferedImage(objectTypeConverter.bufferedImageFromFile(originalImage), "jpg")));
     }
 
     @Test(expected = RuntimeException.class)
     public void bufferedImageFromByteArrayException() throws Exception {
         assertNotNull(objectTypeConverter
-                .bufferedImageFromByteArray(null));
+                .bufferedImageFromInputStream(null));
     }
 
     private List<File> allFilesIn() {
