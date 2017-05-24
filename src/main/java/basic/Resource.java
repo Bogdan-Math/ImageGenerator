@@ -4,23 +4,21 @@ import java.io.File;
 
 public class Resource {
 
-    private File resource;
+    private String fullName;
 
     public Resource(File resource) {
-        this.resource = resource;
+        this.fullName = resource.getName();
     }
 
-    public String getNameWithExtension() {
-        return resource.getName();
+    public Resource(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getOnlyName() {
-        String fullName = resource.getName();
         return fullName.substring(0, fullName.lastIndexOf("."));
     }
 
     public String getOnlyExtension() {
-        String fullName = resource.getName();
         return fullName.substring(1 + fullName.lastIndexOf("."));
     }
 }

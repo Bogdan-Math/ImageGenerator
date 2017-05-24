@@ -16,11 +16,6 @@ public class ResourceTest {
     }
 
     @Test
-    public void getFullName() {
-        assertEquals("images/canonical.jpg", resource.getNameWithExtension());
-    }
-
-    @Test
     public void getOnlyName() {
         assertEquals("canonical", resource.getOnlyName());
     }
