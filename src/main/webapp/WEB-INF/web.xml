@@ -5,16 +5,23 @@
                              http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+    <!-- create app-context under the app code, and load configs from context params -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!--load configs for app-context-->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath*:spring/app.xml</param-value>
+    </context-param>
+
     <servlet>
-        <servlet-name>VaadinServlet</servlet-name>
-        <servlet-class>com.vaadin.server.VaadinServlet</servlet-class>
-        <init-param>
-            <param-name>ui</param-name>
-            <param-value>web.vaadin.MyUI</param-value>
-        </init-param>
+        <servlet-name>SpringVaadinServlet</servlet-name>
+        <servlet-class>com.vaadin.spring.server.SpringVaadinServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>VaadinServlet</servlet-name>
+        <servlet-name>SpringVaadinServlet</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
 

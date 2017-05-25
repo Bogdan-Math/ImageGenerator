@@ -6,9 +6,11 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Upload.SucceededEvent;
+import org.springframework.context.annotation.Scope;
 import utility.*;
 import utility.FileReader;
 
@@ -21,6 +23,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+
+@SpringUI(path = "/*")
+@Scope("prototype")
 @Theme("mytheme")
 @Title("Image Generator")
 public class MyUI extends UI {
@@ -34,12 +39,6 @@ public class MyUI extends UI {
             private ByteArrayInputStream uploadData;
             private String fileName;
 
-/*
-            public ByteArrayInputStream getUploadData() {
-                return uploadData;
-            }
-*/
-
             @Override
             public OutputStream receiveUpload(String fileName, String mimeType) {
                 this.fileName = fileName;
@@ -51,26 +50,6 @@ public class MyUI extends UI {
                 };
 
 
-/*
-                try {
-                    */
-/*
-                        Here, we'll stored the uploaded file as a temporary file. No doubt there's
-                        a way to use a ByteArrayOutputStream, a reader around it, use ProgressListener (and
-                        a progress bar) and a separate reader thread to populate a container *during*
-                        the update.
-                        This is quick and easy example, though.
-                    *//*
-
-                    Resource resource = new Resource(filename);
-                    tempFile = File.createTempFile(resource.getOnlyName(), resource.getOnlyExtension());
-
-                    return new FileOutputStream(tempFile);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return null;
-                }
-*/
             }
             @Override
             public void uploadSucceeded(SucceededEvent event) {
