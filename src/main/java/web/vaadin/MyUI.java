@@ -33,16 +33,16 @@ public class MyUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        final Embedded image = new Embedded("Uploaded Image");
+        final Embedded image = new Embedded("Generated Image");
         image.setVisible(false);
 
         class ImageUploader implements Upload.Receiver, Upload.SucceededListener {
             private ByteArrayInputStream uploadData;
-            private String fileName;
+            private BufferedImage generatedImage;
+            private ObjectTypeConverter converter;
 
             @Override
             public OutputStream receiveUpload(String fileName, String mimeType) {
-                this.fileName = fileName;
                 return new ByteArrayOutputStream() {
                     @Override
                     public void close() throws IOException {
@@ -50,33 +50,31 @@ public class MyUI extends UI {
                     }
                 };
 
-
             }
             @Override
             public void uploadSucceeded(SucceededEvent event) {
                 // Show the uploaded file in the image viewer
                 image.setVisible(true);
                 ImageGenerator imageGenerator = new ImageGenerator();
+                converter = new ObjectTypeConverter();
                 imageGenerator.setExpectedColumnsNumber(300)
                         .setPatterns(patterns("images/colors"))
-                        .setImage(new ObjectTypeConverter().bufferedImageFromInputStream(uploadData));
+                        .setImage(converter.bufferedImageFromInputStream(uploadData));
 
-                File output = new File("/home/bmath/Стільниця/" + fileName);
-                try {
-                    ImageIO.write(imageGenerator.makeImage(), "jpg", output);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                generatedImage = imageGenerator.makeImage();
                 image.setSource(createStreamResource());
-                output.deleteOnExit();
+            }
+
+            private StreamResource createStreamResource() {
+                return new StreamResource((StreamResource.StreamSource) () -> converter.inputStreamFromBufferedImage(generatedImage, "jpg"), "dateImage.png");
             }
         }
 
         ImageUploader receiver = new ImageUploader();
 
         // Create the upload with a caption and set receiver later
-        Upload upload = new Upload("Upload Image Here", receiver);
-        upload.setButtonCaption("Start Upload");
+        Upload upload = new Upload("",receiver);
+        upload.setButtonCaption("Select image");
         upload.addSucceededListener(receiver);
 
         // Put the components in a panel
@@ -88,29 +86,6 @@ public class MyUI extends UI {
 
         setContent(panelContent);
 
-    }
-
-    private StreamResource createStreamResource() {
-        return new StreamResource(new StreamResource.StreamSource() {
-            @Override
-            public InputStream getStream() {
-                String text = "Date: " + DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.MEDIUM).format(new Date());
-
-                BufferedImage bi = new BufferedImage(370, 30,
-                        BufferedImage.TYPE_3BYTE_BGR);
-                bi.getGraphics().drawChars(text.toCharArray(), 0,
-                        text.length(), 10, 20);
-
-                try {
-                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                    ImageIO.write(bi, "png", bos);
-                    return new ByteArrayInputStream(bos.toByteArray());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-        }, "dateImage.png");
     }
 
     private Map<Color, BufferedImage> patterns(String resourcePath) {
