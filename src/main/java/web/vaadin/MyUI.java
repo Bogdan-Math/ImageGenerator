@@ -8,18 +8,14 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.Upload.SucceededEvent;
 import org.springframework.context.annotation.Scope;
 import utility.FileReader;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.text.DateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,61 +27,56 @@ import java.util.stream.Collectors;
 @Title("Image Generator")
 public class MyUI extends UI {
 
+    private ObjectTypeConverter converter = new ObjectTypeConverter();
+    private ImageGenerator imageGenerator = new ImageGenerator();
+    private Embedded image = new Embedded("");
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        final Embedded image = new Embedded("Generated Image");
-        image.setVisible(false);
-
-        class ImageUploader implements Upload.Receiver, Upload.SucceededListener {
-            private ByteArrayInputStream uploadData;
-            private BufferedImage generatedImage;
-            private ObjectTypeConverter converter;
-
-            @Override
-            public OutputStream receiveUpload(String fileName, String mimeType) {
-                return new ByteArrayOutputStream() {
-                    @Override
-                    public void close() throws IOException {
-                        uploadData = new ByteArrayInputStream(toByteArray());
-                    }
-                };
-
-            }
-            @Override
-            public void uploadSucceeded(SucceededEvent event) {
-                // Show the uploaded file in the image viewer
-                image.setVisible(true);
-                ImageGenerator imageGenerator = new ImageGenerator();
-                converter = new ObjectTypeConverter();
-                imageGenerator.setExpectedColumnsNumber(300)
-                        .setPatterns(patterns("images/colors"))
-                        .setImage(converter.bufferedImageFromInputStream(uploadData));
-
-                generatedImage = imageGenerator.makeImage();
-                image.setSource(createStreamResource());
-            }
-
-            private StreamResource createStreamResource() {
-                return new StreamResource((StreamResource.StreamSource) () -> converter.inputStreamFromBufferedImage(generatedImage, "jpg"), "dateImage.png");
-            }
-        }
 
         ImageUploader receiver = new ImageUploader();
-
-        // Create the upload with a caption and set receiver later
-        Upload upload = new Upload("",receiver);
-        upload.setButtonCaption("Select image");
+        Upload upload = new Upload("", receiver);
+        upload.setImmediateMode(true);
+        upload.setButtonCaption("select and generate image");
         upload.addSucceededListener(receiver);
 
-        // Put the components in a panel
-        Panel panel = new Panel("Cool Image Storage");
-        Layout panelContent = new VerticalLayout();
-        panelContent.addComponents(upload, image);
+        VerticalLayout panelContent = new VerticalLayout();
+
+        panelContent.addComponent(upload);
+        panelContent.setComponentAlignment(upload, Alignment.TOP_CENTER);
+
+        panelContent.addComponent(image);
+        panelContent.setComponentAlignment(upload, Alignment.BOTTOM_CENTER);
+
         image.setWidth("100%");
-        panel.setContent(panelContent);
 
         setContent(panelContent);
+    }
 
+    class ImageUploader implements Upload.Receiver, Upload.SucceededListener {
+        private ByteArrayInputStream uploadData;
+
+        @Override
+        public OutputStream receiveUpload(String fileName, String mimeType) {
+            return new ByteArrayOutputStream() {
+
+                @Override
+                public void close() throws IOException {
+                    uploadData = new ByteArrayInputStream(toByteArray());
+                }
+            };
+        }
+
+        @Override
+        public void uploadSucceeded(SucceededEvent event) {
+            imageGenerator.setExpectedColumnsNumber(300)
+                    .setPatterns(patterns("images/colors"))
+                    .setImage(converter.bufferedImageFromInputStream(uploadData));
+
+            image.setSource(new StreamResource((StreamResource.StreamSource) () ->
+                    converter.inputStreamFromBufferedImage( imageGenerator.makeImage(), "jpg"),
+                    "dateImage.png"));
+        }
     }
 
     private Map<Color, BufferedImage> patterns(String resourcePath) {
