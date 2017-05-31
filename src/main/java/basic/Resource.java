@@ -10,10 +10,6 @@ public class Resource {
         this.fullName = resource.getName();
     }
 
-    public Resource(String fullName) {
-        this.fullName = fullName;
-    }
-
     public String getOnlyName() {
         return fullName.substring(0, fullName.lastIndexOf("."));
     }

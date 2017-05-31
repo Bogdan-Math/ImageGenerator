@@ -4,21 +4,22 @@ import basic.ImageGenerator;
 import basic.ObjectTypeConverter;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
-import com.vaadin.server.FileResource;
+import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Upload.SucceededEvent;
 import org.springframework.context.annotation.Scope;
-import utility.*;
 import utility.FileReader;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.text.DateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -66,7 +67,7 @@ public class MyUI extends UI {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                image.setSource(new FileResource(output));
+                image.setSource(createStreamResource());
                 output.deleteOnExit();
             }
         }
@@ -87,6 +88,29 @@ public class MyUI extends UI {
 
         setContent(panelContent);
 
+    }
+
+    private StreamResource createStreamResource() {
+        return new StreamResource(new StreamResource.StreamSource() {
+            @Override
+            public InputStream getStream() {
+                String text = "Date: " + DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.MEDIUM).format(new Date());
+
+                BufferedImage bi = new BufferedImage(370, 30,
+                        BufferedImage.TYPE_3BYTE_BGR);
+                bi.getGraphics().drawChars(text.toCharArray(), 0,
+                        text.length(), 10, 20);
+
+                try {
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    ImageIO.write(bi, "png", bos);
+                    return new ByteArrayInputStream(bos.toByteArray());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        }, "dateImage.png");
     }
 
     private Map<Color, BufferedImage> patterns(String resourcePath) {
