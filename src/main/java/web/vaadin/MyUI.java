@@ -9,6 +9,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Upload.SucceededEvent;
 import org.springframework.context.annotation.Scope;
 import utility.FileReader;
@@ -30,8 +31,8 @@ public class MyUI extends UI {
 
     private ObjectTypeConverter converter = new ObjectTypeConverter();
     private ImageGenerator imageGenerator = new ImageGenerator();
-    private Embedded originalImage  = new Embedded("");
-    private Embedded generatedImage = new Embedded("");
+    private Image originalImage  = new Image("");
+    private Image generatedImage = new Image("");
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -48,10 +49,15 @@ public class MyUI extends UI {
 
         GridLayout gridLayout = new GridLayout(2, 1);
         gridLayout.setSizeFull();
+        gridLayout.setSpacing(true);
         gridLayout.addComponent(originalImage);
         gridLayout.addComponent(generatedImage);
+
         originalImage.setSizeFull();// Width("50%");
+        originalImage.setStyleName("bordered");
+
         generatedImage.setSizeFull();// setWidth("50%");
+        generatedImage.setStyleName("bordered");
 
         verticalLayout.addComponent(gridLayout);
 
