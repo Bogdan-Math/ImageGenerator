@@ -16,7 +16,9 @@ import utility.FileReader;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
@@ -31,8 +33,8 @@ public class MyUI extends UI {
 
     private ObjectTypeConverter converter = new ObjectTypeConverter();
     private ImageGenerator imageGenerator = new ImageGenerator();
-    private Image originalImage  = new Image("");
-    private Image generatedImage = new Image("");
+    private Image originalImageView       = new Image("");
+    private Image generatedImageView      = new Image("");
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -44,20 +46,20 @@ public class MyUI extends UI {
         upload.addSucceededListener(receiver);
 
         VerticalLayout verticalLayout = new VerticalLayout();
-        verticalLayout.addComponent(upload);
+        verticalLayout.addComponents(upload);
         verticalLayout.setComponentAlignment(upload, Alignment.TOP_CENTER);
 
         GridLayout gridLayout = new GridLayout(2, 1);
         gridLayout.setSizeFull();
         gridLayout.setSpacing(true);
-        gridLayout.addComponent(originalImage);
-        gridLayout.addComponent(generatedImage);
+        gridLayout.addComponent(originalImageView);
+        gridLayout.addComponent(generatedImageView);
 
-        originalImage.setSizeFull();// Width("50%");
-        originalImage.setStyleName("bordered");
+        originalImageView.setSizeFull();// Width("50%");
+        originalImageView.setStyleName("bordered");
 
-        generatedImage.setSizeFull();// setWidth("50%");
-        generatedImage.setStyleName("bordered");
+        generatedImageView.setSizeFull();// setWidth("50%");
+        generatedImageView.setStyleName("bordered");
 
         verticalLayout.addComponent(gridLayout);
 
@@ -80,18 +82,25 @@ public class MyUI extends UI {
 
         @Override
         public void uploadSucceeded(SucceededEvent event) {
+            originalImageView.setVisible(false);
+            generatedImageView.setVisible(false);
 
             imageGenerator.setExpectedColumnsNumber(300)
                     .setPatterns(patterns("images/colors"))
                     .setImage(converter.bufferedImageFromByteArray(uploadedImage.toByteArray()));
 
-            originalImage.setSource(new StreamResource((StreamResource.StreamSource) () ->
+            BufferedImage bufferedImage = imageGenerator.makeImage();
+
+            originalImageView.setSource(new StreamResource(() ->
                      converter.inputStream(uploadedImage.toByteArray()),
                     "original_" + fileName));
 
-            generatedImage.setSource(new StreamResource((StreamResource.StreamSource) () ->
-                    converter.inputStream(imageGenerator.makeImage(), "jpg"),
+            generatedImageView.setSource(new StreamResource(() ->
+                    converter.inputStream(bufferedImage, "jpg"),
                     "generated_" + fileName));
+
+            originalImageView.setVisible(true);
+            generatedImageView.setVisible(true);
         }
 
     }
