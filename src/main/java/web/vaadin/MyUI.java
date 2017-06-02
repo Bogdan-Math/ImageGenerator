@@ -33,12 +33,13 @@ public class MyUI extends UI {
     private ImageGenerator imageGenerator = new ImageGenerator();
     private Image originalImage  = new Image("");
     private Image generatedImage = new Image("");
+    private Upload upload;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
         ImageUploader receiver = new ImageUploader();
-        Upload upload = new Upload("", receiver);
+        upload = new Upload("", receiver);
         upload.setImmediateMode(true);
         upload.setButtonCaption("select and generate image");
         upload.addSucceededListener(receiver);
@@ -64,7 +65,7 @@ public class MyUI extends UI {
         setContent(verticalLayout);
     }
 
-    class ImageUploader implements Upload.Receiver, Upload.SucceededListener {
+    class ImageUploader implements Upload.Receiver, Upload.SucceededListener, Upload.StartedListener {
 
         private ByteArrayOutputStream uploadedImage;
         private String fileName;
@@ -93,6 +94,12 @@ public class MyUI extends UI {
                     converter.inputStream(imageGenerator.makeImage(), "jpg"),
                     "generated_" + fileName));
 
+            upload.setEnabled(true);
+        }
+
+        @Override
+        public void uploadStarted(Upload.StartedEvent startedEvent) {
+            upload.setEnabled(false);
         }
     }
 
