@@ -25,7 +25,7 @@ public class ObjectTypeConverter {
         }
     }
 
-    public InputStream inputStreamFromBufferedImage(BufferedImage bufferedImage, String format) {
+    public InputStream inputStream(BufferedImage bufferedImage, String format) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(bufferedImage, format, baos);
@@ -48,6 +48,20 @@ public class ObjectTypeConverter {
             e.printStackTrace();
             throw new IllegalArgumentException(e);
         }
+    }
+
+    public BufferedImage bufferedImageFromByteArray(byte[] bytes) {
+        try {
+            return ImageIO.read(new ByteArrayInputStream(bytes));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    public InputStream inputStream(byte[] bytes) {
+        return new ByteArrayInputStream(bytes);
     }
 
 

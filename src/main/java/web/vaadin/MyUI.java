@@ -8,6 +8,7 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Upload.SucceededEvent;
 import org.springframework.context.annotation.Scope;
 import utility.FileReader;
@@ -29,7 +30,8 @@ public class MyUI extends UI {
 
     private ObjectTypeConverter converter = new ObjectTypeConverter();
     private ImageGenerator imageGenerator = new ImageGenerator();
-    private Embedded image = new Embedded("");
+    private Embedded originalImage  = new Embedded("");
+    private Embedded generatedImage = new Embedded("");
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -40,42 +42,51 @@ public class MyUI extends UI {
         upload.setButtonCaption("select and generate image");
         upload.addSucceededListener(receiver);
 
-        VerticalLayout panelContent = new VerticalLayout();
+        VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout.addComponent(upload);
+        verticalLayout.setComponentAlignment(upload, Alignment.TOP_CENTER);
 
-        panelContent.addComponent(upload);
-        panelContent.setComponentAlignment(upload, Alignment.TOP_CENTER);
+        GridLayout gridLayout = new GridLayout(2, 1);
+        gridLayout.setSizeFull();
+        gridLayout.addComponent(originalImage);
+        gridLayout.addComponent(generatedImage);
+        originalImage.setSizeFull();// Width("50%");
+        generatedImage.setSizeFull();// setWidth("50%");
 
-        panelContent.addComponent(image);
-        panelContent.setComponentAlignment(upload, Alignment.BOTTOM_CENTER);
+        verticalLayout.addComponent(gridLayout);
 
-        image.setWidth("100%");
-
-        setContent(panelContent);
+        setContent(verticalLayout);
     }
 
     class ImageUploader implements Upload.Receiver, Upload.SucceededListener {
-        private ByteArrayInputStream uploadData;
+
+        private ByteArrayOutputStream uploadedImage;
+        private String fileName;
 
         @Override
         public OutputStream receiveUpload(String fileName, String mimeType) {
-            return new ByteArrayOutputStream() {
 
-                @Override
-                public void close() throws IOException {
-                    uploadData = new ByteArrayInputStream(toByteArray());
-                }
-            };
+            this.uploadedImage = new ByteArrayOutputStream();
+            this.fileName = fileName;
+
+            return uploadedImage;
         }
 
         @Override
         public void uploadSucceeded(SucceededEvent event) {
+
             imageGenerator.setExpectedColumnsNumber(300)
                     .setPatterns(patterns("images/colors"))
-                    .setImage(converter.bufferedImageFromInputStream(uploadData));
+                    .setImage(converter.bufferedImageFromByteArray(uploadedImage.toByteArray()));
 
-            image.setSource(new StreamResource((StreamResource.StreamSource) () ->
-                    converter.inputStreamFromBufferedImage( imageGenerator.makeImage(), "jpg"),
-                    "dateImage.png"));
+            originalImage.setSource(new StreamResource((StreamResource.StreamSource) () ->
+                     converter.inputStream(uploadedImage.toByteArray()),
+                    "original_" + fileName));
+
+            generatedImage.setSource(new StreamResource((StreamResource.StreamSource) () ->
+                    converter.inputStream(imageGenerator.makeImage(), "jpg"),
+                    "generated_" + fileName));
+
         }
     }
 
