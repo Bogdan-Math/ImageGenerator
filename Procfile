@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar target/ImageGenerator.war
+web:java $JAVA_OPTS -jar webapp-runner.jar ${WEBAPP_RUNNER_OPTS} --port $PORT ./target/ImageGenerator.war
