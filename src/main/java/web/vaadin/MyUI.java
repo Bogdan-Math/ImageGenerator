@@ -114,7 +114,7 @@ public class MyUI extends UI {
 
             String fileName = event.getFilename();
 
-            imageGenerator.setExpectedColumnsNumber(300)
+            imageGenerator.setExpectedColumnsNumber(250)
                     .setPatterns(patterns("images/colors"))
                     .setImage(converter.bufferedImageFromByteArray(uploadedImage.toByteArray()));
 
