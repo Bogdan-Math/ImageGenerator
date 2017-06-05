@@ -35,17 +35,19 @@ public class MyUI extends UI {
     private ImageGenerator imageGenerator = new ImageGenerator();
     private Image originalImageView       = new Image("");
     private Image generatedImageView      = new Image("");
+    private Upload upload;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
         ImageUploader receiver = new ImageUploader();
-        Upload upload = new Upload("", receiver);
+        upload = new Upload("", receiver);
+        upload.addStartedListener(receiver);
+        upload.addSucceededListener(receiver);
+        upload.addFinishedListener(receiver);
+        upload.addProgressListener(receiver);
         upload.setImmediateMode(true);
         upload.setButtonCaption("select and generate image");
-        upload.addSucceededListener(receiver);
-        upload.addStartedListener(receiver);
-        upload.addFinishedListener(receiver);
 
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.addComponents(upload);
@@ -68,7 +70,7 @@ public class MyUI extends UI {
         setContent(verticalLayout);
     }
 
-    class ImageUploader implements Upload.StartedListener, Upload.Receiver, Upload.SucceededListener, Upload.FinishedListener {
+    class ImageUploader implements Upload.StartedListener, Upload.Receiver, Upload.ProgressListener, Upload.SucceededListener, Upload.FinishedListener {
 
         private ByteArrayOutputStream uploadedImage;
 
@@ -81,7 +83,7 @@ public class MyUI extends UI {
             if (!"image/jpeg".equals(startedEvent.getMIMEType())) {
                 startedEvent.getUpload().interruptUpload();
 
-                String caption = "Oh, trouble: only '.jpg' and '.jpeg' files can be uploaded.";
+                String caption = "Oh, no! Only '.jpg' and '.jpeg' files can be uploaded.";
                 Notification.show(caption, Notification.Type.WARNING_MESSAGE);
             }
         }
@@ -92,6 +94,19 @@ public class MyUI extends UI {
             this.uploadedImage = new ByteArrayOutputStream();
 
             return uploadedImage;
+        }
+
+        @Override
+        public void updateProgress(long readBytes, long contentLength) {
+
+            int maxSize = 5242880; // 5242880 (Bytes) = 5MB
+
+            if (maxSize < contentLength) {
+                upload.interruptUpload();
+
+                String caption = "Oh, no! File size can not be more then 5 MB.";
+                Notification.show(caption, Notification.Type.WARNING_MESSAGE);
+            }
         }
 
         @Override
