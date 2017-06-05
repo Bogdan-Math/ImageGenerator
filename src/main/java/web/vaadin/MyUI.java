@@ -35,13 +35,12 @@ public class MyUI extends UI {
     private ImageGenerator imageGenerator = new ImageGenerator();
     private Image originalImageView       = new Image("");
     private Image generatedImageView      = new Image("");
-    private Upload upload;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
         ImageUploader receiver = new ImageUploader();
-        upload = new Upload("", receiver);
+        Upload upload = new Upload("", receiver);
         upload.setImmediateMode(true);
         upload.setButtonCaption("select and generate image");
         upload.addSucceededListener(receiver);
@@ -69,22 +68,36 @@ public class MyUI extends UI {
         setContent(verticalLayout);
     }
 
-    class ImageUploader implements Upload.Receiver, Upload.SucceededListener, Upload.StartedListener, Upload.FinishedListener {
+    class ImageUploader implements Upload.StartedListener, Upload.Receiver, Upload.SucceededListener, Upload.FinishedListener {
 
         private ByteArrayOutputStream uploadedImage;
-        private String fileName;
+
+        @Override
+        public void uploadStarted(Upload.StartedEvent startedEvent) {
+
+            originalImageView.setVisible(false);
+            generatedImageView.setVisible(false);
+
+            if (!"image/jpeg".equals(startedEvent.getMIMEType())) {
+                startedEvent.getUpload().interruptUpload();
+
+                String caption = "Oh, trouble: only '.jpg' and '.jpeg' files can be uploaded.";
+                Notification.show(caption, Notification.Type.WARNING_MESSAGE);
+            }
+        }
 
         @Override
         public OutputStream receiveUpload(String fileName, String mimeType) {
 
             this.uploadedImage = new ByteArrayOutputStream();
-            this.fileName = fileName;
 
             return uploadedImage;
         }
 
         @Override
         public void uploadSucceeded(SucceededEvent event) {
+
+            String fileName = event.getFilename();
 
             imageGenerator.setExpectedColumnsNumber(300)
                     .setPatterns(patterns("images/colors"))
@@ -105,26 +118,15 @@ public class MyUI extends UI {
         }
 
         @Override
-        public void uploadStarted(Upload.StartedEvent startedEvent) {
-            originalImageView.setVisible(false);
-            generatedImageView.setVisible(false);
-
-            if (!"image/jpeg".equals(startedEvent.getMIMEType())) {
-                upload.interruptUpload();
-
-                String caption = "Oh, trouble: only '.jpg' and '.jpeg' files can be uploaded.";
-                Notification.show(caption, Notification.Type.ERROR_MESSAGE);
-            }
-        }
-
-        @Override
         public void uploadFinished(Upload.FinishedEvent finishedEvent) {
+
             originalImageView.setVisible(true);
             generatedImageView.setVisible(true);
         }
     }
 
     private Map<Color, BufferedImage> patterns(String resourcePath) {
+
         FileReader fileReader = new FileReader();
         ImageGenerator imageGenerator = new ImageGenerator();
         ObjectTypeConverter objectTypeConverter = new ObjectTypeConverter();
