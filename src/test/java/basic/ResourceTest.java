@@ -2,7 +2,7 @@ package basic;
 
 import org.junit.Before;
 import org.junit.Test;
-import utility.FileReader;
+import utility.ResourceReader;
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,7 +12,7 @@ public class ResourceTest {
 
     @Before
     public void setUp() throws Exception {
-        this.resource  = new Resource(new FileReader().getFileObject("images/canonical.jpg"));
+        this.resource  = new Resource(new ResourceReader().readFile("images/canonical.jpg"));
     }
 
     @Test

@@ -12,7 +12,7 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Upload.SucceededEvent;
 import org.springframework.context.annotation.Scope;
-import utility.FileReader;
+import utility.ResourceReader;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -148,11 +148,11 @@ public class MyUI extends UI {
 
     private Map<Color, BufferedImage> patterns(String resourcePath) {
 
-        FileReader fileReader = new FileReader();
+        ResourceReader resourceReader = new ResourceReader();
         ImageGenerator imageGenerator = new ImageGenerator();
         ObjectTypeConverter objectTypeConverter = new ObjectTypeConverter();
 
-        return Arrays.stream(Optional.ofNullable(fileReader.getFileObject(resourcePath).listFiles())
+        return Arrays.stream(Optional.ofNullable(resourceReader.readFile(resourcePath).listFiles())
                 .orElseThrow(() -> new RuntimeException("Directory \'" + resourcePath + "\': is not exist or empty.")))
                 .filter(File::isFile)
                 .collect(Collectors
