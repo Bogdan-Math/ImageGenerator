@@ -99,12 +99,12 @@ public class MyUI extends UI {
         @Override
         public void updateProgress(long readBytes, long contentLength) {
 
-            int maxSize = 5242880; // 5242880 (Bytes) = 5MB
+            int maxSize = 10485760; // 10485760 (Bytes) = 10MB
 
             if (maxSize < contentLength) {
                 upload.interruptUpload();
 
-                String caption = "Oh, no! File size can not be more then 5 MB.";
+                String caption = "Oh, no! File size can not be more then 10 MB.";
                 Notification.show(caption, Notification.Type.WARNING_MESSAGE);
             }
         }
@@ -114,8 +114,8 @@ public class MyUI extends UI {
 
             String fileName = event.getFilename();
 
-            imageGenerator.setExpectedColumnsNumber(250)
-                    .setPatterns(patterns("images/colors"))
+            imageGenerator.setExpectedColumnsNumber(200)
+                    .setPatterns(patterns("images/flags"))
                     .setImage(converter.bufferedImageFromByteArray(uploadedImage.toByteArray()));
 
             BufferedImage bufferedImage = imageGenerator.makeImage();

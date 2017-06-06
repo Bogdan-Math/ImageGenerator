@@ -6,6 +6,6 @@ package basic;
  */
 public class ImageSize {
 
-    public static final int WIDTH = 25;
-    public static final int HEIGHT = 25;
+    public static final int WIDTH = 40;
+    public static final int HEIGHT = 20;
 }

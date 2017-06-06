@@ -44,8 +44,8 @@ public class ImageGeneratorTest {
         this.grayImage = ImageIO.read(fileReader.getFileObject("images/colors/2-grey.jpg"));
         this.blackImage = ImageIO.read(fileReader.getFileObject("images/colors/3-black.jpg"));
 
-        this.patterns = patterns("images/colors");
-        this.expectedColumnsNumber = 300;
+        this.patterns = patterns("images/flags");
+        this.expectedColumnsNumber = 200;
 
         this.imageGenerator = new ImageGenerator()
                 .setImage(canonicalImage)
