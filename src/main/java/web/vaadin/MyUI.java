@@ -18,6 +18,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Map;
@@ -114,7 +115,7 @@ public class MyUI extends UI {
 
             String fileName = event.getFilename();
 
-            imageGenerator.setExpectedColumnsNumber(200)
+            imageGenerator.setExpectedColumnsNumber(100)
                     .setPatterns(patterns("images/flags"))
                     .setImage(converter.bufferedImageFromByteArray(uploadedImage.toByteArray()));
 
@@ -134,6 +135,11 @@ public class MyUI extends UI {
 
         @Override
         public void uploadFinished(Upload.FinishedEvent finishedEvent) {
+            try {
+                uploadedImage.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             originalImageView.setVisible(true);
             generatedImageView.setVisible(true);
