@@ -6,64 +6,42 @@ import java.io.*;
 
 public class ObjectTypeConverter {
 
-    public void copyImage(File fromFile, File toFile, String outputFormat) {
-        try {
-            ImageIO.write(bufferedImageFromFile(fromFile), outputFormat, toFile);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException(e);
-        }
+    public InputStream inputStream(byte[] bytes) {
+        return new ByteArrayInputStream(bytes);
     }
 
-    public BufferedImage bufferedImageFromFile(File fromFile) {
-        try {
-            return ImageIO.read(fromFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException(e);
-        }
-    }
-
-    public InputStream inputStream(BufferedImage bufferedImage, String format) {
+    public InputStream inputStream(BufferedImage bufferedImage) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage, format, baos);
+            ImageIO.write(bufferedImage, "jpg", baos);
             baos.flush();
             byte[] imageInBytes = baos.toByteArray();
             baos.close();
             return new ByteArrayInputStream(imageInBytes);
         }
-        catch (IOException e) {
+        catch (Exception e) {
             e.printStackTrace();
             throw new IllegalArgumentException(e);
         }
     }
 
-    public BufferedImage bufferedImageFromInputStream(InputStream inputStream) {
-        try {
-            return ImageIO.read(inputStream);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException(e);
-        }
-    }
-
-    public BufferedImage bufferedImageFromByteArray(byte[] bytes) {
+    public BufferedImage bufferedImage(byte[] bytes) {
         try {
             return ImageIO.read(new ByteArrayInputStream(bytes));
         }
-        catch (IOException e) {
+        catch (Exception e) {
             e.printStackTrace();
             throw new IllegalArgumentException(e);
         }
     }
 
-    public InputStream inputStream(byte[] bytes) {
-        return new ByteArrayInputStream(bytes);
+    public BufferedImage bufferedImage(File fromFile) {
+        try {
+            return ImageIO.read(fromFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException(e);
+        }
     }
-
-
 
 }

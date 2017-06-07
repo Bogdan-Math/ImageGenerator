@@ -160,8 +160,8 @@ public class ImageGeneratorTest {
                 .filter(File::isFile)
                 .collect(Collectors
                         .toMap(
-                                file -> imageGenerator.setImage(objectTypeConverter.bufferedImageFromFile(file)).averagedColor(),
-                                objectTypeConverter::bufferedImageFromFile,
+                                file -> imageGenerator.setImage(objectTypeConverter.bufferedImage(file)).averagedColor(),
+                                objectTypeConverter::bufferedImage,
                                 (img_color_1, img_color_2) -> {
                                     System.out.println("Two same average color: ");
                                     System.out.println(img_color_1);
