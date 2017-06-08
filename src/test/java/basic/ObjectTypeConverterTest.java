@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import utility.ResourceReader;
+import utility.Resource;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 
 public class ObjectTypeConverterTest {
 
-    private ResourceReader resourceReader;
+    private Resource resource;
     private ObjectTypeConverter converter;
     private File originalImage;
 
@@ -29,52 +29,52 @@ public class ObjectTypeConverterTest {
 
     @Before
     public void setUp() throws Exception {
-        this.resourceReader = new ResourceReader();
+        this.resource       = new Resource();
         this.converter      = new ObjectTypeConverter();
-        this.originalImage  = resourceReader.readFile("images/canonical.jpg");
+        this.originalImage  = resource.readFile("images/canonical.jpg");
     }
 
     @After
     public void tearDown() throws Exception {
-        Arrays.stream(resourceReader.readFile("images/").listFiles())
+        Arrays.stream(resource.readFile("images/").listFiles())
                 .filter(file -> ("canonical_GEN.jpg".equals(file.getName())))
                 .forEach(File::delete);
     }
 
     @Test
-    public void test_inputStream_fromBytes() throws Exception {
+    public void inputStream_fromBytes() throws Exception {
         assertTrue(converter.inputStream(new byte[1]) instanceof InputStream);
     }
 
     @Test
-    public void test_inputStream_fromBufferedImage() throws Exception {
+    public void inputStream_fromBufferedImage() throws Exception {
         assertNotNull(converter.inputStream(ImageIO.read(originalImage)));
     }
 
     @Test
-    public void test_inputStream_fromBufferedImage_exception() throws Exception {
+    public void inputStream_fromBufferedImage_exception() throws Exception {
         thrown.expect(IllegalArgumentException.class);
         assertNotNull(converter.inputStream((BufferedImage) null));
     }
 
     @Test
-    public void test_bufferedImage_fromBytes() throws Exception {
+    public void bufferedImage_fromBytes() throws Exception {
         assertNotNull(converter.bufferedImage(Files.readAllBytes(Paths.get(originalImage.getAbsolutePath()))));
     }
 
     @Test
-    public void test_bufferedImage_fromBytes_exception() throws Exception {
+    public void bufferedImage_fromBytes_exception() throws Exception {
         thrown.expect(IllegalArgumentException.class);
         assertNotNull(converter.bufferedImage((byte[]) null));
     }
 
     @Test
-    public void test_bufferedImage_fromFile() throws Exception {
+    public void bufferedImage_fromFile() throws Exception {
         assertNotNull(converter.bufferedImage(originalImage));
     }
 
     @Test
-    public void test_bufferedImage_fromFile_exception() throws Exception {
+    public void bufferedImage_fromFile_exception() throws Exception {
         thrown.expect(IllegalArgumentException.class);
         assertNotNull(converter.bufferedImage((File) null));
     }

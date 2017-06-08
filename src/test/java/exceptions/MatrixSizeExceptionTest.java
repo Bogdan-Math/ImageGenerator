@@ -20,6 +20,6 @@ public class MatrixSizeExceptionTest {
 
         new ImageGenerator()
                 .setImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB))
-                .likeMatrix(10);
+                .asMatrix(10);
     }
 }

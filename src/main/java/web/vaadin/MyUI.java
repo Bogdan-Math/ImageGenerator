@@ -8,21 +8,13 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Image;
 import com.vaadin.ui.Upload.SucceededEvent;
 import org.springframework.context.annotation.Scope;
-import utility.ResourceReader;
+import utility.Resource;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.OutputStream;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @SpringUI(path = "/*")
@@ -115,10 +107,10 @@ public class MyUI extends UI {
             String fileName = event.getFilename();
 
             imageGenerator.setExpectedColumnsNumber(100)
-                    .setPatterns(patterns("images/flags"))
+                    .setPatterns(new Resource().getPatternsFrom("images/flags"))
                     .setImage(converter.bufferedImage(uploadedImage.toByteArray()));
 
-            BufferedImage bufferedImage = imageGenerator.makeImage();
+            BufferedImage bufferedImage = imageGenerator.generateImage();
 
             originalImageView.setSource(new StreamResource(() ->
                      converter.inputStream(uploadedImage.toByteArray()),
@@ -139,30 +131,5 @@ public class MyUI extends UI {
             generatedImageView.setVisible(true);
         }
     }
-
-    private Map<Color, BufferedImage> patterns(String resourcePath) {
-
-        ResourceReader resourceReader = new ResourceReader();
-        ImageGenerator imageGenerator = new ImageGenerator();
-        ObjectTypeConverter objectTypeConverter = new ObjectTypeConverter();
-
-        return Arrays.stream(Optional.ofNullable(resourceReader.readFile(resourcePath).listFiles())
-                .orElseThrow(() -> new RuntimeException("Directory \'" + resourcePath + "\': is not exist or empty.")))
-                .filter(File::isFile)
-                .collect(Collectors
-                        .toMap(
-                                file -> imageGenerator.setImage(objectTypeConverter.bufferedImage(file)).averagedColor(),
-                                objectTypeConverter::bufferedImage,
-                                (img_color_1, img_color_2) -> {
-                                    System.out.println("Two same average color: ");
-                                    System.out.println(img_color_1);
-                                    System.out.println(img_color_2);
-
-                                    return img_color_1;
-                                }
-                        )
-                );
-    }
-
 
 }

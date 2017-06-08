@@ -4,24 +4,30 @@ import exceptions.MatrixSizeException;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ImageGenerator {
 
+    /**
+     * The values of ImageSize should be as close as possible to patterns average size, if they different.
+     * The best way if all patterns have same width and height. Then set it in in WIDTH and HEIGHT and you are C00L :).
+     */
+    public static final int WIDTH = 40;
+    public static final int HEIGHT = 20;
+
+    private final AveragedColor averagedColor = new AveragedColor();
     private BufferedImage image;
     private Map<Color, BufferedImage> patterns;
     private Integer expectedColumnsNumber;
 
     public Color averagedColor() {
-        return this.averagedColor(this.image);
+        return averagedColor.averagedColor(image);
     }
 
     //TODO: add descriptive comments to this method
-    public List<List<BufferedImage>> likeMatrix(int expectedColumns) {
+    public List<List<BufferedImage>> asMatrix(int expectedColumns) {
                                                 int expectedRows = 0;
 
         int width  = image.getWidth();
@@ -36,7 +42,7 @@ public class ImageGenerator {
         int realRowsNumber    = expectedRows;
 
         int squareWidth  = width / realColumnsNumber;
-        int squareHeight = squareWidth * ImageSize.HEIGHT / ImageSize.WIDTH;
+        int squareHeight = squareWidth * HEIGHT / WIDTH;
 
         squareHeight = (squareHeight != 0) ? squareHeight : 1;
 
@@ -63,14 +69,14 @@ public class ImageGenerator {
     }
 
     public List<List<Color>> averagedColorsMatrix() {
-        return likeMatrix(expectedColumnsNumber).stream()
+        return asMatrix(expectedColumnsNumber).stream()
                 .map(row -> row.stream()
-                        .map(this::averagedColor)
+                        .map(averagedColor::averagedColor)
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
     }
 
-    public List<List<BufferedImage>> generateResultMatrix() {
+    public List<List<BufferedImage>> resultMatrix() {
 
         List<List<Color>> matrix         = averagedColorsMatrix();
         Map<Color, BufferedImage> map    = getPatterns();
@@ -100,8 +106,8 @@ public class ImageGenerator {
         return result;
     }
 
-    public BufferedImage makeImage() {
-        List<List<BufferedImage>> resultMatrix = generateResultMatrix();
+    public BufferedImage generateImage() {
+        List<List<BufferedImage>> resultMatrix = resultMatrix();
 
         int columns = resultMatrix.size();
         int rows = resultMatrix.get(0).size();
@@ -139,41 +145,10 @@ public class ImageGenerator {
     }
 
     private BufferedImage findImageWithMaxSize(List<List<BufferedImage>> imgMatrix) {
-        return imgMatrix.stream().flatMap(List::stream).max(Comparator.comparing(img -> img.getWidth() * img.getHeight())).orElse(null);
-    }
-
-    private Color averagedColor(BufferedImage image) {
-        int width = image.getWidth();
-        int height = image.getHeight();
-        int pixels = width * height;
-
-        int sumR = 0;
-        int sumG = 0;
-        int sumB = 0;
-
-        int avrR = 0;
-        int avrG = 0;
-        int avrB = 0;
-
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                int rgb = image.getRGB(i, j);
-
-                int r = (rgb & 0x00ff0000) >> 16;
-                int g = (rgb & 0x0000ff00) >> 8;
-                int b =  rgb & 0x000000ff;
-
-                sumR += r;
-                sumG += g;
-                sumB += b;
-            }
-
-            avrR = sumR / pixels;
-            avrG = sumG / pixels;
-            avrB = sumB / pixels;
-        }
-
-        return new Color(avrR, avrG, avrB);
+        return imgMatrix.stream()
+                        .flatMap(List::stream)
+                        .max(Comparator.comparing(img -> img.getWidth() * img.getHeight()))
+                        .orElse(null);
     }
 
     public ImageGenerator setImage(BufferedImage image) {
