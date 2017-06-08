@@ -1,6 +1,6 @@
 package utility;
 
-import basic.AveragedColor;
+import basic.ColorInfo;
 import basic.ObjectTypeConverter;
 
 import java.awt.*;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class Resource {
 
-    private final AveragedColor averagedColor = new AveragedColor();
+    private final ColorInfo colorInfo = new ColorInfo();
 
     public Map<Color, BufferedImage> getPatternsFrom(String path) {
 
@@ -23,7 +23,7 @@ public class Resource {
                 .orElseThrow(() -> new RuntimeException("Directory \'" + path + "\': is not exist or empty.")))
                 .filter(File::isFile)
                 .collect(Collectors.toMap(
-                                file -> averagedColor.averagedColor(objectTypeConverter.bufferedImage(file)),
+                                file -> colorInfo.averagedColor(objectTypeConverter.bufferedImage(file)),
                                 objectTypeConverter::bufferedImage,
                                 (img_color_1, img_color_2) -> {
                                     System.out.println("Two same average color: ");

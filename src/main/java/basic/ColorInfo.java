@@ -3,7 +3,7 @@ package basic;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class AveragedColor {
+public class ColorInfo {
 
     public Color averagedColor(BufferedImage image) {
         int width = image.getWidth();

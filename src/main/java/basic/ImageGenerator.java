@@ -4,8 +4,10 @@ import exceptions.MatrixSizeException;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ImageGenerator {
@@ -14,17 +16,13 @@ public class ImageGenerator {
      * The values of ImageSize should be as close as possible to patterns average size, if they different.
      * The best way if all patterns have same width and height. Then set it in in WIDTH and HEIGHT and you are C00L :).
      */
-    public static final int WIDTH = 40;
-    public static final int HEIGHT = 20;
+    private static final int WIDTH = 40;
+    private static final int HEIGHT = 20;
 
-    private final AveragedColor averagedColor = new AveragedColor();
+    private final ColorInfo colorInfo = new ColorInfo();
     private BufferedImage image;
     private Map<Color, BufferedImage> patterns;
     private Integer expectedColumnsNumber;
-
-    public Color averagedColor() {
-        return averagedColor.averagedColor(image);
-    }
 
     //TODO: add descriptive comments to this method
     public List<List<BufferedImage>> asMatrix(int expectedColumns) {
@@ -71,7 +69,7 @@ public class ImageGenerator {
     public List<List<Color>> averagedColorsMatrix() {
         return asMatrix(expectedColumnsNumber).stream()
                 .map(row -> row.stream()
-                        .map(averagedColor::averagedColor)
+                        .map(colorInfo::averagedColor)
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
     }

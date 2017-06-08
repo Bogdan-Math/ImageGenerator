@@ -27,8 +27,6 @@ public class ImageGeneratorTest {
 
     private BufferedImage canonicalImage;
     private BufferedImage whiteImage;
-    private BufferedImage grayImage;
-    private BufferedImage blackImage;
 
     private Map<Color, BufferedImage> patterns;
     private Integer expectedColumnsNumber;
@@ -42,9 +40,6 @@ public class ImageGeneratorTest {
 
         this.canonicalImage = ImageIO.read(resource.readFile("images/canonical.jpg"));
         this.whiteImage     = ImageIO.read(resource.readFile("images/colors/1-white.jpg"));
-        this.grayImage      = ImageIO.read(resource.readFile("images/colors/2-grey.jpg"));
-        this.blackImage     = ImageIO.read(resource.readFile("images/colors/3-black.jpg"));
-
 
         this.expectedColumnsNumber = 200;
         this.patterns              = resource.getPatternsFrom("images/flags");
@@ -61,13 +56,6 @@ public class ImageGeneratorTest {
                 .ifPresent(filesArr -> Arrays.stream(filesArr)
                         .filter(file -> (file.getName().matches("^generate_image.+")))
                         .forEach(File::delete));
-    }
-
-    @Test
-    public void averagedColor() throws Exception {
-        assertEquals(Color.WHITE, imageGenerator.setImage(whiteImage).averagedColor());
-        assertEquals(Color.GRAY, imageGenerator.setImage(grayImage).averagedColor());
-        assertEquals(Color.BLACK, imageGenerator.setImage(blackImage).averagedColor());
     }
 
     @Test
@@ -90,7 +78,6 @@ public class ImageGeneratorTest {
 
         imageGenerator.setImage(canonicalImage).asMatrix(wrongExpectedColumns);
     }
-
 
     @Test
     public void averagedColorsMatrix() throws Exception {
@@ -128,16 +115,19 @@ public class ImageGeneratorTest {
 
     @Test
     public void getAndSetImage() throws Exception {
-        assertEquals(canonicalImage, imageGenerator.setImage(canonicalImage).getImage());
+        assertEquals(canonicalImage, imageGenerator.setImage(canonicalImage)
+                                                   .getImage());
     }
 
     @Test
     public void getAndSetPatterns() throws Exception {
-        assertEquals(patterns, imageGenerator.setPatterns(patterns).getPatterns());
+        assertEquals(patterns, imageGenerator.setPatterns(patterns)
+                                             .getPatterns());
     }
 
     @Test
     public void getAndSetExpectedColumnsNumber() throws Exception {
-        assertEquals(expectedColumnsNumber, imageGenerator.setExpectedColumnsNumber(expectedColumnsNumber).getExpectedColumnsNumber());
+        assertEquals(expectedColumnsNumber, imageGenerator.setExpectedColumnsNumber(expectedColumnsNumber)
+                                                          .getExpectedColumnsNumber());
     }
 }
