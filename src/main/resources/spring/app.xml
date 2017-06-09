@@ -8,12 +8,18 @@
                            http://www.springframework.org/schema/context/spring-context-4.1.xsd">
 
     <!--UI classes-->
-    <context:component-scan base-package="layers.web.vaadin" />
+    <context:component-scan base-package="layers.web.vaadin"/>
+
+    <bean id="imageUploader" class="layers.web.vaadin.ImageUploader"/>
+
+    <bean id="upload" class="com.vaadin.ui.Upload">
+        <property name="receiver" ref="imageUploader"/>
+    </bean>
 
     <!--SERVICE classes-->
-    <context:component-scan base-package="layers.service" />
+    <context:component-scan base-package="layers.service"/>
 
     <!--HELPER classes-->
-    <context:component-scan base-package="utility.helpers" />
+    <context:component-scan base-package="utility.helpers"/>
 
 </beans>

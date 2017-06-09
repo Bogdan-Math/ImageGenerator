@@ -119,7 +119,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!--Servlet API - balayers.web web API-->
+        <!--Servlet API - basic web API-->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -127,7 +127,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--Vaadserviceasic dependencies) UI Framework-->
+        <!--Vaadin (basic dependencies) UI Framework-->
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-server</artifactId>
