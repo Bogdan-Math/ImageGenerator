@@ -3,8 +3,10 @@ package utility;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -27,12 +29,24 @@ public class ResourceTest {
 
     @Test
     public void getPatternsIn() throws Exception {
-        String path = "images/flags";
-        int patternsCount = 195;
+        String path = "images/colors";
+        int patternsCount = 24;
 
         Map<Color, BufferedImage> patterns = resource.getPatternsIn(path);
 
         assertNotNull(patterns);
         assertEquals(patternsCount, patterns.values().size());
     }
+
+    @Test
+    public void readFiles() throws Exception {
+        String path = "images/colors";
+        int patternsCount = 24;
+
+        List<File> files = resource.readFiles(path);
+
+        assertNotNull(files);
+        assertEquals(patternsCount, files.size());
+    }
+
 }

@@ -3,10 +3,11 @@ package utility;
 import basic.ColorInfo;
 import basic.ObjectTypeConverter;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,14 +18,15 @@ public class Resource {
 
     public Map<Color, BufferedImage> getPatternsIn(String path) {
 
-        ObjectTypeConverter objectTypeConverter = new ObjectTypeConverter();
+        ObjectTypeConverter converter = new ObjectTypeConverter();
 
-        return Arrays.stream(Optional.ofNullable(readFile(path).listFiles())
-                .orElseThrow(() -> new RuntimeException("Directory \'" + path + "\': is not exist or empty.")))
-                .filter(File::isFile)
-                .collect(Collectors.toMap(
-                                file -> colorInfo.averagedColor(objectTypeConverter.bufferedImage(file)),
-                                objectTypeConverter::bufferedImage,
+        return Optional.ofNullable(readFiles(path))
+                .orElseThrow(() -> new RuntimeException("Directory \'" + path + "\': is not exist or empty."))
+                .stream()
+                .collect(Collectors
+                        .toMap(
+                                file -> colorInfo.averagedColor(converter.bufferedImage(file)), // put Color         like KEY in map
+                                converter::bufferedImage,                                       // put BufferedImage like VALUE in map
                                 (img_color_1, img_color_2) -> {
                                     System.out.println("Two same average color: ");
                                     System.out.println(img_color_1);
@@ -36,8 +38,16 @@ public class Resource {
                 );
     }
 
+    public List<File> readFiles(String path) {
+        return Arrays.stream(readFile(path).listFiles())
+                     .filter(File::isFile)
+                     .collect(Collectors.toList());
+    }
+
     public File readFile(String resourceName) {
-        return new File(getClass().getClassLoader().getResource("").getPath() + resourceName);
+        return new File(getClass().getClassLoader()
+                                            .getResource("")
+                                            .getPath() + resourceName);
     }
 
 }
