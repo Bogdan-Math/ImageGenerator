@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import utility.Resource;
+import utility.ResourceReader;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 
 public class ObjectTypeConverterTest {
 
-    private Resource resource;
+    private ResourceReader resourceReader;
     private ObjectTypeConverter converter;
     private File originalImage;
 
@@ -29,14 +29,14 @@ public class ObjectTypeConverterTest {
 
     @Before
     public void setUp() throws Exception {
-        this.resource       = new Resource();
+        this.resourceReader = new ResourceReader();
         this.converter      = new ObjectTypeConverter();
-        this.originalImage  = resource.readFile("images/canonical.jpg");
+        this.originalImage  = resourceReader.readFile("images/canonical.jpg");
     }
 
     @After
     public void tearDown() throws Exception {
-        Arrays.stream(resource.readFile("images/").listFiles())
+        Arrays.stream(resourceReader.readFile("images/").listFiles())
                 .filter(file -> ("canonical_GEN.jpg".equals(file.getName())))
                 .forEach(File::delete);
     }

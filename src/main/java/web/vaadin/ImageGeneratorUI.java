@@ -10,7 +10,8 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Upload.SucceededEvent;
 import org.springframework.context.annotation.Scope;
-import utility.Resource;
+import utility.PatternManager;
+import utility.ResourceReader;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -21,13 +22,15 @@ import java.io.OutputStream;
 @Scope("prototype")
 @Theme("mytheme")
 @Title("Image Generator")
-public class MyUI extends UI {
+public class ImageGeneratorUI extends UI {
 
     private ObjectTypeConverter converter = new ObjectTypeConverter();
     private ImageGenerator imageGenerator = new ImageGenerator();
     private Image originalImageView       = new Image("");
     private Image generatedImageView      = new Image("");
     private Upload upload;
+    private ResourceReader resourceReader = new ResourceReader();
+    private PatternManager patternManager = new PatternManager();
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -107,7 +110,7 @@ public class MyUI extends UI {
             String fileName = event.getFilename();
 
             imageGenerator.setExpectedColumnsNumber(100)
-                    .setPatterns(new Resource().getPatternsIn("images/flags"))
+                    .setPatterns(patternManager.patternsMap(resourceReader.readFiles("images/flags")))
                     .setImage(converter.bufferedImage(uploadedImage.toByteArray()));
 
             BufferedImage bufferedImage = imageGenerator.generateImage();

@@ -6,7 +6,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import utility.Resource;
+import utility.PatternManager;
+import utility.ResourceReader;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -21,7 +22,8 @@ import static org.junit.Assert.*;
 
 public class ImageGeneratorTest {
 
-    private Resource resource;
+    private ResourceReader resourceReader;
+    private PatternManager patternManager;
 
     private ImageGenerator imageGenerator;
 
@@ -36,13 +38,14 @@ public class ImageGeneratorTest {
 
     @Before
     public void setUp() throws Exception {
-        this.resource = new Resource();
+        this.resourceReader = new ResourceReader();
+        this.patternManager = new PatternManager();
 
-        this.canonicalImage = ImageIO.read(resource.readFile("images/canonical.jpg"));
-        this.whiteImage     = ImageIO.read(resource.readFile("images/colors/1-white.jpg"));
+        this.canonicalImage = ImageIO.read(resourceReader.readFile("images/canonical.jpg"));
+        this.whiteImage     = ImageIO.read(resourceReader.readFile("images/colors/1-white.jpg"));
 
         this.expectedColumnsNumber = 200;
-        this.patterns              = resource.getPatternsIn("images/flags");
+        this.patterns              = patternManager.patternsMap(resourceReader.readFiles("images/flags"));
 
         this.imageGenerator = new ImageGenerator()
                 .setImage(canonicalImage)
@@ -52,7 +55,7 @@ public class ImageGeneratorTest {
 
     @After
     public void tearDown() throws Exception {
-        Optional.ofNullable(resource.readFile("images/").listFiles())
+        Optional.ofNullable(resourceReader.readFile("images/").listFiles())
                 .ifPresent(filesArr -> Arrays.stream(filesArr)
                         .filter(file -> (file.getName().matches("^generate_image.+")))
                         .forEach(File::delete));

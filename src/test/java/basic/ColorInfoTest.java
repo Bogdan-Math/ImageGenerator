@@ -2,7 +2,7 @@ package basic;
 
 import org.junit.Before;
 import org.junit.Test;
-import utility.Resource;
+import utility.ResourceReader;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -21,10 +21,10 @@ public class ColorInfoTest {
 
     @Test
     public void averagedColor() throws Exception {
-        Resource resource = new Resource();
-        BufferedImage whiteImage = ImageIO.read(resource.readFile("images/colors/1-white.jpg"));
-        BufferedImage grayImage  = ImageIO.read(resource.readFile("images/colors/2-grey.jpg"));
-        BufferedImage blackImage = ImageIO.read(resource.readFile("images/colors/3-black.jpg"));
+        ResourceReader resourceReader = new ResourceReader();
+        BufferedImage whiteImage = ImageIO.read(resourceReader.readFile("images/colors/1-white.jpg"));
+        BufferedImage grayImage  = ImageIO.read(resourceReader.readFile("images/colors/2-grey.jpg"));
+        BufferedImage blackImage = ImageIO.read(resourceReader.readFile("images/colors/3-black.jpg"));
 
         Color white = colorInfo.averagedColor(whiteImage);
         Color gray = colorInfo.averagedColor(grayImage);
