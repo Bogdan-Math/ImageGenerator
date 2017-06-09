@@ -107,7 +107,7 @@ public class MyUI extends UI {
             String fileName = event.getFilename();
 
             imageGenerator.setExpectedColumnsNumber(100)
-                    .setPatterns(new Resource().getPatternsFrom("images/flags"))
+                    .setPatterns(new Resource().getPatternsIn("images/flags"))
                     .setImage(converter.bufferedImage(uploadedImage.toByteArray()));
 
             BufferedImage bufferedImage = imageGenerator.generateImage();

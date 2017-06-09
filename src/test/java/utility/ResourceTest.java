@@ -3,8 +3,11 @@ package utility;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.Map;
+
+import static org.junit.Assert.*;
 
 public class ResourceTest {
 
@@ -23,7 +26,13 @@ public class ResourceTest {
     }
 
     @Test
-    public void getPatternsFrom() throws Exception {
-        //TODO: add test
+    public void getPatternsIn() throws Exception {
+        String path = "images/flags";
+        int patternsCount = 195;
+
+        Map<Color, BufferedImage> patterns = resource.getPatternsIn(path);
+
+        assertNotNull(patterns);
+        assertEquals(patternsCount, patterns.values().size());
     }
 }

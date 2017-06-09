@@ -42,7 +42,7 @@ public class ImageGeneratorTest {
         this.whiteImage     = ImageIO.read(resource.readFile("images/colors/1-white.jpg"));
 
         this.expectedColumnsNumber = 200;
-        this.patterns              = resource.getPatternsFrom("images/flags");
+        this.patterns              = resource.getPatternsIn("images/flags");
 
         this.imageGenerator = new ImageGenerator()
                 .setImage(canonicalImage)

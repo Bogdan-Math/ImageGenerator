@@ -15,7 +15,7 @@ public class Resource {
 
     private final ColorInfo colorInfo = new ColorInfo();
 
-    public Map<Color, BufferedImage> getPatternsFrom(String path) {
+    public Map<Color, BufferedImage> getPatternsIn(String path) {
 
         ObjectTypeConverter objectTypeConverter = new ObjectTypeConverter();
 
