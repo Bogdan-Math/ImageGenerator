@@ -1,7 +1,6 @@
-package utility;
+package utility.helpers;
 
-import basic.ColorInfo;
-import basic.ObjectTypeConverter;
+import layers.service.ColorInfo;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

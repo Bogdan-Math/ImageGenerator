@@ -1,4 +1,4 @@
-package basic;
+package utility.helpers;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

@@ -1,6 +1,6 @@
-package exceptions;
+package utility.exceptions;
 
-import basic.ImageGenerator;
+import layers.service.ImageGenerator;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

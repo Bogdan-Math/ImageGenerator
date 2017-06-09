@@ -1,7 +1,9 @@
-package utility;
+package utility.helpers;
 
 import org.junit.Before;
 import org.junit.Test;
+import utility.helpers.PatternManager;
+import utility.helpers.ResourceReader;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

@@ -1,11 +1,12 @@
-package basic;
+package utility.helpers;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import utility.ResourceReader;
+import utility.helpers.ObjectTypeConverter;
+import utility.helpers.ResourceReader;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

@@ -1,8 +1,8 @@
-package basic;
+package layers.service;
 
 import org.junit.Before;
 import org.junit.Test;
-import utility.ResourceReader;
+import utility.helpers.ResourceReader;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

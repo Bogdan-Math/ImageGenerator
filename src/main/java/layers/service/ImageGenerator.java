@@ -1,6 +1,6 @@
-package basic;
+package layers.service;
 
-import exceptions.MatrixSizeException;
+import utility.exceptions.MatrixSizeException;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

@@ -1,7 +1,5 @@
-package web.vaadin;
+package layers.web.vaadin;
 
-import basic.ImageGenerator;
-import basic.ObjectTypeConverter;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.server.StreamResource;
@@ -9,9 +7,11 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Upload.SucceededEvent;
+import layers.service.ImageGenerator;
 import org.springframework.context.annotation.Scope;
-import utility.PatternManager;
-import utility.ResourceReader;
+import utility.helpers.ObjectTypeConverter;
+import utility.helpers.PatternManager;
+import utility.helpers.ResourceReader;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -28,19 +28,17 @@ public class ImageGeneratorUI extends UI {
     private ImageGenerator imageGenerator = new ImageGenerator();
     private Image originalImageView       = new Image("");
     private Image generatedImageView      = new Image("");
-    private Upload upload;
     private ResourceReader resourceReader = new ResourceReader();
     private PatternManager patternManager = new PatternManager();
+    private ImageUploader imageUploader   = new ImageUploader();
+    private Upload upload = new Upload("", imageUploader);
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
-        ImageUploader receiver = new ImageUploader();
-        upload = new Upload("", receiver);
-        upload.addStartedListener(receiver);
-        upload.addSucceededListener(receiver);
-        upload.addFinishedListener(receiver);
-        upload.addProgressListener(receiver);
+        upload.addSucceededListener(imageUploader);
+        upload.addFinishedListener(imageUploader);
+        upload.addProgressListener(imageUploader);
         upload.setImmediateMode(true);
         upload.setButtonCaption("select and generate image");
 

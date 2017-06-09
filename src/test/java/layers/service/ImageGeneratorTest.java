@@ -1,13 +1,13 @@
-package basic;
+package layers.service;
 
-import exceptions.MatrixSizeException;
+import utility.exceptions.MatrixSizeException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import utility.PatternManager;
-import utility.ResourceReader;
+import utility.helpers.PatternManager;
+import utility.helpers.ResourceReader;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -97,7 +97,7 @@ public class ImageGeneratorTest {
 
     @Test
     public void resultMatrix() throws Exception {
-        imageGenerator.setExpectedColumnsNumber(1000)
+        imageGenerator.setExpectedColumnsNumber(250)
                 .resultMatrix()
                 .forEach(row -> row
                         .forEach(patternImg -> {

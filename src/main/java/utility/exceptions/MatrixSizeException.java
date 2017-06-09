@@ -1,4 +1,4 @@
-package exceptions;
+package utility.exceptions;
 
 public class MatrixSizeException extends RuntimeException {
 

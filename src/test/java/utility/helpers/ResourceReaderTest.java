@@ -1,7 +1,8 @@
-package utility;
+package utility.helpers;
 
 import org.junit.Before;
 import org.junit.Test;
+import utility.helpers.ResourceReader;
 
 import java.io.File;
 import java.util.List;
