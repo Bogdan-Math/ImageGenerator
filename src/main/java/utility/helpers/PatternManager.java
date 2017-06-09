@@ -1,6 +1,7 @@
 package utility.helpers;
 
 import layers.service.ColorInfo;
+import org.springframework.stereotype.Component;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Component
 public class PatternManager {
 
     private ObjectTypeConverter converter = new ObjectTypeConverter();

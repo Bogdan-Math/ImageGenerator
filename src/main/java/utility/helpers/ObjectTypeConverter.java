@@ -1,5 +1,7 @@
 package utility.helpers;
 
+import org.springframework.stereotype.Component;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -7,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
 
+@Component
 public class ObjectTypeConverter {
 
     public InputStream inputStream(byte[] bytes) {

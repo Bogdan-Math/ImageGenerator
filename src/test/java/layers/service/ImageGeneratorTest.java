@@ -48,6 +48,7 @@ public class ImageGeneratorTest {
         this.patterns              = patternManager.patternsMap(resourceReader.readFiles("images/flags"));
 
         this.imageGenerator = new ImageGenerator()
+                .setColorInfo(new ColorInfo())
                 .setImage(canonicalImage)
                 .setPatterns(patterns)
                 .setExpectedColumnsNumber(expectedColumnsNumber);

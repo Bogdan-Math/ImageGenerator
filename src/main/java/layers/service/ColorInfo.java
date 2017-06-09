@@ -1,8 +1,11 @@
 package layers.service;
 
+import org.springframework.stereotype.Component;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+@Component
 public class ColorInfo {
 
     public Color averagedColor(BufferedImage image) {

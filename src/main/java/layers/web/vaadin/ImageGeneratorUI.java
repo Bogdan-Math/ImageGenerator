@@ -1,5 +1,8 @@
 package layers.web.vaadin;
 
+import layers.service.ImageGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
+import utility.helpers.ObjectTypeConverter;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.server.StreamResource;
@@ -7,9 +10,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Upload.SucceededEvent;
-import layers.service.ImageGenerator;
 import org.springframework.context.annotation.Scope;
-import utility.helpers.ObjectTypeConverter;
 import utility.helpers.PatternManager;
 import utility.helpers.ResourceReader;
 
@@ -24,14 +25,23 @@ import java.io.OutputStream;
 @Title("Image Generator")
 public class ImageGeneratorUI extends UI {
 
-    private ObjectTypeConverter converter = new ObjectTypeConverter();
-    private ImageGenerator imageGenerator = new ImageGenerator();
-    private Image originalImageView       = new Image("");
-    private Image generatedImageView      = new Image("");
-    private ResourceReader resourceReader = new ResourceReader();
-    private PatternManager patternManager = new PatternManager();
+    @Autowired
+    private ObjectTypeConverter converter;
+
+    @Autowired
+    private ImageGenerator imageGenerator;
+
+    @Autowired
+    private ResourceReader resourceReader;
+
+    @Autowired
+    private PatternManager patternManager;
+
     private ImageUploader imageUploader   = new ImageUploader();
     private Upload upload = new Upload("", imageUploader);
+
+    private Image originalImageView       = new Image("");
+    private Image generatedImageView      = new Image("");
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {

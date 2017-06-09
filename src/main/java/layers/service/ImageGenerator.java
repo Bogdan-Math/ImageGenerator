@@ -1,5 +1,7 @@
 package layers.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import utility.exceptions.MatrixSizeException;
 
 import java.awt.*;
@@ -10,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Component
 public class ImageGenerator {
 
     /**
@@ -19,7 +22,9 @@ public class ImageGenerator {
     private static final int WIDTH = 40;
     private static final int HEIGHT = 20;
 
-    private final ColorInfo colorInfo = new ColorInfo();
+    @Autowired
+    private ColorInfo colorInfo;
+
     private BufferedImage image;
     private Map<Color, BufferedImage> patterns;
     private Integer expectedColumnsNumber;
@@ -176,4 +181,9 @@ public class ImageGenerator {
         return expectedColumnsNumber;
     }
 
+    //TODO: delete this method, after add Spring to tests
+    public ImageGenerator setColorInfo(ColorInfo colorInfo) {
+        this.colorInfo = colorInfo;
+        return this;
+    }
 }
