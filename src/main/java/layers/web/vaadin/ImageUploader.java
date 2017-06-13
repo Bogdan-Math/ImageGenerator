@@ -37,10 +37,6 @@ public class ImageUploader implements Upload.StartedListener, Upload.Receiver, U
 
     @Override
     public void uploadStarted(Upload.StartedEvent startedEvent) {
-
-        originalImageView.setVisible(false);
-        generatedImageView.setVisible(false);
-
         if (!"image/jpeg".equals(startedEvent.getMIMEType())) {
             startedEvent.getUpload().interruptUpload();
 
@@ -95,8 +91,7 @@ public class ImageUploader implements Upload.StartedListener, Upload.Receiver, U
 
     @Override
     public void uploadFinished(Upload.FinishedEvent finishedEvent) {
-        originalImageView.setVisible(true);
-        generatedImageView.setVisible(true);
+        Notification.show("Your image was generated!", Notification.Type.TRAY_NOTIFICATION);
     }
 
     public Image getOriginalImageView() {

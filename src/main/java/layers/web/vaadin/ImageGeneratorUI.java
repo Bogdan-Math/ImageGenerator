@@ -31,9 +31,6 @@ public class ImageGeneratorUI extends UI {
         upload.setImmediateMode(true);
         upload.setButtonCaption("select and generate image");
 
-        Image originalImageView = imageUploader.getOriginalImageView();
-        Image generatedImageView = imageUploader.getGeneratedImageView();
-
         VerticalLayout verticalLayout = new VerticalLayout();
         Link githubLink               = githubLink();
         Link codacyLink               = codacyLink();
@@ -41,6 +38,11 @@ public class ImageGeneratorUI extends UI {
         verticalLayout.setComponentAlignment(githubLink, Alignment.TOP_RIGHT);
         verticalLayout.setComponentAlignment(codacyLink, Alignment.TOP_RIGHT);
         verticalLayout.setComponentAlignment(upload, Alignment.TOP_CENTER);
+
+        Image originalImageView  = imageUploader.getOriginalImageView();
+        Image generatedImageView = imageUploader.getGeneratedImageView();
+        originalImageView.setSource(null);
+        generatedImageView.setSource(null);
 
         GridLayout gridLayout = new GridLayout(2, 1);
         gridLayout.setSizeFull();
