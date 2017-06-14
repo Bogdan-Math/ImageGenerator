@@ -28,6 +28,7 @@ public class ImageGeneratorUI extends UI {
         upload.addSucceededListener(imageUploader);
         upload.addFinishedListener(imageUploader);
         upload.addProgressListener(imageUploader);
+        upload.addStartedListener(imageUploader);
         upload.setImmediateMode(true);
         upload.setButtonCaption("select and generate image");
 
