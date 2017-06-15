@@ -56,7 +56,7 @@ public class UploadComponentListener implements Upload.Receiver, Upload.StartedL
         notifications.add("Upload started.");
 
         if (!"image/jpeg".equals(startedEvent.getMIMEType())) {
-            startedEvent.getUpload().interruptUpload();
+            uploadComponent.interruptUpload();
 
             notifications.add("Oh, no! Only '.jpg' and '.jpeg' files can be uploaded.");
         }
