@@ -1,5 +1,6 @@
 package utility.helpers;
 
+import layers.service.ColorInfo;
 import org.junit.Before;
 import org.junit.Test;
 import utility.helpers.PatternManager;
@@ -22,8 +23,12 @@ public class PatternManagerTest {
     @Before
     public void setUp() throws Exception {
         this.patternManager = new PatternManager();
+        this.patternManager.setColorInfo(new ColorInfo());
+        this.patternManager.setConverter(new ObjectTypeConverter());
+
         this.resourceReader = new ResourceReader();
         this.originalImage  = resourceReader.readFile("images/canonical.jpg");
+
     }
 
     @Test

@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import utility.helpers.ObjectTypeConverter;
 import utility.helpers.PatternManager;
 import utility.helpers.ResourceReader;
 
@@ -40,6 +41,8 @@ public class ImageGeneratorTest {
     public void setUp() throws Exception {
         this.resourceReader = new ResourceReader();
         this.patternManager = new PatternManager();
+        this.patternManager.setColorInfo(new ColorInfo());
+        this.patternManager.setConverter(new ObjectTypeConverter());
 
         this.canonicalImage = ImageIO.read(resourceReader.readFile("images/canonical.jpg"));
         this.whiteImage     = ImageIO.read(resourceReader.readFile("images/colors/1-white.jpg"));

@@ -26,7 +26,7 @@ public class PatternManager {
         return files.stream()
                 .collect(Collectors
                         .toMap(
-                                this::averagedColor,     // put Color         like KEY in map
+                                this::averagedColor,     // put Color         like KEY   in map
                                 converter::bufferedImage,// put BufferedImage like VALUE in map
 
                                 (img_color_1, img_color_2) -> {
@@ -42,5 +42,15 @@ public class PatternManager {
 
     public Color averagedColor(File file) {
         return colorInfo.averagedColor(converter.bufferedImage(file));
+    }
+
+    //TODO: delete this method, after add Spring to tests
+    public void setConverter(ObjectTypeConverter converter) {
+        this.converter = converter;
+    }
+
+    //TODO: delete this method, after add Spring to tests
+    public void setColorInfo(ColorInfo colorInfo) {
+        this.colorInfo = colorInfo;
     }
 }
