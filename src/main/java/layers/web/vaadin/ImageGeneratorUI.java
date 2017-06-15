@@ -20,18 +20,18 @@ public class ImageGeneratorUI extends UI {
     private UploadComponent uploadComponent;
 
     @Autowired
-    private UploadComponentListener uploadListener;
+    private UploadComponentListener uploadComponentListener;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
         uploadComponent.setImmediateMode(true);
         uploadComponent.setButtonCaption("select and generate image");
-        uploadComponent.setReceiver(uploadListener);
-        uploadComponent.addStartedListener(uploadListener);
-        uploadComponent.addProgressListener(uploadListener);
-        uploadComponent.addSucceededListener(uploadListener);
-        uploadComponent.addFinishedListener(uploadListener);
+        uploadComponent.setReceiver(uploadComponentListener);
+        uploadComponent.addStartedListener(uploadComponentListener);
+        uploadComponent.addProgressListener(uploadComponentListener);
+        uploadComponent.addSucceededListener(uploadComponentListener);
+        uploadComponent.addFinishedListener(uploadComponentListener);
 
         VerticalLayout verticalLayout = new VerticalLayout();
         Link githubLink               = githubLink();
@@ -41,8 +41,8 @@ public class ImageGeneratorUI extends UI {
         verticalLayout.setComponentAlignment(codacyLink, Alignment.TOP_RIGHT);
         verticalLayout.setComponentAlignment(uploadComponent, Alignment.TOP_CENTER);
 
-        Image originalImageView  = uploadListener.getOriginalImageView();
-        Image generatedImageView = uploadListener.getGeneratedImageView();
+        Image originalImageView  = uploadComponentListener.getOriginalImageView();
+        Image generatedImageView = uploadComponentListener.getGeneratedImageView();
         originalImageView.setSource(null);
         generatedImageView.setSource(null);
 
