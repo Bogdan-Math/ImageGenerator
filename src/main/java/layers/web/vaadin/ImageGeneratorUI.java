@@ -17,29 +17,29 @@ import org.springframework.context.annotation.Scope;
 public class ImageGeneratorUI extends UI {
 
     @Autowired
-    private Uploader uploader;
+    private UploadComponent uploadComponent;
 
     @Autowired
-    private UploadListener uploadListener;
+    private UploadComponentListener uploadListener;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
-        uploader.setImmediateMode(true);
-        uploader.setButtonCaption("select and generate image");
-        uploader.setReceiver(uploadListener);
-        uploader.addStartedListener(uploadListener);
-        uploader.addProgressListener(uploadListener);
-        uploader.addSucceededListener(uploadListener);
-        uploader.addFinishedListener(uploadListener);
+        uploadComponent.setImmediateMode(true);
+        uploadComponent.setButtonCaption("select and generate image");
+        uploadComponent.setReceiver(uploadListener);
+        uploadComponent.addStartedListener(uploadListener);
+        uploadComponent.addProgressListener(uploadListener);
+        uploadComponent.addSucceededListener(uploadListener);
+        uploadComponent.addFinishedListener(uploadListener);
 
         VerticalLayout verticalLayout = new VerticalLayout();
         Link githubLink               = githubLink();
         Link codacyLink               = codacyLink();
-        verticalLayout.addComponents(githubLink, codacyLink, uploader);
+        verticalLayout.addComponents(githubLink, codacyLink, uploadComponent);
         verticalLayout.setComponentAlignment(githubLink, Alignment.TOP_RIGHT);
         verticalLayout.setComponentAlignment(codacyLink, Alignment.TOP_RIGHT);
-        verticalLayout.setComponentAlignment(uploader, Alignment.TOP_CENTER);
+        verticalLayout.setComponentAlignment(uploadComponent, Alignment.TOP_CENTER);
 
         Image originalImageView  = uploadListener.getOriginalImageView();
         Image generatedImageView = uploadListener.getGeneratedImageView();
