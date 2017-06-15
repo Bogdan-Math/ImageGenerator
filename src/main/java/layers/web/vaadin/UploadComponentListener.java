@@ -16,7 +16,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 
 @SpringComponent
-public class UploadListener implements Upload.Receiver, Upload.StartedListener, Upload.ProgressListener, Upload.SucceededListener, Upload.FinishedListener {
+public class UploadComponentListener implements Upload.Receiver, Upload.StartedListener, Upload.ProgressListener, Upload.SucceededListener, Upload.FinishedListener {
 
     @Autowired
     private Upload upload;

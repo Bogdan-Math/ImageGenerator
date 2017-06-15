@@ -4,6 +4,6 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Upload;
 
 @SpringComponent
-public class Uploader extends Upload {
+public class UploadComponent extends Upload {
 
 }
