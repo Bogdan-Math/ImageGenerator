@@ -90,7 +90,7 @@ public class UploadComponentListener implements Upload.Receiver, Upload.StartedL
 
         notifications.add("Upload succeeded.");
 
-        imageGenerator.setExpectedColumnsNumber(250)
+        imageGenerator.setExpectedColumnsNumber(128)
                 .setPatterns(patternManager.patternsMap(resourceReader.readFiles("images/colors")))
                 .setImage(uploadedImage);
 
