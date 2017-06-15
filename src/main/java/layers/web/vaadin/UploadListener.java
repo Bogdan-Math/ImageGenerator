@@ -1,6 +1,7 @@
 package layers.web.vaadin;
 
 import com.vaadin.server.StreamResource;
+import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Upload;
@@ -14,7 +15,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 
-public class ImageUploader implements Upload.StartedListener, Upload.Receiver, Upload.ProgressListener, Upload.SucceededListener, Upload.FinishedListener {
+@SpringComponent
+public class UploadListener implements Upload.Receiver, Upload.StartedListener, Upload.ProgressListener, Upload.SucceededListener, Upload.FinishedListener {
 
     @Autowired
     private Upload upload;
@@ -36,6 +38,14 @@ public class ImageUploader implements Upload.StartedListener, Upload.Receiver, U
     private Image generatedImageView = new Image("");
 
     @Override
+    public OutputStream receiveUpload(String fileName, String mimeType) {
+
+        this.uploadedImage = new ByteArrayOutputStream();
+
+        return uploadedImage;
+    }
+
+    @Override
     public void uploadStarted(Upload.StartedEvent startedEvent) {
         if (!"image/jpeg".equals(startedEvent.getMIMEType())) {
             startedEvent.getUpload().interruptUpload();
@@ -43,14 +53,6 @@ public class ImageUploader implements Upload.StartedListener, Upload.Receiver, U
             String caption = "Oh, no! Only '.jpg' and '.jpeg' files can be uploaded.";
             Notification.show(caption, Notification.Type.WARNING_MESSAGE);
         }
-    }
-
-    @Override
-    public OutputStream receiveUpload(String fileName, String mimeType) {
-
-        this.uploadedImage = new ByteArrayOutputStream();
-
-        return uploadedImage;
     }
 
     @Override

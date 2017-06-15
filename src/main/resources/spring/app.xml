@@ -10,12 +10,6 @@
     <!--UI classes-->
     <context:component-scan base-package="layers.web.vaadin"/>
 
-    <bean id="imageUploader" class="layers.web.vaadin.ImageUploader"/>
-
-    <bean id="upload" class="com.vaadin.ui.Upload">
-        <property name="receiver" ref="imageUploader"/>
-    </bean>
-
     <!--SERVICE classes-->
     <context:component-scan base-package="layers.service"/>
 

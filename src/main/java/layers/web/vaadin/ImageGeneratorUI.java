@@ -17,31 +17,32 @@ import org.springframework.context.annotation.Scope;
 public class ImageGeneratorUI extends UI {
 
     @Autowired
-    private ImageUploader imageUploader;
+    private Uploader uploader;
 
     @Autowired
-    private Upload upload;
+    private UploadListener uploadListener;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
-        upload.addSucceededListener(imageUploader);
-        upload.addFinishedListener(imageUploader);
-        upload.addProgressListener(imageUploader);
-        upload.addStartedListener(imageUploader);
-        upload.setImmediateMode(true);
-        upload.setButtonCaption("select and generate image");
+        uploader.setImmediateMode(true);
+        uploader.setButtonCaption("select and generate image");
+        uploader.setReceiver(uploadListener);
+        uploader.addStartedListener(uploadListener);
+        uploader.addProgressListener(uploadListener);
+        uploader.addSucceededListener(uploadListener);
+        uploader.addFinishedListener(uploadListener);
 
         VerticalLayout verticalLayout = new VerticalLayout();
         Link githubLink               = githubLink();
         Link codacyLink               = codacyLink();
-        verticalLayout.addComponents(githubLink, codacyLink, upload);
+        verticalLayout.addComponents(githubLink, codacyLink, uploader);
         verticalLayout.setComponentAlignment(githubLink, Alignment.TOP_RIGHT);
         verticalLayout.setComponentAlignment(codacyLink, Alignment.TOP_RIGHT);
-        verticalLayout.setComponentAlignment(upload, Alignment.TOP_CENTER);
+        verticalLayout.setComponentAlignment(uploader, Alignment.TOP_CENTER);
 
-        Image originalImageView  = imageUploader.getOriginalImageView();
-        Image generatedImageView = imageUploader.getGeneratedImageView();
+        Image originalImageView  = uploadListener.getOriginalImageView();
+        Image generatedImageView = uploadListener.getGeneratedImageView();
         originalImageView.setSource(null);
         generatedImageView.setSource(null);
 
