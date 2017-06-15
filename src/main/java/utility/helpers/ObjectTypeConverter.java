@@ -1,5 +1,6 @@
 package utility.helpers;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
@@ -10,6 +11,7 @@ import java.io.File;
 import java.io.InputStream;
 
 @Component
+@Scope("prototype")
 public class ObjectTypeConverter {
 
     public InputStream inputStream(byte[] bytes) {

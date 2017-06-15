@@ -1,6 +1,8 @@
 package utility.helpers;
 
 import layers.service.ColorInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
@@ -11,10 +13,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
+@Scope("prototype")
 public class PatternManager {
 
-    private ObjectTypeConverter converter = new ObjectTypeConverter();
-    private ColorInfo colorInfo           = new ColorInfo();
+    @Autowired
+    private ObjectTypeConverter converter;
+
+    @Autowired
+    private ColorInfo colorInfo;
 
     public Map<Color, BufferedImage> patternsMap(List<File> files) {
         return files.stream()

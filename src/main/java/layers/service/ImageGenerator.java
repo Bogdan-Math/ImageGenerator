@@ -1,6 +1,7 @@
 package layers.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import utility.exceptions.MatrixSizeException;
 
@@ -13,14 +14,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
+@Scope("prototype")
 public class ImageGenerator {
 
     /**
      * The values of ImageSize should be as close as possible to patterns average size, if they different.
      * The best way if all patterns have same width and height. Then set it in in WIDTH and HEIGHT and you are C00L :).
      */
-    private static final int WIDTH = 40;
-    private static final int HEIGHT = 20;
+    private static final int WIDTH = 25;//40;
+    private static final int HEIGHT = 25;//20;
 
     @Autowired
     private ColorInfo colorInfo;

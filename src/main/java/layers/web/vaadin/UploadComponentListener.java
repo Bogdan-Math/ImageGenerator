@@ -7,6 +7,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.Upload;
 import layers.service.ImageGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import utility.helpers.ObjectTypeConverter;
 import utility.helpers.PatternManager;
 import utility.helpers.ResourceReader;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @SpringComponent
+@Scope("prototype")
 public class UploadComponentListener implements Upload.Receiver, Upload.StartedListener, Upload.ProgressListener, Upload.SucceededListener, Upload.FinishedListener {
 
     @Autowired
@@ -88,8 +90,8 @@ public class UploadComponentListener implements Upload.Receiver, Upload.StartedL
 
         notifications.add("Upload succeeded.");
 
-        imageGenerator.setExpectedColumnsNumber(100)
-                .setPatterns(patternManager.patternsMap(resourceReader.readFiles("images/flags")))
+        imageGenerator.setExpectedColumnsNumber(250)
+                .setPatterns(patternManager.patternsMap(resourceReader.readFiles("images/colors")))
                 .setImage(uploadedImage);
 
         BufferedImage generatedImage = imageGenerator.generateImage();
