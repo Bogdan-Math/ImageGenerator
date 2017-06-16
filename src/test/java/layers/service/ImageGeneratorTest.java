@@ -1,11 +1,11 @@
 package layers.service;
 
-import utility.exceptions.MatrixSizeException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import utility.exceptions.MatrixSizeException;
 import utility.helpers.ObjectTypeConverter;
 import utility.helpers.PatternManager;
 import utility.helpers.ResourceReader;

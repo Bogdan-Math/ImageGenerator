@@ -91,7 +91,7 @@ public class UploadComponentListener implements Upload.Receiver, Upload.StartedL
         notifications.add("Upload succeeded.");
 
         imageGenerator.setExpectedColumnsNumber(128)
-                .setPatterns(patternManager.patternsMap(resourceReader.readFiles("images/colors")))
+                .setPatterns(patternManager.patternsMap(resourceReader.readFiles("images/flags")))
                 .setImage(uploadedImage);
 
         BufferedImage generatedImage = imageGenerator.generateImage();
@@ -103,9 +103,6 @@ public class UploadComponentListener implements Upload.Receiver, Upload.StartedL
         generatedImageView.setSource(new StreamResource(() ->
                 converter.inputStream(generatedImage),
                 "generated_" + fileName));
-
-        originalImageView.setVisible(true);
-        generatedImageView.setVisible(true);
 
         notifications.add("Your image was generated.");
     }
