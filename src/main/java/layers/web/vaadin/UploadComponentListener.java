@@ -24,9 +24,6 @@ import java.util.stream.Collectors;
 public class UploadComponentListener implements Upload.Receiver, Upload.StartedListener, Upload.ProgressListener, Upload.SucceededListener, Upload.FinishedListener {
 
     @Autowired
-    private UploadComponent uploadComponent;
-
-    @Autowired
     private ImageGenerator imageGenerator;
 
     @Autowired
@@ -41,6 +38,7 @@ public class UploadComponentListener implements Upload.Receiver, Upload.StartedL
     @Resource(name = "notifications")
     private List<String> notifications;
 
+    private Upload upload;
     private ByteArrayOutputStream uploadStream;
     private Image originalImageView  = new Image("");
     private Image generatedImageView = new Image("");
@@ -55,10 +53,12 @@ public class UploadComponentListener implements Upload.Receiver, Upload.StartedL
 
     @Override
     public void uploadStarted(Upload.StartedEvent startedEvent) {
-        notifications.add("Upload started.");
 
+        this.upload = startedEvent.getUpload();
+
+        notifications.add("Upload started.");
         if (!"image/jpeg".equals(startedEvent.getMIMEType())) {
-            uploadComponent.interruptUpload();
+            upload.interruptUpload();
 
             notifications.add("Oh, no! Only '.jpg' and '.jpeg' files can be uploaded.");
         }
@@ -70,7 +70,7 @@ public class UploadComponentListener implements Upload.Receiver, Upload.StartedL
         int maxSize = 10485760; // 10485760 (Bytes) = 10MB
 
         if (maxSize < contentLength) {
-            uploadComponent.interruptUpload();
+            upload.interruptUpload();
 
             notifications.add("Oh, no! File size can not be more then 10 MB.");
         }
