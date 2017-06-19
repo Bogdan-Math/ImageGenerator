@@ -1,6 +1,7 @@
 package layers.web.vaadin;
 
 import com.vaadin.spring.annotation.SpringComponent;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Slider;
 import layers.service.ImageGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,17 @@ public class ExpectedColumnsNumberSlider extends Slider {
     public void postConstruct() {
         setCaption("Number of expected columns: ");
         setSizeFull();
-        setMin(8.0);
+        setMin(0.0);
         setMax(128.0);
         setValue(64.0);
-        addValueChangeListener(event -> imageGenerator.setExpectedColumnsNumber(getValue().intValue()));
+        addValueChangeListener(event -> {
+            int expectedColumnsNumber = getValue().intValue();
+            if (expectedColumnsNumber < 8) {
+                Notification.show("No, no, no... Trust me, 8 - it's OK!");
+                setValue(8.0);
+                return;
+            }
+            imageGenerator.setExpectedColumnsNumber(expectedColumnsNumber);
+        });
     }
 }
