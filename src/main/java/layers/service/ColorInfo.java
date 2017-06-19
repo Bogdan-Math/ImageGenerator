@@ -1,13 +1,11 @@
 package layers.service;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 @Component
-@Scope("prototype")
 public class ColorInfo {
 
     public Color averagedColor(BufferedImage image) {

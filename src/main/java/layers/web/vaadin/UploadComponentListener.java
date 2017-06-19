@@ -9,13 +9,13 @@ import layers.service.ImageGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import utility.helpers.ObjectTypeConverter;
-import utility.helpers.PatternManager;
-import utility.helpers.ResourceReader;
 
 import javax.annotation.Resource;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,12 +25,6 @@ public class UploadComponentListener implements Upload.Receiver, Upload.StartedL
 
     @Autowired
     private ImageGenerator imageGenerator;
-
-    @Autowired
-    private PatternManager patternManager;
-
-    @Autowired
-    private ResourceReader resourceReader;
 
     @Autowired
     private ObjectTypeConverter converter;
@@ -90,19 +84,18 @@ public class UploadComponentListener implements Upload.Receiver, Upload.StartedL
 
         notifications.add("Upload succeeded.");
 
-        imageGenerator.setExpectedColumnsNumber(128)
-                .setPatterns(patternManager.patternsMap(resourceReader.readFiles("images/flags")))
-                .setImage(uploadedImage);
+        imageGenerator.setImage(uploadedImage);
 
         BufferedImage generatedImage = imageGenerator.generateImage();
+        String timeNow               = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"));
 
         originalImageView.setSource(new StreamResource(() ->
                 converter.inputStream(uploadedBytes),
-                "original_" + fileName));
+                String.join("_", "original", timeNow, fileName)));
 
         generatedImageView.setSource(new StreamResource(() ->
                 converter.inputStream(generatedImage),
-                "generated_" + fileName));
+                String.join("_", "generated", timeNow, fileName)));
 
         notifications.add("Your image was generated.");
     }

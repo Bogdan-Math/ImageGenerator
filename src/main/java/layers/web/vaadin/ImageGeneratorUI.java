@@ -6,6 +6,8 @@ import com.vaadin.server.ExternalResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
+import layers.service.ImageGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
@@ -22,8 +24,23 @@ public class ImageGeneratorUI extends UI {
     @Autowired
     private UploadComponentListener uploadComponentListener;
 
+    @Autowired
+    private ImageGenerator imageGenerator;
+
+    private RadioButtonGroup<String> radioButtonGroup = new RadioButtonGroup<>();
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
+
+        imageGenerator.setExpectedColumnsNumber(128)
+                      .setPatternsFrom("images/flags");
+
+        radioButtonGroup.setItems("images/flags", "images/colors");
+        radioButtonGroup.setValue("images/flags");
+        radioButtonGroup.addStyleName(ValoTheme.OPTIONGROUP_HORIZONTAL);
+        radioButtonGroup.addValueChangeListener(v -> imageGenerator.setExpectedColumnsNumber(128)
+                                                                   .setPatternsFrom(radioButtonGroup.getValue())
+        );
 
         uploadComponent.setImmediateMode(true);
         uploadComponent.setButtonCaption("select and generate image");
@@ -36,9 +53,10 @@ public class ImageGeneratorUI extends UI {
         VerticalLayout verticalLayout = new VerticalLayout();
         Link githubLink               = githubLink();
         Link codacyLink               = codacyLink();
-        verticalLayout.addComponents(githubLink, codacyLink, uploadComponent);
+        verticalLayout.addComponents(githubLink, codacyLink, uploadComponent, radioButtonGroup);
         verticalLayout.setComponentAlignment(githubLink, Alignment.TOP_RIGHT);
         verticalLayout.setComponentAlignment(codacyLink, Alignment.TOP_RIGHT);
+        verticalLayout.setComponentAlignment(radioButtonGroup, Alignment.TOP_CENTER);
         verticalLayout.setComponentAlignment(uploadComponent, Alignment.TOP_CENTER);
 
         Image originalImageView  = uploadComponentListener.getOriginalImageView();

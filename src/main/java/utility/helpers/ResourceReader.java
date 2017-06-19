@@ -1,6 +1,5 @@
 package utility.helpers;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -10,7 +9,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
-@Scope("prototype")
 public class ResourceReader {
 
     public List<File> readFiles(String path) {

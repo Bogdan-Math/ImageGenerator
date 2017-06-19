@@ -1,9 +1,10 @@
 package layers.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import utility.exceptions.MatrixSizeException;
+import utility.helpers.PatternManager;
+import utility.helpers.ResourceReader;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,7 +15,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
-@Scope("prototype")
 public class ImageGenerator {
 
     /**
@@ -26,6 +26,13 @@ public class ImageGenerator {
 
     @Autowired
     private ColorInfo colorInfo;
+
+    @Autowired
+    private PatternManager patternManager;
+
+    @Autowired
+    private ResourceReader resourceReader;
+
 
     private BufferedImage image;
     private Map<Color, BufferedImage> patterns;
@@ -188,4 +195,10 @@ public class ImageGenerator {
         this.colorInfo = colorInfo;
         return this;
     }
+
+    public ImageGenerator setPatternsFrom(String patternsDir) {
+        this.patterns = patternManager.patternsMap(resourceReader.readFiles(patternsDir));
+        return this;
+    }
+
 }

@@ -2,7 +2,6 @@ package utility.helpers;
 
 import layers.service.ColorInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
@@ -13,7 +12,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
-@Scope("prototype")
 public class PatternManager {
 
     @Autowired
