@@ -37,11 +37,15 @@
   //noinspection SassScssResolvedByNameOnly
   @include valo;
 
-  // Insert your own theme rules here
   .v-image-bordered {
     border: 3px solid gray;
     padding: 3px;
     border-radius: 15px;
+  }
+
+  //TODO: change patterns group location (if it stay in the middle, fix approach to do it)
+  .v-select-optiongroup {
+    padding-left: 24px;
   }
 
 }
