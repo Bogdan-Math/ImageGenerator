@@ -22,9 +22,9 @@
     <util:list id="notifications" value-type="java.lang.String"/>
 
     <util:map id="patterns" key-type="java.lang.String" value-type="java.lang.String">
-        <entry key="Countries flags" value="images/flags"/>
-        <entry key="Rainbow colors" value="images/colors"/>
-        <entry key="Plain colors" value="images/plain"/>
+        <entry key="Common" value="images/colors"/>
+        <entry key="Flags" value="images/flags"/>
+        <entry key="Plain" value="images/plain"/>
     </util:map>
 
 </beans>

@@ -44,7 +44,7 @@ public class ImageGenerator {
     @PostConstruct
     public void postConstruct() {
         this.setExpectedColumnsNumber(128)
-            .setPatternsFrom("images/flags");
+            .setPatternsFrom("images/colors");
     }
 
     //TODO: add descriptive comments to this method
