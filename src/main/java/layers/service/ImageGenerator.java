@@ -1,11 +1,13 @@
 package layers.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import utility.exceptions.MatrixSizeException;
 import utility.helpers.PatternManager;
 import utility.helpers.ResourceReader;
 
+import javax.annotation.PostConstruct;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
+@Scope("session")
 public class ImageGenerator {
 
     /**
@@ -37,6 +40,12 @@ public class ImageGenerator {
     private BufferedImage image;
     private Map<Color, BufferedImage> patterns;
     private Integer expectedColumnsNumber;
+
+    @PostConstruct
+    public void postConstruct() {
+        this.setExpectedColumnsNumber(128)
+            .setPatternsFrom("images/flags");
+    }
 
     //TODO: add descriptive comments to this method
     public List<List<BufferedImage>> asMatrix(int expectedColumns) {

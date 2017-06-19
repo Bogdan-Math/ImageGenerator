@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @SpringComponent
-@Scope("prototype")
+@Scope("session")
 public class UploadComponentListener implements Upload.Receiver, Upload.StartedListener, Upload.ProgressListener, Upload.SucceededListener, Upload.FinishedListener {
 
     @Autowired

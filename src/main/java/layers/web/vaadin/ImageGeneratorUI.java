@@ -6,14 +6,12 @@ import com.vaadin.server.ExternalResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
-import layers.service.ImageGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 
 @SpringUI(path = "/*")
-@Scope("prototype")
+@Scope("session")
 @Theme("mytheme")
 @Title("Image Generator")
 public class ImageGeneratorUI extends UI {
@@ -22,59 +20,35 @@ public class ImageGeneratorUI extends UI {
     private UploadComponent uploadComponent;
 
     @Autowired
-    private UploadComponentListener uploadComponentListener;
-
-    @Autowired
-    private ImageGenerator imageGenerator;
-
-    private RadioButtonGroup<String> radioButtonGroup = new RadioButtonGroup<>();
+    private RadioButtonPatternsGroup patternsGroup;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
-        imageGenerator.setExpectedColumnsNumber(128)
-                      .setPatternsFrom("images/flags");
-
-        radioButtonGroup.setItems("images/flags", "images/colors");
-        radioButtonGroup.setValue("images/flags");
-        radioButtonGroup.addStyleName(ValoTheme.OPTIONGROUP_HORIZONTAL);
-        radioButtonGroup.addValueChangeListener(v -> imageGenerator.setExpectedColumnsNumber(128)
-                                                                   .setPatternsFrom(radioButtonGroup.getValue())
-        );
-
-        uploadComponent.setImmediateMode(true);
-        uploadComponent.setButtonCaption("select and generate image");
-        uploadComponent.setReceiver(uploadComponentListener);
-        uploadComponent.addStartedListener(uploadComponentListener);
-        uploadComponent.addProgressListener(uploadComponentListener);
-        uploadComponent.addSucceededListener(uploadComponentListener);
-        uploadComponent.addFinishedListener(uploadComponentListener);
-
         VerticalLayout verticalLayout = new VerticalLayout();
         Link githubLink               = githubLink();
         Link codacyLink               = codacyLink();
-        verticalLayout.addComponents(githubLink, codacyLink, uploadComponent, radioButtonGroup);
+        verticalLayout.addComponents(githubLink, codacyLink, uploadComponent, patternsGroup);
         verticalLayout.setComponentAlignment(githubLink, Alignment.TOP_RIGHT);
         verticalLayout.setComponentAlignment(codacyLink, Alignment.TOP_RIGHT);
-        verticalLayout.setComponentAlignment(radioButtonGroup, Alignment.TOP_CENTER);
+        verticalLayout.setComponentAlignment(patternsGroup, Alignment.TOP_CENTER);
         verticalLayout.setComponentAlignment(uploadComponent, Alignment.TOP_CENTER);
 
-        Image originalImageView  = uploadComponentListener.getOriginalImageView();
-        Image generatedImageView = uploadComponentListener.getGeneratedImageView();
+        //TODO: create custom layout and bring image initialization (original and generated) there
+        Image originalImageView  = uploadComponent.getUploadComponentListener().getOriginalImageView();
+        Image generatedImageView = uploadComponent.getUploadComponentListener().getGeneratedImageView();
         originalImageView.setSource(null);
         generatedImageView.setSource(null);
+        originalImageView.setSizeFull();// Width("50%");
+        generatedImageView.setSizeFull();// setWidth("50%");
+        originalImageView.setStyleName("bordered");
+        generatedImageView.setStyleName("bordered");
 
         GridLayout gridLayout = new GridLayout(2, 1);
         gridLayout.setSizeFull();
         gridLayout.setSpacing(true);
         gridLayout.addComponent(originalImageView);
         gridLayout.addComponent(generatedImageView);
-
-        originalImageView.setSizeFull();// Width("50%");
-        originalImageView.setStyleName("bordered");
-
-        generatedImageView.setSizeFull();// setWidth("50%");
-        generatedImageView.setStyleName("bordered");
 
         verticalLayout.addComponent(gridLayout);
 

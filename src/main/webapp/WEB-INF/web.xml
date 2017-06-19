@@ -5,9 +5,14 @@
                              http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-    <!--create app-context under the app code, and load configs from context params-->
+    <!--need to correct start web app with Spring context-->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!--need to apply spring session for 'session' and 'request' scopes-->
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
     </listener>
 
     <!--load configs for app-context-->
