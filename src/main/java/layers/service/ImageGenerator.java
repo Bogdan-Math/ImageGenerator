@@ -43,7 +43,7 @@ public class ImageGenerator {
 
     @PostConstruct
     public void postConstruct() {
-        this.setExpectedColumnsNumber(128)
+        this.setExpectedColumnsNumber(64)
             .setPatternsFrom("images/colors");
     }
 

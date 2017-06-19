@@ -22,13 +22,16 @@ public class ImageGeneratorUI extends UI {
     @Autowired
     private RadioButtonPatternsGroup patternsGroup;
 
+    @Autowired
+    private ExpectedColumnsNumberSlider slider;
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
         VerticalLayout verticalLayout = new VerticalLayout();
         Link githubLink               = githubLink();
         Link codacyLink               = codacyLink();
-        verticalLayout.addComponents(githubLink, codacyLink, uploadComponent, patternsGroup);
+        verticalLayout.addComponents(githubLink, codacyLink, uploadComponent, patternsGroup, slider);
         verticalLayout.setComponentAlignment(githubLink, Alignment.TOP_RIGHT);
         verticalLayout.setComponentAlignment(codacyLink, Alignment.TOP_RIGHT);
         verticalLayout.setComponentAlignment(patternsGroup, Alignment.TOP_CENTER);
