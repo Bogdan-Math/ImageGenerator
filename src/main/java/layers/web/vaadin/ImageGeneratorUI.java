@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Scope;
 
 
 @SpringUI(path = "/*")
-@Scope("session")
+@Scope("prototype")
 @Theme("mytheme")
 @Title("Image Generator")
 public class ImageGeneratorUI extends UI {
