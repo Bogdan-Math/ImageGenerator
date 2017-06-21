@@ -25,35 +25,22 @@ public class ImageGeneratorUI extends UI {
     @Autowired
     private ExpectedColumnsNumberSlider slider;
 
+    @Autowired
+    private ImagesLayout images;
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
         VerticalLayout verticalLayout = new VerticalLayout();
         Link githubLink               = githubLink();
         Link codacyLink               = codacyLink();
-        verticalLayout.addComponents(githubLink, codacyLink, uploadComponent, patternsGroup, slider);
+
+        verticalLayout.addComponents(githubLink, codacyLink, uploadComponent, patternsGroup, slider, images);
+
         verticalLayout.setComponentAlignment(githubLink, Alignment.TOP_RIGHT);
         verticalLayout.setComponentAlignment(codacyLink, Alignment.TOP_RIGHT);
         verticalLayout.setComponentAlignment(patternsGroup, Alignment.TOP_CENTER);
         verticalLayout.setComponentAlignment(uploadComponent, Alignment.TOP_CENTER);
-
-        //TODO: create custom layout and bring image initialization (original and generated) there
-        Image originalImageView  = uploadComponent.getUploadComponentListener().getOriginalImageView();
-        Image generatedImageView = uploadComponent.getUploadComponentListener().getGeneratedImageView();
-        originalImageView.setSource(null);
-        generatedImageView.setSource(null);
-        originalImageView.setSizeFull();// Width("50%");
-        generatedImageView.setSizeFull();// setWidth("50%");
-        originalImageView.setStyleName("bordered");
-        generatedImageView.setStyleName("bordered");
-
-        GridLayout gridLayout = new GridLayout(2, 1);
-        gridLayout.setSizeFull();
-        gridLayout.setSpacing(true);
-        gridLayout.addComponent(originalImageView);
-        gridLayout.addComponent(generatedImageView);
-
-        verticalLayout.addComponent(gridLayout);
 
         setContent(verticalLayout);
     }

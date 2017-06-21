@@ -22,9 +22,15 @@
     <util:list id="notifications" value-type="java.lang.String"/>
 
     <util:map id="patterns" key-type="java.lang.String" value-type="java.lang.String">
-        <entry key="Common" value="images/colors"/>
+        <entry key="Commons" value="images/colors"/>
         <entry key="Flags" value="images/flags"/>
-        <entry key="Plain" value="images/plain"/>
+        <entry key="Plains" value="images/plain"/>
     </util:map>
+
+    <bean id="originalImageView"
+          class="com.vaadin.ui.Image" scope="session"/>
+
+    <bean id="generatedImageView"
+          class="com.vaadin.ui.Image" scope="session"/>
 
 </beans>

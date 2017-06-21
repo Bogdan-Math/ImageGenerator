@@ -7,6 +7,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.Upload;
 import layers.service.ImageGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import utility.helpers.ObjectTypeConverter;
 
@@ -29,13 +30,22 @@ public class UploadComponentListener implements Upload.Receiver, Upload.StartedL
     @Autowired
     private ObjectTypeConverter converter;
 
+    @Autowired
+    private ImagesLayout images;
+
     @Resource(name = "notifications")
     private List<String> notifications;
 
     private Upload upload;
     private ByteArrayOutputStream uploadStream;
-    private Image originalImageView  = new Image("");
-    private Image generatedImageView = new Image("");
+
+    @Autowired
+    @Qualifier(value = "originalImageView")
+    private Image originalImageView;
+
+    @Autowired
+    @Qualifier(value = "generatedImageView")
+    private Image generatedImageView;
 
     @Override
     public OutputStream receiveUpload(String fileName, String mimeType) {
@@ -107,13 +117,5 @@ public class UploadComponentListener implements Upload.Receiver, Upload.StartedL
                                        .collect(Collectors.joining("\n")),
                           Notification.Type.TRAY_NOTIFICATION);
         notifications.clear();
-    }
-
-    public Image getOriginalImageView() {
-        return originalImageView;
-    }
-
-    public Image getGeneratedImageView() {
-        return generatedImageView;
     }
 }
