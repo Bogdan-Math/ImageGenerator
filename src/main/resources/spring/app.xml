@@ -21,10 +21,10 @@
 
     <util:list id="notifications" value-type="java.lang.String"/>
 
-    <util:map id="patterns" key-type="java.lang.String" value-type="java.lang.String">
-        <entry key="Commons" value="images/colors"/>
-        <entry key="Flags" value="images/flags"/>
-        <entry key="Plains" value="images/plain"/>
+    <util:map id="patterns" key-type="layers.service.Patterns" value-type="java.lang.String">
+        <entry key="#{T(layers.service.Patterns).COMMONS}" value="images/colors"/>
+        <entry key="#{T(layers.service.Patterns).FLAGS}"   value="images/flags"/>
+        <entry key="#{T(layers.service.Patterns).PLAINS}"  value="images/plain"/>
     </util:map>
 
     <bean id="originalImageView"

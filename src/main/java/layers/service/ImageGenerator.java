@@ -36,20 +36,13 @@ public class ImageGenerator {
     @Autowired
     private ResourceReader resourceReader;
 
-
     private BufferedImage image;
     private Map<Color, BufferedImage> patterns;
     private Integer expectedColumnsNumber;
 
-    @PostConstruct
-    public void postConstruct() {
-        this.setExpectedColumnsNumber(64)
-            .setPatternsFrom("images/colors");
-    }
-
     //TODO: add descriptive comments to this method
     public List<List<BufferedImage>> asMatrix(int expectedColumns) {
-                                                int expectedRows = 0;
+                                              int expectedRows = 0;
 
         int width  = image.getWidth();
         int height = image.getHeight();

@@ -24,8 +24,8 @@ public class PatternManager {
         return files.stream()
                 .collect(Collectors
                         .toMap(
-                                this::averagedColor,     // put Color         like KEY   in map
-                                converter::bufferedImage,// put BufferedImage like VALUE in map
+                                this::averagedColor,     // put Color         as KEY   in map
+                                converter::bufferedImage,// put BufferedImage as VALUE in map
 
                                 (img_color_1, img_color_2) -> {
                                     System.out.println("Two same average color: ");
