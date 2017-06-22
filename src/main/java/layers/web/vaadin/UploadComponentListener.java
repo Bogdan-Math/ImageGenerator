@@ -30,9 +30,6 @@ public class UploadComponentListener implements Upload.Receiver, Upload.StartedL
     @Autowired
     private ObjectTypeConverter converter;
 
-    @Autowired
-    private ImagesLayout images;
-
     @Resource(name = "notifications")
     private List<String> notifications;
 
