@@ -24,7 +24,7 @@
     <util:map id="patterns" key-type="layers.service.Patterns" value-type="java.lang.String">
         <entry key="#{T(layers.service.Patterns).COMMONS}" value="images/colors"/>
         <entry key="#{T(layers.service.Patterns).FLAGS}"   value="images/flags"/>
-        <entry key="#{T(layers.service.Patterns).PLAINS}"  value="images/plain"/>
+        <entry key="#{T(layers.service.Patterns).PLAINS}"  value="images/plains"/>
     </util:map>
 
     <bean id="originalImageView"

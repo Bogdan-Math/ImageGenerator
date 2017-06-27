@@ -24,10 +24,11 @@ public class ExpectedColumnsNumberSlider extends Slider {
         setMax(128.0);
         setValue(64.0);
 
-        int expectedColumnsNumber = getValue().intValue();
-        imageGenerator.setExpectedColumnsNumber(expectedColumnsNumber);
+        int initExpectedColumnsNumber = getValue().intValue();
+        imageGenerator.setExpectedColumnsNumber(initExpectedColumnsNumber);
 
         addValueChangeListener(event -> {
+            int expectedColumnsNumber = getValue().intValue();
             if (expectedColumnsNumber < 8) {
                 Notification.show("No, no, no... Trust me, 8 - it's OK!");
                 setValue(8.0);
