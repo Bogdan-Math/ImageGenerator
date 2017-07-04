@@ -21,11 +21,13 @@
 
     <util:list id="notifications" value-type="java.lang.String"/>
 
-    <util:map id="patterns" key-type="layers.service.Patterns" value-type="java.lang.String">
+    <util:map id="patternsLocation" key-type="layers.service.Patterns" value-type="java.lang.String">
         <entry key="#{T(layers.service.Patterns).COMMONS}" value="images/colors"/>
         <entry key="#{T(layers.service.Patterns).FLAGS}"   value="images/flags"/>
         <entry key="#{T(layers.service.Patterns).PLAINS}"  value="images/plains"/>
     </util:map>
+
+    <util:map id="patterns" key-type="layers.service.Patterns" value-type="java.util.HashMap"/>
 
     <bean id="originalImageView"
           class="com.vaadin.ui.Image" scope="session"/>

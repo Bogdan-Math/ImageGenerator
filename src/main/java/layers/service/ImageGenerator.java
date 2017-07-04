@@ -30,12 +30,6 @@ public class ImageGenerator {
     @Autowired
     private ColorInfo colorInfo;
 
-    @Autowired
-    private PatternManager patternManager;
-
-    @Autowired
-    private ResourceReader resourceReader;
-
     private BufferedImage image;
     private Map<Color, BufferedImage> patterns;
     private Integer expectedColumnsNumber;
@@ -197,10 +191,4 @@ public class ImageGenerator {
         this.colorInfo = colorInfo;
         return this;
     }
-
-    public ImageGenerator setPatternsFrom(String patternsDir) {
-        this.patterns = patternManager.patternsMap(resourceReader.readFiles(patternsDir));
-        return this;
-    }
-
 }
