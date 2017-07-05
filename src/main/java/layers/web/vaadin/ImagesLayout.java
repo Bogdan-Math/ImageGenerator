@@ -40,12 +40,4 @@ public class ImagesLayout extends GridLayout {
 
         addComponents(originalImageView, generatedImageView);
     }
-
-    public Image getOriginalImageView() {
-        return originalImageView;
-    }
-
-    public Image getGeneratedImageView() {
-        return generatedImageView;
-    }
 }

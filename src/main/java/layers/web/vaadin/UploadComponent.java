@@ -24,8 +24,4 @@ public class UploadComponent extends Upload {
         addSucceededListener(uploadComponentListener);
         addFinishedListener(uploadComponentListener);
     }
-
-    public UploadComponentListener getUploadComponentListener() {
-        return uploadComponentListener;
-    }
 }

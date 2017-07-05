@@ -30,17 +30,18 @@ public class ImageGeneratorUI extends UI {
     private ExpectedColumnsNumberSlider slider;
 
     @Autowired
-    private ImagesLayout images;
+    private ImagesLayout imagesLayout;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
         VerticalLayout verticalLayout = new VerticalLayout();
 
-        verticalLayout.addComponents(linksLayout, uploadComponent, patternsGroup, slider, images);
+        verticalLayout.addComponents(linksLayout, uploadComponent, patternsGroup, slider, imagesLayout);
 
         verticalLayout.setComponentAlignment(uploadComponent, Alignment.TOP_CENTER);
         verticalLayout.setComponentAlignment(patternsGroup, Alignment.TOP_CENTER);
+        verticalLayout.setComponentAlignment(slider, Alignment.TOP_CENTER);
 
         setContent(verticalLayout);
     }
