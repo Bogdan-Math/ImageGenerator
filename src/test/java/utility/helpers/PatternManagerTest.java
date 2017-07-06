@@ -1,10 +1,8 @@
 package utility.helpers;
 
-import layers.service.ColorInfo;
+import layers.service.GeneralColorInfo;
 import org.junit.Before;
 import org.junit.Test;
-import utility.helpers.PatternManager;
-import utility.helpers.ResourceReader;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -23,7 +21,7 @@ public class PatternManagerTest {
     @Before
     public void setUp() throws Exception {
         this.patternManager = new PatternManager();
-        this.patternManager.setColorInfo(new ColorInfo());
+        this.patternManager.setColorInfo(new GeneralColorInfo());
         this.patternManager.setConverter(new ObjectTypeConverter());
 
         this.resourceReader = new ResourceReader();

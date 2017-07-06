@@ -10,13 +10,13 @@ import java.awt.image.BufferedImage;
 
 import static org.junit.Assert.assertEquals;
 
-public class ColorInfoTest {
+public class GeneralColorInfoTest {
 
     private ColorInfo colorInfo;
 
     @Before
     public void setUp() throws Exception {
-        this.colorInfo = new ColorInfo();
+        this.colorInfo = new GeneralColorInfo();
     }
 
     @Test

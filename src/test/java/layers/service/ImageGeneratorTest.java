@@ -41,7 +41,7 @@ public class ImageGeneratorTest {
     public void setUp() throws Exception {
         this.resourceReader = new ResourceReader();
         this.patternManager = new PatternManager();
-        this.patternManager.setColorInfo(new ColorInfo());
+        this.patternManager.setColorInfo(new GeneralColorInfo());
         this.patternManager.setConverter(new ObjectTypeConverter());
 
         this.canonicalImage = ImageIO.read(resourceReader.readFile("images/canonical.jpg"));
@@ -51,7 +51,7 @@ public class ImageGeneratorTest {
         this.patterns              = patternManager.patternsMap(resourceReader.readFiles("images/flags"));
 
         this.imageGenerator = new ImageGenerator()
-                .setColorInfo(new ColorInfo())
+                .setColorInfo(new GeneralColorInfo())
                 .setImage(canonicalImage)
                 .setPatterns(patterns)
                 .setExpectedColumnsNumber(expectedColumnsNumber);
