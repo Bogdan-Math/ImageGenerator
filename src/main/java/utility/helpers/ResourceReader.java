@@ -18,10 +18,10 @@ public class ResourceReader {
                      .collect(Collectors.toList());
     }
 
+    @SuppressWarnings("ConstantConditions")
     public File readFile(String resourceName) {
         return new File(getClass().getClassLoader()
-                                            .getResource("")
-                                            .getPath() + resourceName);
+                                            .getResource(resourceName).getFile());
     }
 
 }
