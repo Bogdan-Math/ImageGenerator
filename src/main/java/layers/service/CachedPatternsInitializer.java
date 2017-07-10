@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static layers.service.Patterns.*;
@@ -27,7 +28,6 @@ public class CachedPatternsInitializer implements PatternsInitializer {
     @Resource(name = "patternsLocation")
     private Map<Patterns, String> patternsLocation;
 
-    @Resource(name = "patterns")
     private Map<Patterns, Map<Color, BufferedImage>> patterns;
 
     @PostConstruct
@@ -35,6 +35,8 @@ public class CachedPatternsInitializer implements PatternsInitializer {
         Map<Color, BufferedImage> commons = patternManager.patternsMap(resourceReader.readFiles(patternsLocation.get(COMMONS)));
         Map<Color, BufferedImage> flags   = patternManager.patternsMap(resourceReader.readFiles(patternsLocation.get(FLAGS)));
         Map<Color, BufferedImage> plains  = patternManager.patternsMap(resourceReader.readFiles(patternsLocation.get(PLAINS)));
+
+        patterns = new LinkedHashMap<>();
 
         patterns.put(COMMONS, commons);
         patterns.put(FLAGS, flags);

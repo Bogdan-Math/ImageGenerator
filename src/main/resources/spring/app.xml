@@ -27,8 +27,6 @@
         <entry key="#{T(layers.service.Patterns).PLAINS}"  value="images/plains"/>
     </util:map>
 
-    <util:map id="patterns" key-type="layers.service.Patterns" value-type="java.util.HashMap"/>
-
     <bean id="originalImageView"
           class="com.vaadin.ui.Image" scope="session"/>
 
