@@ -16,7 +16,7 @@ import static layers.service.Patterns.*;
 
 @Component
 @Scope("singleton")
-public class PatternsStore {
+public class CachedPatternsInitializer implements PatternsInitializer {
 
     @Autowired
     private PatternManager patternManager;
@@ -39,5 +39,10 @@ public class PatternsStore {
         patterns.put(COMMONS, commons);
         patterns.put(FLAGS, flags);
         patterns.put(PLAINS, plains);
+    }
+
+    @Override
+    public Map<Patterns, Map<Color, BufferedImage>> getPatterns() {
+        return patterns;
     }
 }
