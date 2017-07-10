@@ -1,6 +1,6 @@
 package layers.service;
 
-public enum  Patterns {
+public enum PatternsType {
     COMMONS,
     FLAGS,
     PLAINS

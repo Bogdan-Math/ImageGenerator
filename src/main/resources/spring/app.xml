@@ -16,15 +16,18 @@
     <!--SERVICE classes-->
     <context:component-scan base-package="layers.service"/>
 
+    <!--REPOSITORY classes-->
+    <context:component-scan base-package="layers.repository"/>
+
     <!--HELPER classes-->
     <context:component-scan base-package="utility.helpers"/>
 
     <util:list id="notifications" value-type="java.lang.String"/>
 
-    <util:map id="patternsLocation" key-type="layers.service.Patterns" value-type="java.lang.String">
-        <entry key="#{T(layers.service.Patterns).COMMONS}" value="images/colors"/>
-        <entry key="#{T(layers.service.Patterns).FLAGS}"   value="images/flags"/>
-        <entry key="#{T(layers.service.Patterns).PLAINS}"  value="images/plains"/>
+    <util:map id="patternsLocation" key-type="layers.service.PatternsType" value-type="java.lang.String">
+        <entry key="#{T(layers.service.PatternsType).COMMONS}" value="images/colors"/>
+        <entry key="#{T(layers.service.PatternsType).FLAGS}" value="images/flags"/>
+        <entry key="#{T(layers.service.PatternsType).PLAINS}" value="images/plains"/>
     </util:map>
 
     <bean id="originalImageView"

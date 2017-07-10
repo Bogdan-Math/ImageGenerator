@@ -4,6 +4,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Map;
 
-public interface PatternsInitializer {
-    Map<Patterns, Map<Color, BufferedImage>> getPatterns();
+public interface PatternsService {
+    Map<PatternsType, Map<Color, BufferedImage>> getAllPatterns();
 }
