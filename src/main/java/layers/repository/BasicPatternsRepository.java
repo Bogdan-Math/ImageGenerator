@@ -29,20 +29,20 @@ public class BasicPatternsRepository implements PatternsRepository {
 
     @Override
     public Map<Color, BufferedImage> getCommons() {
-        return patternsInitialization(COMMONS);
+        return initialize(COMMONS);
     }
 
     @Override
     public Map<Color, BufferedImage> getFlags() {
-        return patternsInitialization(FLAGS);
+        return initialize(FLAGS);
     }
 
     @Override
     public Map<Color, BufferedImage> getPlains() {
-        return patternsInitialization(PLAINS);
+        return initialize(PLAINS);
     }
 
-    private Map<Color, BufferedImage> patternsInitialization(PatternsType patternsType) {
+    private Map<Color, BufferedImage> initialize(PatternsType patternsType) {
         return patternManager.patternsMap(resourceReader.readFiles(patternsLocation.get(patternsType)));
     }
 }
