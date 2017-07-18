@@ -50,7 +50,7 @@ public class ImageGeneratorTest {
         this.expectedColumnsNumber = 200;
         this.patterns              = patternManager.patternsMap(resourceReader.readFiles("images/flags"));
 
-        this.imageGenerator = new ImageGenerator()
+        this.imageGenerator = new BasicImageGenerator()
                 .setColorInfo(new GeneralColorInfo())
                 .setImage(canonicalImage)
                 .setPatterns(patterns)
