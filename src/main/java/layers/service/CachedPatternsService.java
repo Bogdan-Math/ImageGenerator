@@ -1,5 +1,6 @@
 package layers.service;
 
+import domain.PatternType;
 import layers.repository.PatternsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -11,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static layers.service.PatternsType.*;
+import static domain.PatternType.*;
 
 @Service
 @Scope("singleton")
@@ -20,7 +21,7 @@ public class CachedPatternsService implements PatternsService {
     @Autowired
     private PatternsRepository repository;
 
-    private Map<PatternsType, Map<Color, BufferedImage>> patterns;
+    private Map<PatternType, Map<Color, BufferedImage>> allPatterns;
 
     @PostConstruct
     public void postConstruct() {
@@ -28,15 +29,15 @@ public class CachedPatternsService implements PatternsService {
         Map<Color, BufferedImage> flags   = repository.getFlags();
         Map<Color, BufferedImage> plains  = repository.getPlains();
 
-        patterns = new LinkedHashMap<>();
+        allPatterns = new LinkedHashMap<>();
 
-        patterns.put(COMMONS, commons);
-        patterns.put(FLAGS, flags);
-        patterns.put(PLAINS, plains);
+        allPatterns.put(COMMONS, commons);
+        allPatterns.put(FLAGS, flags);
+        allPatterns.put(PLAINS, plains);
     }
 
     @Override
-    public Map<PatternsType, Map<Color, BufferedImage>> getAllPatterns() {
-        return patterns;
+    public Map<PatternType, Map<Color, BufferedImage>> getAllPatterns() {
+        return allPatterns;
     }
 }

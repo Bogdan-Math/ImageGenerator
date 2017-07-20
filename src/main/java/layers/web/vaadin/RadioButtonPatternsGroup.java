@@ -4,7 +4,7 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.RadioButtonGroup;
 import com.vaadin.ui.themes.ValoTheme;
 import layers.service.ImageGenerator;
-import layers.service.PatternsType;
+import domain.PatternType;
 import layers.service.PatternsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -16,8 +16,8 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static layers.service.PatternsType.FLAGS;
-import static layers.service.PatternsType.valueOf;
+import static domain.PatternType.FLAGS;
+import static domain.PatternType.valueOf;
 
 @SpringComponent
 @Scope("session")
@@ -31,11 +31,11 @@ public class RadioButtonPatternsGroup extends RadioButtonGroup<String> {
 
     @PostConstruct
     public void postConstruct() {
-        setItems(Arrays.stream(PatternsType.values()).map(Enum::name).collect(Collectors.toList()));
+        setItems(Arrays.stream(PatternType.values()).map(Enum::name).collect(Collectors.toList()));
         setValue(FLAGS.name());
         addStyleName(ValoTheme.OPTIONGROUP_HORIZONTAL);
 
-        Map<PatternsType, Map<Color, BufferedImage>> patterns = patternsService.getAllPatterns();
+        Map<PatternType, Map<Color, BufferedImage>> patterns = patternsService.getAllPatterns();
 
         imageGenerator.setPatterns(patterns.get(valueOf(getValue())));
 

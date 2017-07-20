@@ -1,6 +1,6 @@
 package layers.repository;
 
-import layers.service.PatternsType;
+import domain.PatternType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Map;
 
-import static layers.service.PatternsType.*;
+import static domain.PatternType.*;
 
 @Repository
 @Scope("singleton")
@@ -25,7 +25,7 @@ public class BasicPatternsRepository implements PatternsRepository {
     private ResourceReader resourceReader;
 
     @Resource(name = "patternsLocation")
-    private Map<PatternsType, String> patternsLocation;
+    private Map<PatternType, String> patternsLocation;
 
     @Override
     public Map<Color, BufferedImage> getCommons() {
@@ -42,7 +42,7 @@ public class BasicPatternsRepository implements PatternsRepository {
         return initialize(PLAINS);
     }
 
-    private Map<Color, BufferedImage> initialize(PatternsType patternsType) {
-        return patternManager.patternsMap(resourceReader.readFiles(patternsLocation.get(patternsType)));
+    private Map<Color, BufferedImage> initialize(PatternType patternType) {
+        return patternManager.patternsMap(resourceReader.readFiles(patternsLocation.get(patternType)));
     }
 }
