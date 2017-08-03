@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 
 @Service
 @Scope("singleton")
-public class GeneralColorInfo implements ColorInfo {
+public class ColorInfoServiceImpl implements ColorInfoService {
 
     @Override
     public Color averagedColor(BufferedImage image) {

@@ -3,6 +3,7 @@ package layers.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import utility.exceptions.MatrixSizeException;
 
 import java.awt.*;
@@ -13,9 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 @Scope("session")
-public class BasicImageGenerator implements ImageGenerator {
+public class ImageGeneratorImpl implements ImageGenerator {
 
     /**
      * The values of ImageSize should be as close as possible to patterns average size, if they different.
@@ -25,7 +26,7 @@ public class BasicImageGenerator implements ImageGenerator {
     private static final int HEIGHT = 14;//20;
 
     @Autowired
-    private ColorInfo colorInfo;
+    private ColorInfoService colorInfoService;
 
     private BufferedImage image;
     private Map<Color, BufferedImage> patterns;
@@ -77,7 +78,7 @@ public class BasicImageGenerator implements ImageGenerator {
     public List<List<Color>> averagedColorsMatrix() {
         return asMatrix(expectedColumnsNumber).stream()
                 .map(row -> row.stream()
-                        .map(colorInfo::averagedColor)
+                        .map(colorInfoService::averagedColor)
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
     }
@@ -193,8 +194,8 @@ public class BasicImageGenerator implements ImageGenerator {
     }
 
     @Override
-    public ImageGenerator setColorInfo(ColorInfo colorInfo) {
-        this.colorInfo = colorInfo;
+    public ImageGenerator setColorInfo(ColorInfoService colorInfoService) {
+        this.colorInfoService = colorInfoService;
         return this;
     }
 }

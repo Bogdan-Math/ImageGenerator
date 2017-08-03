@@ -29,5 +29,5 @@ public interface ImageGenerator {
     Integer getExpectedColumnsNumber();
 
     //TODO: delete this method, after add Spring to tests
-    ImageGenerator setColorInfo(ColorInfo colorInfo);
+    ImageGenerator setColorInfo(ColorInfoService colorInfoService);
 }

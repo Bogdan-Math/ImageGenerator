@@ -10,13 +10,13 @@ import java.awt.image.BufferedImage;
 
 import static org.junit.Assert.assertEquals;
 
-public class GeneralColorInfoTest {
+public class ColorInfoServiceImplTest {
 
-    private ColorInfo colorInfo;
+    private ColorInfoService colorInfoService;
 
     @Before
     public void setUp() throws Exception {
-        this.colorInfo = new GeneralColorInfo();
+        this.colorInfoService = new ColorInfoServiceImpl();
     }
 
     @Test
@@ -26,9 +26,9 @@ public class GeneralColorInfoTest {
         BufferedImage grayImage  = ImageIO.read(resourceReader.readFile("images/colors/2-grey.jpg"));
         BufferedImage blackImage = ImageIO.read(resourceReader.readFile("images/colors/3-black.jpg"));
 
-        Color white = colorInfo.averagedColor(whiteImage);
-        Color gray = colorInfo.averagedColor(grayImage);
-        Color black = colorInfo.averagedColor(blackImage);
+        Color white = colorInfoService.averagedColor(whiteImage);
+        Color gray = colorInfoService.averagedColor(grayImage);
+        Color black = colorInfoService.averagedColor(blackImage);
 
         assertEquals(Color.WHITE, white);
         assertEquals(Color.GRAY, gray);

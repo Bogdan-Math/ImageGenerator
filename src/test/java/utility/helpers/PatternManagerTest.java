@@ -1,6 +1,6 @@
 package utility.helpers;
 
-import layers.service.GeneralColorInfo;
+import layers.service.ColorInfoServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,7 +21,7 @@ public class PatternManagerTest {
     @Before
     public void setUp() throws Exception {
         this.patternManager = new PatternManager();
-        this.patternManager.setColorInfo(new GeneralColorInfo());
+        this.patternManager.setColorInfoService(new ColorInfoServiceImpl());
         this.patternManager.setConverter(new ObjectTypeConverter());
 
         this.resourceReader = new ResourceReader();
