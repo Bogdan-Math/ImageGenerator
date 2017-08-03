@@ -21,7 +21,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 
-public class ImageGeneratorTest {
+public class ImageGeneratorImplTest {
 
     private ResourceReader resourceReader;
     private PatternManager patternManager;
