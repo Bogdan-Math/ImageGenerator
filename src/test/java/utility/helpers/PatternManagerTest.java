@@ -21,6 +21,7 @@ public class PatternManagerTest {
     @Before
     public void setUp() throws Exception {
         this.patternManager = new PatternManager();
+
         this.patternManager.setColorInfoService(new ColorInfoServiceImpl());
         this.patternManager.setConverter(new ObjectTypeConverter());
 
@@ -30,7 +31,7 @@ public class PatternManagerTest {
     }
 
     @Test
-    public void patternsMap() throws Exception {
+    public void testPatternsMap() throws Exception {
         String path = "images/colors";
         int patternsCount = 24;
 
@@ -42,7 +43,7 @@ public class PatternManagerTest {
     }
 
     @Test
-    public void averagedColor() throws Exception {
+    public void testAveragedColor() throws Exception {
         Color averagedColor = patternManager.averagedColor(originalImage);
 
         assertThat(averagedColor.getRed(), is(68));

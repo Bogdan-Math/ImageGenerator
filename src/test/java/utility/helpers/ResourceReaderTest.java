@@ -19,14 +19,14 @@ public class ResourceReaderTest {
     }
 
     @Test
-    public void readFile() throws Exception {
+    public void testReadFile() throws Exception {
         assertTrue(resourceReader.readFile("images/canonical.jpg").exists());
         assertTrue(resourceReader.readFile("images/canonical.jpg").isFile());
         assertFalse(resourceReader.readFile("images/canonical.jpg").isDirectory());
     }
 
     @Test
-    public void readFiles() throws Exception {
+    public void testReadFiles() throws Exception {
         String path = "images/colors";
         int patternsCount = 24;
 
