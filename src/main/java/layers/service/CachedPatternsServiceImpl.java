@@ -23,8 +23,9 @@ public class CachedPatternsServiceImpl implements CachedPatternsService {
 
     private Map<PatternType, Map<Color, BufferedImage>> allPatterns;
 
+    @Override
     @PostConstruct
-    private void postConstruct() {
+    public void cacheAllPatterns() {
         Map<Color, BufferedImage> commons = repository.getCommons();
         Map<Color, BufferedImage> flags   = repository.getFlags();
         Map<Color, BufferedImage> plains  = repository.getPlains();
