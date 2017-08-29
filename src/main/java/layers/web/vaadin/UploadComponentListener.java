@@ -22,13 +22,10 @@ import java.util.stream.Collectors;
 
 @SpringComponent
 @Scope("session")
-public class UploadComponentListener implements Upload.ProgressListener, Upload.SucceededListener, Upload.FinishedListener {
+public class UploadComponentListener implements Upload.SucceededListener, Upload.FinishedListener {
 
     @Autowired
     private UploadReceiver receiver;
-
-    @Autowired
-    private UploadStartedListener startedListener;
 
     @Autowired
     private ImageGenerator imageGenerator;
@@ -46,18 +43,6 @@ public class UploadComponentListener implements Upload.ProgressListener, Upload.
     @Autowired
     @Qualifier(value = "generatedImageView")
     private Image generatedImageView;
-
-    @Override
-    public void updateProgress(long readBytes, long contentLength) {
-
-        int maxSize = 10485760; // 10485760 (Bytes) = 10MB
-
-        if (maxSize < contentLength) {
-            startedListener.getUpload().interruptUpload();
-
-            notifications.add("Oh, no! File size can not be more then 10 MB.");
-        }
-    }
 
     @Override
     public void uploadSucceeded(Upload.SucceededEvent event) {
