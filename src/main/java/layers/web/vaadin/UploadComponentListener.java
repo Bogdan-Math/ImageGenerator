@@ -6,6 +6,7 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Upload;
 import layers.service.ImageGenerator;
+import layers.web.vaadin.listeners.UploadReceiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -13,8 +14,6 @@ import utility.helpers.ObjectTypeConverter;
 
 import javax.annotation.Resource;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -22,7 +21,10 @@ import java.util.stream.Collectors;
 
 @SpringComponent
 @Scope("session")
-public class UploadComponentListener implements Upload.Receiver, Upload.StartedListener, Upload.ProgressListener, Upload.SucceededListener, Upload.FinishedListener {
+public class UploadComponentListener implements Upload.StartedListener, Upload.ProgressListener, Upload.SucceededListener, Upload.FinishedListener {
+
+    @Autowired
+    private UploadReceiver receiver;
 
     @Autowired
     private ImageGenerator imageGenerator;
@@ -34,7 +36,6 @@ public class UploadComponentListener implements Upload.Receiver, Upload.StartedL
     private List<String> notifications;
 
     private Upload upload;
-    private ByteArrayOutputStream uploadStream;
 
     @Autowired
     @Qualifier(value = "originalImageView")
@@ -43,14 +44,6 @@ public class UploadComponentListener implements Upload.Receiver, Upload.StartedL
     @Autowired
     @Qualifier(value = "generatedImageView")
     private Image generatedImageView;
-
-    @Override
-    public OutputStream receiveUpload(String fileName, String mimeType) {
-
-        this.uploadStream = new ByteArrayOutputStream();
-
-        return uploadStream;
-    }
 
     @Override
     public void uploadStarted(Upload.StartedEvent startedEvent) {
@@ -81,7 +74,7 @@ public class UploadComponentListener implements Upload.Receiver, Upload.StartedL
     public void uploadSucceeded(Upload.SucceededEvent event) {
 
         String fileName             = event.getFilename();
-        byte[] uploadedBytes        = uploadStream.toByteArray();
+        byte[] uploadedBytes        = receiver.getUploadStream().toByteArray();
         BufferedImage uploadedImage = converter.bufferedImage(uploadedBytes);
 
         if ((uploadedImage.getWidth() > 2560) || (uploadedImage.getHeight() > 2048)) {
