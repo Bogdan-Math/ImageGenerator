@@ -3,6 +3,7 @@ package layers.web.vaadin;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Upload;
 import layers.web.vaadin.listeners.UploadReceiver;
+import layers.web.vaadin.listeners.UploadStartedListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
@@ -18,12 +19,15 @@ public class UploadComponent extends Upload {
     @Autowired
     private UploadReceiver receiver;
 
+    @Autowired
+    private UploadStartedListener startedListener;
+
     @PostConstruct
     public void postConstruct() {
         setImmediateMode(true);
         setButtonCaption("select and generate image");
         setReceiver(receiver);
-        addStartedListener(uploadComponentListener);
+        addStartedListener(startedListener);
         addProgressListener(uploadComponentListener);
         addSucceededListener(uploadComponentListener);
         addFinishedListener(uploadComponentListener);

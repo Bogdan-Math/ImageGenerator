@@ -7,6 +7,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.Upload;
 import layers.service.ImageGenerator;
 import layers.web.vaadin.listeners.UploadReceiver;
+import layers.web.vaadin.listeners.UploadStartedListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -21,10 +22,13 @@ import java.util.stream.Collectors;
 
 @SpringComponent
 @Scope("session")
-public class UploadComponentListener implements Upload.StartedListener, Upload.ProgressListener, Upload.SucceededListener, Upload.FinishedListener {
+public class UploadComponentListener implements Upload.ProgressListener, Upload.SucceededListener, Upload.FinishedListener {
 
     @Autowired
     private UploadReceiver receiver;
+
+    @Autowired
+    private UploadStartedListener startedListener;
 
     @Autowired
     private ImageGenerator imageGenerator;
@@ -35,8 +39,6 @@ public class UploadComponentListener implements Upload.StartedListener, Upload.P
     @Resource(name = "notifications")
     private List<String> notifications;
 
-    private Upload upload;
-
     @Autowired
     @Qualifier(value = "originalImageView")
     private Image originalImageView;
@@ -46,25 +48,12 @@ public class UploadComponentListener implements Upload.StartedListener, Upload.P
     private Image generatedImageView;
 
     @Override
-    public void uploadStarted(Upload.StartedEvent startedEvent) {
-
-        this.upload = startedEvent.getUpload();
-
-        notifications.add("Upload started.");
-        if (!"image/jpeg".equals(startedEvent.getMIMEType())) {
-            upload.interruptUpload();
-
-            notifications.add("Oh, no! Only '.jpg' and '.jpeg' files can be uploaded.");
-        }
-    }
-
-    @Override
     public void updateProgress(long readBytes, long contentLength) {
 
         int maxSize = 10485760; // 10485760 (Bytes) = 10MB
 
         if (maxSize < contentLength) {
-            upload.interruptUpload();
+            startedListener.getUpload().interruptUpload();
 
             notifications.add("Oh, no! File size can not be more then 10 MB.");
         }
