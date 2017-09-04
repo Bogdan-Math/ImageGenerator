@@ -2,11 +2,13 @@ package layers.web.vaadin.listeners;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @SpringComponent
+@Scope("session")
 public class UploadProgressListenerComponent implements UploadProgressListener {
 
     @Autowired

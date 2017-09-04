@@ -2,11 +2,13 @@ package layers.web.vaadin.listeners;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Upload;
+import org.springframework.context.annotation.Scope;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @SpringComponent
+@Scope("session")
 public class UploadStartedListenerComponent implements UploadStartedListener {
 
     private Upload upload;

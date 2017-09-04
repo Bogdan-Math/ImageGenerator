@@ -1,4 +1,4 @@
-package layers.web.vaadin;
+package layers.web.vaadin.listeners;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Notification;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @SpringComponent
 @Scope("session")
-public class UploadComponentListener implements Upload.FinishedListener {
+public class UploadFinishedListenerComponent implements UploadFinishedListener {
 
     @Resource(name = "notifications")
     private List<String> notifications;
@@ -19,9 +19,9 @@ public class UploadComponentListener implements Upload.FinishedListener {
     @Override
     public void uploadFinished(Upload.FinishedEvent finishedEvent) {
         Notification.show(notifications.stream()
-                                       .map(notification -> "- " + notification)
-                                       .collect(Collectors.joining("\n")),
-                          Notification.Type.TRAY_NOTIFICATION);
+                        .map(notification -> "- " + notification)
+                        .collect(Collectors.joining("\n")),
+                Notification.Type.TRAY_NOTIFICATION);
         notifications.clear();
     }
 }

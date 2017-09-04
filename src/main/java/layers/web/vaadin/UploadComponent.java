@@ -2,10 +2,7 @@ package layers.web.vaadin;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Upload;
-import layers.web.vaadin.listeners.UploadProgressListener;
-import layers.web.vaadin.listeners.UploadReceiver;
-import layers.web.vaadin.listeners.UploadStartedListener;
-import layers.web.vaadin.listeners.UploadSucceededListener;
+import layers.web.vaadin.listeners.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
@@ -14,9 +11,6 @@ import javax.annotation.PostConstruct;
 @SpringComponent
 @Scope("session")
 public class UploadComponent extends Upload {
-
-    @Autowired
-    private UploadComponentListener uploadComponentListener;
 
     @Autowired
     private UploadReceiver receiver;
@@ -30,6 +24,9 @@ public class UploadComponent extends Upload {
     @Autowired
     private UploadSucceededListener succeededListener;
 
+    @Autowired
+    private UploadFinishedListener finishedListener;
+
     @PostConstruct
     public void postConstruct() {
         setImmediateMode(true);
@@ -38,6 +35,6 @@ public class UploadComponent extends Upload {
         addStartedListener(startedListener);
         addProgressListener(progressListener);
         addSucceededListener(succeededListener);
-        addFinishedListener(uploadComponentListener);
+        addFinishedListener(finishedListener);
     }
 }
