@@ -44,7 +44,8 @@ public class ObjectTypeConverter {
     public BufferedImage bufferedImage(File fromFile) {
         try {
             return ImageIO.read(fromFile);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
             throw new IllegalArgumentException(e);
         }

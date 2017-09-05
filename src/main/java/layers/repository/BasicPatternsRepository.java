@@ -89,4 +89,9 @@ public class BasicPatternsRepository implements PatternsRepository {
     public void setImageInformation(ImageInformation imageInformation) {
         this.imageInformation = imageInformation;
     }
+
+    //TODO: delete this method, after add Spring to tests
+    public void setPatternsLocation(Map<PatternType, String> patternsLocation) {
+        this.patternsLocation = patternsLocation;
+    }
 }

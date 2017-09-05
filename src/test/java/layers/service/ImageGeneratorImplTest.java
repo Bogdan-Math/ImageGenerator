@@ -1,14 +1,12 @@
 package layers.service;
 
+import domain.PatternType;
 import layers.repository.BasicPatternsRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnitRunner;
 import utility.exceptions.MatrixSizeException;
 import utility.helpers.ImageInformation;
 import utility.helpers.ObjectTypeConverter;
@@ -18,29 +16,23 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
+import static domain.PatternType.*;
 import static org.junit.Assert.*;
 
-@RunWith(MockitoJUnitRunner.class)
 public class ImageGeneratorImplTest {
 
-    @InjectMocks
-    private ImageGenerator imageGenerator;
-
     private ResourceReader resourceReader;
-    private ObjectTypeConverter converter;
-    private ImageInformation imageInformation;
 
     private BasicPatternsRepository repository;
 
+    private ImageGenerator imageGenerator;
 
     private BufferedImage whiteImage;
-
     private BufferedImage canonicalImage;
+
     private Map<Color, BufferedImage> patterns;
     private Integer expectedColumnsNumber;
 
@@ -49,14 +41,17 @@ public class ImageGeneratorImplTest {
 
     @Before
     public void setUp() throws Exception {
-        this.resourceReader   = new ResourceReader();
-        this.converter        = new ObjectTypeConverter();
-        this.imageInformation = new ImageInformation();
+        this.resourceReader = new ResourceReader();
 
         this.repository = new BasicPatternsRepository();
-        this.repository.setResourceReader(resourceReader);
-        this.repository.setConverter(converter);
-        this.repository.setImageInformation(imageInformation);
+        this.repository.setResourceReader(new ResourceReader());
+        this.repository.setConverter(new ObjectTypeConverter());
+        this.repository.setImageInformation(new ImageInformation());
+        this.repository.setPatternsLocation(new HashMap<PatternType, String>() {{
+            put(COMMONS, "images/colors");
+            put(FLAGS, "images/flags");
+            put(PLAINS, "images/plains");
+        }});
 
         this.canonicalImage = ImageIO.read(resourceReader.readFile("images/canonical.jpg"));
         this.whiteImage     = ImageIO.read(resourceReader.readFile("images/colors/1-white.jpg"));
@@ -65,10 +60,10 @@ public class ImageGeneratorImplTest {
         this.patterns              = repository.getFlags();// patternsMap(resourceReader.readFiles("images/flags"));
 
         this.imageGenerator = new ImageGeneratorImpl()
-                .setImageInformation(imageInformation)
                 .setImage(canonicalImage)
                 .setPatterns(patterns)
-                .setExpectedColumnsNumber(expectedColumnsNumber);
+                .setExpectedColumnsNumber(expectedColumnsNumber)
+                .setImageInformation(new ImageInformation());
     }
 
     @After

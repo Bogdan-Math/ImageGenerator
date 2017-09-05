@@ -46,7 +46,7 @@ public class CachedPatternsServiceImplTest {
     }
 
     @Test
-    public void testCacheAllPatternsAndGetAllPatterns() throws Exception {
+    public void cacheAllPatternsAndGetAllPatterns() throws Exception {
         patternsService.cacheAllPatterns();
         Map<PatternType, Map<Color, BufferedImage>> allPatterns = patternsService.getAllPatterns();
 

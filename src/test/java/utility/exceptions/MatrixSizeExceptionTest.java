@@ -13,7 +13,7 @@ public class MatrixSizeExceptionTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void testExceptionMessage() throws Exception {
+    public void exceptionMessage() throws Exception {
 
         thrown.expect(MatrixSizeException.class);
         thrown.expectMessage("Number of expected columns (is 10) could not be more than image width (is 1)");

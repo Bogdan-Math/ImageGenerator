@@ -45,39 +45,39 @@ public class ObjectTypeConverterTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    public void testInputStreamFromBytes() throws Exception {
+    public void inputStreamFromBytes() throws Exception {
         assertTrue(converter.inputStream(new byte[1]) instanceof InputStream);
     }
 
     @Test
-    public void testInputStreamFromBufferedImage() throws Exception {
+    public void inputStreamFromBufferedImage() throws Exception {
         assertNotNull(converter.inputStream(ImageIO.read(originalImage)));
     }
 
     @Test
-    public void testInputStreamFromBufferedImageException() throws Exception {
+    public void inputStreamFromBufferedImageException() throws Exception {
         thrown.expect(IllegalArgumentException.class);
         assertNotNull(converter.inputStream((BufferedImage) null));
     }
 
     @Test
-    public void testBufferedImageFromBytes() throws Exception {
+    public void bufferedImageFromBytes() throws Exception {
         assertNotNull(converter.bufferedImage(Files.readAllBytes(Paths.get(originalImage.getAbsolutePath()))));
     }
 
     @Test
-    public void testBufferedImageFromBytesException() throws Exception {
+    public void bufferedImageFromBytesException() throws Exception {
         thrown.expect(IllegalArgumentException.class);
         assertNotNull(converter.bufferedImage((byte[]) null));
     }
 
     @Test
-    public void testBufferedImageFromFile() throws Exception {
+    public void bufferedImageFromFile() throws Exception {
         assertNotNull(converter.bufferedImage(originalImage));
     }
 
     @Test
-    public void testBufferedImageFromFileException() throws Exception {
+    public void bufferedImageFromFileException() throws Exception {
         thrown.expect(IllegalArgumentException.class);
         assertNotNull(converter.bufferedImage((File) null));
     }

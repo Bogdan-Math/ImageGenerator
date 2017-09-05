@@ -21,7 +21,8 @@ public class ResourceReader {
     @SuppressWarnings("ConstantConditions")
     public File readFile(String resourceName) {
         return new File(getClass().getClassLoader()
-                                            .getResource(resourceName).getFile());
+                                  .getResource(resourceName)
+                                  .getFile());
     }
 
 }

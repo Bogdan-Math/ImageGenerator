@@ -78,7 +78,7 @@ public class ImageGeneratorImpl implements ImageGenerator {
     public List<List<Color>> averagedColorsMatrix() {
         return asMatrix(expectedColumnsNumber).stream()
                 .map(row -> row.stream()
-                        .map(imageInformation::averagedColor)
+                        .map(image -> imageInformation.averagedColor(image))
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
     }
@@ -178,9 +178,10 @@ public class ImageGeneratorImpl implements ImageGenerator {
         return this;
     }
 
-    @Override
+    //TODO: delete this method, after add Spring to tests
     public ImageGenerator setImageInformation(ImageInformation imageInformation) {
         this.imageInformation = imageInformation;
         return this;
     }
+
 }
