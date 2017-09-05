@@ -1,5 +1,7 @@
 package layers.service;
 
+import utility.helpers.ImageInformation;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -21,5 +23,5 @@ public interface ImageGenerator {
     Map<Color, BufferedImage> getPatterns();
     Integer getExpectedColumnsNumber();
     //TODO: delete this method, after add Spring to tests
-    ImageGenerator setColorInfo(ColorInfoService colorInfoService);
+    ImageGenerator setImageInformation(ImageInformation imageInformation);
 }

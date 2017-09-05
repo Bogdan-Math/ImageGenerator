@@ -2,9 +2,9 @@ package layers.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import utility.exceptions.MatrixSizeException;
+import utility.helpers.ImageInformation;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -26,7 +26,7 @@ public class ImageGeneratorImpl implements ImageGenerator {
     private static final int HEIGHT = 14;//20;
 
     @Autowired
-    private ColorInfoService colorInfoService;
+    private ImageInformation imageInformation;
 
     private BufferedImage image;
     private Map<Color, BufferedImage> patterns;
@@ -52,11 +52,11 @@ public class ImageGeneratorImpl implements ImageGenerator {
 
         squareHeight = (squareHeight != 0) ? squareHeight : 1;
 
-        while (width - squareWidth * realColumnsNumber >= squareWidth ) {
+        while (width - squareWidth * realColumnsNumber >= squareWidth) {
             realColumnsNumber++;
         }
 
-        while (height - squareHeight * realRowsNumber >= squareHeight ) {
+        while (height - squareHeight * realRowsNumber >= squareHeight) {
             realRowsNumber++;
         }
 
@@ -78,7 +78,7 @@ public class ImageGeneratorImpl implements ImageGenerator {
     public List<List<Color>> averagedColorsMatrix() {
         return asMatrix(expectedColumnsNumber).stream()
                 .map(row -> row.stream()
-                        .map(colorInfoService::averagedColor)
+                        .map(imageInformation::averagedColor)
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
     }
@@ -194,8 +194,8 @@ public class ImageGeneratorImpl implements ImageGenerator {
     }
 
     @Override
-    public ImageGenerator setColorInfo(ColorInfoService colorInfoService) {
-        this.colorInfoService = colorInfoService;
+    public ImageGenerator setImageInformation(ImageInformation imageInformation) {
+        this.imageInformation = imageInformation;
         return this;
     }
 }

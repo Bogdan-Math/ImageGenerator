@@ -1,37 +1,37 @@
-package layers.service;
+package utility.helpers;
 
 import org.junit.Before;
 import org.junit.Test;
-import utility.helpers.ResourceReader;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
-public class ColorInfoServiceImplTest {
+public class ImageInformationTest {
 
-    private ColorInfoService colorInfoService;
+    private ImageInformation imageInformation;
 
     @Before
     public void setUp() throws Exception {
-        this.colorInfoService = new ColorInfoServiceImpl();
+        this.imageInformation = new ImageInformation();
     }
 
     @Test
-    public void averagedColor() throws Exception {
+    public void testAveragedColor() throws Exception {
         ResourceReader resourceReader = new ResourceReader();
         BufferedImage whiteImage = ImageIO.read(resourceReader.readFile("images/colors/1-white.jpg"));
         BufferedImage grayImage  = ImageIO.read(resourceReader.readFile("images/colors/2-grey.jpg"));
         BufferedImage blackImage = ImageIO.read(resourceReader.readFile("images/colors/3-black.jpg"));
 
-        Color white = colorInfoService.averagedColor(whiteImage);
-        Color gray = colorInfoService.averagedColor(grayImage);
-        Color black = colorInfoService.averagedColor(blackImage);
+        Color white = imageInformation.averagedColor(whiteImage);
+        Color gray  = imageInformation.averagedColor(grayImage);
+        Color black = imageInformation.averagedColor(blackImage);
 
         assertEquals(Color.WHITE, white);
-        assertEquals(Color.GRAY, gray);
+        assertEquals(Color.GRAY,  gray);
         assertEquals(Color.BLACK, black);
     }
+
 }

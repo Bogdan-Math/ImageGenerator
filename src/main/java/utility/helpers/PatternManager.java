@@ -1,6 +1,5 @@
 package utility.helpers;
 
-import layers.service.ColorInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +17,7 @@ public class PatternManager {
     private ObjectTypeConverter converter;
 
     @Autowired
-    private ColorInfoService colorInfoService;
+    private ImageInformation imageInformation;
 
     public Map<Color, BufferedImage> patternsMap(List<File> files) {
         return files.stream()
@@ -39,7 +38,7 @@ public class PatternManager {
     }
 
     public Color averagedColor(File file) {
-        return colorInfoService.averagedColor(converter.bufferedImage(file));
+        return imageInformation.averagedColor(converter.bufferedImage(file));
     }
 
     //TODO: delete this method, after add Spring to tests
@@ -48,7 +47,7 @@ public class PatternManager {
     }
 
     //TODO: delete this method, after add Spring to tests
-    public void setColorInfoService(ColorInfoService colorInfoService) {
-        this.colorInfoService = colorInfoService;
+    public void setImageInformation(ImageInformation imageInformation) {
+        this.imageInformation = imageInformation;
     }
 }

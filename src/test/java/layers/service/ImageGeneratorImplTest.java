@@ -6,6 +6,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import utility.exceptions.MatrixSizeException;
+import utility.helpers.ImageInformation;
 import utility.helpers.ObjectTypeConverter;
 import utility.helpers.PatternManager;
 import utility.helpers.ResourceReader;
@@ -41,7 +42,7 @@ public class ImageGeneratorImplTest {
     public void setUp() throws Exception {
         this.resourceReader = new ResourceReader();
         this.patternManager = new PatternManager();
-        this.patternManager.setColorInfoService(new ColorInfoServiceImpl());
+        this.patternManager.setImageInformation(new ImageInformation());
         this.patternManager.setConverter(new ObjectTypeConverter());
 
         this.canonicalImage = ImageIO.read(resourceReader.readFile("images/canonical.jpg"));
@@ -51,7 +52,7 @@ public class ImageGeneratorImplTest {
         this.patterns              = patternManager.patternsMap(resourceReader.readFiles("images/flags"));
 
         this.imageGenerator = new ImageGeneratorImpl()
-                .setColorInfo(new ColorInfoServiceImpl())
+                .setImageInformation(new ImageInformation())
                 .setImage(canonicalImage)
                 .setPatterns(patterns)
                 .setExpectedColumnsNumber(expectedColumnsNumber);
