@@ -36,6 +36,7 @@ public class ObjectTypeConverterTest {
     }
 
     @After
+    @SuppressWarnings("ConstantConditions")
     public void tearDown() throws Exception {
         Arrays.stream(resourceReader.readFile("images/").listFiles())
                 .filter(file -> ("canonical_GEN.jpg".equals(file.getName())))
@@ -43,39 +44,40 @@ public class ObjectTypeConverterTest {
     }
 
     @Test
-    public void inputStream_fromBytes() throws Exception {
+    @SuppressWarnings("ConstantConditions")
+    public void testInputStreamFromBytes() throws Exception {
         assertTrue(converter.inputStream(new byte[1]) instanceof InputStream);
     }
 
     @Test
-    public void inputStream_fromBufferedImage() throws Exception {
+    public void testInputStreamFromBufferedImage() throws Exception {
         assertNotNull(converter.inputStream(ImageIO.read(originalImage)));
     }
 
     @Test
-    public void inputStream_fromBufferedImage_exception() throws Exception {
+    public void testInputStreamFromBufferedImageException() throws Exception {
         thrown.expect(IllegalArgumentException.class);
         assertNotNull(converter.inputStream((BufferedImage) null));
     }
 
     @Test
-    public void bufferedImage_fromBytes() throws Exception {
+    public void testBufferedImageFromBytes() throws Exception {
         assertNotNull(converter.bufferedImage(Files.readAllBytes(Paths.get(originalImage.getAbsolutePath()))));
     }
 
     @Test
-    public void bufferedImage_fromBytes_exception() throws Exception {
+    public void testBufferedImageFromBytesException() throws Exception {
         thrown.expect(IllegalArgumentException.class);
         assertNotNull(converter.bufferedImage((byte[]) null));
     }
 
     @Test
-    public void bufferedImage_fromFile() throws Exception {
+    public void testBufferedImageFromFile() throws Exception {
         assertNotNull(converter.bufferedImage(originalImage));
     }
 
     @Test
-    public void bufferedImage_fromFile_exception() throws Exception {
+    public void testBufferedImageFromFileException() throws Exception {
         thrown.expect(IllegalArgumentException.class);
         assertNotNull(converter.bufferedImage((File) null));
     }

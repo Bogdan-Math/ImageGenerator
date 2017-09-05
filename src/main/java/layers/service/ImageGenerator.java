@@ -19,9 +19,6 @@ public interface ImageGenerator {
     ImageGenerator setImage(BufferedImage image);
     ImageGenerator setPatterns(Map<Color, BufferedImage> patterns);
     ImageGenerator setExpectedColumnsNumber(Integer expectedColumnsNumber);
-    BufferedImage getImage();
-    Map<Color, BufferedImage> getPatterns();
-    Integer getExpectedColumnsNumber();
     //TODO: delete this method, after add Spring to tests
     ImageGenerator setImageInformation(ImageInformation imageInformation);
 }

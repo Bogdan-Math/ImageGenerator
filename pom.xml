@@ -156,7 +156,7 @@
             <artifactId>vaadin-themes</artifactId>
         </dependency>
 
-        <!--Vaadin + Spring (integration)-->
+        <!--Vaadin 8 + Spring 4.3.3.RELEASE (integration)-->
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-spring</artifactId>

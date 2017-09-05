@@ -87,7 +87,7 @@ public class ImageGeneratorImpl implements ImageGenerator {
     public List<List<BufferedImage>> resultMatrix() {
 
         List<List<Color>> matrix         = averagedColorsMatrix();
-        Map<Color, BufferedImage> map    = getPatterns();
+        Map<Color, BufferedImage> map    = patterns;
         List<List<BufferedImage>> result = new ArrayList<>();
 
         for (List<Color> colors : matrix) {
@@ -176,21 +176,6 @@ public class ImageGeneratorImpl implements ImageGenerator {
     public ImageGenerator setExpectedColumnsNumber(Integer expectedColumnsNumber) {
         this.expectedColumnsNumber = expectedColumnsNumber;
         return this;
-    }
-
-    @Override
-    public BufferedImage getImage() {
-        return image;
-    }
-
-    @Override
-    public Map<Color, BufferedImage> getPatterns() {
-        return patterns;
-    }
-
-    @Override
-    public Integer getExpectedColumnsNumber() {
-        return expectedColumnsNumber;
     }
 
     @Override
