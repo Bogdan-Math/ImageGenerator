@@ -1,11 +1,10 @@
 package layers.service;
 
-import utility.helpers.ImageInformation;
+import utility.config.ImageGenerationConfig;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
-import java.util.Map;
 
 public interface ImageGenerator {
 
@@ -15,9 +14,5 @@ public interface ImageGenerator {
     List<List<BufferedImage>> resultMatrix();
     BufferedImage generateImage();
 
-    //TODO: move this methods to config class/file/etc
-    ImageGenerator setImage(BufferedImage image);
-    ImageGenerator setPatterns(Map<Color, BufferedImage> patterns);
-    ImageGenerator setExpectedColumnsNumber(Integer expectedColumnsNumber);
-    ImageGenerator setImageInformation(ImageInformation imageInformation);
+    void setConfig(ImageGenerationConfig config);
 }

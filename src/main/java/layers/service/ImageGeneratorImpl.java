@@ -1,6 +1,7 @@
 package layers.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import utility.config.ImageGenerationConfig;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import utility.exceptions.MatrixSizeException;
@@ -14,30 +15,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static utility.config.ImageGenerationConfig.PATTERN_HEIGHT;
+import static utility.config.ImageGenerationConfig.PATTERN_WIDTH;
+
 @Service
 @Scope("session")
 public class ImageGeneratorImpl implements ImageGenerator {
 
-    /**
-     * The values of ImageSize should be as close as possible to patterns average size, if they different.
-     * The best way if all patterns have same width and height. Then set it in in WIDTH and HEIGHT and you are C00L :).
-     */
-    private static final int WIDTH = 14;//40;
-    private static final int HEIGHT = 14;//20;
-
     @Autowired
-    private ImageInformation imageInformation;
-
-    private BufferedImage image;
-    private Map<Color, BufferedImage> patterns;
-    private Integer expectedColumnsNumber;
+    private ImageGenerationConfig config;
 
     @Override
     public List<List<BufferedImage>> asMatrix(int expectedColumns) {
                                               int expectedRows = 0;
 
-        int width  = image.getWidth();
-        int height = image.getHeight();
+        int width  = config.getImageWidth();
+        int height = config.getImageHeight();
 
         if (expectedColumns > width) {
             throw new MatrixSizeException(String
@@ -48,7 +41,7 @@ public class ImageGeneratorImpl implements ImageGenerator {
         int realRowsNumber    = expectedRows;
 
         int squareWidth  = width / realColumnsNumber;
-        int squareHeight = squareWidth * HEIGHT / WIDTH;
+        int squareHeight = squareWidth * PATTERN_HEIGHT / PATTERN_WIDTH;
 
         squareHeight = (squareHeight != 0) ? squareHeight : 1;
 
@@ -65,7 +58,7 @@ public class ImageGeneratorImpl implements ImageGenerator {
 
             List<BufferedImage> matrixRow = new ArrayList<>();
             for (int j = 0; j < realRowsNumber; j++) {
-                matrixRow.add(image.getSubimage(i * squareWidth, j * squareHeight, squareWidth, squareHeight));
+                matrixRow.add(config.getSubImage(i * squareWidth, j * squareHeight, squareWidth, squareHeight));
             }
 
             matrix.add(matrixRow);
@@ -76,9 +69,9 @@ public class ImageGeneratorImpl implements ImageGenerator {
 
     @Override
     public List<List<Color>> averagedColorsMatrix() {
-        return asMatrix(expectedColumnsNumber).stream()
+        return asMatrix(config.getExpectedColumnsNumber()).stream()
                 .map(row -> row.stream()
-                        .map(image -> imageInformation.averagedColor(image))
+                        .map(image -> new ImageInformation().averagedColor(image))
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
     }
@@ -87,7 +80,7 @@ public class ImageGeneratorImpl implements ImageGenerator {
     public List<List<BufferedImage>> resultMatrix() {
 
         List<List<Color>> matrix         = averagedColorsMatrix();
-        Map<Color, BufferedImage> map    = patterns;
+        Map<Color, BufferedImage> map    = config.getPatterns();
         List<List<BufferedImage>> result = new ArrayList<>();
 
         for (List<Color> colors : matrix) {
@@ -161,27 +154,7 @@ public class ImageGeneratorImpl implements ImageGenerator {
     }
 
     @Override
-    public ImageGenerator setImage(BufferedImage image) {
-        this.image = image;
-        return this;
+    public void setConfig(ImageGenerationConfig config) {
+        this.config = config;
     }
-
-    @Override
-    public ImageGenerator setPatterns(Map<Color, BufferedImage> patterns) {
-        this.patterns = patterns;
-        return this;
-    }
-
-    @Override
-    public ImageGenerator setExpectedColumnsNumber(Integer expectedColumnsNumber) {
-        this.expectedColumnsNumber = expectedColumnsNumber;
-        return this;
-    }
-
-    //TODO: delete this method, after add Spring to tests
-    public ImageGenerator setImageInformation(ImageInformation imageInformation) {
-        this.imageInformation = imageInformation;
-        return this;
-    }
-
 }

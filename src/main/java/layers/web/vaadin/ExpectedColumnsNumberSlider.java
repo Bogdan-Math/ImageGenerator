@@ -6,6 +6,7 @@ import com.vaadin.ui.Slider;
 import layers.service.ImageGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import utility.config.ImageGenerationConfig;
 
 import javax.annotation.PostConstruct;
 
@@ -14,7 +15,8 @@ import javax.annotation.PostConstruct;
 public class ExpectedColumnsNumberSlider extends Slider {
 
     @Autowired
-    private ImageGenerator imageGenerator;
+    private ImageGenerationConfig config;
+
 
     @PostConstruct
     public void postConstruct() {
@@ -25,7 +27,7 @@ public class ExpectedColumnsNumberSlider extends Slider {
         setValue(64.0);
 
         int initExpectedColumnsNumber = getValue().intValue();
-        imageGenerator.setExpectedColumnsNumber(initExpectedColumnsNumber);
+        config.setExpectedColumnsNumber(initExpectedColumnsNumber);
 
         addValueChangeListener(event -> {
             int expectedColumnsNumber = getValue().intValue();
@@ -34,7 +36,7 @@ public class ExpectedColumnsNumberSlider extends Slider {
                 setValue(8.0);
                 return;
             }
-            imageGenerator.setExpectedColumnsNumber(expectedColumnsNumber);
+            config.setExpectedColumnsNumber(expectedColumnsNumber);
         });
     }
 }

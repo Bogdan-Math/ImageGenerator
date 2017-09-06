@@ -3,11 +3,11 @@ package layers.web.vaadin;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.RadioButtonGroup;
 import com.vaadin.ui.themes.ValoTheme;
-import layers.service.ImageGenerator;
 import domain.PatternType;
 import layers.service.CachedPatternsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import utility.config.ImageGenerationConfig;
 
 import javax.annotation.PostConstruct;
 import java.awt.*;
@@ -24,7 +24,7 @@ import static domain.PatternType.valueOf;
 public class RadioButtonPatternsGroup extends RadioButtonGroup<String> {
 
     @Autowired
-    private ImageGenerator imageGenerator;
+    private ImageGenerationConfig config;
 
     @Autowired
     private CachedPatternsService cachedPatternsService;
@@ -37,8 +37,8 @@ public class RadioButtonPatternsGroup extends RadioButtonGroup<String> {
 
         Map<PatternType, Map<Color, BufferedImage>> patterns = cachedPatternsService.getAllPatterns();
 
-        imageGenerator.setPatterns(patterns.get(valueOf(getValue())));
+        config.setPatterns(patterns.get(valueOf(getValue())));
 
-        addValueChangeListener(event -> imageGenerator.setPatterns(patterns.get(valueOf(getValue()))));
+        addValueChangeListener(event -> config.setPatterns(patterns.get(valueOf(getValue()))));
     }
 }

@@ -19,6 +19,9 @@
     <!--REPOSITORY classes-->
     <context:component-scan base-package="layers.repository"/>
 
+    <!--CONFIG classes-->
+    <context:component-scan base-package="utility.config"/>
+
     <!--HELPER classes-->
     <context:component-scan base-package="utility.helpers"/>
 
