@@ -3,7 +3,6 @@ package layers.web.vaadin;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Slider;
-import layers.service.ImageGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import utility.config.ImageGenerationConfig;
@@ -16,7 +15,6 @@ public class ExpectedColumnsNumberSlider extends Slider {
 
     @Autowired
     private ImageGenerationConfig config;
-
 
     @PostConstruct
     public void postConstruct() {

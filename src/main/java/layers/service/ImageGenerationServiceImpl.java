@@ -20,7 +20,7 @@ import static utility.config.ImageGenerationConfig.PATTERN_WIDTH;
 
 @Service
 @Scope("session")
-public class ImageGeneratorImpl implements ImageGenerator {
+public class ImageGenerationServiceImpl implements ImageGenerationService {
 
     @Autowired
     private ImageGenerationConfig config;

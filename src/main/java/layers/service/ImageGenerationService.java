@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-public interface ImageGenerator {
+public interface ImageGenerationService {
 
     //TODO: add descriptive comments to this method
     List<List<BufferedImage>> asMatrix(int expectedColumns);
@@ -14,5 +14,6 @@ public interface ImageGenerator {
     List<List<BufferedImage>> resultMatrix();
     BufferedImage generateImage();
 
+    //TODO: delete this method, after add Spring to tests
     void setConfig(ImageGenerationConfig config);
 }
