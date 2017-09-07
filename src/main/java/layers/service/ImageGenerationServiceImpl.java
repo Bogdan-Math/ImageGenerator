@@ -80,7 +80,7 @@ public class ImageGenerationServiceImpl implements ImageGenerationService {
     public List<List<BufferedImage>> resultMatrix() {
 
         List<List<Color>> matrix         = averagedColorsMatrix();
-        Map<Color, BufferedImage> map    = config.getPatterns();
+        Map<Color, BufferedImage> map    = config.patternsMap();
         List<List<BufferedImage>> result = new ArrayList<>();
 
         for (List<Color> colors : matrix) {
