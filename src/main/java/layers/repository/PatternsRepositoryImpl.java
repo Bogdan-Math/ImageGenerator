@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.toMap;
 
 @Repository
 @Scope("singleton")
-public class BasicPatternsRepository implements PatternsRepository {
+public class PatternsRepositoryImpl implements PatternsRepository {
 
     @Autowired
     private ResourceReader resourceReader;

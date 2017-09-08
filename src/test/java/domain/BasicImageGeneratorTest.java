@@ -1,7 +1,9 @@
-package layers.service;
+package domain;
 
+import domain.ImageGenerator;
+import domain.BasicImageGenerator;
 import utility.pattern.PatternType;
-import layers.repository.BasicPatternsRepository;
+import layers.repository.PatternsRepositoryImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -22,9 +24,9 @@ import java.util.List;
 import static utility.pattern.PatternType.*;
 import static org.junit.Assert.*;
 
-public class ImageGenerationServiceImplTest {
+public class BasicImageGeneratorTest {
 
-    private ImageGenerationService imageGenerationService;
+    private ImageGenerator imageGenerator;
 
     private BufferedImage canonicalImage;
     private Map<Color, BufferedImage> patterns;
@@ -42,7 +44,7 @@ public class ImageGenerationServiceImplTest {
         this.resourceReader = new ResourceReader();
         this.whiteImage     = ImageIO.read(resourceReader.readFile("images/colors/1-white.jpg"));
 
-        BasicPatternsRepository repository = new BasicPatternsRepository();
+        PatternsRepositoryImpl repository = new PatternsRepositoryImpl();
         repository.setResourceReader(resourceReader);
         repository.setConverter(new ObjectTypeConverter());
         repository.setImageInformation(new ImageInformation());
@@ -52,14 +54,14 @@ public class ImageGenerationServiceImplTest {
             put(PLAINS, "images/plains");
         }});
 
-        this.imageGenerationService = new ImageGenerationServiceImpl();
+        this.imageGenerator = new BasicImageGenerator();
         this.canonicalImage         = ImageIO.read(resourceReader.readFile("images/canonical.jpg"));
         this.patterns               = repository.getFlags();
         this.expectedColumnsNumber  = 200;
 
-        this.imageGenerationService.setImage(canonicalImage);
-        this.imageGenerationService.setPatterns(patterns);
-        this.imageGenerationService.setExpectedColumnsNumber(expectedColumnsNumber);
+        this.imageGenerator.setImage(canonicalImage);
+        this.imageGenerator.setPatterns(patterns);
+        this.imageGenerator.setExpectedColumnsNumber(expectedColumnsNumber);
     }
 
     @After
@@ -72,9 +74,9 @@ public class ImageGenerationServiceImplTest {
 
     @Test
     public void asMatrix() throws Exception {
-        imageGenerationService.setExpectedColumnsNumber(100);
+        imageGenerator.setExpectedColumnsNumber(100);
 
-        List<List<BufferedImage>> matrix = imageGenerationService.asMatrix();
+        List<List<BufferedImage>> matrix = imageGenerator.asMatrix();
 
         int matrixWidth = matrix.size();
         int matrixHeight = matrix.get(0).size();
@@ -84,20 +86,20 @@ public class ImageGenerationServiceImplTest {
 
     @Test
     public void asMatrix_exception() throws Exception {
-        imageGenerationService.setExpectedColumnsNumber(2000);
+        imageGenerator.setExpectedColumnsNumber(2000);
 
         thrown.expect(MatrixSizeException.class);
         thrown.expectMessage("Number of expected columns (is 2000) could not be more than image width (is 1600).");
 
-        imageGenerationService.asMatrix();
+        imageGenerator.asMatrix();
     }
 
     @Test
     public void averagedColorsMatrix() throws Exception {
         int white = 255;
-        imageGenerationService.setImage(whiteImage);
-        imageGenerationService.setExpectedColumnsNumber(10);
-        imageGenerationService.averagedColorsMatrix()
+        imageGenerator.setImage(whiteImage);
+        imageGenerator.setExpectedColumnsNumber(10);
+        imageGenerator.averagedColorsMatrix()
                 .forEach(row -> row
                         .forEach(averageRGB -> {
                             assertEquals(white, averageRGB.getRed());
@@ -108,7 +110,7 @@ public class ImageGenerationServiceImplTest {
 
     @Test
     public void resultMatrix() throws Exception {
-        imageGenerationService.resultMatrix()
+        imageGenerator.resultMatrix()
                 .forEach(row -> row
                         .forEach(patternImg -> {
                             assertTrue(patterns.values().contains(patternImg));
@@ -117,7 +119,7 @@ public class ImageGenerationServiceImplTest {
 
     @Test
     public void generateImage() throws Exception {
-        BufferedImage generatedImage = imageGenerationService.generateImage();
+        BufferedImage generatedImage = imageGenerator.generateImage();
 
         assertNotEquals(whiteImage, generatedImage);
         assertTrue(generatedImage.getWidth() >= whiteImage.getWidth());

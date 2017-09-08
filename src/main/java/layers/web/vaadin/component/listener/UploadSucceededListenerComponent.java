@@ -4,7 +4,7 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Upload;
-import layers.service.ImageGenerationService;
+import domain.ImageGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -27,7 +27,7 @@ public class UploadSucceededListenerComponent implements UploadSucceededListener
     private ObjectTypeConverter converter;
 
     @Autowired
-    private ImageGenerationService imageGenerationService;
+    private ImageGenerator imageGenerator;
 
     @Resource(name = "notifications")
     private List<String> notifications;
@@ -54,9 +54,9 @@ public class UploadSucceededListenerComponent implements UploadSucceededListener
 
         notifications.add("Upload succeeded.");
 
-        imageGenerationService.setImage(uploadedImage);
+        imageGenerator.setImage(uploadedImage);
 
-        BufferedImage generatedImage = imageGenerationService.generateImage();
+        BufferedImage generatedImage = imageGenerator.generateImage();
         String timeNow               = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"));
 
         originalImageView.setSource(new StreamResource(() ->

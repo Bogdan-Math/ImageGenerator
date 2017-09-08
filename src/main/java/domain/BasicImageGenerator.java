@@ -1,7 +1,7 @@
-package layers.service;
+package domain;
 
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import utility.exception.MatrixSizeException;
 import utility.helper.ImageInformation;
 
@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Service
+@Component
 @Scope("session")
-public class ImageGenerationServiceImpl implements ImageGenerationService {
+public class BasicImageGenerator implements ImageGenerator {
 
     /**
      * The values of ImageSize should be as close as possible to patterns average size, if they different.

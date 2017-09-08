@@ -1,7 +1,7 @@
 package utility.exception;
 
-import layers.service.ImageGenerationService;
-import layers.service.ImageGenerationServiceImpl;
+import domain.ImageGenerator;
+import domain.BasicImageGenerator;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -19,9 +19,9 @@ public class MatrixSizeExceptionTest {
         thrown.expect(MatrixSizeException.class);
         thrown.expectMessage("Number of expected columns (is 10) could not be more than image width (is 1)");
 
-        ImageGenerationService imageGenerationService = new ImageGenerationServiceImpl();
-        imageGenerationService.setImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB));
-        imageGenerationService.setExpectedColumnsNumber(10);
-        imageGenerationService.asMatrix();
+        ImageGenerator imageGenerator = new BasicImageGenerator();
+        imageGenerator.setImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB));
+        imageGenerator.setExpectedColumnsNumber(10);
+        imageGenerator.asMatrix();
     }
 }

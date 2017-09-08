@@ -13,14 +13,14 @@
     <!--UI classes-->
     <context:component-scan base-package="layers.web.vaadin"/>
 
+    <!--DOMAIN classes-->
+    <context:component-scan base-package="domain"/>
+
     <!--SERVICE classes-->
     <context:component-scan base-package="layers.service"/>
 
     <!--REPOSITORY classes-->
     <context:component-scan base-package="layers.repository"/>
-
-    <!--CONFIG classes-->
-    <context:component-scan base-package="utility.config"/>
 
     <!--HELPER classes-->
     <context:component-scan base-package="utility.helper"/>

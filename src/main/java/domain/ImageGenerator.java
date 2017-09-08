@@ -1,11 +1,11 @@
-package layers.service;
+package domain;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Map;
 
-public interface ImageGenerationService {
+public interface ImageGenerator {
 
     void setImage(BufferedImage image);
     void setPatterns(Map<Color, BufferedImage> patterns);

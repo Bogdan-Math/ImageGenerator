@@ -15,13 +15,13 @@ import static utility.pattern.PatternType.PLAINS;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
-public class BasicPatternsRepositoryTest {
+public class PatternsRepositoryImplTest {
 
-    private BasicPatternsRepository repository;
+    private PatternsRepositoryImpl repository;
 
     @Before
     public void setUp() throws Exception {
-        repository = new BasicPatternsRepository();
+        repository = new PatternsRepositoryImpl();
         repository.setResourceReader(new ResourceReader());
         repository.setConverter(new ObjectTypeConverter());
         repository.setImageInformation(new ImageInformation());
