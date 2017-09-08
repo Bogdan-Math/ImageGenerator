@@ -1,4 +1,4 @@
-package layers.web.vaadin.components.visuals;
+package layers.web.vaadin.component.visual;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Notification;

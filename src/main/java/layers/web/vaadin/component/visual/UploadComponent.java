@@ -1,8 +1,8 @@
-package layers.web.vaadin.components.visuals;
+package layers.web.vaadin.component.visual;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Upload;
-import layers.web.vaadin.components.listeners.*;
+import layers.web.vaadin.component.listener.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
