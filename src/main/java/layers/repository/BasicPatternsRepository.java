@@ -12,11 +12,10 @@ import javax.annotation.Resource;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static domain.PatternType.*;
+import static java.util.stream.Collectors.toMap;
 
 @Repository
 @Scope("singleton")
@@ -50,25 +49,21 @@ public class BasicPatternsRepository implements PatternsRepository {
     }
 
     private Map<Color, BufferedImage> initialize(PatternType patternType) {
-        return patternsMap(resourceReader.readFiles(patternsLocation.get(patternType)));
-    }
+        return resourceReader.readFiles(patternsLocation.get(patternType))
+                             .stream()
+                             .collect(toMap(
+                                            this::averagedColor,     // put Color         as KEY   in map
+                                            converter::bufferedImage,// put BufferedImage as VALUE in map
 
-    private Map<Color, BufferedImage> patternsMap(List<File> files) {
-        return files.stream()
-                .collect(Collectors
-                        .toMap(
-                                this::averagedColor,     // put Color         as KEY   in map
-                                converter::bufferedImage,// put BufferedImage as VALUE in map
+                                            (img_color_1, img_color_2) -> {
+                                                System.out.println("Two same average color: ");
+                                                System.out.println(img_color_1);
+                                                System.out.println(img_color_2);
 
-                                (img_color_1, img_color_2) -> {
-                                    System.out.println("Two same average color: ");
-                                    System.out.println(img_color_1);
-                                    System.out.println(img_color_2);
-
-                                    return img_color_1;
-                                }
-                        )
-                );
+                                                return img_color_1;
+                                            }
+                                     )
+                             );
     }
 
     private Color averagedColor(File file) {
