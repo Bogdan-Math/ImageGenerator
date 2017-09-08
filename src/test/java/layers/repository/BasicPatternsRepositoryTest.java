@@ -1,17 +1,17 @@
 package layers.repository;
 
-import domain.PatternType;
+import utility.pattern.PatternType;
 import org.junit.Before;
 import org.junit.Test;
-import utility.helpers.ImageInformation;
-import utility.helpers.ObjectTypeConverter;
-import utility.helpers.ResourceReader;
+import utility.helper.ImageInformation;
+import utility.helper.ObjectTypeConverter;
+import utility.helper.ResourceReader;
 
 import java.util.HashMap;
 
-import static domain.PatternType.COMMONS;
-import static domain.PatternType.FLAGS;
-import static domain.PatternType.PLAINS;
+import static utility.pattern.PatternType.COMMONS;
+import static utility.pattern.PatternType.FLAGS;
+import static utility.pattern.PatternType.PLAINS;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 

@@ -1,6 +1,6 @@
 package layers.service;
 
-import domain.PatternType;
+import utility.pattern.PatternType;
 import layers.repository.PatternsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static domain.PatternType.*;
+import static utility.pattern.PatternType.*;
 
 @Service
 @Scope("singleton")

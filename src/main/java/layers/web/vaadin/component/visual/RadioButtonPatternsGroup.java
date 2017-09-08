@@ -3,7 +3,7 @@ package layers.web.vaadin.component.visual;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.RadioButtonGroup;
 import com.vaadin.ui.themes.ValoTheme;
-import domain.PatternType;
+import utility.pattern.PatternType;
 import layers.service.CachedPatternsService;
 import layers.service.ImageGenerationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +16,8 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static domain.PatternType.FLAGS;
-import static domain.PatternType.valueOf;
+import static utility.pattern.PatternType.FLAGS;
+import static utility.pattern.PatternType.valueOf;
 
 @SpringComponent
 @Scope("session")

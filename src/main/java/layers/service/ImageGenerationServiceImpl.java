@@ -2,8 +2,8 @@ package layers.service;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import utility.exceptions.MatrixSizeException;
-import utility.helpers.ImageInformation;
+import utility.exception.MatrixSizeException;
+import utility.helper.ImageInformation;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

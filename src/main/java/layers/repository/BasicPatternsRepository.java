@@ -1,12 +1,12 @@
 package layers.repository;
 
-import domain.PatternType;
+import utility.pattern.PatternType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
-import utility.helpers.ImageInformation;
-import utility.helpers.ObjectTypeConverter;
-import utility.helpers.ResourceReader;
+import utility.helper.ImageInformation;
+import utility.helper.ObjectTypeConverter;
+import utility.helper.ResourceReader;
 
 import javax.annotation.Resource;
 import java.awt.*;
@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Map;
 
-import static domain.PatternType.*;
+import static utility.pattern.PatternType.*;
 import static java.util.stream.Collectors.toMap;
 
 @Repository

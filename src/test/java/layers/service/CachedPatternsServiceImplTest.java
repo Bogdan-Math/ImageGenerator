@@ -1,6 +1,6 @@
 package layers.service;
 
-import domain.PatternType;
+import utility.pattern.PatternType;
 import layers.repository.PatternsRepository;
 import org.junit.Before;
 import org.junit.Test;

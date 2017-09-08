@@ -1,4 +1,4 @@
-package domain;
+package utility.pattern;
 
 public enum PatternType {
     COMMONS,

@@ -1,7 +1,6 @@
-package utility.helpers;
+package utility.helper;
 
 import org.junit.Test;
-import utility.helpers.Creator;
 
 import static org.junit.Assert.assertEquals;
 

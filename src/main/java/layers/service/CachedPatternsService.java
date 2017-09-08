@@ -1,6 +1,6 @@
 package layers.service;
 
-import domain.PatternType;
+import utility.pattern.PatternType;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

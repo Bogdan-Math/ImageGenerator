@@ -1,16 +1,16 @@
 package layers.service;
 
-import domain.PatternType;
+import utility.pattern.PatternType;
 import layers.repository.BasicPatternsRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import utility.exceptions.MatrixSizeException;
-import utility.helpers.ImageInformation;
-import utility.helpers.ObjectTypeConverter;
-import utility.helpers.ResourceReader;
+import utility.exception.MatrixSizeException;
+import utility.helper.ImageInformation;
+import utility.helper.ObjectTypeConverter;
+import utility.helper.ResourceReader;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -19,7 +19,7 @@ import java.io.File;
 import java.util.*;
 import java.util.List;
 
-import static domain.PatternType.*;
+import static utility.pattern.PatternType.*;
 import static org.junit.Assert.*;
 
 public class ImageGenerationServiceImplTest {

@@ -8,7 +8,7 @@ import layers.service.ImageGenerationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
-import utility.helpers.ObjectTypeConverter;
+import utility.helper.ObjectTypeConverter;
 
 import javax.annotation.Resource;
 import java.awt.image.BufferedImage;

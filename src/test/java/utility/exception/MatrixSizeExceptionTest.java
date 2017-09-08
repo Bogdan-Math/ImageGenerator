@@ -1,4 +1,4 @@
-package utility.exceptions;
+package utility.exception;
 
 import layers.service.ImageGenerationService;
 import layers.service.ImageGenerationServiceImpl;
