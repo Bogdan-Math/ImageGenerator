@@ -1,4 +1,4 @@
-package layers.web.vaadin;
+package layers.web.vaadin.components.visuals;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.GridLayout;

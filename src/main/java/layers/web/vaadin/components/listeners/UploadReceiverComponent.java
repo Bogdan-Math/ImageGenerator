@@ -1,4 +1,4 @@
-package layers.web.vaadin.listeners;
+package layers.web.vaadin.components.listeners;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import org.springframework.context.annotation.Scope;

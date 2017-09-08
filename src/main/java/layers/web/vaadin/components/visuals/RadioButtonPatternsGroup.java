@@ -1,4 +1,4 @@
-package layers.web.vaadin;
+package layers.web.vaadin.components.visuals;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.RadioButtonGroup;
@@ -10,9 +10,9 @@ import org.springframework.context.annotation.Scope;
 import utility.config.ImageGenerationConfig;
 
 import javax.annotation.PostConstruct;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -35,7 +35,7 @@ public class RadioButtonPatternsGroup extends RadioButtonGroup<String> {
         setValue(FLAGS.name());
         addStyleName(ValoTheme.OPTIONGROUP_HORIZONTAL);
 
-        Map<PatternType, List<BufferedImage>> patterns = cachedPatternsService.getAllPatterns();
+        Map<PatternType, Map<Color, BufferedImage>> patterns = cachedPatternsService.getAllPatterns();
 
         config.setPatterns(patterns.get(valueOf(getValue())));
 

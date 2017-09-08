@@ -9,9 +9,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -31,16 +31,16 @@ public class CachedPatternsServiceImplTest {
     @Before
     public void setUp() throws Exception {
 
-        when(repository.getCommons()).thenReturn(new ArrayList<BufferedImage>(){{
-            add(new BufferedImage(1,1, BufferedImage.TYPE_INT_RGB));
+        when(repository.getCommons()).thenReturn(new HashMap<Color, BufferedImage>(){{
+            put(Color.WHITE, new BufferedImage(1,1, BufferedImage.TYPE_INT_RGB));
         }});
 
-        when(repository.getFlags()).thenReturn(new ArrayList<BufferedImage>(){{
-            add(new BufferedImage(1,1, BufferedImage.TYPE_INT_RGB));
+        when(repository.getFlags()).thenReturn(new HashMap<Color, BufferedImage>(){{
+            put(Color.WHITE, new BufferedImage(1,1, BufferedImage.TYPE_INT_RGB));
         }});
 
-        when(repository.getPlains()).thenReturn(new ArrayList<BufferedImage>(){{
-            add(new BufferedImage(1,1, BufferedImage.TYPE_INT_RGB));
+        when(repository.getPlains()).thenReturn(new HashMap<Color, BufferedImage>(){{
+            put(Color.WHITE, new BufferedImage(1,1, BufferedImage.TYPE_INT_RGB));
         }});
 
     }
@@ -48,7 +48,7 @@ public class CachedPatternsServiceImplTest {
     @Test
     public void cacheAllPatternsAndGetAllPatterns() throws Exception {
         patternsService.cacheAllPatterns();
-        Map<PatternType, List<BufferedImage>> allPatterns = patternsService.getAllPatterns();
+        Map<PatternType, Map<Color, BufferedImage>> allPatterns = patternsService.getAllPatterns();
 
         assertNotNull(allPatterns);
         assertThat(allPatterns.size(), is(3));

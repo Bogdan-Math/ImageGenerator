@@ -1,11 +1,12 @@
 package layers.repository;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.List;
+import java.util.Map;
 
 public interface PatternsRepository {
 
-    List<BufferedImage> getCommons();
-    List<BufferedImage> getFlags();
-    List<BufferedImage> getPlains();
+    Map<Color, BufferedImage> getCommons();
+    Map<Color, BufferedImage> getFlags();
+    Map<Color, BufferedImage> getPlains();
 }

@@ -24,6 +24,7 @@ public class BasicPatternsRepositoryTest {
         repository = new BasicPatternsRepository();
         repository.setResourceReader(new ResourceReader());
         repository.setConverter(new ObjectTypeConverter());
+        repository.setImageInformation(new ImageInformation());
         repository.setPatternsLocation(new HashMap<PatternType, String>() {{
             put(COMMONS, "images/colors");
             put(FLAGS, "images/flags");
@@ -38,7 +39,7 @@ public class BasicPatternsRepositoryTest {
 
     @Test
     public void getFlags() throws Exception {
-        assertThat(repository.getFlags().size(), is(196));
+        assertThat(repository.getFlags().size(), is(195));
     }
 
     @Test

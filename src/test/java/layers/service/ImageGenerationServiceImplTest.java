@@ -1,5 +1,6 @@
 package layers.service;
 
+import utility.config.ImageGenerationConfig;
 import domain.PatternType;
 import layers.repository.BasicPatternsRepository;
 import org.junit.After;
@@ -7,19 +8,17 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import utility.config.ImageGenerationConfig;
 import utility.exceptions.MatrixSizeException;
 import utility.helpers.ImageInformation;
 import utility.helpers.ObjectTypeConverter;
 import utility.helpers.ResourceReader;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Optional;
 
 import static domain.PatternType.*;
 import static org.junit.Assert.*;
@@ -35,7 +34,7 @@ public class ImageGenerationServiceImplTest {
     private BufferedImage whiteImage;
     private BufferedImage canonicalImage;
 
-    private List<BufferedImage> patterns;
+    private Map<Color, BufferedImage> patterns;
     private Integer expectedColumnsNumber;
 
     @Rule
@@ -49,6 +48,7 @@ public class ImageGenerationServiceImplTest {
         this.repository = new BasicPatternsRepository();
         this.repository.setResourceReader(new ResourceReader());
         this.repository.setConverter(new ObjectTypeConverter());
+        this.repository.setImageInformation(new ImageInformation());
         this.repository.setPatternsLocation(new HashMap<PatternType, String>() {{
             put(COMMONS, "images/colors");
             put(FLAGS, "images/flags");
@@ -66,7 +66,6 @@ public class ImageGenerationServiceImplTest {
             setImage(canonicalImage);
             setPatterns(patterns);
             setExpectedColumnsNumber(expectedColumnsNumber);
-            setImageInformation(new ImageInformation());
         }};
         this.imageGenerationService.setConfig(config);
     }
@@ -123,7 +122,7 @@ public class ImageGenerationServiceImplTest {
         imageGenerationService.resultMatrix()
                 .forEach(row -> row
                         .forEach(patternImg -> {
-                            assertTrue(patterns.contains(patternImg));
+                            assertTrue(patterns.values().contains(patternImg));
                         }));
     }
 
