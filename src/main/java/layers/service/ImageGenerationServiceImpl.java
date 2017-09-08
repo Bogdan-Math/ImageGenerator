@@ -1,7 +1,5 @@
 package layers.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import utility.config.ImageGenerationConfig;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import utility.exceptions.MatrixSizeException;
@@ -15,22 +13,57 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static utility.config.ImageGenerationConfig.PATTERN_HEIGHT;
-import static utility.config.ImageGenerationConfig.PATTERN_WIDTH;
-
 @Service
 @Scope("session")
 public class ImageGenerationServiceImpl implements ImageGenerationService {
 
-    @Autowired
-    private ImageGenerationConfig config;
+    /**
+     * The values of ImageSize should be as close as possible to patterns average size, if they different.
+     * The best way if all patterns have same width and height. Then set it in in WIDTH and HEIGHT and you are C00L :).
+     */
+    private static final int PATTERN_WIDTH = 14;//40;
+    private static final int PATTERN_HEIGHT = 14;//20;
+
+    private BufferedImage image;
+    private Map<Color, BufferedImage> patterns;
+    private Integer expectedColumnsNumber;
+
+    @Override
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    @Override
+    public void setImage(BufferedImage image) {
+        this.image = image;
+    }
+
+    @Override
+    public Map<Color, BufferedImage> getPatterns() {
+        return patterns;
+    }
+
+    @Override
+    public void setPatterns(Map<Color, BufferedImage> patterns) {
+        this.patterns = patterns;
+    }
+
+    @Override
+    public Integer getExpectedColumnsNumber() {
+        return expectedColumnsNumber;
+    }
+
+    @Override
+    public void setExpectedColumnsNumber(Integer expectedColumnsNumber) {
+        this.expectedColumnsNumber = expectedColumnsNumber;
+    }
 
     @Override
     public List<List<BufferedImage>> asMatrix(int expectedColumns) {
                                               int expectedRows = 0;
 
-        int width  = config.getImageWidth();
-        int height = config.getImageHeight();
+        int width  = image.getWidth();
+        int height = image.getHeight();
 
         if (expectedColumns > width) {
             throw new MatrixSizeException(String
@@ -58,7 +91,7 @@ public class ImageGenerationServiceImpl implements ImageGenerationService {
 
             List<BufferedImage> matrixRow = new ArrayList<>();
             for (int j = 0; j < realRowsNumber; j++) {
-                matrixRow.add(config.getSubImage(i * squareWidth, j * squareHeight, squareWidth, squareHeight));
+                matrixRow.add(image.getSubimage(i * squareWidth, j * squareHeight, squareWidth, squareHeight));
             }
 
             matrix.add(matrixRow);
@@ -69,7 +102,7 @@ public class ImageGenerationServiceImpl implements ImageGenerationService {
 
     @Override
     public List<List<Color>> averagedColorsMatrix() {
-        return asMatrix(config.getExpectedColumnsNumber()).stream()
+        return asMatrix(getExpectedColumnsNumber()).stream()
                 .map(row -> row.stream()
                         .map(image -> new ImageInformation().averagedColor(image))
                         .collect(Collectors.toList()))
@@ -80,7 +113,7 @@ public class ImageGenerationServiceImpl implements ImageGenerationService {
     public List<List<BufferedImage>> resultMatrix() {
 
         List<List<Color>> matrix         = averagedColorsMatrix();
-        Map<Color, BufferedImage> map    = config.getPatterns();
+        Map<Color, BufferedImage> map    = getPatterns();
         List<List<BufferedImage>> result = new ArrayList<>();
 
         for (List<Color> colors : matrix) {
@@ -151,10 +184,5 @@ public class ImageGenerationServiceImpl implements ImageGenerationService {
                         .flatMap(List::stream)
                         .max(Comparator.comparing(img -> img.getWidth() * img.getHeight()))
                         .orElse(null);
-    }
-
-    @Override
-    public void setConfig(ImageGenerationConfig config) {
-        this.config = config;
     }
 }

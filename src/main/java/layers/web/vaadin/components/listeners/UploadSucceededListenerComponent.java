@@ -8,7 +8,6 @@ import layers.service.ImageGenerationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
-import utility.config.ImageGenerationConfig;
 import utility.helpers.ObjectTypeConverter;
 
 import javax.annotation.Resource;
@@ -29,9 +28,6 @@ public class UploadSucceededListenerComponent implements UploadSucceededListener
 
     @Autowired
     private ImageGenerationService imageGenerationService;
-
-    @Autowired
-    private ImageGenerationConfig config;
 
     @Resource(name = "notifications")
     private List<String> notifications;
@@ -58,7 +54,7 @@ public class UploadSucceededListenerComponent implements UploadSucceededListener
 
         notifications.add("Upload succeeded.");
 
-        config.setImage(uploadedImage);
+        imageGenerationService.setImage(uploadedImage);
 
         BufferedImage generatedImage = imageGenerationService.generateImage();
         String timeNow               = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"));
