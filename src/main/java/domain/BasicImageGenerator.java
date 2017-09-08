@@ -1,5 +1,6 @@
 package domain;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import utility.exception.MatrixSizeException;
@@ -13,44 +14,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static domain.ImageGeneratorSettings.PATTERN_HEIGHT;
+import static domain.ImageGeneratorSettings.PATTERN_WIDTH;
+
 @Component
 @Scope("session")
 public class BasicImageGenerator implements ImageGenerator {
 
-    /**
-     * The values of ImageSize should be as close as possible to patterns average size, if they different.
-     * The best way if all patterns have same width and height. Then set it in in WIDTH and HEIGHT and you are C00L :).
-     */
-    private static final int PATTERN_WIDTH = 14;//40;
-    private static final int PATTERN_HEIGHT = 14;//20;
-
-    private BufferedImage image;
-    private Map<Color, BufferedImage> patterns;
-    private Integer expectedColumnsNumber;
+    @Autowired
+    private ImageGeneratorSettings settings;
 
     @Override
-    public void setImage(BufferedImage image) {
-        this.image = image;
-    }
-
-    @Override
-    public void setPatterns(Map<Color, BufferedImage> patterns) {
-        this.patterns = patterns;
-    }
-
-    @Override
-    public void setExpectedColumnsNumber(Integer expectedColumnsNumber) {
-        this.expectedColumnsNumber = expectedColumnsNumber;
+    public void setSettings(ImageGeneratorSettings settings) {
+        this.settings = settings;
     }
 
     @Override
     public List<List<BufferedImage>> asMatrix() {
 
-        int expectedColumns = expectedColumnsNumber;
+        int expectedColumns = settings.getExpectedColumnsNumber();
         int expectedRows    = 0;
 
-        int width  = image.getWidth();
-        int height = image.getHeight();
+        int width  = settings.getImageWidth();
+        int height = settings.getImageHeight();
 
         if (expectedColumns > width) {
             throw new MatrixSizeException(String
@@ -78,7 +64,7 @@ public class BasicImageGenerator implements ImageGenerator {
 
             List<BufferedImage> matrixRow = new ArrayList<>();
             for (int j = 0; j < realRowsNumber; j++) {
-                matrixRow.add(image.getSubimage(i * squareWidth, j * squareHeight, squareWidth, squareHeight));
+                matrixRow.add(settings.getSubImage(i * squareWidth, j * squareHeight, squareWidth, squareHeight));
             }
 
             matrix.add(matrixRow);
@@ -100,7 +86,7 @@ public class BasicImageGenerator implements ImageGenerator {
     public List<List<BufferedImage>> resultMatrix() {
 
         List<List<Color>> matrix         = averagedColorsMatrix();
-        Map<Color, BufferedImage> map    = patterns;
+        Map<Color, BufferedImage> map    = settings.getPatterns();
         List<List<BufferedImage>> result = new ArrayList<>();
 
         for (List<Color> colors : matrix) {

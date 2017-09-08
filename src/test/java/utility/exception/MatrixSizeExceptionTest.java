@@ -2,6 +2,7 @@ package utility.exception;
 
 import domain.ImageGenerator;
 import domain.BasicImageGenerator;
+import domain.ImageGeneratorSettings;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -20,8 +21,10 @@ public class MatrixSizeExceptionTest {
         thrown.expectMessage("Number of expected columns (is 10) could not be more than image width (is 1)");
 
         ImageGenerator imageGenerator = new BasicImageGenerator();
-        imageGenerator.setImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB));
-        imageGenerator.setExpectedColumnsNumber(10);
+        imageGenerator.setSettings(new ImageGeneratorSettings(){{
+            setImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB));
+            setExpectedColumnsNumber(10);
+        }});
         imageGenerator.asMatrix();
     }
 }

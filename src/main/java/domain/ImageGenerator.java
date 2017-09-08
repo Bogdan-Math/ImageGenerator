@@ -7,9 +7,7 @@ import java.util.Map;
 
 public interface ImageGenerator {
 
-    void setImage(BufferedImage image);
-    void setPatterns(Map<Color, BufferedImage> patterns);
-    void setExpectedColumnsNumber(Integer expectedColumnsNumber);
+    void setSettings(ImageGeneratorSettings settings);
 
     //TODO: add descriptive comments to this method
     List<List<BufferedImage>> asMatrix();

@@ -28,6 +28,8 @@ public class BasicImageGeneratorTest {
 
     private ImageGenerator imageGenerator;
 
+    private ImageGeneratorSettings settings;
+
     private BufferedImage canonicalImage;
     private Map<Color, BufferedImage> patterns;
     private Integer expectedColumnsNumber;
@@ -59,9 +61,13 @@ public class BasicImageGeneratorTest {
         this.patterns               = repository.getFlags();
         this.expectedColumnsNumber  = 200;
 
-        this.imageGenerator.setImage(canonicalImage);
-        this.imageGenerator.setPatterns(patterns);
-        this.imageGenerator.setExpectedColumnsNumber(expectedColumnsNumber);
+        this.settings = new ImageGeneratorSettings() {{
+            setImage(canonicalImage);
+            setPatterns(patterns);
+            setExpectedColumnsNumber(expectedColumnsNumber);
+        }};
+
+        this.imageGenerator.setSettings(settings);
     }
 
     @After
@@ -74,7 +80,7 @@ public class BasicImageGeneratorTest {
 
     @Test
     public void asMatrix() throws Exception {
-        imageGenerator.setExpectedColumnsNumber(100);
+        settings.setExpectedColumnsNumber(100);
 
         List<List<BufferedImage>> matrix = imageGenerator.asMatrix();
 
@@ -86,7 +92,7 @@ public class BasicImageGeneratorTest {
 
     @Test
     public void asMatrix_exception() throws Exception {
-        imageGenerator.setExpectedColumnsNumber(2000);
+        settings.setExpectedColumnsNumber(2000);
 
         thrown.expect(MatrixSizeException.class);
         thrown.expectMessage("Number of expected columns (is 2000) could not be more than image width (is 1600).");
@@ -97,8 +103,8 @@ public class BasicImageGeneratorTest {
     @Test
     public void averagedColorsMatrix() throws Exception {
         int white = 255;
-        imageGenerator.setImage(whiteImage);
-        imageGenerator.setExpectedColumnsNumber(10);
+        settings.setImage(whiteImage);
+        settings.setExpectedColumnsNumber(10);
         imageGenerator.averagedColorsMatrix()
                 .forEach(row -> row
                         .forEach(averageRGB -> {
