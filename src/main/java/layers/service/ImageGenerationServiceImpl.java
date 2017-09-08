@@ -29,18 +29,8 @@ public class ImageGenerationServiceImpl implements ImageGenerationService {
     private Integer expectedColumnsNumber;
 
     @Override
-    public BufferedImage getImage() {
-        return image;
-    }
-
-    @Override
     public void setImage(BufferedImage image) {
         this.image = image;
-    }
-
-    @Override
-    public Map<Color, BufferedImage> getPatterns() {
-        return patterns;
     }
 
     @Override
@@ -49,18 +39,15 @@ public class ImageGenerationServiceImpl implements ImageGenerationService {
     }
 
     @Override
-    public Integer getExpectedColumnsNumber() {
-        return expectedColumnsNumber;
-    }
-
-    @Override
     public void setExpectedColumnsNumber(Integer expectedColumnsNumber) {
         this.expectedColumnsNumber = expectedColumnsNumber;
     }
 
     @Override
-    public List<List<BufferedImage>> asMatrix(int expectedColumns) {
-                                              int expectedRows = 0;
+    public List<List<BufferedImage>> asMatrix() {
+
+        int expectedColumns = expectedColumnsNumber;
+        int expectedRows    = 0;
 
         int width  = image.getWidth();
         int height = image.getHeight();
@@ -102,7 +89,7 @@ public class ImageGenerationServiceImpl implements ImageGenerationService {
 
     @Override
     public List<List<Color>> averagedColorsMatrix() {
-        return asMatrix(getExpectedColumnsNumber()).stream()
+        return asMatrix().stream()
                 .map(row -> row.stream()
                         .map(image -> new ImageInformation().averagedColor(image))
                         .collect(Collectors.toList()))
@@ -113,7 +100,7 @@ public class ImageGenerationServiceImpl implements ImageGenerationService {
     public List<List<BufferedImage>> resultMatrix() {
 
         List<List<Color>> matrix         = averagedColorsMatrix();
-        Map<Color, BufferedImage> map    = getPatterns();
+        Map<Color, BufferedImage> map    = patterns;
         List<List<BufferedImage>> result = new ArrayList<>();
 
         for (List<Color> colors : matrix) {

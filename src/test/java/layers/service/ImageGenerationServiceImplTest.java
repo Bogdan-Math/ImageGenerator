@@ -72,23 +72,24 @@ public class ImageGenerationServiceImplTest {
 
     @Test
     public void asMatrix() throws Exception {
-        int expectedColumn = 100;
+        imageGenerationService.setExpectedColumnsNumber(100);
 
-        List<List<BufferedImage>> matrix = imageGenerationService.asMatrix(expectedColumn);
+        List<List<BufferedImage>> matrix = imageGenerationService.asMatrix();
+
         int matrixWidth = matrix.size();
         int matrixHeight = matrix.get(0).size();
-
         assertTrue(matrixWidth <= canonicalImage.getWidth()); // matrix width CAN NOT be more then image width.
         assertTrue(matrixHeight <= canonicalImage.getHeight()); // matrix height CAN NOT be more then image height.
     }
 
     @Test
     public void asMatrix_exception() throws Exception {
-        int wrongExpectedColumns = 2000;
+        imageGenerationService.setExpectedColumnsNumber(2000);
+
         thrown.expect(MatrixSizeException.class);
         thrown.expectMessage("Number of expected columns (is 2000) could not be more than image width (is 1600).");
 
-        imageGenerationService.asMatrix(wrongExpectedColumns);
+        imageGenerationService.asMatrix();
     }
 
     @Test
