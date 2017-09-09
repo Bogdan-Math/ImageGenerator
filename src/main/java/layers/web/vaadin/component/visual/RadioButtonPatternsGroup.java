@@ -3,10 +3,9 @@ package layers.web.vaadin.component.visual;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.RadioButtonGroup;
 import com.vaadin.ui.themes.ValoTheme;
-import domain.ImageGeneratorSettings;
+import domain.Settings;
 import utility.pattern.PatternType;
 import layers.service.CachedPatternsService;
-import domain.ImageGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
@@ -25,7 +24,7 @@ import static utility.pattern.PatternType.valueOf;
 public class RadioButtonPatternsGroup extends RadioButtonGroup<String> {
 
     @Autowired
-    private ImageGeneratorSettings settings;
+    private Settings settings;
 
     @Autowired
     private CachedPatternsService cachedPatternsService;

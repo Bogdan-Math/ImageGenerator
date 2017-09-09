@@ -21,7 +21,7 @@ public class MatrixSizeExceptionTest {
         thrown.expectMessage("Number of expected columns (is 10) could not be more than image width (is 1)");
 
         ImageGenerator imageGenerator = new BasicImageGenerator();
-        imageGenerator.setSettings(new ImageGeneratorSettings(){{
+        imageGenerator.setSettings(new ImageGeneratorSettings() {{
             setImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB));
             setExpectedColumnsNumber(10);
         }});

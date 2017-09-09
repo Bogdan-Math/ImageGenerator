@@ -5,7 +5,7 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Upload;
 import domain.ImageGenerator;
-import domain.ImageGeneratorSettings;
+import domain.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -28,7 +28,7 @@ public class UploadSucceededListenerComponent implements UploadSucceededListener
     private ObjectTypeConverter converter;
 
     @Autowired
-    private ImageGeneratorSettings settings;
+    private Settings settings;
 
     @Autowired
     private ImageGenerator imageGenerator;

@@ -1,7 +1,5 @@
 package domain;
 
-import domain.ImageGenerator;
-import domain.BasicImageGenerator;
 import utility.pattern.PatternType;
 import layers.repository.PatternsRepositoryImpl;
 import org.junit.After;
@@ -28,7 +26,7 @@ public class BasicImageGeneratorTest {
 
     private ImageGenerator imageGenerator;
 
-    private ImageGeneratorSettings settings;
+    private Settings settings;
 
     private BufferedImage canonicalImage;
     private Map<Color, BufferedImage> patterns;

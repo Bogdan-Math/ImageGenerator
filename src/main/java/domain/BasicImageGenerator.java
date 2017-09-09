@@ -14,18 +14,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static domain.ImageGeneratorSettings.PATTERN_HEIGHT;
-import static domain.ImageGeneratorSettings.PATTERN_WIDTH;
+import static domain.Settings.PATTERN_HEIGHT;
+import static domain.Settings.PATTERN_WIDTH;
 
 @Component
 @Scope("session")
 public class BasicImageGenerator implements ImageGenerator {
 
     @Autowired
-    private ImageGeneratorSettings settings;
+    private Settings settings;
 
     @Override
-    public void setSettings(ImageGeneratorSettings settings) {
+    public void setSettings(Settings settings) {
         this.settings = settings;
     }
 
