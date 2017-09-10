@@ -47,16 +47,16 @@ public class ImageGeneratorSettings implements Settings {
 
     @Override
     public int getImageWidth() {
-        return image.getWidth();
+        return getImage().getWidth();
     }
 
     @Override
     public int getImageHeight() {
-        return image.getHeight();
+        return getImage().getHeight();
     }
 
     @Override
     public BufferedImage getSubImage(int x, int y, int width, int height) {
-        return image.getSubimage(x, y, width, height);
+        return getImage().getSubimage(x, y, width, height);
     }
 }
