@@ -1,27 +1,30 @@
 package domain;
 
-import utility.pattern.PatternType;
 import layers.repository.PatternsRepositoryImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import utility.exception.MatrixSizeException;
 import utility.helper.ImageInformation;
 import utility.helper.ObjectTypeConverter;
 import utility.helper.ResourceReader;
+import utility.pattern.PatternType;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.*;
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 import static utility.pattern.PatternType.*;
-import static org.junit.Assert.*;
 
+//TODO: add more code coverage
 public class BasicImageGeneratorTest {
 
     private ImageGenerator imageGenerator;
@@ -74,51 +77,6 @@ public class BasicImageGeneratorTest {
                 .ifPresent(filesArr -> Arrays.stream(filesArr)
                         .filter(file -> (file.getName().matches("^generate_image.+")))
                         .forEach(File::delete));
-    }
-
-    @Test
-    public void asMatrix() throws Exception {
-        settings.setExpectedColumnsNumber(100);
-
-        List<List<BufferedImage>> matrix = imageGenerator.asMatrix();
-
-        int matrixWidth = matrix.size();
-        int matrixHeight = matrix.get(0).size();
-        assertTrue(matrixWidth <= canonicalImage.getWidth()); // matrix width CAN NOT be more then image width.
-        assertTrue(matrixHeight <= canonicalImage.getHeight()); // matrix height CAN NOT be more then image height.
-    }
-
-    @Test
-    public void asMatrix_exception() throws Exception {
-        settings.setExpectedColumnsNumber(2000);
-
-        thrown.expect(MatrixSizeException.class);
-        thrown.expectMessage("Number of expected columns (is 2000) could not be more than image width (is 1600).");
-
-        imageGenerator.asMatrix();
-    }
-
-    @Test
-    public void averagedColorsMatrix() throws Exception {
-        int white = 255;
-        settings.setImage(whiteImage);
-        settings.setExpectedColumnsNumber(10);
-        imageGenerator.averagedColorsMatrix()
-                .forEach(row -> row
-                        .forEach(averageRGB -> {
-                            assertEquals(white, averageRGB.getRed());
-                            assertEquals(white, averageRGB.getGreen());
-                            assertEquals(white, averageRGB.getBlue());
-                        }));
-    }
-
-    @Test
-    public void resultMatrix() throws Exception {
-        imageGenerator.resultMatrix()
-                .forEach(row -> row
-                        .forEach(patternImg -> {
-                            assertTrue(patterns.values().contains(patternImg));
-                        }));
     }
 
     @Test

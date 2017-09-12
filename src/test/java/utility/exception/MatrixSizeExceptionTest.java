@@ -25,6 +25,7 @@ public class MatrixSizeExceptionTest {
             setImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB));
             setExpectedColumnsNumber(10);
         }});
-        imageGenerator.asMatrix();
+
+        imageGenerator.generateImage();
     }
 }

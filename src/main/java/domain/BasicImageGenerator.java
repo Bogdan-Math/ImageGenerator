@@ -29,8 +29,8 @@ public class BasicImageGenerator implements ImageGenerator {
         this.settings = settings;
     }
 
-    @Override
-    public List<List<BufferedImage>> asMatrix() {
+    private List<List<BufferedImage>> asMatrix() {
+        //TODO: add descriptive comments to this method
 
         int expectedColumns = settings.getExpectedColumnsNumber();
         int expectedRows    = 0;
@@ -73,17 +73,17 @@ public class BasicImageGenerator implements ImageGenerator {
         return matrix;
     }
 
-    @Override
-    public List<List<Color>> averagedColorsMatrix() {
+
+    private List<List<Color>> averagedColorsMatrix() {
         return asMatrix().stream()
                 .map(row -> row.stream()
+                        //TODO: clear new ImageInformation after ImageConstructor creation
                         .map(image -> new ImageInformation().averagedColor(image))
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<List<BufferedImage>> resultMatrix() {
+    private List<List<BufferedImage>> resultMatrix() {
 
         List<List<Color>> matrix         = averagedColorsMatrix();
         Map<Color, BufferedImage> map    = settings.getPatterns();
