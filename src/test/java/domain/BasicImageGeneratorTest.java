@@ -58,9 +58,9 @@ public class BasicImageGeneratorTest {
         }});
 
         this.imageGenerator = new BasicImageGenerator();
-        this.canonicalImage         = ImageIO.read(resourceReader.readFile("images/canonical.jpg"));
+        this.canonicalImage         = ImageIO.read(resourceReader.readFile("images/music_man.jpg"));
         this.patterns               = repository.getFlags();
-        this.expectedColumnsNumber  = 200;
+        this.expectedColumnsNumber  = 100;
 
         this.settings = new BasicSettings() {{
             setImage(canonicalImage);
