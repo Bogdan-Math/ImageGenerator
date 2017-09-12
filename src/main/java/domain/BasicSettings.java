@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Component
 @Scope("session")
-public class ImageGeneratorSettings implements Settings {
+public class BasicSettings implements Settings {
 
     private BufferedImage image;
     private Map<Color, BufferedImage> patterns;

@@ -59,7 +59,7 @@ public class BasicImageGeneratorTest {
         this.patterns               = repository.getFlags();
         this.expectedColumnsNumber  = 200;
 
-        this.settings = new ImageGeneratorSettings() {{
+        this.settings = new BasicSettings() {{
             setImage(canonicalImage);
             setPatterns(patterns);
             setExpectedColumnsNumber(expectedColumnsNumber);
