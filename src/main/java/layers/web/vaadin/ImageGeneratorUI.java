@@ -33,12 +33,15 @@ public class ImageGeneratorUI extends UI {
     @Autowired
     private ImagesLayout imagesLayout;
 
+    @Autowired
+    private FooterLayout footerLayout;
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
         VerticalLayout verticalLayout = new VerticalLayout();
 
-        verticalLayout.addComponents(linksLayout, uploadComponent, patternsGroup, slider, imagesLayout);
+        verticalLayout.addComponents(linksLayout, uploadComponent, patternsGroup, slider, imagesLayout, footerLayout);
 
         verticalLayout.setComponentAlignment(uploadComponent, Alignment.TOP_CENTER);
         verticalLayout.setComponentAlignment(patternsGroup, Alignment.TOP_CENTER);
