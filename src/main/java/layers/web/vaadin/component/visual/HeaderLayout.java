@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct;
 
 @SpringComponent
 @Scope("session")
-public class LinksLayout extends HorizontalLayout {
+public class HeaderLayout extends HorizontalLayout {
 
     @PostConstruct
     public void postConstruct() {
@@ -41,10 +41,8 @@ public class LinksLayout extends HorizontalLayout {
     private Link link(String sourceURL) {
         Link link                 = new Link();
         ExternalResource resource = new ExternalResource(sourceURL);
-//        ExternalResource iconLink = new ExternalResource("https://api.codacy.com/project/badge/Grade/433e9ca7250d46f2bbd6280b7db5768c");
 
         link.setResource(resource);
-//        toGithub.setIcon(iconLink);
 
         return link;
     }

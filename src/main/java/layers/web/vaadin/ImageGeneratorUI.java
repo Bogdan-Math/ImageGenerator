@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Scope;
 public class ImageGeneratorUI extends UI {
 
     @Autowired
-    private LinksLayout linksLayout;
+    private HeaderLayout headerLayout;
 
     @Autowired
     private UploadComponent uploadComponent;
@@ -41,7 +41,7 @@ public class ImageGeneratorUI extends UI {
 
         VerticalLayout verticalLayout = new VerticalLayout();
 
-        verticalLayout.addComponents(linksLayout, uploadComponent, patternsGroup, slider, imagesLayout, footerLayout);
+        verticalLayout.addComponents(headerLayout, uploadComponent, patternsGroup, slider, imagesLayout, footerLayout);
 
         verticalLayout.setComponentAlignment(uploadComponent, Alignment.TOP_CENTER);
         verticalLayout.setComponentAlignment(patternsGroup, Alignment.TOP_CENTER);
