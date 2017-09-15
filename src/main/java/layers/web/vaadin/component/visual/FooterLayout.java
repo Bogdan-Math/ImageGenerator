@@ -16,17 +16,17 @@ public class FooterLayout extends VerticalLayout {
     @PostConstruct
     public void postConstruct() {
 
-        Link flagsLink = link("http://www.icondrawer.com");
+        Link flagsLink = flagsLink();
 
         addComponents(flagsLink);
 
         setComponentAlignment(flagsLink, Alignment.BOTTOM_RIGHT);
-
     }
 
-    private Link link(String sourceURL) {
+    private Link flagsLink() {
         Link link                 = new Link();
-        ExternalResource resource = new ExternalResource(sourceURL);
+        ExternalResource resource = new ExternalResource("http://www.icondrawer.com");
+
         link.setCaption("Thanks for FLAGS!");
         link.setResource(resource);
 
