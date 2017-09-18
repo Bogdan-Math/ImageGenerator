@@ -1,6 +1,8 @@
 # ImageGenerator
-App generate image from different patterns. 
-User should select image and app will generate similar image from selected funny patterns.
+
+This is a software product designed to be fun and to increase my own ability to program. 
+The name speaks for itself - it generates pictures!
+You should select image and app will generate similar image from selected funny patterns.
 
 <br>[![Heroku](https://heroku-badge.herokuapp.com/?app=image-generator-app&root=/)](https://image-generator-app.herokuapp.com/)
 : Try app.
