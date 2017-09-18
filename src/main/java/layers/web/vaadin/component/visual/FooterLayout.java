@@ -1,10 +1,11 @@
 package layers.web.vaadin.component.visual;
 
-import com.vaadin.server.ExternalResource;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.VerticalLayout;
+import layers.web.vaadin.component.visual.link.LinksStorage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
@@ -13,23 +14,16 @@ import javax.annotation.PostConstruct;
 @Scope("session")
 public class FooterLayout extends VerticalLayout {
 
+    @Autowired
+    private LinksStorage linksStorage;
+
     @PostConstruct
     public void postConstruct() {
 
-        Link flagsLink = flagsLink();
+        Link flagsLink = linksStorage.flagsLink();
 
         addComponents(flagsLink);
 
         setComponentAlignment(flagsLink, Alignment.BOTTOM_RIGHT);
-    }
-
-    private Link flagsLink() {
-        Link link                 = new Link();
-        ExternalResource resource = new ExternalResource("http://www.icondrawer.com");
-
-        link.setCaption("Thanks for FLAGS!");
-        link.setResource(resource);
-
-        return link;
     }
 }
