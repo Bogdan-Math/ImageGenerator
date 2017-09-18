@@ -38,7 +38,7 @@ public class ObjectTypeConverterTest {
     public void tearDown() throws Exception {
         Arrays.stream(resourceReader.readFile("images/").listFiles())
                 .filter(file -> ("canonical_GEN.jpg".equals(file.getName())))
-                .forEach(File::delete);
+                .forEach(file -> System.out.println(file.delete()));
     }
 
     @Test
