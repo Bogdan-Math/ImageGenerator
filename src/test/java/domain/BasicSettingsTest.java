@@ -14,7 +14,8 @@ import java.util.HashMap;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
 
 @ContextConfiguration(locations = {
         "classpath:spring/basic-settings.xml"
@@ -55,17 +56,24 @@ public class BasicSettingsTest {
     @Test
     public void getImageWidth() throws Exception {
         assertThat(settings.getImageWidth(), is(100));
+        verify(image, times(1)).getWidth();
     }
 
     @Test
     public void getImageHeight() throws Exception {
         assertThat(settings.getImageHeight(), is(200));
+        verify(image, times(1)).getHeight();
     }
 
     @Test
     public void getSubImage() throws Exception {
-        assertThat(settings.getSubImage(1, 1, 1, 1).getWidth(), is(1));
-        assertThat(settings.getSubImage(1, 1, 1, 1).getHeight(), is(1));
+        BufferedImage subImage = settings.getSubImage(1, 1, 1, 1);
+
+        assertNotNull(subImage);
+        verify(image, times(1)).getSubimage(eq(1), eq(1), eq(1), eq(1));
+        assertThat(subImage.getWidth(), is(1));
+        assertThat(subImage.getHeight(), is(1));
+
     }
 
 }
