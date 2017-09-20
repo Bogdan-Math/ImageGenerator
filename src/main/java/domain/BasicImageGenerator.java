@@ -74,11 +74,9 @@ public class BasicImageGenerator implements ImageGenerator {
     }
 
     private List<List<Color>> averagedColorsMatrix() {
-        ImageInformation imageInformation = new ImageInformation();
         return asMatrix().stream()
                 .map(row -> row.stream()
-                        //TODO: clear new ImageInformation after ImageConstructor creation
-                        .map(imageInformation::averagedColor)
+                        .map(ImageInformation::averagedColor)
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
     }

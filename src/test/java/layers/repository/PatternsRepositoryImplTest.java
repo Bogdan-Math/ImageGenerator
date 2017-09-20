@@ -1,19 +1,16 @@
 package layers.repository;
 
-import utility.pattern.PatternType;
 import org.junit.Before;
 import org.junit.Test;
-import utility.helper.ImageInformation;
 import utility.helper.ObjectTypeConverter;
 import utility.helper.ResourceReader;
+import utility.pattern.PatternType;
 
 import java.util.HashMap;
 
-import static utility.pattern.PatternType.COMMONS;
-import static utility.pattern.PatternType.FLAGS;
-import static utility.pattern.PatternType.PLAINS;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
+import static utility.pattern.PatternType.*;
 
 public class PatternsRepositoryImplTest {
 
@@ -24,7 +21,6 @@ public class PatternsRepositoryImplTest {
         repository = new PatternsRepositoryImpl();
         repository.setResourceReader(new ResourceReader());
         repository.setConverter(new ObjectTypeConverter());
-        repository.setImageInformation(new ImageInformation());
         repository.setPatternsLocation(new HashMap<PatternType, String>() {{
             put(COMMONS, "images/colors");
             put(FLAGS, "images/flags");

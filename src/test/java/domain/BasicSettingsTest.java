@@ -9,10 +9,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
@@ -39,13 +39,11 @@ public class BasicSettingsTest {
     @Test
     public void getImage() throws Exception {
         assertNotNull(settings.getImage());
-        assertTrue(settings.getImage() instanceof BufferedImage);
     }
 
     @Test
     public void getPatterns() throws Exception {
         assertNotNull(settings.getPatterns());
-        assertTrue(settings.getPatterns() instanceof HashMap);
     }
 
     @Test
@@ -73,7 +71,6 @@ public class BasicSettingsTest {
         verify(image, times(1)).getSubimage(eq(1), eq(1), eq(1), eq(1));
         assertThat(subImage.getWidth(), is(1));
         assertThat(subImage.getHeight(), is(1));
-
     }
 
 }

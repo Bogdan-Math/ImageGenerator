@@ -1,15 +1,12 @@
 package utility.helper;
 
-import org.springframework.stereotype.Component;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.stream.IntStream;
 
-@Component
 public class ImageInformation {
 
-    public Color averagedColor(BufferedImage image) {
+    public static Color averagedColor(BufferedImage image) {
 
         int width  = image.getWidth();
         int height = image.getHeight();

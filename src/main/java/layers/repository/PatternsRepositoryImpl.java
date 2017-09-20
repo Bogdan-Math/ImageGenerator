@@ -1,12 +1,12 @@
 package layers.repository;
 
-import utility.pattern.PatternType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import utility.helper.ImageInformation;
 import utility.helper.ObjectTypeConverter;
 import utility.helper.ResourceReader;
+import utility.pattern.PatternType;
 
 import javax.annotation.Resource;
 import java.awt.*;
@@ -14,8 +14,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Map;
 
-import static utility.pattern.PatternType.*;
 import static java.util.stream.Collectors.toMap;
+import static utility.pattern.PatternType.*;
 
 @Repository
 @Scope("singleton")
@@ -26,9 +26,6 @@ public class PatternsRepositoryImpl implements PatternsRepository {
 
     @Autowired
     private ObjectTypeConverter converter;
-
-    @Autowired
-    private ImageInformation imageInformation;
 
     @Resource(name = "patternsLocation")
     private Map<PatternType, String> patternsLocation;
@@ -67,7 +64,7 @@ public class PatternsRepositoryImpl implements PatternsRepository {
     }
 
     private Color averagedColor(File file) {
-        return imageInformation.averagedColor(converter.bufferedImage(file));
+        return ImageInformation.averagedColor(converter.bufferedImage(file));
     }
 
     //TODO: delete this method, after add Spring to tests
@@ -79,12 +76,7 @@ public class PatternsRepositoryImpl implements PatternsRepository {
     public void setConverter(ObjectTypeConverter converter) {
         this.converter = converter;
     }
-
-    //TODO: delete this method, after add Spring to tests
-    public void setImageInformation(ImageInformation imageInformation) {
-        this.imageInformation = imageInformation;
-    }
-
+    
     //TODO: delete this method, after add Spring to tests
     public void setPatternsLocation(Map<PatternType, String> patternsLocation) {
         this.patternsLocation = patternsLocation;
