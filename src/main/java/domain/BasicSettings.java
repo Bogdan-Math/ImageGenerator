@@ -3,6 +3,7 @@ package domain;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Map;
@@ -14,6 +15,11 @@ public class BasicSettings implements Settings {
     private BufferedImage image;
     private Map<Color, BufferedImage> patterns;
     private Integer expectedColumnsNumber;
+
+    @PostConstruct
+    public void postConstruct() {
+        setExpectedColumnsNumber(64);
+    }
 
     @Override
     public BufferedImage getImage() {

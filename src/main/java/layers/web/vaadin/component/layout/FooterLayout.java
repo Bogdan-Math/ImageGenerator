@@ -1,10 +1,10 @@
-package layers.web.vaadin.component.visual;
+package layers.web.vaadin.component.layout;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.VerticalLayout;
-import layers.web.vaadin.component.visual.link.LinksStorage;
+import layers.web.vaadin.component.visual.LinksStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 

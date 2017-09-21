@@ -1,4 +1,4 @@
-package layers.web.vaadin.component.visual.link;
+package layers.web.vaadin.component.visual;
 
 import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.Link;
