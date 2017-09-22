@@ -18,7 +18,7 @@ public class BasicSettings implements Settings {
 
     @PostConstruct
     public void postConstruct() {
-        setExpectedColumnsNumber(64);
+        setExpectedColumnsNumber(MAX_NUMBER_OF_EXPECTED_COLUMNS / 2);
     }
 
     @Override

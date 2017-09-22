@@ -12,6 +12,9 @@ public interface Settings {
     int PATTERN_WIDTH = 14;//40;
     int PATTERN_HEIGHT = 14;//20;
 
+    Integer MIN_NUMBER_OF_EXPECTED_COLUMNS = 0;
+    Integer MAX_NUMBER_OF_EXPECTED_COLUMNS = 128;
+
     BufferedImage getImage();
 
     void setImage(BufferedImage image);
