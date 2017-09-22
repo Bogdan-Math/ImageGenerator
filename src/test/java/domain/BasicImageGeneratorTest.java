@@ -1,27 +1,37 @@
 package domain;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import utility.helper.ImageInformation;
+import utility.helper.ObjectTypeConverter;
 import utility.helper.ResourceReader;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.Optional;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.Map;
 
+import static java.awt.Color.*;
+import static java.util.stream.Collectors.toMap;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
+import static utility.helper.ImageInformation.averagedColor;
 
 @ContextConfiguration(locations = {
         "classpath:spring/basic-image-generator.xml"
 })
+@DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
 @RunWith(SpringJUnit4ClassRunner.class)
-//TODO: add more code coverage
 public class BasicImageGeneratorTest {
 
     @Autowired
@@ -30,27 +40,120 @@ public class BasicImageGeneratorTest {
     @Autowired
     private Settings settings;
 
+    @Autowired
+    private ResourceReader resourceReader;
+
+    @Autowired
+    private ObjectTypeConverter typeConverter;
+
+    private BufferedImage originalImage;
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() throws Exception {
-        //TODO:add when->then for settings
-    }
+        Map<Color, BufferedImage> patterns = resourceReader.readFiles("images/colors").stream().collect(toMap(
+                file -> ImageInformation.averagedColor(typeConverter.bufferedImage(file)),
+                file -> typeConverter.bufferedImage(file)
+        ));
 
-    @After
-    public void tearDown() throws Exception {
-        ResourceReader resourceReader = new ResourceReader();
-        Optional.ofNullable(resourceReader.readFile("images/").listFiles())
-                .ifPresent(filesArr -> Arrays.stream(filesArr)
-                        .filter(file -> (file.getName().matches("^generate_image.+")))
-                        .forEach(File::delete));
+        when(settings.getPatterns()).thenReturn(patterns);
+        when(settings.getExpectedColumnsNumber()).thenReturn(32);
+        when(settings.getSubImage(anyInt(), anyInt(), anyInt(), anyInt())).thenCallRealMethod();
+
     }
 
     @Test
-    public void generateImage() throws Exception {
-        assertNotNull(imageGenerator);
-        assertNotNull(settings);
-        //TODO: add more conditions
+    public void generateWhiteImage() throws Exception {
+
+        //Arrange
+        this.originalImage = typeConverter.bufferedImage(resourceReader.readFile("images/testable/1-white.jpg"));
+        when(settings.getImage()).thenReturn(originalImage);
+        when(settings.getImageWidth()).thenReturn(originalImage.getWidth());
+        when(settings.getImageHeight()).thenReturn(originalImage.getHeight());
+
+        //Act
+        BufferedImage generatedImage = imageGenerator.generateImage();
+
+        //Assert
+        assertNotNull(generatedImage);
+        verify(settings, times(1024)).getSubImage(anyInt(), anyInt(), anyInt(), anyInt());//1024 = 32 * 32
+        assertThat(generatedImage.getWidth(),  is(800));// 800 = 32 * 25
+        assertThat(generatedImage.getHeight(), is(800));// 800 = 32 * 25
+        assertThat(averagedColor(generatedImage), is(WHITE));
     }
+
+    @Test
+    public void generateGrayImage() throws Exception {
+
+        //Arrange
+        this.originalImage = typeConverter.bufferedImage(resourceReader.readFile("images/testable/2-gray.jpg"));
+        when(settings.getImage()).thenReturn(originalImage);
+        when(settings.getImageWidth()).thenReturn(originalImage.getWidth());
+        when(settings.getImageHeight()).thenReturn(originalImage.getHeight());
+
+        //Act
+        BufferedImage generatedImage = imageGenerator.generateImage();
+
+        //Assert
+        assertNotNull(generatedImage);
+        verify(settings, times(1024)).getSubImage(anyInt(), anyInt(), anyInt(), anyInt());//1024 = 32 * 32
+        assertThat(generatedImage.getWidth(),  is(800));// 800 = 32 * 25
+        assertThat(generatedImage.getHeight(), is(800));// 800 = 32 * 25
+        assertThat(averagedColor(generatedImage), is(GRAY));
+    }
+
+    @Test
+    public void generateBlackImage() throws Exception {
+
+        //Arrange
+        this.originalImage = typeConverter.bufferedImage(resourceReader.readFile("images/testable/3-black.jpg"));
+        when(settings.getImage()).thenReturn(originalImage);
+        when(settings.getImageWidth()).thenReturn(originalImage.getWidth());
+        when(settings.getImageHeight()).thenReturn(originalImage.getHeight());
+
+        //Act
+        BufferedImage generatedImage = imageGenerator.generateImage();
+
+        //Assert
+        assertNotNull(generatedImage);
+        verify(settings, times(1024)).getSubImage(anyInt(), anyInt(), anyInt(), anyInt());//1024 = 32 * 32
+        assertThat(generatedImage.getWidth(),  is(800));// 800 = 32 * 25
+        assertThat(generatedImage.getHeight(), is(800));// 800 = 32 * 25
+        assertThat(averagedColor(generatedImage), is(BLACK));
+    }
+
+    @Test
+    //TODO: add more code coverage
+    public void generate4x4Image() throws Exception {
+
+        //Arrange
+        this.originalImage = typeConverter.bufferedImage(resourceReader.readFile("images/testable/4x4.jpg"));
+        when(settings.getImage()).thenReturn(originalImage);
+        when(settings.getImageWidth()).thenReturn(originalImage.getWidth());
+        when(settings.getImageHeight()).thenReturn(originalImage.getHeight());
+
+        //Act
+        BufferedImage generatedImage = imageGenerator.generateImage();
+
+        //Assert
+        assertNotNull(generatedImage);
+        verify(settings, times(1024)).getSubImage(anyInt(), anyInt(), anyInt(), anyInt());//1024 = 32 * 32
+        assertThat(generatedImage.getWidth(),  is(800));// 800 = 32 * 25
+        assertThat(generatedImage.getHeight(), is(800));// 800 = 32 * 25
+
+/*
+        assertThat(averagedColor(generatedImage.getSubimage(0, 0, 200, 200)), is(BLACK));
+        assertThat(averagedColor(generatedImage.getSubimage(200, 0, 200, 200)), is(WHITE));
+        assertThat(averagedColor(generatedImage.getSubimage(0, 200, 200, 200)), is(WHITE));
+        assertThat(averagedColor(generatedImage.getSubimage(200, 200, 200, 200)), is(BLUE));
+
+        assertThat(averagedColor(generatedImage.getSubimage(400, 0, 200, 200)), is(WHITE));
+        assertThat(averagedColor(generatedImage.getSubimage(600, 0, 200, 200)), is(BLUE));
+        assertThat(averagedColor(generatedImage.getSubimage(400, 200, 200, 200)), is(WHITE));
+        assertThat(averagedColor(generatedImage.getSubimage(600, 200, 200, 200)), is(RED));
+*/
+    }
+
 }

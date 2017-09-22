@@ -1,6 +1,5 @@
 package utility.helper;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -9,17 +8,14 @@ import org.junit.rules.ExpectedException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class ObjectTypeConverterTest {
 
-    private ResourceReader resourceReader;
     private ObjectTypeConverter converter;
     private File originalImage;
 
@@ -28,23 +24,14 @@ public class ObjectTypeConverterTest {
 
     @Before
     public void setUp() throws Exception {
-        this.resourceReader = new ResourceReader();
+        ResourceReader resourceReader = new ResourceReader();
         this.converter      = new ObjectTypeConverter();
-        this.originalImage  = resourceReader.readFile("images/testable/canonical.jpg");
-    }
-
-    @After
-    @SuppressWarnings("ConstantConditions")
-    public void tearDown() throws Exception {
-        Arrays.stream(resourceReader.readFile("images/").listFiles())
-                .filter(file -> ("canonical_GEN.jpg".equals(file.getName())))
-                .forEach(file -> System.out.println(file.delete()));
+        this.originalImage  = resourceReader.readFile("images/testable/4x4.jpg");
     }
 
     @Test
-    @SuppressWarnings("ConstantConditions")
     public void inputStreamFromBytes() throws Exception {
-        assertTrue(converter.inputStream(new byte[1]) instanceof InputStream);
+        assertTrue(converter.inputStream(new byte[1]) != null);
     }
 
     @Test
