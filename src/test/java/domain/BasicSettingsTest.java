@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.annotation.Resource;
 import java.awt.image.BufferedImage;
 
+import static domain.Settings.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
@@ -48,7 +49,7 @@ public class BasicSettingsTest {
 
     @Test
     public void getExpectedColumnsNumber() throws Exception {
-        assertThat(settings.getExpectedColumnsNumber(), is(10));
+        assertThat(settings.getExpectedColumnsNumber(), is(MAX_NUMBER_OF_EXPECTED_COLUMNS / 2));
     }
 
     @Test

@@ -30,7 +30,7 @@ public class ObjectTypeConverterTest {
     public void setUp() throws Exception {
         this.resourceReader = new ResourceReader();
         this.converter      = new ObjectTypeConverter();
-        this.originalImage  = resourceReader.readFile("images/canonical.jpg");
+        this.originalImage  = resourceReader.readFile("images/testable/canonical.jpg");
     }
 
     @After
