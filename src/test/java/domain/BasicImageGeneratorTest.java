@@ -15,9 +15,12 @@ import utility.helper.ResourceReader;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Map;
 
 import static java.awt.Color.*;
+import static java.math.BigDecimal.valueOf;
 import static java.util.stream.Collectors.toMap;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNotNull;
@@ -143,8 +146,11 @@ public class BasicImageGeneratorTest {
         assertThat(generatedImage.getWidth(),  is(800));// 800 = 32 * 25
         assertThat(generatedImage.getHeight(), is(800));// 800 = 32 * 25
 
+        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(0, 0, 200, 200)), BLACK), is(true));
+        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(200, 0, 200, 200)), WHITE), is(true));
+        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(0, 200, 200, 200)), WHITE), is(true));
+        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(200, 200, 200, 200)), BLUE), is(true));
 /*
-        assertThat(averagedColor(generatedImage.getSubimage(0, 0, 200, 200)), is(BLACK));
         assertThat(averagedColor(generatedImage.getSubimage(200, 0, 200, 200)), is(WHITE));
         assertThat(averagedColor(generatedImage.getSubimage(0, 200, 200, 200)), is(WHITE));
         assertThat(averagedColor(generatedImage.getSubimage(200, 200, 200, 200)), is(BLUE));
@@ -154,6 +160,23 @@ public class BasicImageGeneratorTest {
         assertThat(averagedColor(generatedImage.getSubimage(400, 200, 200, 200)), is(WHITE));
         assertThat(averagedColor(generatedImage.getSubimage(600, 200, 200, 200)), is(RED));
 */
+    }
+
+    private boolean almostIdentical(Color colorOne, Color colorTwo) {
+        return almostIdentical(colorOne.getRed(), colorTwo.getRed()) &&
+               almostIdentical(colorOne.getGreen(), colorTwo.getGreen()) &&
+               almostIdentical(colorOne.getBlue(), colorTwo.getBlue());
+    }
+
+    private boolean almostIdentical(int firstColor, int secondColor) {
+        BigDecimal firstValue  = valueOf(firstColor).add(valueOf(0.01), MathContext.DECIMAL32);
+        BigDecimal secondValue = valueOf(secondColor).add(valueOf(0.01), MathContext.DECIMAL32);
+
+        BigDecimal greaterRatio = (firstValue.compareTo(secondValue) > 0) ?
+                                   firstValue.divide(secondValue, MathContext.DECIMAL32) :
+                                   secondValue.divide(firstValue, MathContext.DECIMAL32);
+
+        return greaterRatio.remainder(BigDecimal.ONE).compareTo(valueOf(0.05)) < 0;
     }
 
 }
