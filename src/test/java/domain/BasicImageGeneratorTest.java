@@ -128,7 +128,6 @@ public class BasicImageGeneratorTest {
     }
 
     @Test
-    //TODO: add more code coverage
     public void generate4x4Image() throws Exception {
 
         //Arrange
@@ -150,16 +149,21 @@ public class BasicImageGeneratorTest {
         assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(200, 0, 200, 200)), WHITE), is(true));
         assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(0, 200, 200, 200)), WHITE), is(true));
         assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(200, 200, 200, 200)), BLUE), is(true));
-/*
-        assertThat(averagedColor(generatedImage.getSubimage(200, 0, 200, 200)), is(WHITE));
-        assertThat(averagedColor(generatedImage.getSubimage(0, 200, 200, 200)), is(WHITE));
-        assertThat(averagedColor(generatedImage.getSubimage(200, 200, 200, 200)), is(BLUE));
 
-        assertThat(averagedColor(generatedImage.getSubimage(400, 0, 200, 200)), is(WHITE));
-        assertThat(averagedColor(generatedImage.getSubimage(600, 0, 200, 200)), is(BLUE));
-        assertThat(averagedColor(generatedImage.getSubimage(400, 200, 200, 200)), is(WHITE));
-        assertThat(averagedColor(generatedImage.getSubimage(600, 200, 200, 200)), is(RED));
-*/
+        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(400, 0, 200, 200)), GREEN), is(true));
+        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(600, 0, 200, 200)), WHITE), is(true));
+        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(400, 200, 200, 200)), WHITE), is(true));
+        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(600, 200, 200, 200)), RED), is(true));
+
+        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(0, 400, 200, 200)), RED), is(true));
+        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(200, 400, 200, 200)), WHITE), is(true));
+        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(0, 600, 200, 200)), WHITE), is(true));
+        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(200, 600, 200, 200)), GREEN), is(true));
+
+        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(400, 400, 200, 200)), BLUE), is(true));
+        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(600, 400, 200, 200)), WHITE), is(true));
+        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(400, 600, 200, 200)), WHITE), is(true));
+        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(600, 600, 200, 200)), BLACK), is(true));
     }
 
     private boolean almostIdentical(Color colorOne, Color colorTwo) {
@@ -169,14 +173,14 @@ public class BasicImageGeneratorTest {
     }
 
     private boolean almostIdentical(int firstColor, int secondColor) {
-        BigDecimal firstValue  = valueOf(firstColor).add(valueOf(0.01), MathContext.DECIMAL32);
-        BigDecimal secondValue = valueOf(secondColor).add(valueOf(0.01), MathContext.DECIMAL32);
+        BigDecimal firstValue  = valueOf(firstColor).add(valueOf(0.01), MathContext.DECIMAL32); // have to add 0.01 to avoid division by zero
+        BigDecimal secondValue = valueOf(secondColor).add(valueOf(0.01), MathContext.DECIMAL32);// have to add 0.01 to avoid division by zero
 
         BigDecimal greaterRatio = (firstValue.compareTo(secondValue) > 0) ?
                                    firstValue.divide(secondValue, MathContext.DECIMAL32) :
                                    secondValue.divide(firstValue, MathContext.DECIMAL32);
 
-        return greaterRatio.remainder(BigDecimal.ONE).compareTo(valueOf(0.05)) < 0;
+        return greaterRatio.remainder(BigDecimal.ONE).compareTo(valueOf(0.333)) < 0; // allow 33% deviation between two colors
     }
 
 }
