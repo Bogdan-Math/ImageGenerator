@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
 
 @SpringComponent
 @Scope("session")
+//TODO: add upload and download button
 public class ImagesLayout extends GridLayout {
 
     @Autowired
