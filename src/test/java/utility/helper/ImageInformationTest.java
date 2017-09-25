@@ -1,22 +1,15 @@
 package utility.helper;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static utility.helper.ImageInformation.averagedColor;
 
 public class ImageInformationTest {
-
-    private ImageInformation imageInformation;
-
-    @Before
-    public void setUp() throws Exception {
-        this.imageInformation = new ImageInformation();
-    }
 
     @Test
     public void testAveragedColor() throws Exception {
@@ -25,9 +18,9 @@ public class ImageInformationTest {
         BufferedImage grayImage  = ImageIO.read(resourceReader.readFile("images/colors/2-grey.jpg"));
         BufferedImage blackImage = ImageIO.read(resourceReader.readFile("images/colors/3-black.jpg"));
 
-        Color white = imageInformation.averagedColor(whiteImage);
-        Color gray  = imageInformation.averagedColor(grayImage);
-        Color black = imageInformation.averagedColor(blackImage);
+        Color white = averagedColor(whiteImage);
+        Color gray  = averagedColor(grayImage);
+        Color black = averagedColor(blackImage);
 
         assertEquals(Color.WHITE, white);
         assertEquals(Color.GRAY,  gray);

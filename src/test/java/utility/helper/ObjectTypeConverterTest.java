@@ -24,9 +24,8 @@ public class ObjectTypeConverterTest {
 
     @Before
     public void setUp() throws Exception {
-        ResourceReader resourceReader = new ResourceReader();
         this.converter      = new ObjectTypeConverter();
-        this.originalImage  = resourceReader.readFile("images/testable/4x4.jpg");
+        this.originalImage  = new ResourceReader().readFile("images/testable/4x4.jpg");
     }
 
     @Test

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/util
+                           http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="basicSettings" class="layers.repository.PatternsRepositoryImpl">
+        <property name="resourceReader" ref="resourceReader"/>
+        <property name="converter" ref="typeConverter"/>
+        <property name="patternsLocation" ref="patternsLocation"/>
+    </bean>
+
+    <bean id="resourceReader" class="utility.helper.ResourceReader"/>
+    <bean id="typeConverter" class="utility.helper.ObjectTypeConverter"/>
+    <util:map id="patternsLocation" key-type="utility.pattern.PatternType" value-type="java.lang.String">
+        <entry key="#{T(utility.pattern.PatternType).COMMONS}" value="images/colors"/>
+        <entry key="#{T(utility.pattern.PatternType).FLAGS}" value="images/flags"/>
+        <entry key="#{T(utility.pattern.PatternType).PLAINS}" value="images/plains"/>
+    </util:map>
+
+</beans>

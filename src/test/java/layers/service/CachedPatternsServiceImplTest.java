@@ -31,16 +31,16 @@ public class CachedPatternsServiceImplTest {
     @Before
     public void setUp() throws Exception {
 
-        when(repository.getCommons()).thenReturn(new HashMap<Color, BufferedImage>(){{
-            put(Color.WHITE, new BufferedImage(1,1, BufferedImage.TYPE_INT_RGB));
+        when(repository.getCommons()).thenReturn(new HashMap<Color, BufferedImage>() {{
+            put(Color.WHITE, new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB));
         }});
 
-        when(repository.getFlags()).thenReturn(new HashMap<Color, BufferedImage>(){{
-            put(Color.WHITE, new BufferedImage(1,1, BufferedImage.TYPE_INT_RGB));
+        when(repository.getFlags()).thenReturn(new HashMap<Color, BufferedImage>() {{
+            put(Color.WHITE, new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB));
         }});
 
-        when(repository.getPlains()).thenReturn(new HashMap<Color, BufferedImage>(){{
-            put(Color.WHITE, new BufferedImage(1,1, BufferedImage.TYPE_INT_RGB));
+        when(repository.getPlains()).thenReturn(new HashMap<Color, BufferedImage>() {{
+            put(Color.WHITE, new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB));
         }});
 
     }
