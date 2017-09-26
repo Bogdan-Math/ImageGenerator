@@ -16,7 +16,7 @@ import static org.junit.Assert.assertThat;
 public class PatternsRepositoryImplTest {
 
     @Autowired
-    private PatternsRepositoryImpl repository;
+    private PatternsRepository repository;
 
     @Test
     public void getCommons() throws Exception {
