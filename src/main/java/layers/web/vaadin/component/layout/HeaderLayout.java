@@ -4,24 +4,22 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Link;
-import layers.web.vaadin.component.visual.LinksStorage;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
+
+import static layers.web.vaadin.component.visual.Reference.CODACY;
+import static layers.web.vaadin.component.visual.Reference.GITHUB;
 
 @SpringComponent
 @Scope("session")
 public class HeaderLayout extends HorizontalLayout {
 
-    @Autowired
-    private LinksStorage linksStorage;
-
     @PostConstruct
     public void postConstruct() {
 
-        Link codacyLink = linksStorage.codacyLink();
-        Link githubLink = linksStorage.githubLink();
+        Link codacyLink = CODACY.link();
+        Link githubLink = GITHUB.link();
 
         addComponents(codacyLink, githubLink);
 
