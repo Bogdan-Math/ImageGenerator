@@ -6,6 +6,7 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Upload;
 import domain.ImageGenerator;
 import domain.Settings;
+import layers.web.vaadin.component.visual.DownloadButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -44,6 +45,9 @@ public class UploadSucceededListenerComponent implements UploadSucceededListener
     @Qualifier(value = "generatedImageView")
     private Image generatedImageView;
 
+    @Autowired
+    private DownloadButton downloadButton;
+
     @Override
     public void uploadSucceeded(Upload.SucceededEvent succeededEvent) {
 
@@ -67,9 +71,11 @@ public class UploadSucceededListenerComponent implements UploadSucceededListener
                 converter.inputStream(uploadedBytes),
                 String.join("_", "original", timeNow, fileName)));
 
-        generatedImageView.setSource(new StreamResource(() ->
+        StreamResource generatedImageSource = new StreamResource(() ->
                 converter.inputStream(generatedImage),
-                String.join("_", "generated", timeNow, fileName)));
+                String.join("_", "generated", timeNow, fileName));
+        generatedImageView.setSource(generatedImageSource);
+        downloadButton.download(generatedImageSource);
 
         notifications.add("Your image was generated.");
     }

@@ -10,7 +10,7 @@ import javax.annotation.PostConstruct;
 
 @SpringComponent
 @Scope("session")
-public class UploadComponent extends Upload {
+public class UploadButton extends Upload {
 
     @Autowired
     private UploadReceiver receiver;
@@ -30,7 +30,7 @@ public class UploadComponent extends Upload {
     @PostConstruct
     public void postConstruct() {
         setImmediateMode(true);
-        setButtonCaption("select and generate image");
+        setButtonCaption("upload image");
         setReceiver(receiver);
         addStartedListener(startedListener);
         addProgressListener(progressListener);

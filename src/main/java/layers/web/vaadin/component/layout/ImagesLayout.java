@@ -1,8 +1,10 @@
 package layers.web.vaadin.component.layout;
 
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Image;
+import com.vaadin.ui.*;
+import layers.web.vaadin.component.visual.DownloadButton;
+import layers.web.vaadin.component.visual.GenerateButton;
+import layers.web.vaadin.component.visual.UploadButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -29,9 +31,6 @@ public class ImagesLayout extends GridLayout {
         setRows(1);
         setSizeFull();
         setSpacing(true);
-
-        originalImageView.setSource(null);
-        generatedImageView.setSource(null);
 
         originalImageView.setSizeFull();
         generatedImageView.setSizeFull();

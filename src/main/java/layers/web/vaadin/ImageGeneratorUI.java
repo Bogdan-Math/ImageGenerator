@@ -7,10 +7,7 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import layers.web.vaadin.component.layout.SliderLayout;
-import layers.web.vaadin.component.layout.FooterLayout;
-import layers.web.vaadin.component.layout.HeaderLayout;
-import layers.web.vaadin.component.layout.ImagesLayout;
+import layers.web.vaadin.component.layout.*;
 import layers.web.vaadin.component.visual.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -26,13 +23,13 @@ public class ImageGeneratorUI extends UI {
     private HeaderLayout headerLayout;
 
     @Autowired
-    private UploadComponent uploadComponent;
-
-    @Autowired
     private RadioButtonPatternsGroup patternsGroup;
 
     @Autowired
     private SliderLayout sliderLayout;
+
+    @Autowired
+    private ButtonsLayout buttonsLayout;
 
     @Autowired
     private ImagesLayout imagesLayout;
@@ -45,9 +42,8 @@ public class ImageGeneratorUI extends UI {
 
         VerticalLayout verticalLayout = new VerticalLayout();
 
-        verticalLayout.addComponents(headerLayout, uploadComponent, patternsGroup, sliderLayout, imagesLayout, footerLayout);
+        verticalLayout.addComponents(headerLayout, patternsGroup, sliderLayout, buttonsLayout, imagesLayout, footerLayout);
 
-        verticalLayout.setComponentAlignment(uploadComponent, Alignment.TOP_CENTER);
         verticalLayout.setComponentAlignment(patternsGroup, Alignment.TOP_CENTER);
 
         setContent(verticalLayout);
