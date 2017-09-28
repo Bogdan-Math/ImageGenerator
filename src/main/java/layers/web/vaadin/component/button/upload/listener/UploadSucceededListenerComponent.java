@@ -1,11 +1,10 @@
-package layers.web.vaadin.component.listener;
+package layers.web.vaadin.component.button.upload.listener;
 
 import com.vaadin.server.StreamResource;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Upload;
 import domain.Settings;
-import layers.web.vaadin.component.visual.GenerateButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -37,9 +36,6 @@ public class UploadSucceededListenerComponent implements UploadSucceededListener
     @Resource(name = "notifications")
     private List<String> notifications;
 
-    @Autowired
-    private GenerateButton generateButton;
-
     @Override
     public void uploadSucceeded(Upload.SucceededEvent succeededEvent) {
 
@@ -61,7 +57,5 @@ public class UploadSucceededListenerComponent implements UploadSucceededListener
         originalImageView.setSource(new StreamResource(() ->
                 converter.inputStream(settings.getImage()),
                 String.join("_", "original", timeNow, settings.getImageFileName())));
-
-        generateButton.setEnabled(true);
     }
 }

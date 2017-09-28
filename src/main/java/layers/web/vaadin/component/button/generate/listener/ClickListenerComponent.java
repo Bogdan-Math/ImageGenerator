@@ -1,17 +1,17 @@
-package layers.web.vaadin.component.visual;
+package layers.web.vaadin.component.button.generate.listener;
 
 import com.vaadin.server.StreamResource;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Image;
 import domain.ImageGenerator;
 import domain.Settings;
+import layers.web.vaadin.component.button.download.listener.Downloader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import utility.helper.ObjectTypeConverter;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
@@ -20,7 +20,7 @@ import java.util.List;
 
 @Component
 @Scope("session")
-public class GenerateButton extends Button {
+public class ClickListenerComponent implements ClickListener {
 
     @Autowired
     private ImageGenerator imageGenerator;
@@ -39,14 +39,11 @@ public class GenerateButton extends Button {
     private List<String> notifications;
 
     @Autowired
-    private DownloadButton downloadButton;
+    private Downloader downloader;
 
-    @PostConstruct
-    public void postConstruct() {
-        setCaption("generate");
-        setEnabled(false);
-        addClickListener((ClickListener) event -> {
-
+    @Override
+    public void buttonClick(ClickEvent event) {
+        if (settings.getImage() != null) {
             BufferedImage generatedImage = imageGenerator.generateImage();
             String timeNow               = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"));
 
@@ -56,8 +53,7 @@ public class GenerateButton extends Button {
 
             notifications.add("Your image was generated.");
 
-            downloadButton.getFileDownloader().setFileDownloadResource(generatedImageView.getSource());
-            downloadButton.setEnabled(true);
-        });
+            downloader.setFileDownloadResource(generatedImageView.getSource());
+        }
     }
 }

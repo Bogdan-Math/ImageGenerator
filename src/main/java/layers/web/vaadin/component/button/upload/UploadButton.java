@@ -1,8 +1,8 @@
-package layers.web.vaadin.component.visual;
+package layers.web.vaadin.component.button.upload;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Upload;
-import layers.web.vaadin.component.listener.*;
+import layers.web.vaadin.component.button.upload.listener.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
@@ -29,12 +29,12 @@ public class UploadButton extends Upload {
 
     @PostConstruct
     public void postConstruct() {
-        setImmediateMode(true);
         setButtonCaption("upload image");
         setReceiver(receiver);
         addStartedListener(startedListener);
         addProgressListener(progressListener);
         addSucceededListener(succeededListener);
         addFinishedListener(finishedListener);
+        setImmediateMode(true);
     }
 }

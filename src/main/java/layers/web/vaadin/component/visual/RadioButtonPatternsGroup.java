@@ -4,10 +4,10 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.RadioButtonGroup;
 import com.vaadin.ui.themes.ValoTheme;
 import domain.Settings;
-import utility.pattern.PatternType;
 import layers.service.CachedPatternsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import utility.pattern.PatternType;
 
 import javax.annotation.PostConstruct;
 import java.awt.*;

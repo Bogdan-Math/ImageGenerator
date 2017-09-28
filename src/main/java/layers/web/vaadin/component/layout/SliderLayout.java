@@ -11,7 +11,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
-import static domain.Settings.*;
+import static domain.Settings.MAX_NUMBER_OF_EXPECTED_COLUMNS;
+import static domain.Settings.MIN_NUMBER_OF_EXPECTED_COLUMNS;
 
 @Component
 @Scope("session")

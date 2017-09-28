@@ -2,9 +2,9 @@ package layers.web.vaadin.component.layout;
 
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
-import layers.web.vaadin.component.visual.DownloadButton;
-import layers.web.vaadin.component.visual.GenerateButton;
-import layers.web.vaadin.component.visual.UploadButton;
+import layers.web.vaadin.component.button.download.DownloadButton;
+import layers.web.vaadin.component.button.generate.GenerateButton;
+import layers.web.vaadin.component.button.upload.UploadButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;

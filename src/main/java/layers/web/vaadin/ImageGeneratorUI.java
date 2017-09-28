@@ -8,7 +8,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import layers.web.vaadin.component.layout.*;
-import layers.web.vaadin.component.visual.*;
+import layers.web.vaadin.component.visual.RadioButtonPatternsGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
@@ -42,7 +42,7 @@ public class ImageGeneratorUI extends UI {
 
         VerticalLayout verticalLayout = new VerticalLayout();
 
-        verticalLayout.addComponents(headerLayout, patternsGroup, sliderLayout, buttonsLayout, imagesLayout, footerLayout);
+        verticalLayout.addComponents(headerLayout, sliderLayout, patternsGroup, buttonsLayout, imagesLayout, footerLayout);
 
         verticalLayout.setComponentAlignment(patternsGroup, Alignment.TOP_CENTER);
 
