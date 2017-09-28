@@ -6,21 +6,20 @@ import com.vaadin.ui.Image;
 import domain.ImageGenerator;
 import domain.Settings;
 import layers.web.vaadin.component.button.download.listener.Downloader;
+import layers.web.vaadin.component.visual.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import utility.helper.ObjectTypeConverter;
 
-import javax.annotation.Resource;
 import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @Component
 @Scope("session")
-public class ClickListenerComponent implements ClickListener {
+public class GenerateClickListenerComponent implements GenerateClickListener {
 
     @Autowired
     private ImageGenerator imageGenerator;
@@ -35,8 +34,8 @@ public class ClickListenerComponent implements ClickListener {
     @Qualifier(value = "generatedImageView")
     private Image generatedImageView;
 
-    @Resource(name = "notifications")
-    private List<String> notifications;
+    @Autowired
+    private Notification notification;
 
     @Autowired
     private Downloader downloader;
@@ -51,9 +50,10 @@ public class ClickListenerComponent implements ClickListener {
                     converter.inputStream(generatedImage),
                     String.join("_", "generated", timeNow, settings.getImageFileName())));
 
-            notifications.add("Your image was generated.");
-
             downloader.setFileDownloadResource(generatedImageView.getSource());
+
+            notification.add("Your image was generated.");
+            notification.show();
         }
     }
 }

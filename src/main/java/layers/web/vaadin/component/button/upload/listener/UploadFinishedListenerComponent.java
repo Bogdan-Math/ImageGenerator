@@ -1,27 +1,20 @@
 package layers.web.vaadin.component.button.upload.listener;
 
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Upload;
+import com.vaadin.ui.Upload.FinishedEvent;
+import layers.web.vaadin.component.visual.Notification;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-
-import javax.annotation.Resource;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @SpringComponent
 @Scope("session")
 public class UploadFinishedListenerComponent implements UploadFinishedListener {
 
-    @Resource(name = "notifications")
-    private List<String> notifications;
+    @Autowired
+    private Notification notification;
 
     @Override
-    public void uploadFinished(Upload.FinishedEvent finishedEvent) {
-        Notification.show(notifications.stream()
-                        .map(notification -> "- " + notification)
-                        .collect(Collectors.joining("\n")),
-                Notification.Type.TRAY_NOTIFICATION);
-        notifications.clear();
+    public void uploadFinished(FinishedEvent finishedEvent) {
+        notification.show();
     }
 }
