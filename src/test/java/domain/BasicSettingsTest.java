@@ -74,4 +74,8 @@ public class BasicSettingsTest {
         assertThat(subImage.getHeight(), is(1));
     }
 
+    @Test
+    public void getImageFileName() throws Exception {
+        assertThat(settings.getImageFileName(), is("image-file-name.jpg"));
+    }
 }

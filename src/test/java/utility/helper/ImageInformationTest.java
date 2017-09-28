@@ -1,5 +1,6 @@
 package utility.helper;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import javax.imageio.ImageIO;
@@ -10,6 +11,11 @@ import static org.junit.Assert.assertEquals;
 import static utility.helper.ImageInformation.averagedColor;
 
 public class ImageInformationTest {
+
+    @Before
+    public void setUp() throws Exception {
+        new ImageInformation();
+    }
 
     @Test
     public void testAveragedColor() throws Exception {
