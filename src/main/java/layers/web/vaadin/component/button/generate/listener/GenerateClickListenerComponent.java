@@ -17,6 +17,8 @@ import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static java.util.Optional.ofNullable;
+
 @Component
 @Scope("session")
 public class GenerateClickListenerComponent implements GenerateClickListener {
@@ -42,7 +44,9 @@ public class GenerateClickListenerComponent implements GenerateClickListener {
 
     @Override
     public void buttonClick(ClickEvent event) {
-        if (settings.getImage() != null) {
+
+        ofNullable(settings.getImage()).ifPresent(image -> {
+
             BufferedImage generatedImage = imageGenerator.generateImage();
             String timeNow               = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"));
 
@@ -54,6 +58,7 @@ public class GenerateClickListenerComponent implements GenerateClickListener {
 
             notification.add("Your image was generated.");
             notification.show();
-        }
+        });
+
     }
 }
