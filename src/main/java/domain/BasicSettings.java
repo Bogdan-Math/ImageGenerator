@@ -15,6 +15,7 @@ public class BasicSettings implements Settings {
     private BufferedImage image;
     private Map<Color, BufferedImage> patterns;
     private Integer expectedColumnsNumber;
+    private String imageFileName;
 
     @PostConstruct
     public void postConstruct() {
@@ -64,5 +65,15 @@ public class BasicSettings implements Settings {
     @Override
     public BufferedImage getSubImage(int x, int y, int width, int height) {
         return getImage().getSubimage(x, y, width, height);
+    }
+
+    @Override
+    public String getImageFileName() {
+        return imageFileName;
+    }
+
+    @Override
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
     }
 }

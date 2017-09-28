@@ -32,4 +32,8 @@ public interface Settings {
     int getImageHeight();
 
     BufferedImage getSubImage(int x, int y, int width, int height);
+
+    String getImageFileName();
+
+    void setImageFileName(String imageFileName);
 }

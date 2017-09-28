@@ -18,6 +18,7 @@ public class UploadReceiverComponent implements UploadReceiver {
         return uploadStream;
     }
 
+    @Override
     public ByteArrayOutputStream getUploadStream() {
         return uploadStream;
     }

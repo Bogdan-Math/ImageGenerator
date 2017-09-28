@@ -4,9 +4,8 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Upload;
-import domain.ImageGenerator;
 import domain.Settings;
-import layers.web.vaadin.component.visual.DownloadButton;
+import layers.web.vaadin.component.visual.GenerateButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -32,26 +31,20 @@ public class UploadSucceededListenerComponent implements UploadSucceededListener
     private Settings settings;
 
     @Autowired
-    private ImageGenerator imageGenerator;
+    @Qualifier(value = "originalImageView")
+    private Image originalImageView;
 
     @Resource(name = "notifications")
     private List<String> notifications;
 
     @Autowired
-    @Qualifier(value = "originalImageView")
-    private Image originalImageView;
-
-    @Autowired
-    @Qualifier(value = "generatedImageView")
-    private Image generatedImageView;
-
-    @Autowired
-    private DownloadButton downloadButton;
+    private GenerateButton generateButton;
 
     @Override
     public void uploadSucceeded(Upload.SucceededEvent succeededEvent) {
 
-        String fileName             = succeededEvent.getFilename();
+        String timeNow              = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"));
+        String imageFileName        = succeededEvent.getFilename();
         byte[] uploadedBytes        = receiver.getUploadStream().toByteArray();
         BufferedImage uploadedImage = converter.bufferedImage(uploadedBytes);
 
@@ -62,21 +55,13 @@ public class UploadSucceededListenerComponent implements UploadSucceededListener
 
         notifications.add("Upload succeeded.");
 
+        settings.setImageFileName(imageFileName);
         settings.setImage(uploadedImage);
 
-        BufferedImage generatedImage = imageGenerator.generateImage();
-        String timeNow               = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"));
-
         originalImageView.setSource(new StreamResource(() ->
-                converter.inputStream(uploadedBytes),
-                String.join("_", "original", timeNow, fileName)));
+                converter.inputStream(settings.getImage()),
+                String.join("_", "original", timeNow, settings.getImageFileName())));
 
-        StreamResource generatedImageSource = new StreamResource(() ->
-                converter.inputStream(generatedImage),
-                String.join("_", "generated", timeNow, fileName));
-        generatedImageView.setSource(generatedImageSource);
-        downloadButton.download(generatedImageSource);
-
-        notifications.add("Your image was generated.");
+        generateButton.setEnabled(true);
     }
 }

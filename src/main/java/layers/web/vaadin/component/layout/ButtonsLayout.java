@@ -1,9 +1,7 @@
 package layers.web.vaadin.component.layout;
 
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Notification;
 import layers.web.vaadin.component.visual.DownloadButton;
 import layers.web.vaadin.component.visual.GenerateButton;
 import layers.web.vaadin.component.visual.UploadButton;
