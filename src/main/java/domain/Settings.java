@@ -9,11 +9,16 @@ public interface Settings {
      * The values of ImageSize should be as close as possible to patterns average size, if they different.
      * The best way if all patterns have same width and height. Then set it in in WIDTH and HEIGHT and you are C00L :).
      */
-    int PATTERN_WIDTH = 14;//40;
-    int PATTERN_HEIGHT = 14;//20;
+    int INCOME_IMAGE_ALLOWED_MIN_WIDTH  = 80;
+    int INCOME_IMAGE_ALLOWED_MIN_HEIGHT = 64;
+    int INCOME_IMAGE_ALLOWED_MAX_WIDTH  = 5120;
+    int INCOME_IMAGE_ALLOWED_MAX_HEIGHT = 4096;
+
+    int PATTERN_WIDTH = 16;
+    int PATTERN_HEIGHT = 16;
 
     Integer MIN_NUMBER_OF_EXPECTED_COLUMNS = 0;
-    Integer MAX_NUMBER_OF_EXPECTED_COLUMNS = 128;
+    Integer MAX_NUMBER_OF_EXPECTED_COLUMNS = 256;
 
     BufferedImage getImage();
 

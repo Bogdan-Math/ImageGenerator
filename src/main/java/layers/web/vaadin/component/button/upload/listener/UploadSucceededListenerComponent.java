@@ -15,6 +15,8 @@ import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static domain.Settings.*;
+
 @SpringComponent
 @Scope("session")
 public class UploadSucceededListenerComponent implements UploadSucceededListener {
@@ -43,12 +45,15 @@ public class UploadSucceededListenerComponent implements UploadSucceededListener
         byte[] uploadedBytes        = receiver.getUploadStream().toByteArray();
         BufferedImage uploadedImage = converter.bufferedImage(uploadedBytes);
 
-        if ((uploadedImage.getWidth() > 2560) || (uploadedImage.getHeight() > 2048)) {
-            notification.add("Image resolution can't be more than 2560 x 2048 (px)");
+        if ((uploadedImage.getWidth() < INCOME_IMAGE_ALLOWED_MIN_WIDTH) || (uploadedImage.getHeight() < INCOME_IMAGE_ALLOWED_MIN_HEIGHT)) {
+            notification.add("Image resolution can't be less than " + INCOME_IMAGE_ALLOWED_MIN_WIDTH + " x " + INCOME_IMAGE_ALLOWED_MIN_HEIGHT + " (px)");
             return;
         }
 
-        notification.add("Upload succeeded.");
+        if ((uploadedImage.getWidth() > INCOME_IMAGE_ALLOWED_MAX_WIDTH) || (uploadedImage.getHeight() > INCOME_IMAGE_ALLOWED_MAX_HEIGHT)) {
+            notification.add("Image resolution can't be more than " + INCOME_IMAGE_ALLOWED_MAX_WIDTH + " x " + INCOME_IMAGE_ALLOWED_MAX_HEIGHT + " (px)");
+            return;
+        }
 
         settings.setImageFileName(imageFileName);
         settings.setImage(uploadedImage);
@@ -56,5 +61,7 @@ public class UploadSucceededListenerComponent implements UploadSucceededListener
         originalImageView.setSource(new StreamResource(() ->
                 converter.inputStream(settings.getImage()),
                 String.join("_", "original", timeNow, settings.getImageFileName())));
+
+        notification.add("Upload succeeded.");
     }
 }
