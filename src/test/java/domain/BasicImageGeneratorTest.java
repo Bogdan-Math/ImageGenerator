@@ -9,12 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import utility.helper.ImageInformation;
 import utility.helper.ObjectTypeConverter;
 import utility.helper.ResourceReader;
+import utility.pattern.InformationalImage;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Map;
@@ -28,7 +27,6 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
-import static utility.helper.ImageInformation.averagedColor;
 
 @ContextConfiguration(locations = {
         "classpath:spring/basic-image-generator.xml"
@@ -49,16 +47,16 @@ public class BasicImageGeneratorTest {
     @Autowired
     private ObjectTypeConverter typeConverter;
 
-    private BufferedImage originalImage;
+    private InformationalImage originalImage;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() throws Exception {
-        Map<Color, BufferedImage> patterns = resourceReader.readFiles("images/colors").stream().collect(toMap(
-                file -> ImageInformation.averagedColor(typeConverter.bufferedImage(file)),
-                file -> typeConverter.bufferedImage(file)
+        Map<Color, InformationalImage> patterns = resourceReader.readFiles("images/colors").stream().collect(toMap(
+                file -> typeConverter.informationalImage(file).averagedColor(),
+                file -> typeConverter.informationalImage(file)
         ));
 
         when(settings.getPatterns()).thenReturn(patterns);
@@ -70,73 +68,73 @@ public class BasicImageGeneratorTest {
     public void generateWhiteImage() throws Exception {
 
         //Arrange
-        this.originalImage = typeConverter.bufferedImage(resourceReader.readFile("images/testable/1-white.jpg"));
-        when(settings.getImage()).thenReturn(originalImage);
+        this.originalImage = typeConverter.informationalImage(resourceReader.readFile("images/testable/1-white.jpg"));
+        when(settings.getIncomeImage()).thenReturn(originalImage);
         when(settings.getImageWidth()).thenReturn(originalImage.getWidth());
         when(settings.getImageHeight()).thenReturn(originalImage.getHeight());
 
         //Act
-        BufferedImage generatedImage = imageGenerator.generateImage();
+        InformationalImage generatedImage = imageGenerator.generateImage();
 
         //Assert
         assertNotNull(generatedImage);
         verify(settings, times(1024)).getSubImage(anyInt(), anyInt(), anyInt(), anyInt());//1024 = 32 * 32
         assertThat(generatedImage.getWidth(),  is(800));// 800 = 32 * 25
         assertThat(generatedImage.getHeight(), is(800));// 800 = 32 * 25
-        assertThat(averagedColor(generatedImage), is(WHITE));
+        assertThat(generatedImage.averagedColor(), is(WHITE));
     }
 
     @Test
     public void generateGrayImage() throws Exception {
 
         //Arrange
-        this.originalImage = typeConverter.bufferedImage(resourceReader.readFile("images/testable/2-gray.jpg"));
-        when(settings.getImage()).thenReturn(originalImage);
+        this.originalImage = typeConverter.informationalImage(resourceReader.readFile("images/testable/2-gray.jpg"));
+        when(settings.getIncomeImage()).thenReturn(originalImage);
         when(settings.getImageWidth()).thenReturn(originalImage.getWidth());
         when(settings.getImageHeight()).thenReturn(originalImage.getHeight());
 
         //Act
-        BufferedImage generatedImage = imageGenerator.generateImage();
+        InformationalImage generatedImage = imageGenerator.generateImage();
 
         //Assert
         assertNotNull(generatedImage);
         verify(settings, times(1024)).getSubImage(anyInt(), anyInt(), anyInt(), anyInt());//1024 = 32 * 32
         assertThat(generatedImage.getWidth(),  is(800));// 800 = 32 * 25
         assertThat(generatedImage.getHeight(), is(800));// 800 = 32 * 25
-        assertThat(averagedColor(generatedImage), is(GRAY));
+        assertThat(generatedImage.averagedColor(), is(GRAY));
     }
 
     @Test
     public void generateBlackImage() throws Exception {
 
         //Arrange
-        this.originalImage = typeConverter.bufferedImage(resourceReader.readFile("images/testable/3-black.jpg"));
-        when(settings.getImage()).thenReturn(originalImage);
+        this.originalImage = typeConverter.informationalImage(resourceReader.readFile("images/testable/3-black.jpg"));
+        when(settings.getIncomeImage()).thenReturn(originalImage);
         when(settings.getImageWidth()).thenReturn(originalImage.getWidth());
         when(settings.getImageHeight()).thenReturn(originalImage.getHeight());
 
         //Act
-        BufferedImage generatedImage = imageGenerator.generateImage();
+        InformationalImage generatedImage = imageGenerator.generateImage();
 
         //Assert
         assertNotNull(generatedImage);
         verify(settings, times(1024)).getSubImage(anyInt(), anyInt(), anyInt(), anyInt());//1024 = 32 * 32
         assertThat(generatedImage.getWidth(),  is(800));// 800 = 32 * 25
         assertThat(generatedImage.getHeight(), is(800));// 800 = 32 * 25
-        assertThat(averagedColor(generatedImage), is(BLACK));
+        assertThat(generatedImage.averagedColor(), is(BLACK));
     }
 
     @Test
     public void generate4x4Image() throws Exception {
 
         //Arrange
-        this.originalImage = typeConverter.bufferedImage(resourceReader.readFile("images/testable/4x4.jpg"));
-        when(settings.getImage()).thenReturn(originalImage);
+        this.originalImage = typeConverter.informationalImage(resourceReader.readFile("images/testable/4x4.jpg"));
+        when(settings.getIncomeImage()).thenReturn(originalImage);
         when(settings.getImageWidth()).thenReturn(originalImage.getWidth());
         when(settings.getImageHeight()).thenReturn(originalImage.getHeight());
 
         //Act
-        BufferedImage generatedImage = imageGenerator.generateImage();
+        InformationalImage generatedImage = imageGenerator.generateImage();
 
         //Assert
         assertNotNull(generatedImage);
@@ -144,25 +142,27 @@ public class BasicImageGeneratorTest {
         assertThat(generatedImage.getWidth(),  is(800));// 800 = 32 * 25
         assertThat(generatedImage.getHeight(), is(800));// 800 = 32 * 25
 
-        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(0, 0, 200, 200)), BLACK), is(true));
-        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(200, 0, 200, 200)), WHITE), is(true));
-        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(0, 200, 200, 200)), WHITE), is(true));
-        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(200, 200, 200, 200)), BLUE), is(true));
+        assertThat(almostIdentical(generatedImage.getSubImage(0, 0, 200, 200).averagedColor(), BLACK), is(true));
+        assertThat(almostIdentical(generatedImage.getSubImage(200, 0, 200, 200).averagedColor(), WHITE), is(true));
+        assertThat(almostIdentical(generatedImage.getSubImage(0, 200, 200, 200).averagedColor(), WHITE), is(true));
+        assertThat(almostIdentical(generatedImage.getSubImage(200, 200, 200, 200).averagedColor(), BLUE), is(true));
 
-        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(400, 0, 200, 200)), GREEN), is(true));
-        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(600, 0, 200, 200)), WHITE), is(true));
-        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(400, 200, 200, 200)), WHITE), is(true));
-        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(600, 200, 200, 200)), RED), is(true));
+        assertThat(almostIdentical(generatedImage.getSubImage(400, 0, 200, 200).averagedColor(), GREEN), is(true));
+        assertThat(almostIdentical(generatedImage.getSubImage(600, 0, 200, 200).averagedColor(), WHITE), is(true));
+        assertThat(almostIdentical(generatedImage.getSubImage(400, 200, 200, 200).averagedColor(), WHITE), is(true));
+        assertThat(almostIdentical(generatedImage.getSubImage(600, 200, 200, 200).averagedColor(), RED), is(true));
 
-        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(0, 400, 200, 200)), RED), is(true));
-        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(200, 400, 200, 200)), WHITE), is(true));
-        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(0, 600, 200, 200)), WHITE), is(true));
-        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(200, 600, 200, 200)), GREEN), is(true));
+        assertThat(almostIdentical(generatedImage.getSubImage(0, 400, 200, 200).averagedColor(), RED), is(true));
+        assertThat(almostIdentical(generatedImage.getSubImage(200, 400, 200, 200).averagedColor(), WHITE), is(true));
+        assertThat(almostIdentical(generatedImage.getSubImage(0, 600, 200, 200).averagedColor(), WHITE), is(true));
+        assertThat(almostIdentical(generatedImage.getSubImage(200, 600, 200, 200).averagedColor(), GREEN), is(true));
 
-        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(400, 400, 200, 200)), BLUE), is(true));
-        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(600, 400, 200, 200)), WHITE), is(true));
-        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(400, 600, 200, 200)), WHITE), is(true));
-        assertThat(almostIdentical(averagedColor(generatedImage.getSubimage(600, 600, 200, 200)), BLACK), is(true));
+        assertThat(almostIdentical(generatedImage.getSubImage(400, 400, 200, 200).averagedColor(), BLUE), is(true));
+        assertThat(almostIdentical(generatedImage.getSubImage(600, 400, 200, 200).averagedColor(), WHITE), is(true));
+        assertThat(almostIdentical(generatedImage.getSubImage(400, 600, 200, 200).averagedColor(), WHITE), is(true));
+        assertThat(almostIdentical(generatedImage.getSubImage(600, 600, 200, 200).averagedColor(), BLACK), is(true));
+
+        assertThat(almostIdentical(generatedImage.getSubImage(600, 600, 200, 200).averagedColor(), WHITE), is(false));
     }
 
     private boolean almostIdentical(Color colorOne, Color colorTwo) {
@@ -172,14 +172,13 @@ public class BasicImageGeneratorTest {
     }
 
     private boolean almostIdentical(int firstColor, int secondColor) {
-        BigDecimal firstValue  = valueOf(firstColor).add(valueOf(0.01), MathContext.DECIMAL32); // have to add 0.01 to avoid division by zero
-        BigDecimal secondValue = valueOf(secondColor).add(valueOf(0.01), MathContext.DECIMAL32);// have to add 0.01 to avoid division by zero
+        BigDecimal delta        = valueOf(255.0).divide(valueOf(3.0), MathContext.DECIMAL32);
+        BigDecimal firstValue   = valueOf(firstColor); // have to add 0.01 to avoid division by zero
+        BigDecimal secondValue  = valueOf(secondColor);// have to add 0.01 to avoid division by zero
+        BigDecimal smallerValue = (firstValue.compareTo(secondValue) < 0) ? firstValue : secondValue;
+        BigDecimal greaterValue = (firstValue.compareTo(secondValue) < 0) ? secondValue : firstValue;
 
-        BigDecimal greaterRatio = (firstValue.compareTo(secondValue) > 0) ?
-                                   firstValue.divide(secondValue, MathContext.DECIMAL32) :
-                                   secondValue.divide(firstValue, MathContext.DECIMAL32);
-
-        return greaterRatio.remainder(BigDecimal.ONE).compareTo(valueOf(0.333)) < 0; // allow 33% deviation between two colors
+        return smallerValue.add(delta, MathContext.DECIMAL32).compareTo(greaterValue) > 0;
     }
 
 }

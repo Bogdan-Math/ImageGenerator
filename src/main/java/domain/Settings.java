@@ -1,32 +1,33 @@
 package domain;
 
+import utility.pattern.InformationalImage;
+
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.Map;
 
 public interface Settings {
+    Integer MIN_NUMBER_OF_EXPECTED_COLUMNS = 0;
+    Integer MAX_NUMBER_OF_EXPECTED_COLUMNS = 128;
+
+    Integer INCOME_IMAGE_ALLOWED_MIN_WIDTH  = 80;
+    Integer INCOME_IMAGE_ALLOWED_MIN_HEIGHT = 64;
+    Integer INCOME_IMAGE_ALLOWED_MAX_WIDTH  = 5120;
+    Integer INCOME_IMAGE_ALLOWED_MAX_HEIGHT = 4096;
+
     /**
      * The values of ImageSize should be as close as possible to patterns average size, if they different.
      * The best way if all patterns have same width and height. Then set it in in WIDTH and HEIGHT and you are C00L :).
      */
-    int INCOME_IMAGE_ALLOWED_MIN_WIDTH  = 80;
-    int INCOME_IMAGE_ALLOWED_MIN_HEIGHT = 64;
-    int INCOME_IMAGE_ALLOWED_MAX_WIDTH  = 5120;
-    int INCOME_IMAGE_ALLOWED_MAX_HEIGHT = 4096;
+    Integer PATTERN_WIDTH = 16;
+    Integer PATTERN_HEIGHT = 16;
 
-    int PATTERN_WIDTH = 16;
-    int PATTERN_HEIGHT = 16;
+    InformationalImage getIncomeImage();
 
-    Integer MIN_NUMBER_OF_EXPECTED_COLUMNS = 0;
-    Integer MAX_NUMBER_OF_EXPECTED_COLUMNS = 256;
+    void setIncomeImage(InformationalImage image);
 
-    BufferedImage getImage();
+    Map<Color, InformationalImage> getPatterns();
 
-    void setImage(BufferedImage image);
-
-    Map<Color, BufferedImage> getPatterns();
-
-    void setPatterns(Map<Color, BufferedImage> patterns);
+    void setPatterns(Map<Color, InformationalImage> patterns);
 
     Integer getExpectedColumnsNumber();
 
@@ -36,7 +37,7 @@ public interface Settings {
 
     int getImageHeight();
 
-    BufferedImage getSubImage(int x, int y, int width, int height);
+    InformationalImage getSubImage(int x, int y, int width, int height);
 
     String getImageFileName();
 

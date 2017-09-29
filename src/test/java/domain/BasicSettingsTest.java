@@ -6,11 +6,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import utility.pattern.InformationalImage;
 
 import javax.annotation.Resource;
-import java.awt.image.BufferedImage;
 
-import static domain.Settings.*;
+import static domain.Settings.MAX_NUMBER_OF_EXPECTED_COLUMNS;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
@@ -28,18 +28,18 @@ public class BasicSettingsTest {
     private Settings settings;
 
     @Resource(name = "image")
-    private BufferedImage image;
+    private InformationalImage image;
 
     @Before
     public void setUp() throws Exception {
         when(image.getWidth()).thenReturn(100);
         when(image.getHeight()).thenReturn(200);
-        when(image.getSubimage(anyInt(), anyInt(), anyInt(), anyInt())).thenReturn(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB));
+        when(image.getSubImage(anyInt(), anyInt(), anyInt(), anyInt())).thenReturn(new InformationalImage(1, 1, InformationalImage.TYPE_INT_RGB));
     }
 
     @Test
     public void getImage() throws Exception {
-        assertNotNull(settings.getImage());
+        assertNotNull(settings.getIncomeImage());
     }
 
     @Test
@@ -66,10 +66,10 @@ public class BasicSettingsTest {
 
     @Test
     public void getSubImage() throws Exception {
-        BufferedImage subImage = settings.getSubImage(1, 1, 1, 1);
+        InformationalImage subImage = settings.getSubImage(1, 1, 1, 1);
 
         assertNotNull(subImage);
-        verify(image, times(1)).getSubimage(eq(1), eq(1), eq(1), eq(1));
+        verify(image, times(1)).getSubImage(eq(1), eq(1), eq(1), eq(1));
         assertThat(subImage.getWidth(), is(1));
         assertThat(subImage.getHeight(), is(1));
     }

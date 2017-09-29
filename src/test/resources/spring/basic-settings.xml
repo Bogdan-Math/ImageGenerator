@@ -5,14 +5,14 @@
                            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="basicSettings" class="domain.BasicSettings">
-        <property name="image" ref="image"/>
+        <property name="incomeImage" ref="image"/>
         <property name="patterns" ref="patterns"/>
         <property name="expectedColumnsNumber" value="10"/>
         <property name="imageFileName" value="image-file-name.jpg"/>
     </bean>
 
     <bean id="image" class="org.mockito.Mockito" factory-method="mock">
-        <constructor-arg value="java.awt.image.BufferedImage"/>
+        <constructor-arg value="utility.pattern.InformationalImage"/>
     </bean>
 
     <bean id="patterns" class="org.mockito.Mockito" factory-method="mock">

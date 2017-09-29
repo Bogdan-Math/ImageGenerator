@@ -1,10 +1,10 @@
 package domain;
 
-import java.awt.image.BufferedImage;
+import utility.pattern.InformationalImage;
 
 public interface ImageGenerator {
 
     void setSettings(Settings settings);
 
-    BufferedImage generateImage();
+    InformationalImage generateImage();
 }

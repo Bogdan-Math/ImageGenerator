@@ -1,28 +1,32 @@
 package utility.helper;
 
 import org.springframework.stereotype.Component;
+import utility.pattern.InformationalImage;
 
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
 
+import static javax.imageio.ImageIO.read;
+
 @Component
 public class ObjectTypeConverter {
 
+    //TODO: check method usages
     public InputStream inputStream(byte[] bytes) {
         return new ByteArrayInputStream(bytes);
     }
 
-    public InputStream inputStream(BufferedImage bufferedImage) {
+    //TODO: try move it to InformationalImage
+    public InputStream inputStream(InformationalImage informationalImage) {
         try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage, "jpg", baos);
-            baos.flush();
-            byte[] imageInBytes = baos.toByteArray();
-            baos.close();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            ImageIO.write(informationalImage.getBufferedImage(), "jpg", stream);
+            stream.flush();
+            byte[] imageInBytes = stream.toByteArray();
+            stream.close();
             return new ByteArrayInputStream(imageInBytes);
         }
         catch (Exception e) {
@@ -31,9 +35,9 @@ public class ObjectTypeConverter {
         }
     }
 
-    public BufferedImage bufferedImage(byte[] bytes) {
+    public InformationalImage informationalImage(byte[] bytes) {
         try {
-            return ImageIO.read(new ByteArrayInputStream(bytes));
+            return new InformationalImage(read(new ByteArrayInputStream(bytes)));
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -41,9 +45,9 @@ public class ObjectTypeConverter {
         }
     }
 
-    public BufferedImage bufferedImage(File fromFile) {
+    public InformationalImage informationalImage(File fromFile) {
         try {
-            return ImageIO.read(fromFile);
+            return new InformationalImage(read(fromFile));
         }
         catch (Exception e) {
             e.printStackTrace();

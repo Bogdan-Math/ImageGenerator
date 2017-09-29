@@ -4,10 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import utility.exception.MatrixSizeException;
-import utility.helper.ImageInformation;
+import utility.pattern.InformationalImage;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -29,9 +28,8 @@ public class BasicImageGenerator implements ImageGenerator {
         this.settings = settings;
     }
 
-    private List<List<BufferedImage>> asMatrix() {
-        //TODO: add descriptive comments to this method
-
+    //TODO: add descriptive comments to this method
+    private List<List<InformationalImage>> asMatrix() {
         int expectedColumns = settings.getExpectedColumnsNumber();
         int expectedRows    = 0;
 
@@ -59,10 +57,10 @@ public class BasicImageGenerator implements ImageGenerator {
             realRowsNumber++;
         }
 
-        List<List<BufferedImage>> matrix = new ArrayList<>();
+        List<List<InformationalImage>> matrix = new ArrayList<>();
         for (int i = 0; i < realColumnsNumber; i++) {
 
-            List<BufferedImage> matrixRow = new ArrayList<>();
+            List<InformationalImage> matrixRow = new ArrayList<>();
             for (int j = 0; j < realRowsNumber; j++) {
                 matrixRow.add(settings.getSubImage(i * squareWidth, j * squareHeight, squareWidth, squareHeight));
             }
@@ -76,23 +74,22 @@ public class BasicImageGenerator implements ImageGenerator {
     private List<List<Color>> averagedColorsMatrix() {
         return asMatrix().stream()
                 .map(row -> row.stream()
-                        .map(ImageInformation::averagedColor)
+                        .map(InformationalImage::averagedColor)
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
     }
 
-    private List<List<BufferedImage>> resultMatrix() {
-
-        List<List<Color>> matrix         = averagedColorsMatrix();
-        Map<Color, BufferedImage> map    = settings.getPatterns();
-        List<List<BufferedImage>> result = new ArrayList<>();
+    private List<List<InformationalImage>> resultMatrix() {
+        List<List<Color>> matrix              = averagedColorsMatrix();
+        Map<Color, InformationalImage> map    = settings.getPatterns();
+        List<List<InformationalImage>> result = new ArrayList<>();
 
         for (List<Color> colors : matrix) {
-            List<BufferedImage> resultRows = new ArrayList<>();
+            List<InformationalImage> resultRows = new ArrayList<>();
 
             for (Color color : colors) {
-                BufferedImage minImg = null;
-                int minColor         = Integer.MAX_VALUE;
+                InformationalImage minImg = null;
+                int minColor              = Integer.MAX_VALUE;
 
                 for (Color pColor : map.keySet()) {
                     int dColor = Math.abs(color.getRed()   - pColor.getRed())   +
@@ -112,45 +109,46 @@ public class BasicImageGenerator implements ImageGenerator {
     }
 
     @Override
-    public BufferedImage generateImage() {
-        List<List<BufferedImage>> resultMatrix = resultMatrix();
+    public InformationalImage generateImage() {
+        List<List<InformationalImage>> resultMatrix = resultMatrix();
 
         int columns = resultMatrix.size();
         int rows = resultMatrix.get(0).size();
 
-        BufferedImage imageWithMaxSize = findImageWithMaxSize(resultMatrix);
+        InformationalImage imageWithMaxSize = findImageWithMaxSize(resultMatrix);
         int width  = imageWithMaxSize.getWidth() * columns;
         int height = imageWithMaxSize.getHeight() * rows;
 
         int squareWidth = width / columns;
         int squareHeight = height / rows;
 
-        BufferedImage averageImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        InformationalImage averagedImg = new InformationalImage(width, height, InformationalImage.TYPE_INT_RGB);
 
         for (int i = 0; i < columns; i++) {
             for (int j = 0; j < rows; j++) {
+                Graphics2D graphics2D = averagedImg.createGraphics();
 
-                Graphics graphics = averageImg.getGraphics();
-                graphics.drawImage(resize(resultMatrix.get(i).get(j), imageWithMaxSize.getWidth(), imageWithMaxSize.getHeight()),
+                graphics2D.drawImage(resize(resultMatrix.get(i).get(j), imageWithMaxSize.getWidth(), imageWithMaxSize.getHeight())
+                        .getBufferedImage(),
                         i * squareWidth,
                         j * squareHeight,
                         null);
             }
         }
 
-        return averageImg;
+        return averagedImg;
     }
 
-    private BufferedImage resize(BufferedImage oldImage, int newWidth, int newHeight) {
-        BufferedImage resizedImg = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
-        Graphics2D graphics2D    = resizedImg.createGraphics();
+    private InformationalImage resize(InformationalImage oldImage, int newWidth, int newHeight) {
+        InformationalImage resizedImg = new InformationalImage(newWidth, newHeight, InformationalImage.TYPE_INT_RGB);
+        Graphics2D graphics2D         = resizedImg.createGraphics();
 
-        graphics2D.drawImage(oldImage, 0, 0, resizedImg.getWidth(), resizedImg.getHeight(), null);
+        graphics2D.drawImage(oldImage.getBufferedImage(), 0, 0, resizedImg.getWidth(), resizedImg.getHeight(), null);
 
         return resizedImg;
     }
 
-    private BufferedImage findImageWithMaxSize(List<List<BufferedImage>> imgMatrix) {
+    private InformationalImage findImageWithMaxSize(List<List<InformationalImage>> imgMatrix) {
         return imgMatrix.stream()
                         .flatMap(List::stream)
                         .max(Comparator.comparing(img -> img.getWidth() * img.getHeight()))

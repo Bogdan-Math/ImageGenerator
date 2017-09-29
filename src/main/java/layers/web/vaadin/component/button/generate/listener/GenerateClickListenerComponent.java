@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import utility.helper.ObjectTypeConverter;
+import utility.pattern.InformationalImage;
 
-import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -45,10 +45,10 @@ public class GenerateClickListenerComponent implements GenerateClickListener {
     @Override
     public void buttonClick(ClickEvent event) {
 
-        ofNullable(settings.getImage()).ifPresent(image -> {
+        ofNullable(settings.getIncomeImage()).ifPresent(image -> {
 
-            BufferedImage generatedImage = imageGenerator.generateImage();
-            String timeNow               = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"));
+            InformationalImage generatedImage = imageGenerator.generateImage();
+            String timeNow                    = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"));
 
             generatedImageView.setSource(new StreamResource(() ->
                     converter.inputStream(generatedImage),

@@ -2,18 +2,18 @@ package domain;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import utility.pattern.InformationalImage;
 
 import javax.annotation.PostConstruct;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.Map;
 
 @Component
 @Scope("session")
 public class BasicSettings implements Settings {
 
-    private BufferedImage image;
-    private Map<Color, BufferedImage> patterns;
+    private InformationalImage incomeImage;
+    private Map<Color, InformationalImage> patterns;
     private Integer expectedColumnsNumber;
     private String imageFileName;
 
@@ -23,22 +23,22 @@ public class BasicSettings implements Settings {
     }
 
     @Override
-    public BufferedImage getImage() {
-        return image;
+    public InformationalImage getIncomeImage() {
+        return incomeImage;
     }
 
     @Override
-    public void setImage(BufferedImage image) {
-        this.image = image;
+    public void setIncomeImage(InformationalImage incomeImage) {
+        this.incomeImage = incomeImage;
     }
 
     @Override
-    public Map<Color, BufferedImage> getPatterns() {
+    public Map<Color, InformationalImage> getPatterns() {
         return patterns;
     }
 
     @Override
-    public void setPatterns(Map<Color, BufferedImage> patterns) {
+    public void setPatterns(Map<Color, InformationalImage> patterns) {
         this.patterns = patterns;
     }
 
@@ -54,17 +54,17 @@ public class BasicSettings implements Settings {
 
     @Override
     public int getImageWidth() {
-        return getImage().getWidth();
+        return getIncomeImage().getWidth();
     }
 
     @Override
     public int getImageHeight() {
-        return getImage().getHeight();
+        return getIncomeImage().getHeight();
     }
 
     @Override
-    public BufferedImage getSubImage(int x, int y, int width, int height) {
-        return getImage().getSubimage(x, y, width, height);
+    public InformationalImage getSubImage(int x, int y, int width, int height) {
+        return getIncomeImage().getSubImage(x, y, width, height);
     }
 
     @Override
