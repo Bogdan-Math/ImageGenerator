@@ -23,7 +23,7 @@ public class ObjectTypeConverter {
     public InputStream inputStream(InformationalImage informationalImage) {
         try {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            ImageIO.write(informationalImage.getBufferedImage(), "jpg", stream);
+            ImageIO.write(informationalImage, "jpg", stream);
             stream.flush();
             byte[] imageInBytes = stream.toByteArray();
             stream.close();

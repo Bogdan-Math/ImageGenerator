@@ -25,7 +25,7 @@ public class PatternsRepositoryImplTest {
 
     @Test
     public void getFlags() throws Exception {
-        assertThat(repository.getFlags().size(), is(195));
+        assertThat(repository.getFlags().size(), is(189));
     }
 
     @Test

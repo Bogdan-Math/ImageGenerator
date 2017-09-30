@@ -4,23 +4,23 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.stream.IntStream;
 
-public class InformationalImage {
+public class InformationalImage extends BufferedImage {
     public static final int TYPE_INT_RGB = BufferedImage.TYPE_INT_RGB;
 
-    private BufferedImage bufferedImage;
-
     public InformationalImage(BufferedImage bufferedImage) {
-        setBufferedImage(bufferedImage);
+        this(bufferedImage.getWidth(), bufferedImage.getHeight(), bufferedImage.getType());
+        this.createGraphics()
+            .drawImage(bufferedImage, 0, 0, getWidth(), getHeight(), null);
     }
 
     public InformationalImage(int width, int height, int typeIntRgb) {
-        setBufferedImage(new BufferedImage(width, height, typeIntRgb));
+        super(width, height, typeIntRgb);
     }
 
     public Color averagedColor() {
 
-        int width  = getBufferedImage().getWidth();
-        int height = getBufferedImage().getHeight();
+        int width  = getWidth();
+        int height = getHeight();
         int pixels = width * height;
 
         final int[] sumR = {0};
@@ -35,7 +35,7 @@ public class InformationalImage {
 
             IntStream.range(0, height).forEach((int j) -> {
 
-                int rgb = getBufferedImage().getRGB(i, j);
+                int rgb = getRGB(i, j);
 
                 int r = (rgb & 0x00ff0000) >> 16;
                 int g = (rgb & 0x0000ff00) >> 8;
@@ -56,26 +56,6 @@ public class InformationalImage {
     }
 
     public InformationalImage getSubImage(int x, int y, int width, int height) {
-        return new InformationalImage(getBufferedImage().getSubimage(x, y, width, height));
-    }
-
-    public int getWidth() {
-        return getBufferedImage().getWidth();
-    }
-
-    public int getHeight() {
-        return getBufferedImage().getHeight();
-    }
-
-    public Graphics2D createGraphics() {
-        return getBufferedImage().createGraphics();
-    }
-
-    public BufferedImage getBufferedImage() {
-        return bufferedImage;
-    }
-
-    private void setBufferedImage(BufferedImage bufferedImage) {
-        this.bufferedImage = bufferedImage;
+        return new InformationalImage(getSubimage(x, y, width, height));
     }
 }

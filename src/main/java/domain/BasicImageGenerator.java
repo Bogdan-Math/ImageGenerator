@@ -126,13 +126,11 @@ public class BasicImageGenerator implements ImageGenerator {
 
         for (int i = 0; i < columns; i++) {
             for (int j = 0; j < rows; j++) {
-                Graphics2D graphics2D = averagedImg.createGraphics();
-
-                graphics2D.drawImage(resize(resultMatrix.get(i).get(j), imageWithMaxSize.getWidth(), imageWithMaxSize.getHeight())
-                        .getBufferedImage(),
-                        i * squareWidth,
-                        j * squareHeight,
-                        null);
+                averagedImg.getGraphics()
+                           .drawImage(resize(resultMatrix.get(i).get(j), imageWithMaxSize.getWidth(), imageWithMaxSize.getHeight()),
+                                   i * squareWidth,
+                                   j * squareHeight,
+                                   null);
             }
         }
 
@@ -141,9 +139,8 @@ public class BasicImageGenerator implements ImageGenerator {
 
     private InformationalImage resize(InformationalImage oldImage, int newWidth, int newHeight) {
         InformationalImage resizedImg = new InformationalImage(newWidth, newHeight, InformationalImage.TYPE_INT_RGB);
-        Graphics2D graphics2D         = resizedImg.createGraphics();
-
-        graphics2D.drawImage(oldImage.getBufferedImage(), 0, 0, resizedImg.getWidth(), resizedImg.getHeight(), null);
+        resizedImg.getGraphics()
+                  .drawImage(oldImage, 0, 0, resizedImg.getWidth(), resizedImg.getHeight(), null);
 
         return resizedImg;
     }
