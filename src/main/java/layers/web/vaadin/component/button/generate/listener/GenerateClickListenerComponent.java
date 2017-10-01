@@ -50,8 +50,8 @@ public class GenerateClickListenerComponent implements GenerateClickListener {
             InformationalImage generatedImage = imageGenerator.generateImage();
             String timeNow                    = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"));
 
-            generatedImageView.setSource(new StreamResource(() ->
-                    converter.inputStream(generatedImage),
+            generatedImageView.setSource(new StreamResource(
+                    generatedImage::asStream,
                     String.join("_", "generated", timeNow, settings.getImageFileName())));
 
             downloader.setFileDownloadResource(generatedImageView.getSource());

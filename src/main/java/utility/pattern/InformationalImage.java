@@ -1,7 +1,11 @@
 package utility.pattern;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.stream.IntStream;
 
 public class InformationalImage extends BufferedImage {
@@ -15,6 +19,25 @@ public class InformationalImage extends BufferedImage {
 
     public InformationalImage(int width, int height, int typeIntRgb) {
         super(width, height, typeIntRgb);
+    }
+
+    public InputStream asStream() {
+        return asStream("jpg");
+    }
+
+    InputStream asStream(String format) {
+        try {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            ImageIO.write(this, format, stream);
+            stream.flush();
+            byte[] imageInBytes = stream.toByteArray();
+            stream.close();
+            return new ByteArrayInputStream(imageInBytes);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException(e);
+        }
     }
 
     public Color averagedColor() {
