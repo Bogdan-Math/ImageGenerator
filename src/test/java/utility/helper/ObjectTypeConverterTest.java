@@ -29,11 +29,6 @@ public class ObjectTypeConverterTest {
     }
 
     @Test
-    public void inputStreamFromBytes() throws Exception {
-        assertTrue(converter.inputStream(new byte[1]) != null);
-    }
-
-    @Test
     public void inputStreamFromInformationalImage() throws Exception {
         assertNotNull(converter.inputStream(new InformationalImage(read(originalImage))));
     }

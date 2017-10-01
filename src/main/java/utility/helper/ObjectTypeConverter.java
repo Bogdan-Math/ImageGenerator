@@ -14,11 +14,6 @@ import static javax.imageio.ImageIO.read;
 @Component
 public class ObjectTypeConverter {
 
-    //TODO: check method usages
-    public InputStream inputStream(byte[] bytes) {
-        return new ByteArrayInputStream(bytes);
-    }
-
     //TODO: try move it to InformationalImage
     public InputStream inputStream(InformationalImage informationalImage) {
         try {

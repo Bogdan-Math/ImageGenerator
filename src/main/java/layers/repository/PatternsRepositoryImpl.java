@@ -68,7 +68,7 @@ public class PatternsRepositoryImpl implements PatternsRepository {
     public void setConverter(ObjectTypeConverter converter) {
         this.converter = converter;
     }
-    
+
     //TODO: delete this method, after add Spring to tests
     public void setPatternsLocation(Map<PatternType, String> patternsLocation) {
         this.patternsLocation = patternsLocation;
