@@ -9,17 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import utility.core.InformationalImage;
 import utility.system.ObjectTypeConverter;
 import utility.system.ResourceReader;
-import utility.core.InformationalImage;
 
 import java.awt.*;
-import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.Map;
 
 import static java.awt.Color.*;
-import static java.math.BigDecimal.valueOf;
 import static java.util.stream.Collectors.toMap;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNotNull;
@@ -27,6 +24,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
+import static utility.core.ColorComparator.almostIdentical;
 
 @ContextConfiguration(locations = {
         "classpath:spring/basic-image-generator.xml"
@@ -164,21 +162,4 @@ public class BasicImageGeneratorTest {
 
         assertThat(almostIdentical(generatedImage.getSubImage(600, 600, 200, 200).averagedColor(), WHITE), is(false));
     }
-
-    private boolean almostIdentical(Color colorOne, Color colorTwo) {
-        return almostIdentical(colorOne.getRed(), colorTwo.getRed()) &&
-               almostIdentical(colorOne.getGreen(), colorTwo.getGreen()) &&
-               almostIdentical(colorOne.getBlue(), colorTwo.getBlue());
-    }
-
-    private boolean almostIdentical(int firstColor, int secondColor) {
-        BigDecimal delta        = valueOf(255.0).divide(valueOf(3.0), MathContext.DECIMAL32);
-        BigDecimal firstValue   = valueOf(firstColor); // have to add 0.01 to avoid division by zero
-        BigDecimal secondValue  = valueOf(secondColor);// have to add 0.01 to avoid division by zero
-        BigDecimal smallerValue = (firstValue.compareTo(secondValue) < 0) ? firstValue : secondValue;
-        BigDecimal greaterValue = (firstValue.compareTo(secondValue) < 0) ? secondValue : firstValue;
-
-        return smallerValue.add(delta, MathContext.DECIMAL32).compareTo(greaterValue) > 0;
-    }
-
 }
