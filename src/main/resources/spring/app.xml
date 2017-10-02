@@ -27,12 +27,6 @@
 
     <util:list id="notifications" value-type="java.lang.String"/>
 
-    <util:map id="patternsLocation" key-type="utility.core.PatternType" value-type="java.lang.String">
-        <entry key="#{T(utility.core.PatternType).COMMONS}" value="images/colors"/>
-        <entry key="#{T(utility.core.PatternType).FLAGS}" value="images/flags"/>
-        <entry key="#{T(utility.core.PatternType).PLAINS}" value="images/plains"/>
-    </util:map>
-
     <bean id="originalImageView"
           class="com.vaadin.ui.Image" scope="session"/>
 

@@ -3,12 +3,11 @@ package layers.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
-import utility.system.ObjectTypeConverter;
-import utility.system.ResourceReader;
 import utility.core.InformationalImage;
 import utility.core.PatternType;
+import utility.system.ObjectTypeConverter;
+import utility.system.ResourceReader;
 
-import javax.annotation.Resource;
 import java.awt.*;
 import java.util.Map;
 
@@ -24,9 +23,6 @@ public class PatternsRepositoryImpl implements PatternsRepository {
 
     @Autowired
     private ObjectTypeConverter converter;
-
-    @Resource(name = "patternsLocation")
-    private Map<PatternType, String> patternsLocation;
 
     @Override
     public Map<Color, InformationalImage> getCommons() {
@@ -44,7 +40,7 @@ public class PatternsRepositoryImpl implements PatternsRepository {
     }
 
     private Map<Color, InformationalImage> initialize(PatternType patternType) {
-        return resourceReader.readFiles(patternsLocation.get(patternType))
+        return resourceReader.readFiles(patternType.getLocation())
                              .stream()
                              .collect(toMap(file -> converter.informationalImage(file).averagedColor(),// put Color              as KEY   in map
                                             file -> converter.informationalImage(file),                // put InformationalImage as VALUE in map
@@ -67,10 +63,5 @@ public class PatternsRepositoryImpl implements PatternsRepository {
     //TODO: delete this method, after add Spring to tests
     public void setConverter(ObjectTypeConverter converter) {
         this.converter = converter;
-    }
-
-    //TODO: delete this method, after add Spring to tests
-    public void setPatternsLocation(Map<PatternType, String> patternsLocation) {
-        this.patternsLocation = patternsLocation;
     }
 }
