@@ -1,11 +1,11 @@
-package utility.pattern;
+package utility.core;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import utility.helper.ObjectTypeConverter;
-import utility.helper.ResourceReader;
+import utility.system.ObjectTypeConverter;
+import utility.system.ResourceReader;
 
 import static org.junit.Assert.assertNotNull;
 

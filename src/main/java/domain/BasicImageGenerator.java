@@ -3,8 +3,8 @@ package domain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import utility.core.InformationalImage;
 import utility.exception.MatrixSizeException;
-import utility.pattern.InformationalImage;
 
 import java.awt.*;
 import java.util.ArrayList;

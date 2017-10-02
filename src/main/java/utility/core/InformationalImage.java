@@ -1,4 +1,4 @@
-package utility.pattern;
+package utility.core;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

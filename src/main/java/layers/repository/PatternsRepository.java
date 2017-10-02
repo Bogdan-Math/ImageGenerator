@@ -1,6 +1,6 @@
 package layers.repository;
 
-import utility.pattern.InformationalImage;
+import utility.core.InformationalImage;
 
 import java.awt.*;
 import java.util.Map;

@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import utility.helper.ObjectTypeConverter;
-import utility.helper.ResourceReader;
-import utility.pattern.InformationalImage;
+import utility.system.ObjectTypeConverter;
+import utility.system.ResourceReader;
+import utility.core.InformationalImage;
 
 import java.awt.*;
 import java.math.BigDecimal;

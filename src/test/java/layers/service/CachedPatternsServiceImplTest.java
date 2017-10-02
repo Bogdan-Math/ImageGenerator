@@ -7,8 +7,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import utility.pattern.InformationalImage;
-import utility.pattern.PatternType;
+import utility.core.InformationalImage;
+import utility.core.PatternType;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -19,8 +19,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
-import static utility.pattern.InformationalImage.TYPE_INT_RGB;
-import static utility.pattern.PatternType.*;
+import static utility.core.InformationalImage.TYPE_INT_RGB;
+import static utility.core.PatternType.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CachedPatternsServiceImplTest {

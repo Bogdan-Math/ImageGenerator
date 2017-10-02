@@ -9,8 +9,8 @@ import layers.web.vaadin.component.visual.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
-import utility.helper.ObjectTypeConverter;
-import utility.pattern.InformationalImage;
+import utility.system.ObjectTypeConverter;
+import utility.core.InformationalImage;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

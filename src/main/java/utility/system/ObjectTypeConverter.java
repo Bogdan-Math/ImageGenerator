@@ -1,7 +1,7 @@
-package utility.helper;
+package utility.system;
 
 import org.springframework.stereotype.Component;
-import utility.pattern.InformationalImage;
+import utility.core.InformationalImage;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

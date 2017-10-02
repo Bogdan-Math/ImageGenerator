@@ -2,7 +2,7 @@ package domain;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import utility.pattern.InformationalImage;
+import utility.core.InformationalImage;
 
 import javax.annotation.PostConstruct;
 import java.awt.*;

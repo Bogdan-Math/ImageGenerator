@@ -1,4 +1,4 @@
-package utility.pattern;
+package utility.core;
 
 public enum PatternType {
     COMMONS,

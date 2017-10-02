@@ -22,15 +22,15 @@
     <!--REPOSITORY classes-->
     <context:component-scan base-package="layers.repository"/>
 
-    <!--HELPER classes-->
-    <context:component-scan base-package="utility.helper"/>
+    <!--SYSTEM classes-->
+    <context:component-scan base-package="utility.system"/>
 
     <util:list id="notifications" value-type="java.lang.String"/>
 
-    <util:map id="patternsLocation" key-type="utility.pattern.PatternType" value-type="java.lang.String">
-        <entry key="#{T(utility.pattern.PatternType).COMMONS}" value="images/colors"/>
-        <entry key="#{T(utility.pattern.PatternType).FLAGS}" value="images/flags"/>
-        <entry key="#{T(utility.pattern.PatternType).PLAINS}" value="images/plains"/>
+    <util:map id="patternsLocation" key-type="utility.core.PatternType" value-type="java.lang.String">
+        <entry key="#{T(utility.core.PatternType).COMMONS}" value="images/colors"/>
+        <entry key="#{T(utility.core.PatternType).FLAGS}" value="images/flags"/>
+        <entry key="#{T(utility.core.PatternType).PLAINS}" value="images/plains"/>
     </util:map>
 
     <bean id="originalImageView"

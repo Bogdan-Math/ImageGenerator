@@ -6,9 +6,9 @@ import domain.ImageGenerator;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import utility.pattern.InformationalImage;
+import utility.core.InformationalImage;
 
-import static utility.pattern.InformationalImage.TYPE_INT_RGB;
+import static utility.core.InformationalImage.TYPE_INT_RGB;
 
 
 public class MatrixSizeExceptionTest {

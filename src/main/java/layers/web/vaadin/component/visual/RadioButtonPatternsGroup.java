@@ -6,8 +6,8 @@ import domain.Settings;
 import layers.service.CachedPatternsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import utility.pattern.InformationalImage;
-import utility.pattern.PatternType;
+import utility.core.InformationalImage;
+import utility.core.PatternType;
 
 import javax.annotation.PostConstruct;
 import java.awt.*;
@@ -16,8 +16,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.vaadin.ui.themes.ValoTheme.OPTIONGROUP_HORIZONTAL;
-import static utility.pattern.PatternType.FLAGS;
-import static utility.pattern.PatternType.valueOf;
+import static utility.core.PatternType.FLAGS;
+import static utility.core.PatternType.valueOf;
 
 @SpringComponent
 @Scope("session")

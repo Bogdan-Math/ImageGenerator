@@ -3,17 +3,17 @@ package layers.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
-import utility.helper.ObjectTypeConverter;
-import utility.helper.ResourceReader;
-import utility.pattern.InformationalImage;
-import utility.pattern.PatternType;
+import utility.system.ObjectTypeConverter;
+import utility.system.ResourceReader;
+import utility.core.InformationalImage;
+import utility.core.PatternType;
 
 import javax.annotation.Resource;
 import java.awt.*;
 import java.util.Map;
 
 import static java.util.stream.Collectors.toMap;
-import static utility.pattern.PatternType.*;
+import static utility.core.PatternType.*;
 
 @Repository
 @Scope("singleton")

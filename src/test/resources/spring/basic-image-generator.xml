@@ -12,7 +12,7 @@
         <constructor-arg value="domain.BasicSettings"/>
     </bean>
 
-    <bean id="resourceReader" class="utility.helper.ResourceReader"/>
-    <bean id="typeConverter" class="utility.helper.ObjectTypeConverter"/>
+    <bean id="resourceReader" class="utility.system.ResourceReader"/>
+    <bean id="typeConverter" class="utility.system.ObjectTypeConverter"/>
 
 </beans>

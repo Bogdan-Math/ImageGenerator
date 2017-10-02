@@ -12,7 +12,7 @@
     </bean>
 
     <bean id="image" class="org.mockito.Mockito" factory-method="mock">
-        <constructor-arg value="utility.pattern.InformationalImage"/>
+        <constructor-arg value="utility.core.InformationalImage"/>
     </bean>
 
     <bean id="patterns" class="org.mockito.Mockito" factory-method="mock">
