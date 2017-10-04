@@ -54,14 +54,4 @@ public class PatternsRepositoryImpl implements PatternsRepository {
                                      )
                              );
     }
-
-    //TODO: delete this method, after add Spring to tests
-    public void setResourceReader(ResourceReader resourceReader) {
-        this.resourceReader = resourceReader;
-    }
-
-    //TODO: delete this method, after add Spring to tests
-    public void setConverter(ObjectTypeConverter converter) {
-        this.converter = converter;
-    }
 }

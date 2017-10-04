@@ -4,12 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="basicSettings" class="layers.repository.PatternsRepositoryImpl">
-        <property name="resourceReader" ref="resourceReader"/>
-        <property name="converter" ref="typeConverter"/>
-    </bean>
-
+    <bean id="basicSettings"  class="layers.repository.PatternsRepositoryImpl"/>
     <bean id="resourceReader" class="utility.system.ResourceReader"/>
-    <bean id="typeConverter" class="utility.system.ObjectTypeConverter"/>
+    <bean id="typeConverter"  class="utility.system.ObjectTypeConverter"/>
 
 </beans>
