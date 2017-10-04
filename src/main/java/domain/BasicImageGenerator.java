@@ -3,6 +3,7 @@ package domain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import utility.core.InformationalColor;
 import utility.core.InformationalImage;
 import utility.exception.MatrixSizeException;
 
@@ -71,7 +72,7 @@ public class BasicImageGenerator implements ImageGenerator {
         return matrix;
     }
 
-    private List<List<Color>> averagedColorsMatrix() {
+    private List<List<InformationalColor>> averagedColorsMatrix() {
         return asMatrix().stream()
                 .map(row -> row.stream()
                         .map(InformationalImage::averagedColor)
@@ -80,11 +81,11 @@ public class BasicImageGenerator implements ImageGenerator {
     }
 
     private List<List<InformationalImage>> resultMatrix() {
-        List<List<Color>> matrix              = averagedColorsMatrix();
+        List<List<InformationalColor>> matrix = averagedColorsMatrix();
         Map<Color, InformationalImage> map    = settings.getPatterns();
         List<List<InformationalImage>> result = new ArrayList<>();
 
-        for (List<Color> colors : matrix) {
+        for (List<InformationalColor> colors : matrix) {
             List<InformationalImage> resultRows = new ArrayList<>();
 
             for (Color color : colors) {

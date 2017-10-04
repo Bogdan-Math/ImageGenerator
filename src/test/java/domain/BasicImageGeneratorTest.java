@@ -24,7 +24,6 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
-import static utility.core.ColorComparator.almostIdentical;
 
 @ContextConfiguration(locations = {
         "classpath:spring/basic-image-generator.xml"
@@ -140,26 +139,26 @@ public class BasicImageGeneratorTest {
         assertThat(generatedImage.getWidth(),  is(800));// 800 = 32 * 25
         assertThat(generatedImage.getHeight(), is(800));// 800 = 32 * 25
 
-        assertThat(almostIdentical(generatedImage.getSubImage(0, 0, 200, 200).averagedColor(), BLACK), is(true));
-        assertThat(almostIdentical(generatedImage.getSubImage(200, 0, 200, 200).averagedColor(), WHITE), is(true));
-        assertThat(almostIdentical(generatedImage.getSubImage(0, 200, 200, 200).averagedColor(), WHITE), is(true));
-        assertThat(almostIdentical(generatedImage.getSubImage(200, 200, 200, 200).averagedColor(), BLUE), is(true));
+        assertThat(generatedImage.getSubImage(0, 0, 200, 200).averagedColor().almostIdentical(BLACK), is(true));
+        assertThat(generatedImage.getSubImage(200, 0, 200, 200).averagedColor().almostIdentical(WHITE), is(true));
+        assertThat(generatedImage.getSubImage(0, 200, 200, 200).averagedColor().almostIdentical(WHITE), is(true));
+        assertThat(generatedImage.getSubImage(200, 200, 200, 200).averagedColor().almostIdentical(BLUE), is(true));
 
-        assertThat(almostIdentical(generatedImage.getSubImage(400, 0, 200, 200).averagedColor(), GREEN), is(true));
-        assertThat(almostIdentical(generatedImage.getSubImage(600, 0, 200, 200).averagedColor(), WHITE), is(true));
-        assertThat(almostIdentical(generatedImage.getSubImage(400, 200, 200, 200).averagedColor(), WHITE), is(true));
-        assertThat(almostIdentical(generatedImage.getSubImage(600, 200, 200, 200).averagedColor(), RED), is(true));
+        assertThat(generatedImage.getSubImage(400, 0, 200, 200).averagedColor().almostIdentical(GREEN), is(true));
+        assertThat(generatedImage.getSubImage(600, 0, 200, 200).averagedColor().almostIdentical(WHITE), is(true));
+        assertThat(generatedImage.getSubImage(400, 200, 200, 200).averagedColor().almostIdentical(WHITE), is(true));
+        assertThat(generatedImage.getSubImage(600, 200, 200, 200).averagedColor().almostIdentical(RED), is(true));
 
-        assertThat(almostIdentical(generatedImage.getSubImage(0, 400, 200, 200).averagedColor(), RED), is(true));
-        assertThat(almostIdentical(generatedImage.getSubImage(200, 400, 200, 200).averagedColor(), WHITE), is(true));
-        assertThat(almostIdentical(generatedImage.getSubImage(0, 600, 200, 200).averagedColor(), WHITE), is(true));
-        assertThat(almostIdentical(generatedImage.getSubImage(200, 600, 200, 200).averagedColor(), GREEN), is(true));
+        assertThat(generatedImage.getSubImage(0, 400, 200, 200).averagedColor().almostIdentical(RED), is(true));
+        assertThat(generatedImage.getSubImage(200, 400, 200, 200).averagedColor().almostIdentical(WHITE), is(true));
+        assertThat(generatedImage.getSubImage(0, 600, 200, 200).averagedColor().almostIdentical(WHITE), is(true));
+        assertThat(generatedImage.getSubImage(200, 600, 200, 200).averagedColor().almostIdentical(GREEN), is(true));
 
-        assertThat(almostIdentical(generatedImage.getSubImage(400, 400, 200, 200).averagedColor(), BLUE), is(true));
-        assertThat(almostIdentical(generatedImage.getSubImage(600, 400, 200, 200).averagedColor(), WHITE), is(true));
-        assertThat(almostIdentical(generatedImage.getSubImage(400, 600, 200, 200).averagedColor(), WHITE), is(true));
-        assertThat(almostIdentical(generatedImage.getSubImage(600, 600, 200, 200).averagedColor(), BLACK), is(true));
+        assertThat(generatedImage.getSubImage(400, 400, 200, 200).averagedColor().almostIdentical(BLUE), is(true));
+        assertThat(generatedImage.getSubImage(600, 400, 200, 200).averagedColor().almostIdentical(WHITE), is(true));
+        assertThat(generatedImage.getSubImage(400, 600, 200, 200).averagedColor().almostIdentical(WHITE), is(true));
+        assertThat(generatedImage.getSubImage(600, 600, 200, 200).averagedColor().almostIdentical(BLACK), is(true));
 
-        assertThat(almostIdentical(generatedImage.getSubImage(600, 600, 200, 200).averagedColor(), WHITE), is(false));
+        assertThat(generatedImage.getSubImage(600, 600, 200, 200).averagedColor().almostIdentical(WHITE), is(false));
     }
 }

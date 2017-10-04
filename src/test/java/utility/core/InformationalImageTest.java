@@ -12,7 +12,6 @@ import java.awt.*;
 import static java.awt.Color.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
-import static utility.core.ColorComparator.almostIdentical;
 
 public class InformationalImageTest {
 
@@ -63,28 +62,27 @@ public class InformationalImageTest {
     public void getSubImage() throws Exception {
         this.image = new ObjectTypeConverter().informationalImage(new ResourceReader().readFile("images/testable/4x4.jpg"));
 
-        assertThat(almostIdentical(image.getSubImage(0, 0, 8, 8).averagedColor(), BLACK), is(true));
-        assertThat(almostIdentical(image.getSubImage(8, 0, 8, 8).averagedColor(), WHITE), is(true));
-        assertThat(almostIdentical(image.getSubImage(0, 8, 8, 8).averagedColor(), WHITE), is(true));
-        assertThat(almostIdentical(image.getSubImage(8, 8, 8, 8).averagedColor(), BLUE), is(true));
+        assertThat(image.getSubImage(0, 0, 8, 8).averagedColor().almostIdentical(BLACK), is(true));
+        assertThat(image.getSubImage(8, 0, 8, 8).averagedColor().almostIdentical(WHITE), is(true));
+        assertThat(image.getSubImage(0, 8, 8, 8).averagedColor().almostIdentical(WHITE), is(true));
+        assertThat(image.getSubImage(8, 8, 8, 8).averagedColor().almostIdentical(BLUE), is(true));
 
-        assertThat(almostIdentical(image.getSubImage(16, 0, 8, 8).averagedColor(), GREEN), is(true));
-        assertThat(almostIdentical(image.getSubImage(24, 0, 8, 8).averagedColor(), WHITE), is(true));
-        assertThat(almostIdentical(image.getSubImage(16, 8, 8, 8).averagedColor(), WHITE), is(true));
-        assertThat(almostIdentical(image.getSubImage(24, 8, 8, 8).averagedColor(), RED), is(true));
+        assertThat(image.getSubImage(16, 0, 8, 8).averagedColor().almostIdentical(GREEN), is(true));
+        assertThat(image.getSubImage(24, 0, 8, 8).averagedColor().almostIdentical(WHITE), is(true));
+        assertThat(image.getSubImage(16, 8, 8, 8).averagedColor().almostIdentical(WHITE), is(true));
+        assertThat(image.getSubImage(24, 8, 8, 8).averagedColor().almostIdentical(RED), is(true));
 
-        assertThat(almostIdentical(image.getSubImage(0, 16, 8, 8).averagedColor(), RED), is(true));
-        assertThat(almostIdentical(image.getSubImage(8, 16, 8, 8).averagedColor(), WHITE), is(true));
-        assertThat(almostIdentical(image.getSubImage(0, 24, 8, 8).averagedColor(), WHITE), is(true));
-        assertThat(almostIdentical(image.getSubImage(8, 24, 8, 8).averagedColor(), GREEN), is(true));
+        assertThat(image.getSubImage(0, 16, 8, 8).averagedColor().almostIdentical(RED), is(true));
+        assertThat(image.getSubImage(8, 16, 8, 8).averagedColor().almostIdentical(WHITE), is(true));
+        assertThat(image.getSubImage(0, 24, 8, 8).averagedColor().almostIdentical(WHITE), is(true));
+        assertThat(image.getSubImage(8, 24, 8, 8).averagedColor().almostIdentical(GREEN), is(true));
 
-        assertThat(almostIdentical(image.getSubImage(16, 16, 8, 8).averagedColor(), BLUE), is(true));
-        assertThat(almostIdentical(image.getSubImage(24, 16, 8, 8).averagedColor(), WHITE), is(true));
-        assertThat(almostIdentical(image.getSubImage(16, 24, 8, 8).averagedColor(), WHITE), is(true));
-        assertThat(almostIdentical(image.getSubImage(24, 24, 8, 8).averagedColor(), BLACK), is(true));
+        assertThat(image.getSubImage(16, 16, 8, 8).averagedColor().almostIdentical(BLUE), is(true));
+        assertThat(image.getSubImage(24, 16, 8, 8).averagedColor().almostIdentical(WHITE), is(true));
+        assertThat(image.getSubImage(16, 24, 8, 8).averagedColor().almostIdentical(WHITE), is(true));
+        assertThat(image.getSubImage(24, 24, 8, 8).averagedColor().almostIdentical(BLACK), is(true));
 
-        assertThat(almostIdentical(image.getSubImage(24, 24, 8, 8).averagedColor(), WHITE), is(false));
-
+        assertThat(image.getSubImage(24, 24, 8, 8).averagedColor().almostIdentical(WHITE), is(false));
     }
 
 }

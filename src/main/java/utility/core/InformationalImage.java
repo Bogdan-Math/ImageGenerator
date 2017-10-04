@@ -1,7 +1,6 @@
 package utility.core;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -40,7 +39,7 @@ public class InformationalImage extends BufferedImage {
         }
     }
 
-    public Color averagedColor() {
+    public InformationalColor averagedColor() {
 
         int width  = getWidth();
         int height = getHeight();
@@ -75,7 +74,7 @@ public class InformationalImage extends BufferedImage {
             avrB[0] = sumB[0] / pixels;
         });
 
-        return new Color(avrR[0], avrG[0], avrB[0]);
+        return new InformationalColor(avrR[0], avrG[0], avrB[0]);
     }
 
     public InformationalImage getSubImage(int x, int y, int width, int height) {
