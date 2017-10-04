@@ -20,6 +20,22 @@ public class InformationalImage extends BufferedImage {
         super(width, height, typeIntRgb);
     }
 
+    public boolean widthLessThan(int allowedMinWidth) {
+        return getWidth() < allowedMinWidth;
+    }
+
+    public boolean heightLessThan(int allowedMinHeight) {
+        return getHeight() < allowedMinHeight;
+    }
+
+    public boolean widthMoreThan(int allowedMaxWidth) {
+        return getWidth() > allowedMaxWidth;
+    }
+
+    public boolean heightMoreThan(int allowedMaxHeight) {
+        return getHeight() > allowedMaxHeight;
+    }
+
     public InputStream asStream() {
         return asStream("jpg");
     }

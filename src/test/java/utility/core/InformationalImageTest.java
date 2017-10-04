@@ -22,7 +22,19 @@ public class InformationalImageTest {
 
     @Before
     public void setUp() throws Exception {
-        this.image = new ObjectTypeConverter().informationalImage(new ResourceReader().readFile("images/testable/4x4.jpg"));
+        this.image = new ObjectTypeConverter().informationalImage(new ResourceReader().readFile("images/testable/4x4.jpg")); // 32 x 32 (px)
+    }
+
+    @Test
+    public void allowedWidth() throws Exception {
+        assertTrue(image.widthLessThan(33));
+        assertTrue(image.widthMoreThan(0));
+    }
+
+    @Test
+    public void allowedHeight() throws Exception {
+        assertTrue(image.heightLessThan(33));
+        assertTrue(image.heightMoreThan(0));
     }
 
     @Test

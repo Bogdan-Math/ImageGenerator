@@ -9,8 +9,8 @@ import layers.web.vaadin.component.visual.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
-import utility.system.ObjectTypeConverter;
 import utility.core.InformationalImage;
+import utility.system.ObjectTypeConverter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -45,12 +45,12 @@ public class UploadSucceededListenerComponent implements UploadSucceededListener
         byte[] uploadedBytes             = receiver.getUploadStream().toByteArray();
         InformationalImage uploadedImage = converter.informationalImage(uploadedBytes);
 
-        if ((uploadedImage.getWidth() < INCOME_IMAGE_ALLOWED_MIN_WIDTH) || (uploadedImage.getHeight() < INCOME_IMAGE_ALLOWED_MIN_HEIGHT)) {
+        if (uploadedImage.widthLessThan(INCOME_IMAGE_ALLOWED_MIN_WIDTH) || uploadedImage.heightLessThan(INCOME_IMAGE_ALLOWED_MIN_HEIGHT)) {
             notification.add("Image resolution can't be less than " + INCOME_IMAGE_ALLOWED_MIN_WIDTH + " x " + INCOME_IMAGE_ALLOWED_MIN_HEIGHT + " (px)");
             return;
         }
 
-        if ((uploadedImage.getWidth() > INCOME_IMAGE_ALLOWED_MAX_WIDTH) || (uploadedImage.getHeight() > INCOME_IMAGE_ALLOWED_MAX_HEIGHT)) {
+        if (uploadedImage.widthMoreThan(INCOME_IMAGE_ALLOWED_MAX_WIDTH) || uploadedImage.heightMoreThan(INCOME_IMAGE_ALLOWED_MAX_HEIGHT)) {
             notification.add("Image resolution can't be more than " + INCOME_IMAGE_ALLOWED_MAX_WIDTH + " x " + INCOME_IMAGE_ALLOWED_MAX_HEIGHT + " (px)");
             return;
         }

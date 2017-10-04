@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import utility.system.ObjectTypeConverter;
 import utility.core.InformationalImage;
 
 import java.time.LocalDateTime;
@@ -25,9 +24,6 @@ public class GenerateClickListenerComponent implements GenerateClickListener {
 
     @Autowired
     private ImageGenerator imageGenerator;
-
-    @Autowired
-    private ObjectTypeConverter converter;
 
     @Autowired
     private Settings settings;
