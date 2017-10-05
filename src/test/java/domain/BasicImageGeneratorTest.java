@@ -139,26 +139,26 @@ public class BasicImageGeneratorTest {
         assertThat(generatedImage.getWidth(),  is(800));// 800 = 32 * 25
         assertThat(generatedImage.getHeight(), is(800));// 800 = 32 * 25
 
-        assertThat(generatedImage.getSubImage(0, 0, 200, 200).averagedColor().almostIdentical(BLACK), is(true));
-        assertThat(generatedImage.getSubImage(200, 0, 200, 200).averagedColor().almostIdentical(WHITE), is(true));
-        assertThat(generatedImage.getSubImage(0, 200, 200, 200).averagedColor().almostIdentical(WHITE), is(true));
-        assertThat(generatedImage.getSubImage(200, 200, 200, 200).averagedColor().almostIdentical(BLUE), is(true));
+        assertThat(generatedImage.getSubImage(0, 0, 200, 200).averagedColor().almostEqualTo(BLACK), is(true));
+        assertThat(generatedImage.getSubImage(200, 0, 200, 200).averagedColor().almostEqualTo(WHITE), is(true));
+        assertThat(generatedImage.getSubImage(0, 200, 200, 200).averagedColor().almostEqualTo(WHITE), is(true));
+        assertThat(generatedImage.getSubImage(200, 200, 200, 200).averagedColor().almostEqualTo(BLUE), is(true));
 
-        assertThat(generatedImage.getSubImage(400, 0, 200, 200).averagedColor().almostIdentical(GREEN), is(true));
-        assertThat(generatedImage.getSubImage(600, 0, 200, 200).averagedColor().almostIdentical(WHITE), is(true));
-        assertThat(generatedImage.getSubImage(400, 200, 200, 200).averagedColor().almostIdentical(WHITE), is(true));
-        assertThat(generatedImage.getSubImage(600, 200, 200, 200).averagedColor().almostIdentical(RED), is(true));
+        assertThat(generatedImage.getSubImage(400, 0, 200, 200).averagedColor().almostEqualTo(GREEN), is(true));
+        assertThat(generatedImage.getSubImage(600, 0, 200, 200).averagedColor().almostEqualTo(WHITE), is(true));
+        assertThat(generatedImage.getSubImage(400, 200, 200, 200).averagedColor().almostEqualTo(WHITE), is(true));
+        assertThat(generatedImage.getSubImage(600, 200, 200, 200).averagedColor().almostEqualTo(RED), is(true));
 
-        assertThat(generatedImage.getSubImage(0, 400, 200, 200).averagedColor().almostIdentical(RED), is(true));
-        assertThat(generatedImage.getSubImage(200, 400, 200, 200).averagedColor().almostIdentical(WHITE), is(true));
-        assertThat(generatedImage.getSubImage(0, 600, 200, 200).averagedColor().almostIdentical(WHITE), is(true));
-        assertThat(generatedImage.getSubImage(200, 600, 200, 200).averagedColor().almostIdentical(GREEN), is(true));
+        assertThat(generatedImage.getSubImage(0, 400, 200, 200).averagedColor().almostEqualTo(RED), is(true));
+        assertThat(generatedImage.getSubImage(200, 400, 200, 200).averagedColor().almostEqualTo(WHITE), is(true));
+        assertThat(generatedImage.getSubImage(0, 600, 200, 200).averagedColor().almostEqualTo(WHITE), is(true));
+        assertThat(generatedImage.getSubImage(200, 600, 200, 200).averagedColor().almostEqualTo(GREEN), is(true));
 
-        assertThat(generatedImage.getSubImage(400, 400, 200, 200).averagedColor().almostIdentical(BLUE), is(true));
-        assertThat(generatedImage.getSubImage(600, 400, 200, 200).averagedColor().almostIdentical(WHITE), is(true));
-        assertThat(generatedImage.getSubImage(400, 600, 200, 200).averagedColor().almostIdentical(WHITE), is(true));
-        assertThat(generatedImage.getSubImage(600, 600, 200, 200).averagedColor().almostIdentical(BLACK), is(true));
+        assertThat(generatedImage.getSubImage(400, 400, 200, 200).averagedColor().almostEqualTo(BLUE), is(true));
+        assertThat(generatedImage.getSubImage(600, 400, 200, 200).averagedColor().almostEqualTo(WHITE), is(true));
+        assertThat(generatedImage.getSubImage(400, 600, 200, 200).averagedColor().almostEqualTo(WHITE), is(true));
+        assertThat(generatedImage.getSubImage(600, 600, 200, 200).averagedColor().almostEqualTo(BLACK), is(true));
 
-        assertThat(generatedImage.getSubImage(600, 600, 200, 200).averagedColor().almostIdentical(WHITE), is(false));
+        assertThat(generatedImage.getSubImage(600, 600, 200, 200).averagedColor().almostEqualTo(WHITE), is(false));
     }
 }

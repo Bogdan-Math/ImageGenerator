@@ -22,17 +22,17 @@ public class InformationalColorTest {
     }
 
     @Test
-    public void almostIdenticalTrue() throws Exception {
+    public void almostEqualIsTrue() throws Exception {
         random100AllowedColors()
-                .forEach(color -> assertTrue(blackColor.almostIdentical(color)));
-        assertTrue(blackColor.almostIdentical(new Color(84,84,84)));
+                .forEach(color -> assertTrue(blackColor.almostEqualTo(color)));
+        assertTrue(blackColor.almostEqualTo(new Color(84,84,84)));
     }
 
     @Test
-    public void almostIdenticalFalse() throws Exception {
+    public void almostEqualIsFalse() throws Exception {
         random100DenyColors()
-                .forEach(color -> assertFalse(blackColor.almostIdentical(color)));
-        assertFalse(blackColor.almostIdentical(new Color(85,85,85)));
+                .forEach(color -> assertFalse(blackColor.almostEqualTo(color)));
+        assertFalse(blackColor.almostEqualTo(new Color(85,85,85)));
     }
 
     private List<InformationalColor> random100AllowedColors() {
