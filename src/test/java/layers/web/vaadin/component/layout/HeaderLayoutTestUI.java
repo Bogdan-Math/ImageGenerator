@@ -1,0 +1,63 @@
+package layers.web.vaadin.component.layout;
+
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import utility.system.ResourceReader;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
+
+public class HeaderLayoutTestUI {
+
+    private static Map<String, String> driverLocations = new HashMap<String, String>() {{
+        put("windows", new ResourceReader().readFile("geckodriver.exe").getAbsolutePath());
+    }};
+
+    private static FirefoxDriver firefox;
+    private static WebDriverWait wait;
+
+    @BeforeClass
+    public static void beforeClass() {
+        driverLocations.keySet().stream()
+                .filter(osName -> System.getProperty("os.name").toLowerCase().contains(osName)).findFirst()
+                .ifPresent(osName -> System.setProperty("webdriver.gecko.driver", driverLocations.get(osName)));
+
+        firefox = new FirefoxDriver();
+        wait    = new WebDriverWait(firefox, 10);
+    }
+
+    @AfterClass
+    public static void afterClass() {
+        firefox.quit();
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        firefox.get("http://localhost:8080/ImageGenerator/");
+    }
+
+    @Test
+    public void codacyLink() throws Exception {
+        WebElement codacyLink = wait.until(elementToBeClickable(By.id("codacy-link-id")));
+        codacyLink.click();
+        assertThat(firefox.getTitle(), is("ImageGenerator - Codacy - Dashboard"));
+    }
+
+    @Test
+    public void githubLink() throws Exception {
+        WebElement githubLink = wait.until(elementToBeClickable(By.id("github-link-id")));
+        githubLink.click();
+        assertThat(firefox.getTitle(), containsString("GitHub - Bogdan-Math/ImageGenerator"));
+    }
+}
