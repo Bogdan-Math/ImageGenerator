@@ -26,6 +26,7 @@
         <maven.war.plugin.version>2.6</maven.war.plugin.version>
         <maven.clean.plugin.version>3.0.0</maven.clean.plugin.version>
         <vaadin.spring.version>2.0.0</vaadin.spring.version>
+        <selenium.firefox.driver.version>3.6.0</selenium.firefox.driver.version>
     </properties>
 
     <!--build properties-->
@@ -171,10 +172,18 @@
             <version>${vaadin.spring.version}</version>
         </dependency>
 
+        <!--Selenium framework (tests)-->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-firefox-driver</artifactId>
-            <version>3.6.0</version>
+            <version>${selenium.firefox.driver.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-support</artifactId>
+            <version>${selenium.firefox.driver.version}</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

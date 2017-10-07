@@ -21,6 +21,9 @@ public class HeaderLayout extends HorizontalLayout {
         Link codacyLink = CODACY.link();
         Link githubLink = GITHUB.link();
 
+        codacyLink.setId("codacy-link-id");
+        githubLink.setId("github-link-id");
+
         addComponents(codacyLink, githubLink);
 
         setComponentAlignment(codacyLink, Alignment.TOP_LEFT);
