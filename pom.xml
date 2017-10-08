@@ -27,6 +27,7 @@
         <maven.clean.plugin.version>3.0.0</maven.clean.plugin.version>
         <vaadin.spring.version>2.0.0</vaadin.spring.version>
         <selenium.firefox.driver.version>3.6.0</selenium.firefox.driver.version>
+        <lombok.version>1.16.16</lombok.version>
     </properties>
 
     <!--build properties-->
@@ -184,6 +185,13 @@
             <artifactId>selenium-support</artifactId>
             <version>${selenium.firefox.driver.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>
