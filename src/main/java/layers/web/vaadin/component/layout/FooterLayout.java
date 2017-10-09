@@ -4,6 +4,8 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Link;
+import lombok.Getter;
 import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
@@ -15,10 +17,25 @@ import static layers.web.vaadin.component.visual.Reference.JAVARUSH;
 @Scope("session")
 public class FooterLayout extends HorizontalLayout {
 
+    @Getter
+    private Link javarushLink;
+
+    @Getter
+    private Link flagsLink;
+
     @PostConstruct
     public void postConstruct() {
 
-        HorizontalLayout footerLinksLayout = footerLinksLayout(JAVARUSH.link(), FLAGS.link());
+        javarushLink = JAVARUSH.link();
+        flagsLink = FLAGS.link();
+
+        javarushLink.setId("javarush-link-id");
+        flagsLink.setId("flags-link-id");
+
+        javarushLink.setTargetName("_blank");
+        flagsLink.setTargetName("_blank");
+
+        HorizontalLayout footerLinksLayout = footerLinksLayout(javarushLink, flagsLink);
 
         addComponents(footerLinksLayout);
 

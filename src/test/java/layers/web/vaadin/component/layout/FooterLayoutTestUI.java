@@ -1,5 +1,6 @@
 package layers.web.vaadin.component.layout;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -15,10 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 
-public class HeaderLayoutTestUI {
+public class FooterLayoutTestUI {
 
     private static Map<String, String> driverLocations = new HashMap<String, String>() {{
         put("windows", new ResourceReader().readFile("geckodriver.exe").getAbsolutePath());
@@ -48,32 +48,33 @@ public class HeaderLayoutTestUI {
     }
 
     @Test
-    public void codacyLink() throws Exception {
-        WebElement codacyLink = wait.until(elementToBeClickable(By.id("codacy-link-id")));
+    public void javarushLink() throws Exception {
+        WebElement codacyLink = wait.until(elementToBeClickable(By.id("javarush-link-id")));
 
         codacyLink.click();
 
-        assertThat(firefox.getWindowHandles().stream()
+        MatcherAssert.assertThat(firefox.getWindowHandles().stream()
                 .filter(handle -> {
                     firefox.switchTo().window(handle);
                     wait.until(firefox -> ((JavascriptExecutor) firefox)
                         .executeScript("return document.readyState").equals("complete"));
-                    return firefox.getTitle().contains("ImageGenerator - Codacy - Dashboard");
+                    return firefox.getTitle().contains("JavaRush");
                 }).count(), is(1L));
     }
 
     @Test
-    public void githubLink() throws Exception {
-        WebElement codacyLink = wait.until(elementToBeClickable(By.id("github-link-id")));
+    public void flagsLink() throws Exception {
+        WebElement codacyLink = wait.until(elementToBeClickable(By.id("flags-link-id")));
 
         codacyLink.click();
 
-        assertThat(firefox.getWindowHandles().stream()
+        MatcherAssert.assertThat(firefox.getWindowHandles().stream()
                 .filter(handle -> {
                     firefox.switchTo().window(handle);
                     wait.until(firefox -> ((JavascriptExecutor) firefox)
                         .executeScript("return document.readyState").equals("complete"));
-                    return firefox.getTitle().contains("GitHub - Bogdan-Math/ImageGenerator");
+                    return firefox.getTitle().contains("IconDrawer");
                 }).count(), is(1L));
     }
+
 }

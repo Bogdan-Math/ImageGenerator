@@ -1,5 +1,6 @@
 package layers.web.vaadin.component.layout;
 
+import com.vaadin.ui.Link;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,17 @@ public class HeaderLayoutTest {
 
     @Test
     public void postConstruct() throws Exception {
+        Link codacyLink = headerLayout.getCodacyLink();
+        Link githubLink = headerLayout.getGithubLink();
+
         assertNotNull(headerLayout);
         assertThat(headerLayout.getComponentCount(), is(2));
-        assertThat(headerLayout.getCodacyLink().getId(), is("codacy-link-id"));
-        assertThat(headerLayout.getGithubLink().getId(), is("github-link-id"));
-        assertEquals(TOP_LEFT,  headerLayout.getComponentAlignment(headerLayout.getCodacyLink()));
-        assertEquals(TOP_RIGHT, headerLayout.getComponentAlignment(headerLayout.getGithubLink()));
+        assertThat(codacyLink.getId(), is("codacy-link-id"));
+        assertThat(githubLink.getId(), is("github-link-id"));
+        assertThat(codacyLink.getTargetName(), is("_blank"));
+        assertThat(githubLink.getTargetName(), is("_blank"));
+        assertEquals(TOP_LEFT,  headerLayout.getComponentAlignment(codacyLink));
+        assertEquals(TOP_RIGHT, headerLayout.getComponentAlignment(githubLink));
     }
 
 }
