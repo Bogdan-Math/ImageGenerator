@@ -42,12 +42,4 @@ public interface Settings {
     String getImageFileName();
 
     void setImageFileName(String imageFileName);
-
-    void addColumnsNumberListener(ColumnsNumberListener listener);
-
-    void notifyColumnsNumberListeners();
-
-    interface ColumnsNumberListener {
-        void changeValueTo(Integer expectedColumnsNumber);
-    }
 }
