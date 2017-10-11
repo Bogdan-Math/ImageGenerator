@@ -6,6 +6,8 @@ import utility.core.InformationalImage;
 
 import javax.annotation.PostConstruct;
 import java.awt.*;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -16,9 +18,11 @@ public class BasicSettings implements Settings {
     private Map<Color, InformationalImage> patterns;
     private Integer expectedColumnsNumber;
     private String imageFileName;
+    private List<ColumnsNumberListener> listeners;
 
     @PostConstruct
     public void postConstruct() {
+        listeners = new LinkedList<>();
         setExpectedColumnsNumber(MAX_NUMBER_OF_EXPECTED_COLUMNS / 2);
     }
 
@@ -75,5 +79,15 @@ public class BasicSettings implements Settings {
     @Override
     public void setImageFileName(String imageFileName) {
         this.imageFileName = imageFileName;
+    }
+
+    @Override
+    public void addColumnsNumberListener(ColumnsNumberListener listener) {
+        listeners.add(listener);
+    }
+
+    @Override
+    public void notifyColumnsNumberListeners() {
+        listeners.forEach(listener -> listener.changeValueTo(expectedColumnsNumber));
     }
 }
