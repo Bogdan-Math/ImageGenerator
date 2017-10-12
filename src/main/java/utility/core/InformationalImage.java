@@ -1,5 +1,7 @@
 package utility.core;
 
+import com.google.common.annotations.VisibleForTesting;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -40,6 +42,7 @@ public class InformationalImage extends BufferedImage {
         return asStream("jpg");
     }
 
+    @VisibleForTesting
     InputStream asStream(String format) {
         try {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();

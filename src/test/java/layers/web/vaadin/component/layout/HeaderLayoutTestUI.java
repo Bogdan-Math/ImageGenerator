@@ -1,9 +1,6 @@
 package layers.web.vaadin.component.layout;
 
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -18,6 +15,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 
+@Ignore
 public class HeaderLayoutTestUI {
 
     private static Map<String, String> driverLocations = new HashMap<String, String>() {{

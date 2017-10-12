@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.vaadin.ui.Notification.Type.HUMANIZED_MESSAGE;
 import static domain.Settings.MAX_NUMBER_OF_EXPECTED_COLUMNS;
 import static domain.Settings.MIN_NUMBER_OF_EXPECTED_COLUMNS;
@@ -32,7 +33,7 @@ public class ExpectedColumnsNumberField extends TextField implements ColumnsNumb
             String newValue = event.getValue();
 
             //Check EMPTY value
-            if (newValue == null || newValue.isEmpty()) {
+            if (isNullOrEmpty(newValue)) {
                 setValue(event.getOldValue());
                 notificationBuilder.add(EMPTY_COLUMNS_NUMBER_MESSAGE);
                 notificationBuilder.showAsHtml(HUMANIZED_MESSAGE);
