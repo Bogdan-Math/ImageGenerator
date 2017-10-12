@@ -76,4 +76,5 @@ public class BasicSettings implements Settings {
     public void setImageFileName(String imageFileName) {
         this.imageFileName = imageFileName;
     }
+
 }
