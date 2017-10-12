@@ -16,7 +16,6 @@ public class ObjectTypeConverter {
             return new InformationalImage(read(new ByteArrayInputStream(bytes)));
         }
         catch (Exception e) {
-            e.printStackTrace();
             throw new IllegalArgumentException(e);
         }
     }
@@ -26,7 +25,6 @@ public class ObjectTypeConverter {
             return new InformationalImage(read(fromFile));
         }
         catch (Exception e) {
-            e.printStackTrace();
             throw new IllegalArgumentException(e);
         }
     }

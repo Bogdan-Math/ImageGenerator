@@ -12,6 +12,8 @@ import java.awt.*;
 import static java.awt.Color.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.spy;
 
 public class InformationalImageTest {
 
@@ -44,9 +46,15 @@ public class InformationalImageTest {
 
     @Test
     public void inputStreamFromInformationalImageException() throws Exception {
+        String message              = "Message from UNCHECKED exception!";
+        InformationalImage spyImage = spy(image);
+        doThrow(new IllegalArgumentException(message)).when(spyImage).asUncheckedStream();
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("formatName == null!");
-        assertNotNull(image.asStream(null));
+        thrown.expectMessage(message);
+
+        spyImage.asStream();
+
+        fail();
     }
 
     @Test

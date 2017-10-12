@@ -6,10 +6,11 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
+import static java.nio.file.Files.readAllBytes;
+import static java.nio.file.Paths.get;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 public class ObjectTypeConverterTest {
 
@@ -21,19 +22,20 @@ public class ObjectTypeConverterTest {
 
     @Before
     public void setUp() throws Exception {
-        this.converter      = new ObjectTypeConverter();
-        this.originalImage  = new ResourceReader().readFile("images/testable/4x4.jpg");
+        this.converter     = new ObjectTypeConverter();
+        this.originalImage = new ResourceReader().readFile("images/testable/4x4.jpg");
     }
 
     @Test
     public void informationalImageFromBytes() throws Exception {
-        assertNotNull(converter.informationalImage(Files.readAllBytes(Paths.get(originalImage.getAbsolutePath()))));
+        assertNotNull(converter.informationalImage(readAllBytes(get(originalImage.getAbsolutePath()))));
     }
 
     @Test
     public void informationalImageFromBytesException() throws Exception {
         thrown.expect(IllegalArgumentException.class);
-        assertNotNull(converter.informationalImage((byte[]) null));
+        converter.informationalImage((byte[]) null);
+        fail();
     }
 
     @Test
@@ -44,6 +46,7 @@ public class ObjectTypeConverterTest {
     @Test
     public void informationalImageFromFileException() throws Exception {
         thrown.expect(IllegalArgumentException.class);
-        assertNotNull(converter.informationalImage((File) null));
+        converter.informationalImage((File) null);
+        fail();
     }
 }

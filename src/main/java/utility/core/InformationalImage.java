@@ -39,23 +39,22 @@ public class InformationalImage extends BufferedImage {
     }
 
     public InputStream asStream() {
-        return asStream("jpg");
+        try {
+            return asUncheckedStream();
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
     @VisibleForTesting
-    InputStream asStream(String format) {
-        try {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            ImageIO.write(this, format, stream);
-            stream.flush();
-            byte[] imageInBytes = stream.toByteArray();
-            stream.close();
-            return new ByteArrayInputStream(imageInBytes);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException(e);
-        }
+    InputStream asUncheckedStream() throws Exception {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        ImageIO.write(this, "jpg", stream);
+        stream.flush();
+        byte[] imageInBytes = stream.toByteArray();
+        stream.close();
+
+        return new ByteArrayInputStream(imageInBytes);
     }
 
     public InformationalColor averagedColor() {
