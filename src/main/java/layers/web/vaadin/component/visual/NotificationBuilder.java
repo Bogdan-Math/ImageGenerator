@@ -1,6 +1,6 @@
 package layers.web.vaadin.component.visual;
 
-public interface Notification {
+public interface NotificationBuilder {
 
     void add(String notification);
     void show();

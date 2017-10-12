@@ -1,16 +1,18 @@
 package layers.web.vaadin.component.visual;
 
+import com.vaadin.ui.Notification;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.joining;
 
 @Component
 @Scope("session")
-public class NotificationComponent implements Notification {
+public class NotificationBuilderComponent implements NotificationBuilder {
 
     private List<String> notifications;
 
@@ -26,10 +28,10 @@ public class NotificationComponent implements Notification {
 
     @Override
     public void show() {
-        com.vaadin.ui.Notification.show(notifications.stream()
+        Notification.show(notifications.stream()
                         .map(notification -> "- " + notification)
-                        .collect(Collectors.joining("\n")),
-                com.vaadin.ui.Notification.Type.TRAY_NOTIFICATION);
+                        .collect(joining("\n")),
+                Notification.Type.TRAY_NOTIFICATION);
         notifications.clear();
     }
 }

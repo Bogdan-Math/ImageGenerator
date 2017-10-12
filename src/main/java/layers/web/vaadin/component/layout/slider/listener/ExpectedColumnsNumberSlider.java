@@ -22,7 +22,7 @@ public class ExpectedColumnsNumberSlider extends Slider implements ColumnsNumber
     @PostConstruct
     public void postConstruct() {
         columnsNumberPublisher.addColumnsNumberListener(this);
-        
+
         setSizeFull();
         setMin(MIN_NUMBER_OF_EXPECTED_COLUMNS);
         setMax(MAX_NUMBER_OF_EXPECTED_COLUMNS);

@@ -3,7 +3,7 @@ package layers.web.vaadin.component.button.upload.listener;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Upload;
 import com.vaadin.ui.Upload.StartedEvent;
-import layers.web.vaadin.component.visual.Notification;
+import layers.web.vaadin.component.visual.NotificationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
@@ -14,17 +14,17 @@ public class UploadStartedListenerComponent implements UploadStartedListener {
     private Upload upload;
 
     @Autowired
-    private Notification notification;
+    private NotificationBuilder notificationBuilder;
 
     @Override
     public void uploadStarted(StartedEvent startedEvent) {
         this.upload = startedEvent.getUpload();
 
-        notification.add("Upload started.");
+        notificationBuilder.add("Upload started.");
         if (!"image/jpeg".equals(startedEvent.getMIMEType())) {
             upload.interruptUpload();
 
-            notification.add("Oh, no! Only '.jpg' and '.jpeg' files can be uploaded.");
+            notificationBuilder.add("Oh, no! Only '.jpg' and '.jpeg' files can be uploaded.");
         }
     }
 

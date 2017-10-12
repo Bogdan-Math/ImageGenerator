@@ -6,7 +6,7 @@ import com.vaadin.ui.Image;
 import domain.ImageGenerator;
 import domain.Settings;
 import layers.web.vaadin.component.button.download.listener.Downloader;
-import layers.web.vaadin.component.visual.Notification;
+import layers.web.vaadin.component.visual.NotificationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -33,7 +33,7 @@ public class GenerateClickListenerComponent implements GenerateClickListener {
     private Image generatedImageView;
 
     @Autowired
-    private Notification notification;
+    private NotificationBuilder notificationBuilder;
 
     @Autowired
     private Downloader downloader;
@@ -52,8 +52,8 @@ public class GenerateClickListenerComponent implements GenerateClickListener {
 
             downloader.setFileDownloadResource(generatedImageView.getSource());
 
-            notification.add("Your image was generated.");
-            notification.show();
+            notificationBuilder.add("Your image was generated.");
+            notificationBuilder.show();
         });
 
     }

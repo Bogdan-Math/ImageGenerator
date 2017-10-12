@@ -5,7 +5,7 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Upload.SucceededEvent;
 import domain.Settings;
-import layers.web.vaadin.component.visual.Notification;
+import layers.web.vaadin.component.visual.NotificationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -35,7 +35,7 @@ public class UploadSucceededListenerComponent implements UploadSucceededListener
     private Image originalImageView;
 
     @Autowired
-    private Notification notification;
+    private NotificationBuilder notificationBuilder;
 
     @Override
     public void uploadSucceeded(SucceededEvent succeededEvent) {
@@ -46,12 +46,12 @@ public class UploadSucceededListenerComponent implements UploadSucceededListener
         InformationalImage uploadedImage = converter.informationalImage(uploadedBytes);
 
         if (uploadedImage.widthLessThan(INCOME_IMAGE_ALLOWED_MIN_WIDTH) || uploadedImage.heightLessThan(INCOME_IMAGE_ALLOWED_MIN_HEIGHT)) {
-            notification.add("Image resolution can't be less than " + INCOME_IMAGE_ALLOWED_MIN_WIDTH + " x " + INCOME_IMAGE_ALLOWED_MIN_HEIGHT + " (px)");
+            notificationBuilder.add("Image resolution can't be less than " + INCOME_IMAGE_ALLOWED_MIN_WIDTH + " x " + INCOME_IMAGE_ALLOWED_MIN_HEIGHT + " (px)");
             return;
         }
 
         if (uploadedImage.widthMoreThan(INCOME_IMAGE_ALLOWED_MAX_WIDTH) || uploadedImage.heightMoreThan(INCOME_IMAGE_ALLOWED_MAX_HEIGHT)) {
-            notification.add("Image resolution can't be more than " + INCOME_IMAGE_ALLOWED_MAX_WIDTH + " x " + INCOME_IMAGE_ALLOWED_MAX_HEIGHT + " (px)");
+            notificationBuilder.add("Image resolution can't be more than " + INCOME_IMAGE_ALLOWED_MAX_WIDTH + " x " + INCOME_IMAGE_ALLOWED_MAX_HEIGHT + " (px)");
             return;
         }
 
@@ -62,6 +62,6 @@ public class UploadSucceededListenerComponent implements UploadSucceededListener
                 settings.getIncomeImage().asStream(),
                 String.join("_", "original", timeNow, settings.getImageFileName())));
 
-        notification.add("Upload succeeded.");
+        notificationBuilder.add("Upload succeeded.");
     }
 }
