@@ -24,10 +24,10 @@ public class SliderLayout extends HorizontalLayout {
     private ExpectedColumnsNumberLabel label;
 
     @Autowired
-    private ExpectedColumnsNumberField field;
+    private ExpectedColumnsNumberSlider slider;
 
     @Autowired
-    private ExpectedColumnsNumberSlider slider;
+    private ExpectedColumnsNumberField field;
 
     @Autowired
     private ColumnsNumberPublisher columnsNumberPublisher;
@@ -36,11 +36,15 @@ public class SliderLayout extends HorizontalLayout {
     public void postConstruct() {
         setSizeFull();
 
-        addComponents(label, field, slider);
+        addComponents(label, slider, field);
 
-        setComponentAlignment(label,  Alignment.MIDDLE_CENTER);
-        setComponentAlignment(field,  Alignment.MIDDLE_CENTER);
+        setExpandRatio(label,0.15f);
+        setExpandRatio(slider,0.50f);
+        setExpandRatio(field,0.15f);
+
+        setComponentAlignment(label,  Alignment.MIDDLE_RIGHT);
         setComponentAlignment(slider, Alignment.MIDDLE_CENTER);
+        setComponentAlignment(field,  Alignment.MIDDLE_LEFT);
 
         columnsNumberPublisher.publishNewValue(settings.getExpectedColumnsNumber());
     }

@@ -1,7 +1,9 @@
 package layers.web.vaadin.component.visual;
 
-public interface NotificationBuilder {
+import com.vaadin.ui.Notification.Type;
 
+public interface NotificationBuilder {
     void add(String notification);
-    void show();
+    void showAsString(Type type);
+    void showAsHtml(Type type);
 }

@@ -16,6 +16,7 @@ import utility.core.InformationalImage;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static com.vaadin.ui.Notification.Type.TRAY_NOTIFICATION;
 import static java.util.Optional.ofNullable;
 
 @Component
@@ -53,7 +54,7 @@ public class GenerateClickListenerComponent implements GenerateClickListener {
             downloader.setFileDownloadResource(generatedImageView.getSource());
 
             notificationBuilder.add("Your image was generated.");
-            notificationBuilder.show();
+            notificationBuilder.showAsString(TRAY_NOTIFICATION);
         });
 
     }

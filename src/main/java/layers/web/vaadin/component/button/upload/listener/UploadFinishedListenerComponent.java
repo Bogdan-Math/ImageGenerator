@@ -6,6 +6,8 @@ import layers.web.vaadin.component.visual.NotificationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
+import static com.vaadin.ui.Notification.Type.TRAY_NOTIFICATION;
+
 @SpringComponent
 @Scope("session")
 public class UploadFinishedListenerComponent implements UploadFinishedListener {
@@ -15,6 +17,6 @@ public class UploadFinishedListenerComponent implements UploadFinishedListener {
 
     @Override
     public void uploadFinished(FinishedEvent finishedEvent) {
-        notificationBuilder.show();
+        notificationBuilder.showAsString(TRAY_NOTIFICATION);
     }
 }

@@ -1,14 +1,15 @@
 package layers.web.vaadin.component.layout.slider.listener;
 
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.Slider;
 import layers.web.vaadin.component.layout.slider.publisher.ColumnsNumberPublisher;
+import layers.web.vaadin.component.visual.NotificationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+import static com.vaadin.ui.Notification.Type.HUMANIZED_MESSAGE;
 import static domain.Settings.MAX_NUMBER_OF_EXPECTED_COLUMNS;
 import static domain.Settings.MIN_NUMBER_OF_EXPECTED_COLUMNS;
 
@@ -18,6 +19,9 @@ public class ExpectedColumnsNumberSlider extends Slider implements ColumnsNumber
 
     @Autowired
     private ColumnsNumberPublisher columnsNumberPublisher;
+
+    @Autowired
+    private NotificationBuilder notificationBuilder;
 
     @PostConstruct
     public void postConstruct() {
@@ -32,7 +36,8 @@ public class ExpectedColumnsNumberSlider extends Slider implements ColumnsNumber
             Integer expectedColumnsNumber = event.getValue().intValue();
             if (expectedColumnsNumber < HINT_NUMBER_OF_EXPECTED_COLUMNS) {
                 setValue(HINT_NUMBER_OF_EXPECTED_COLUMNS.doubleValue());
-                Notification.show(HINT_COLUMNS_NUMBER_MESSAGE);
+                notificationBuilder.add(HINT_COLUMNS_NUMBER_MESSAGE);
+                notificationBuilder.showAsHtml(HUMANIZED_MESSAGE);
                 return;
             }
 
