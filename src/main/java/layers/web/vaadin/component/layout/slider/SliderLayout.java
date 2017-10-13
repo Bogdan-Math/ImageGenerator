@@ -38,10 +38,6 @@ public class SliderLayout extends HorizontalLayout {
 
         addComponents(label, slider, field);
 
-        setExpandRatio(label,0.15f);
-        setExpandRatio(slider,0.50f);
-        setExpandRatio(field,0.15f);
-
         setComponentAlignment(label,  Alignment.MIDDLE_RIGHT);
         setComponentAlignment(slider, Alignment.MIDDLE_CENTER);
         setComponentAlignment(field,  Alignment.MIDDLE_LEFT);

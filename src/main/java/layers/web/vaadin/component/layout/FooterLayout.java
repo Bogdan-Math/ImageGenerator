@@ -32,9 +32,6 @@ public class FooterLayout extends HorizontalLayout {
         javarushLink.setId("javarush-link-id");
         flagsLink.setId("flags-link-id");
 
-        javarushLink.setTargetName("_blank");
-        flagsLink.setTargetName("_blank");
-
         HorizontalLayout footerLinksLayout = footerLinksLayout(javarushLink, flagsLink);
 
         addComponents(footerLinksLayout);

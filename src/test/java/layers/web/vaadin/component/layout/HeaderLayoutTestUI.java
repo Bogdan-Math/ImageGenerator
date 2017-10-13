@@ -15,7 +15,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 
-@Ignore
+//@Ignore
 public class HeaderLayoutTestUI {
 
     private static Map<String, String> driverLocations = new HashMap<String, String>() {{
@@ -62,9 +62,9 @@ public class HeaderLayoutTestUI {
 
     @Test
     public void githubLink() throws Exception {
-        WebElement codacyLink = wait.until(elementToBeClickable(By.id("github-link-id")));
+        WebElement githubLink = wait.until(elementToBeClickable(By.id("github-link-id")));
 
-        codacyLink.click();
+        githubLink.click();
 
         assertThat(firefox.getWindowHandles().stream()
                 .filter(handle -> {

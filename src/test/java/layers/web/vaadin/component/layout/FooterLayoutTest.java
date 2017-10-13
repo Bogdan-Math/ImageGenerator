@@ -27,8 +27,6 @@ public class FooterLayoutTest {
         assertNotNull(footerLayout);
         assertThat(javarushLink.getId(), is("javarush-link-id"));
         assertThat(flagsLink.getId(), is("flags-link-id"));
-        assertThat(javarushLink.getTargetName(), is("_blank"));
-        assertThat(flagsLink.getTargetName(), is("_blank"));
     }
 
 }

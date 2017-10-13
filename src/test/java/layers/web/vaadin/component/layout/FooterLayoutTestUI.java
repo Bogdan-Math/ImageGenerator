@@ -13,9 +13,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 
-@Ignore
+//@Ignore
 public class FooterLayoutTestUI {
 
     private static Map<String, String> driverLocations = new HashMap<String, String>() {{
@@ -51,7 +52,7 @@ public class FooterLayoutTestUI {
 
         codacyLink.click();
 
-        MatcherAssert.assertThat(firefox.getWindowHandles().stream()
+        assertThat(firefox.getWindowHandles().stream()
                 .filter(handle -> {
                     firefox.switchTo().window(handle);
                     wait.until(firefox -> ((JavascriptExecutor) firefox)
@@ -66,7 +67,7 @@ public class FooterLayoutTestUI {
 
         codacyLink.click();
 
-        MatcherAssert.assertThat(firefox.getWindowHandles().stream()
+        assertThat(firefox.getWindowHandles().stream()
                 .filter(handle -> {
                     firefox.switchTo().window(handle);
                     wait.until(firefox -> ((JavascriptExecutor) firefox)

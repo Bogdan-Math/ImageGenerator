@@ -32,8 +32,6 @@ public class HeaderLayoutTest {
         assertThat(headerLayout.getComponentCount(), is(2));
         assertThat(codacyLink.getId(), is("codacy-link-id"));
         assertThat(githubLink.getId(), is("github-link-id"));
-        assertThat(codacyLink.getTargetName(), is("_blank"));
-        assertThat(githubLink.getTargetName(), is("_blank"));
         assertEquals(TOP_LEFT,  headerLayout.getComponentAlignment(codacyLink));
         assertEquals(TOP_RIGHT, headerLayout.getComponentAlignment(githubLink));
     }
