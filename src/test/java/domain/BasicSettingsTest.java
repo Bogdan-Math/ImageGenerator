@@ -10,7 +10,7 @@ import utility.core.InformationalImage;
 
 import javax.annotation.Resource;
 
-import static domain.Settings.MAX_NUMBER_OF_EXPECTED_COLUMNS;
+import static domain.Settings.MAX_EXPECTED_COLUMNS_COUNT;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
@@ -48,8 +48,8 @@ public class BasicSettingsTest {
     }
 
     @Test
-    public void getExpectedColumnsNumber() throws Exception {
-        assertThat(settings.getExpectedColumnsNumber(), is(MAX_NUMBER_OF_EXPECTED_COLUMNS / 2));
+    public void getExpectedColumnsCount() throws Exception {
+        assertThat(settings.getExpectedColumnsCount(), is(MAX_EXPECTED_COLUMNS_COUNT / 2));
     }
 
     @Test

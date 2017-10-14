@@ -31,7 +31,7 @@ public class BasicImageGenerator implements ImageGenerator {
 
     //TODO: add descriptive comments to this method
     private List<List<InformationalImage>> asMatrix() {
-        int expectedColumns = settings.getExpectedColumnsNumber();
+        int expectedColumns = settings.getExpectedColumnsCount();
         int expectedRows    = 0;
 
         int width  = settings.getImageWidth();
@@ -39,7 +39,7 @@ public class BasicImageGenerator implements ImageGenerator {
 
         if (expectedColumns > width) {
             throw new MatrixSizeException(String
-                    .format("Number of expected columns (is %s) could not be more than image width (is %s).", expectedColumns, width));
+                    .format("Count of expected columns (is %s) could not be more than image width (is %s).", expectedColumns, width));
         }
 
         int realColumnsNumber = expectedColumns;

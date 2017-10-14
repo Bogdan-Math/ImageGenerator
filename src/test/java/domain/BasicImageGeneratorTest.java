@@ -57,7 +57,7 @@ public class BasicImageGeneratorTest {
         ));
 
         when(settings.getPatterns()).thenReturn(patterns);
-        when(settings.getExpectedColumnsNumber()).thenReturn(31); //31 -  because we want to move into incrementing loop for image width
+        when(settings.getExpectedColumnsCount()).thenReturn(31); //31 -  because we want to move into incrementing loop for image width
         when(settings.getSubImage(anyInt(), anyInt(), anyInt(), anyInt())).thenCallRealMethod();
     }
 

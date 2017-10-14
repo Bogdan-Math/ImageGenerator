@@ -3,10 +3,10 @@ package layers.web.vaadin.component.layout.slider;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import domain.Settings;
-import layers.web.vaadin.component.layout.slider.listener.ExpectedColumnsNumberField;
-import layers.web.vaadin.component.layout.slider.listener.ExpectedColumnsNumberLabel;
-import layers.web.vaadin.component.layout.slider.listener.ExpectedColumnsNumberSlider;
-import layers.web.vaadin.component.layout.slider.publisher.ColumnsNumberPublisher;
+import layers.web.vaadin.component.layout.slider.listener.ExpectedColumnsCountField;
+import layers.web.vaadin.component.layout.slider.listener.ExpectedColumnsCountLabel;
+import layers.web.vaadin.component.layout.slider.listener.ExpectedColumnsCountSlider;
+import layers.web.vaadin.component.layout.slider.publisher.ColumnsCountPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -21,16 +21,16 @@ public class SliderLayout extends HorizontalLayout {
     private Settings settings;
 
     @Autowired
-    private ExpectedColumnsNumberLabel label;
+    private ExpectedColumnsCountLabel label;
 
     @Autowired
-    private ExpectedColumnsNumberSlider slider;
+    private ExpectedColumnsCountSlider slider;
 
     @Autowired
-    private ExpectedColumnsNumberField field;
+    private ExpectedColumnsCountField field;
 
     @Autowired
-    private ColumnsNumberPublisher columnsNumberPublisher;
+    private ColumnsCountPublisher columnsCountPublisher;
 
     @PostConstruct
     public void postConstruct() {
@@ -42,6 +42,6 @@ public class SliderLayout extends HorizontalLayout {
         setComponentAlignment(slider, Alignment.MIDDLE_CENTER);
         setComponentAlignment(field,  Alignment.MIDDLE_LEFT);
 
-        columnsNumberPublisher.publishNewValue(settings.getExpectedColumnsNumber());
+        columnsCountPublisher.publishNewValue(settings.getExpectedColumnsCount());
     }
 }

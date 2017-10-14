@@ -14,12 +14,12 @@ public class BasicSettings implements Settings {
 
     private InformationalImage incomeImage;
     private Map<Color, InformationalImage> patterns;
-    private Integer expectedColumnsNumber;
+    private Integer expectedColumnsCount;
     private String imageFileName;
 
     @PostConstruct
     public void postConstruct() {
-        setExpectedColumnsNumber(MAX_NUMBER_OF_EXPECTED_COLUMNS / 2);
+        setExpectedColumnsCount(MAX_EXPECTED_COLUMNS_COUNT / 2);
     }
 
     @Override
@@ -43,13 +43,13 @@ public class BasicSettings implements Settings {
     }
 
     @Override
-    public Integer getExpectedColumnsNumber() {
-        return expectedColumnsNumber;
+    public Integer getExpectedColumnsCount() {
+        return expectedColumnsCount;
     }
 
     @Override
-    public void setExpectedColumnsNumber(Integer expectedColumnsNumber) {
-        this.expectedColumnsNumber = expectedColumnsNumber;
+    public void setExpectedColumnsCount(Integer expectedColumnsCount) {
+        this.expectedColumnsCount = expectedColumnsCount;
     }
 
     @Override

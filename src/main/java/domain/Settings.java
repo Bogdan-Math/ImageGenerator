@@ -6,8 +6,8 @@ import java.awt.*;
 import java.util.Map;
 
 public interface Settings {
-    Integer MIN_NUMBER_OF_EXPECTED_COLUMNS = 0;
-    Integer MAX_NUMBER_OF_EXPECTED_COLUMNS = 128;
+    Integer MIN_EXPECTED_COLUMNS_COUNT = 0;
+    Integer MAX_EXPECTED_COLUMNS_COUNT = 128;
 
     Integer INCOME_IMAGE_ALLOWED_MIN_WIDTH  = 80;
     Integer INCOME_IMAGE_ALLOWED_MIN_HEIGHT = 64;
@@ -29,9 +29,9 @@ public interface Settings {
 
     void setPatterns(Map<Color, InformationalImage> patterns);
 
-    Integer getExpectedColumnsNumber();
+    Integer getExpectedColumnsCount();
 
-    void setExpectedColumnsNumber(Integer expectedColumnsNumber);
+    void setExpectedColumnsCount(Integer expectedColumnsCount);
 
     int getImageWidth();
 

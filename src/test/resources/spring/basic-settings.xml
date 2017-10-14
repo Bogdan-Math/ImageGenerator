@@ -7,7 +7,7 @@
     <bean id="basicSettings" class="domain.BasicSettings">
         <property name="incomeImage" ref="image"/>
         <property name="patterns" ref="patterns"/>
-        <property name="expectedColumnsNumber" value="10"/>
+        <property name="expectedColumnsCount" value="10"/>
         <property name="imageFileName" value="image-file-name.jpg"/>
     </bean>
 

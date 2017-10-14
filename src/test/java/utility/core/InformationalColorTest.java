@@ -45,7 +45,7 @@ public class InformationalColorTest {
 
     private List<InformationalColor> randomColors(Integer minComponentValue, Integer maxComponentValue) {
         Random random = new Random();
-        return range(0, 100).mapToObj(number -> {
+        return range(0, 100).mapToObj(count -> {
             int[] ints = random.ints(minComponentValue, maxComponentValue).limit(3).toArray();
             return new InformationalColor(ints[0], ints[1], ints[2]);
         }).collect(toList());

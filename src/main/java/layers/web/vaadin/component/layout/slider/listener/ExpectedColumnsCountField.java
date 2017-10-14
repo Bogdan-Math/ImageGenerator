@@ -1,7 +1,7 @@
 package layers.web.vaadin.component.layout.slider.listener;
 
 import com.vaadin.ui.TextField;
-import layers.web.vaadin.component.layout.slider.publisher.ColumnsNumberPublisher;
+import layers.web.vaadin.component.layout.slider.publisher.ColumnsCountPublisher;
 import layers.web.vaadin.component.visual.NotificationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -11,23 +11,23 @@ import javax.annotation.PostConstruct;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.vaadin.ui.Notification.Type.HUMANIZED_MESSAGE;
-import static domain.Settings.MAX_NUMBER_OF_EXPECTED_COLUMNS;
-import static domain.Settings.MIN_NUMBER_OF_EXPECTED_COLUMNS;
+import static domain.Settings.MAX_EXPECTED_COLUMNS_COUNT;
+import static domain.Settings.MIN_EXPECTED_COLUMNS_COUNT;
 import static java.lang.Integer.valueOf;
 
 @Component
 @Scope("session")
-public class ExpectedColumnsNumberField extends TextField implements ColumnsNumberListener {
+public class ExpectedColumnsCountField extends TextField implements ColumnsCountListener {
 
     @Autowired
-    private ColumnsNumberPublisher columnsNumberPublisher;
+    private ColumnsCountPublisher columnsCountPublisher;
 
     @Autowired
     private NotificationBuilder notificationBuilder;
 
     @PostConstruct
     public void postConstruct() {
-        columnsNumberPublisher.addColumnsNumberListener(this);
+        columnsCountPublisher.addColumnsCountListener(this);
 
         addValueChangeListener(event -> {
             String newValue = event.getValue();
@@ -35,39 +35,39 @@ public class ExpectedColumnsNumberField extends TextField implements ColumnsNumb
             //Check EMPTY value
             if (isNullOrEmpty(newValue)) {
                 setValue(event.getOldValue());
-                notificationBuilder.add(EMPTY_COLUMNS_NUMBER_MESSAGE);
+                notificationBuilder.add(EMPTY_COLUMNS_COUNT_MESSAGE);
                 notificationBuilder.showAsHtml(HUMANIZED_MESSAGE);
                 return;
             }
 
             //Check BOUNDS and NUMERIC value
             try {
-                Integer newExpectedColumnsNumber = valueOf(newValue);
-                if (newExpectedColumnsNumber < MIN_NUMBER_OF_EXPECTED_COLUMNS ||
-                        newExpectedColumnsNumber > MAX_NUMBER_OF_EXPECTED_COLUMNS) {
+                Integer newExpectedColumnsCount = valueOf(newValue);
+                if (newExpectedColumnsCount < MIN_EXPECTED_COLUMNS_COUNT ||
+                        newExpectedColumnsCount > MAX_EXPECTED_COLUMNS_COUNT) {
                     setValue(event.getOldValue());
-                    notificationBuilder.add(BOUNDS_COLUMNS_NUMBER_MESSAGE);
+                    notificationBuilder.add(BOUNDS_COLUMNS_COUNT_MESSAGE);
                     notificationBuilder.showAsHtml(HUMANIZED_MESSAGE);
                     return;
                 }
             } catch (NumberFormatException e) {
                 setValue(event.getOldValue());
-                notificationBuilder.add(NUMERIC_COLUMNS_NUMBER_MESSAGE);
+                notificationBuilder.add(NUMERIC_COLUMNS_COUNT_MESSAGE);
                 notificationBuilder.showAsHtml(HUMANIZED_MESSAGE);
                 return;
             }
 
             //Check HINT value
-            Integer expectedColumnsNumber = valueOf(event.getValue());
-            if (expectedColumnsNumber < HINT_NUMBER_OF_EXPECTED_COLUMNS) {
-                setValue(HINT_NUMBER_OF_EXPECTED_COLUMNS.toString());
-                notificationBuilder.add(HINT_COLUMNS_NUMBER_MESSAGE);
+            Integer expectedColumnsCount = valueOf(event.getValue());
+            if (expectedColumnsCount < HINT_EXPECTED_COLUMNS_COUNT) {
+                setValue(HINT_EXPECTED_COLUMNS_COUNT.toString());
+                notificationBuilder.add(HINT_COLUMNS_COUNT_MESSAGE);
                 notificationBuilder.showAsHtml(HUMANIZED_MESSAGE);
                 return;
             }
 
             // publish newValue
-            columnsNumberPublisher.publishNewValue(expectedColumnsNumber);
+            columnsCountPublisher.publishNewValue(expectedColumnsCount);
         });
     }
 

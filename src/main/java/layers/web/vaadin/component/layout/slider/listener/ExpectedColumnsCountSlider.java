@@ -1,7 +1,7 @@
 package layers.web.vaadin.component.layout.slider.listener;
 
 import com.vaadin.ui.Slider;
-import layers.web.vaadin.component.layout.slider.publisher.ColumnsNumberPublisher;
+import layers.web.vaadin.component.layout.slider.publisher.ColumnsCountPublisher;
 import layers.web.vaadin.component.visual.NotificationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -10,39 +10,39 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 import static com.vaadin.ui.Notification.Type.HUMANIZED_MESSAGE;
-import static domain.Settings.MAX_NUMBER_OF_EXPECTED_COLUMNS;
-import static domain.Settings.MIN_NUMBER_OF_EXPECTED_COLUMNS;
+import static domain.Settings.MAX_EXPECTED_COLUMNS_COUNT;
+import static domain.Settings.MIN_EXPECTED_COLUMNS_COUNT;
 
 @Component
 @Scope("session")
-public class ExpectedColumnsNumberSlider extends Slider implements ColumnsNumberListener {
+public class ExpectedColumnsCountSlider extends Slider implements ColumnsCountListener {
 
     @Autowired
-    private ColumnsNumberPublisher columnsNumberPublisher;
+    private ColumnsCountPublisher columnsCountPublisher;
 
     @Autowired
     private NotificationBuilder notificationBuilder;
 
     @PostConstruct
     public void postConstruct() {
-        columnsNumberPublisher.addColumnsNumberListener(this);
+        columnsCountPublisher.addColumnsCountListener(this);
 
         setSizeFull();
-        setMin(MIN_NUMBER_OF_EXPECTED_COLUMNS);
-        setMax(MAX_NUMBER_OF_EXPECTED_COLUMNS);
+        setMin(MIN_EXPECTED_COLUMNS_COUNT);
+        setMax(MAX_EXPECTED_COLUMNS_COUNT);
         addValueChangeListener(event -> {
 
             //Check HINT value
             Integer expectedColumnsNumber = event.getValue().intValue();
-            if (expectedColumnsNumber < HINT_NUMBER_OF_EXPECTED_COLUMNS) {
-                setValue(HINT_NUMBER_OF_EXPECTED_COLUMNS.doubleValue());
-                notificationBuilder.add(HINT_COLUMNS_NUMBER_MESSAGE);
+            if (expectedColumnsNumber < HINT_EXPECTED_COLUMNS_COUNT) {
+                setValue(HINT_EXPECTED_COLUMNS_COUNT.doubleValue());
+                notificationBuilder.add(HINT_COLUMNS_COUNT_MESSAGE);
                 notificationBuilder.showAsHtml(HUMANIZED_MESSAGE);
                 return;
             }
 
             // publish newValue
-            columnsNumberPublisher.publishNewValue(expectedColumnsNumber);
+            columnsCountPublisher.publishNewValue(expectedColumnsNumber);
         });
     }
 

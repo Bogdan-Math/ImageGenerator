@@ -1,6 +1,6 @@
 package layers.web.vaadin.component.layout.slider.publisher;
 
-import layers.web.vaadin.component.layout.slider.listener.ColumnsNumberListener;
+import layers.web.vaadin.component.layout.slider.listener.ColumnsCountListener;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -10,9 +10,9 @@ import java.util.List;
 
 @Component
 @Scope("session")
-public class ExpectedColumnsNumberPublisher implements ColumnsNumberPublisher {
+public class ExpectedColumnsCountPublisher implements ColumnsCountPublisher {
 
-    private List<ColumnsNumberListener> listeners;
+    private List<ColumnsCountListener> listeners;
 
     @PostConstruct
     public void postConstruct() {
@@ -25,7 +25,7 @@ public class ExpectedColumnsNumberPublisher implements ColumnsNumberPublisher {
     }
 
     @Override
-    public void addColumnsNumberListener(ColumnsNumberListener listener) {
+    public void addColumnsCountListener(ColumnsCountListener listener) {
         listeners.add(listener);
     }
 }
