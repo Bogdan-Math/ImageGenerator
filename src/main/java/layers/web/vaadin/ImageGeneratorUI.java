@@ -6,8 +6,12 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import layers.web.vaadin.component.layout.*;
-import layers.web.vaadin.component.layout.slider.SliderLayout;
+import layers.web.vaadin.layout.buttons.ButtonsLayout;
+import layers.web.vaadin.layout.footer.FooterLayout;
+import layers.web.vaadin.layout.header.HeaderLayout;
+import layers.web.vaadin.layout.images.ImagesLayout;
+import layers.web.vaadin.layout.patterns.PatternsGroupLayout;
+import layers.web.vaadin.layout.slider.SliderLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 

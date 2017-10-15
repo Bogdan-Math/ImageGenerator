@@ -16,7 +16,7 @@
 // Affects the color of content areas, e.g  Panel and Window content, TextField input etc
 //$v-app-background-color: $v-background-color;
 
-// Affects the visual appearance of all component
+// Affects the additional appearance of all component
 //$v-gradient: v-linear 8%;
 //$v-bevel-depth: 30%;
 //$v-shadow-opacity: 5%;
@@ -44,7 +44,7 @@
     min-height: 250px;
   }
 
-  //TODO: change patterns group location (if it stay in the middle, fix approach to do it)
+  //TODO: change patterns patterns location (if it stay in the middle, fix approach to do it)
   .v-select-optiongroup {
     padding-left: 37px;
   }
