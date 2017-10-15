@@ -4,9 +4,9 @@ import layers.repository.PatternsRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import utility.core.InformationalImage;
 import utility.core.PatternType;
 
@@ -22,13 +22,16 @@ import static org.mockito.Mockito.when;
 import static utility.core.InformationalImage.TYPE_INT_RGB;
 import static utility.core.PatternType.*;
 
-@RunWith(MockitoJUnitRunner.class)
-public class CachedPatternsServiceImplTest {
+@ContextConfiguration(locations = {
+        "classpath:spring/cached-patterns-service.xml"
+})
+@RunWith(SpringJUnit4ClassRunner.class)
+public class CachedPatternsServiceTest {
 
-    @InjectMocks
-    private CachedPatternsServiceImpl patternsService;
+    @Autowired
+    private CachedPatternsService patternsService;
 
-    @Mock
+    @Autowired
     private PatternsRepository repository;
 
     @Before

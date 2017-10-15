@@ -1,7 +1,6 @@
 package layers.web.vaadin.layout.header;
 
 import com.vaadin.ui.Link;
-import layers.web.vaadin.layout.header.HeaderLayout;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

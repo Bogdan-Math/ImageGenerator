@@ -30,7 +30,7 @@ import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER
 })
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
 @RunWith(SpringJUnit4ClassRunner.class)
-public class BasicImageGeneratorTest {
+public class ImageGeneratorTest {
 
     @Autowired
     private ImageGenerator imageGenerator;

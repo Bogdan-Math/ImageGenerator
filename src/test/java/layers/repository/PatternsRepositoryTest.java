@@ -13,7 +13,7 @@ import static org.junit.Assert.assertThat;
         "classpath:spring/patterns-repository.xml"
 })
 @RunWith(SpringJUnit4ClassRunner.class)
-public class PatternsRepositoryImplTest {
+public class PatternsRepositoryTest {
 
     @Autowired
     private PatternsRepository repository;

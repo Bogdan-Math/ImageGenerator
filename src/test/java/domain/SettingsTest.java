@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
         "classpath:spring/basic-settings.xml"
 })
 @RunWith(SpringJUnit4ClassRunner.class)
-public class BasicSettingsTest {
+public class SettingsTest {
 
     @Autowired
     private Settings settings;
