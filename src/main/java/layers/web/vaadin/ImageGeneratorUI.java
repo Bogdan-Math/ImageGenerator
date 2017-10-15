@@ -4,12 +4,10 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import layers.web.vaadin.component.layout.*;
 import layers.web.vaadin.component.layout.slider.SliderLayout;
-import layers.web.vaadin.component.visual.RadioButtonPatternsGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
@@ -24,10 +22,10 @@ public class ImageGeneratorUI extends UI {
     private HeaderLayout headerLayout;
 
     @Autowired
-    private RadioButtonPatternsGroup patternsGroup;
+    private SliderLayout sliderLayout;
 
     @Autowired
-    private SliderLayout sliderLayout;
+    private PatternsGroupLayout patternsGroupLayout;
 
     @Autowired
     private ButtonsLayout buttonsLayout;
@@ -43,9 +41,12 @@ public class ImageGeneratorUI extends UI {
 
         VerticalLayout verticalLayout = new VerticalLayout();
 
-        verticalLayout.addComponents(headerLayout, sliderLayout, patternsGroup, buttonsLayout, imagesLayout, footerLayout);
-
-        verticalLayout.setComponentAlignment(patternsGroup, Alignment.TOP_CENTER);
+        verticalLayout.addComponents(headerLayout,
+                                     sliderLayout,
+                                     patternsGroupLayout,
+                                     buttonsLayout,
+                                     imagesLayout,
+                                     footerLayout);
 
         setContent(verticalLayout);
     }
