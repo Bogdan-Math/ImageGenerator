@@ -6,6 +6,8 @@ import org.junit.Test;
 import java.io.File;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.*;
 
 public class ResourceReaderTest {
@@ -29,10 +31,10 @@ public class ResourceReaderTest {
         String path = "images/colors";
         int patternsCount = 24;
 
-        List<File> files = resourceReader.readFiles(path);
+        List<File> fileList = resourceReader.readFiles(path);
 
-        assertNotNull(files);
-        assertEquals(patternsCount, files.size());
+        assertThat(fileList, notNullValue());
+        assertThat(fileList.size(), equalTo(patternsCount));
     }
 
 }

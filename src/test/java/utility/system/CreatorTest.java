@@ -2,7 +2,8 @@ package utility.system;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CreatorTest {
 
@@ -18,7 +19,7 @@ public class CreatorTest {
         Creator creator = new Creator(creatorName);
 
         //"A" - Assert
-        assertEquals(expectedDescription, creator.getDescription());
+        assertThat(creator.getDescription(), equalTo(expectedDescription));
     }
 
 }

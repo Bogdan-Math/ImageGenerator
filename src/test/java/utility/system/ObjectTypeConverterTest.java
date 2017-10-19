@@ -9,7 +9,8 @@ import java.io.File;
 
 import static java.nio.file.Files.readAllBytes;
 import static java.nio.file.Paths.get;
-import static org.junit.Assert.assertNotNull;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 public class ObjectTypeConverterTest {
@@ -28,7 +29,7 @@ public class ObjectTypeConverterTest {
 
     @Test
     public void informationalImageFromBytes() throws Exception {
-        assertNotNull(converter.informationalImage(readAllBytes(get(originalImage.getAbsolutePath()))));
+        assertThat(converter.informationalImage(readAllBytes(get(originalImage.getAbsolutePath()))), notNullValue());
     }
 
     @Test
@@ -40,7 +41,7 @@ public class ObjectTypeConverterTest {
 
     @Test
     public void informationalImageFromFile() throws Exception {
-        assertNotNull(converter.informationalImage(originalImage));
+        assertThat(converter.informationalImage(originalImage), notNullValue());
     }
 
     @Test
