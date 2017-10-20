@@ -16,7 +16,6 @@ import layers.web.vaadin.layout.slider.SliderLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
-
 @SpringUI(path = "/*")
 @Scope("prototype")
 @Theme("mytheme")
@@ -58,6 +57,6 @@ public class ImageGeneratorUI extends UI {
                                      galleryLayout);
 
         setContent(verticalLayout);
-        galleryLayout.init();
+        galleryLayout.initGalleryImages();//need to be here, NECESSARILY after setContent method
     }
 }

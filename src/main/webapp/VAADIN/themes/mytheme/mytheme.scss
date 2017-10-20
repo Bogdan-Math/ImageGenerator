@@ -37,11 +37,19 @@
   //noinspection SassScssResolvedByNameOnly
   @include valo;
 
-  .v-image-bordered {
+  .v-image-bordered,
+  .gallery-image {
     border: 3px solid gray;
     padding: 3px;
     border-radius: 15px;
+  }
+
+  .v-image-bordered {
     min-height: 250px;
+  }
+
+  .gallery-image {
+    cursor: pointer;
   }
 
   //TODO: change patterns patterns location (if it stay in the middle, fix approach to do it)

@@ -15,9 +15,7 @@ import utility.core.PatternType;
 import utility.system.ResourceReader;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
 import java.util.List;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -27,7 +25,8 @@ public class GalleryLayout extends VerticalLayout {
 
     @Autowired
     private ResourceReader resourceReader;
-    private List<Image> images;
+
+    private List<Image> layoutImages;
     private Gallery gallery;
 
     @PostConstruct
@@ -35,31 +34,33 @@ public class GalleryLayout extends VerticalLayout {
         HorizontalLayout allImagesLayout = new HorizontalLayout();
         allImagesLayout.setSizeFull();
 
-        images = resourceReader.readFiles(PatternType.PLAINS.getLocation())
+        layoutImages = resourceReader.readFiles(PatternType.COMMONS.getLocation())
                                .stream()
-                               .map(imgFile -> new Image(imgFile.getName(), new FileResource(imgFile)))
+                               .map(imgFile -> new Image() {{
+                                   setSource(new FileResource(imgFile));
+                                   setStyleName("gallery-image");
+                               }})
                                .collect(toList());
 
-        images.forEach(allImagesLayout::addComponent);
+        layoutImages.forEach(allImagesLayout::addComponent);
 
         gallery = new Gallery();
         allImagesLayout.addComponent(gallery);
         this.addComponent(allImagesLayout);
     }
 
-    public void init() {
-        List<com.github.lotsabackscatter.blueimp.gallery.Image> imageList =
-                images.stream().map(img -> new Builder()
-                      .title(img.getCaption())
-                      .href(getResourceURL(img, img.getCaption()))
-                      .thumbnail(getResourceURL(img, img.getCaption()))
-                      .build())
-                      .collect(toList());
+    public void initGalleryImages() {
+        List<com.github.lotsabackscatter.blueimp.gallery.Image> galleryImages =
+                layoutImages.stream()
+                            .map(img -> new Builder()
+                                    .href(getResourceURL(img, img.getCaption()))
+                                    .thumbnail(getResourceURL(img, img.getCaption()))
+                                    .build())
+                            .collect(toList());
 
-        images.forEach(img -> img.addClickListener(event ->
-                gallery.showGallery(imageList)
+        layoutImages.forEach(img -> img.addClickListener(event ->
+                gallery.showGallery(galleryImages)
         ));
-//        gallery.showGallery(imageList);
     }
 
     private String getResourceURL(AbstractClientConnector connector, String fileName) {
