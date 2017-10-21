@@ -57,6 +57,5 @@ public class ImageGeneratorUI extends UI {
                                      galleryLayout);
 
         setContent(verticalLayout);
-        galleryLayout.initGalleryImages();//need to be here, NECESSARILY after setContent method
     }
 }
