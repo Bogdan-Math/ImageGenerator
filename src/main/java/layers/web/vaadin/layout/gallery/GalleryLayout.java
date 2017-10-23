@@ -1,12 +1,13 @@
 package layers.web.vaadin.layout.gallery;
 
 import com.github.lotsabackscatter.blueimp.gallery.Gallery;
-import com.github.lotsabackscatter.blueimp.gallery.Image;
-import com.github.lotsabackscatter.blueimp.gallery.Image.Builder;
+import com.github.lotsabackscatter.blueimp.gallery.Picture;
+import com.github.lotsabackscatter.blueimp.gallery.Picture.Builder;
 import com.vaadin.server.AbstractClientConnector;
 import com.vaadin.server.FileResource;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class GalleryLayout extends VerticalLayout {
     @Autowired
     private ResourceReader resourceReader;
 
-    private List<com.vaadin.ui.Image> layoutImages;
+    private List<Image> layoutImages;
     private Gallery gallery;
 
     @PostConstruct
@@ -36,7 +37,7 @@ public class GalleryLayout extends VerticalLayout {
 
         layoutImages = resourceReader.readFiles(FLAGS.getLocation())
                                      .stream()
-                                     .map(imgFile -> new com.vaadin.ui.Image() {{
+                                     .map(imgFile -> new Image() {{
                                          setSource(new FileResource(imgFile));
                                          setStyleName("gallery-image");
                                      }})
@@ -46,18 +47,18 @@ public class GalleryLayout extends VerticalLayout {
 
         gallery = new Gallery();
         layoutImages.forEach(img -> img.addClickListener(event -> {
-            List<Image> galleryImages = layoutImages.stream()
-                                                    .map(this::buildGalleryImage)
-                                                    .collect(toList());
+            List<Picture> galleryImages = layoutImages.stream()
+                                                      .map(this::buildGalleryImage)
+                                                      .collect(toList());
 
-            gallery.showGallery(buildGalleryImage(img), galleryImages.toArray(new Image[galleryImages.size()]));
+            gallery.showGallery(buildGalleryImage(img), galleryImages);
         }));
 
         allImagesLayout.addComponent(gallery);
         addComponent(allImagesLayout);
     }
 
-    private Image buildGalleryImage(com.vaadin.ui.Image layoutImage) {
+    private Picture buildGalleryImage(Image layoutImage) {
         return new Builder().href(getResourceURL(layoutImage, layoutImage.getCaption()))
                             .thumbnail(getResourceURL(layoutImage, layoutImage.getCaption()))
                             .build();
