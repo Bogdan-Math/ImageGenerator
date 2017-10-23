@@ -6,5 +6,5 @@ You should select image and app will generate similar image from selected funny 
 
 <br>[![Heroku](https://heroku-badge.herokuapp.com/?app=image-generator-app&root=/)](https://image-generator-app.herokuapp.com/)
 : Try app.
-<br>[![Codacy Badge](https://api.codacy.com/project/badge/Grade/433e9ca7250d46f2bbd6280b7db5768c)](https://www.codacy.com/app/bogdan-math-stepanov/ImageGenerator?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Bogdan-Math/ImageGenerator&amp;utm_campaign=Badge_Grade)
+<br>[![Codacy Badge](https://api.codacy.com/project/badge/Grade/24ff295c7ebf44f1b023db677ad068d6)](https://www.codacy.com/app/bogdan-math-stepanov/ImageGeneratorApplication?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Bogdan-Math/ImageGeneratorApplication&amp;utm_campaign=Badge_Grade)
 : Evaluate code.
