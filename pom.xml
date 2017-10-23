@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!--project version properties-->
-    <groupId>ImageGenerator</groupId>
-    <artifactId>ImageGenerator</artifactId>
+    <groupId>ImageGeneratorApplication</groupId>
+    <artifactId>ImageGeneratorApplication</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <!--packaging properties-->
-    <name>ImageGenerator</name>
+    <name>ImageGeneratorApplication</name>
     <packaging>war</packaging>
 
     <!--project properties and versions of modules-->
@@ -34,7 +34,7 @@
 
     <!--build properties-->
     <build>
-        <finalName>ImageGenerator</finalName>
+        <finalName>ImageGeneratorApplication</finalName>
 
         <plugins>
             <plugin>
