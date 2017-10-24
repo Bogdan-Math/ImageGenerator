@@ -1,4 +1,4 @@
-# ImageGeneratorApplication
+# ImageGenerator
 
 This is a software product designed to be fun and to increase my own ability to program. 
 The name speaks for itself - it generates pictures!

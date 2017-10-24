@@ -9,7 +9,7 @@ public class Creator {
     }
 
     public String getDescription() {
-        return String.format("Hello, I'm %s - creator of ImageGeneratorApplication!", name);
+        return String.format("Hello, I'm %s - creator of ImageGenerator!", name);
     }
 
 }

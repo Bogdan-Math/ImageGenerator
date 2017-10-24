@@ -13,7 +13,7 @@ public class CreatorTest {
 
         //"A" - Arrange
         String creatorName = "Bogdan";
-        String expectedDescription = "Hello, I'm Bogdan - creator of ImageGeneratorApplication!";
+        String expectedDescription = "Hello, I'm Bogdan - creator of ImageGenerator!";
 
         //"A" - Act
         Creator creator = new Creator(creatorName);
