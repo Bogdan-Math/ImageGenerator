@@ -8,8 +8,8 @@ public enum Reference {
     CODACY {
         @Override
         public Link link() {
-            Link codacyLink = link("https://www.codacy.com/app/bogdan-math-stepanov/ImageGenerator/dashboard");
-            codacyLink.setIcon(new ExternalResource("https://api.codacy.com/project/badge/Grade/433e9ca7250d46f2bbd6280b7db5768c"));
+            Link codacyLink = link("https://www.codacy.com/app/bogdan-math-stepanov/ImageGeneratorApplication/dashboard");
+            codacyLink.setIcon(new ExternalResource("https://api.codacy.com/project/badge/Grade/24ff295c7ebf44f1b023db677ad068d6"));
             return codacyLink;
         }
     },
