@@ -18,7 +18,7 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
-import static utility.core.PatternType.FLAGS;
+import static utility.core.PatternType.COMMONS;
 
 @SpringComponent
 @Scope("session")
@@ -35,7 +35,7 @@ public class GalleryLayout extends VerticalLayout {
         HorizontalLayout allImagesLayout = new HorizontalLayout();
         allImagesLayout.setSizeFull();
 
-        layoutImages = resourceReader.readFiles(FLAGS.getLocation())
+        layoutImages = resourceReader.readFiles(COMMONS.getLocation())
                                      .stream()
                                      .map(imgFile -> new Image() {{
                                          setSource(new FileResource(imgFile));
