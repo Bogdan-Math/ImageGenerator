@@ -12,12 +12,12 @@
     </parent>
 
     <!--module version properties-->
-    <groupId>ImageGeneratorApp</groupId>
-    <artifactId>ImageGeneratorApp</artifactId>
+    <groupId>ImageGeneratorCore</groupId>
+    <artifactId>ImageGeneratorCore</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <!--packaging properties-->
-    <name>ImageGeneratorApp</name>
-    <packaging>war</packaging>
+    <name>ImageGeneratorCore</name>
+    <packaging>jar</packaging>
 
 </project>
