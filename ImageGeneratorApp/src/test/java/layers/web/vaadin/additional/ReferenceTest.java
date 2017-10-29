@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static layers.web.vaadin.additional.Reference.*;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class ReferenceTest {
 

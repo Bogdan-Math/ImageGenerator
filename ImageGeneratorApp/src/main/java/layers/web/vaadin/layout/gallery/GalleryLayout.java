@@ -12,13 +12,13 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import utility.system.ResourceReader;
+import system.ResourceReader;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
-import static utility.core.PatternType.COMMONS;
+import static core.PatternType.COMMONS;
 
 @SpringComponent
 @Scope("session")

@@ -7,8 +7,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import utility.core.InformationalImage;
-import utility.core.PatternType;
+import core.InformationalImage;
+import core.PatternType;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -19,8 +19,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
-import static utility.core.InformationalImage.TYPE_INT_RGB;
-import static utility.core.PatternType.*;
+import static core.InformationalImage.TYPE_INT_RGB;
+import static core.PatternType.*;
 
 @ContextConfiguration(locations = {
         "classpath:spring/cached-patterns-service.xml"

@@ -4,13 +4,13 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Upload.SucceededEvent;
+import core.InformationalImage;
 import domain.Settings;
 import layers.web.vaadin.additional.NotificationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
-import utility.core.InformationalImage;
-import utility.system.ObjectTypeConverter;
+import system.ObjectTypeConverter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

@@ -3,15 +3,15 @@ package layers.web.vaadin.layout.buttons.generate.listener;
 import com.vaadin.server.StreamResource;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Image;
+import core.InformationalImage;
 import domain.ImageGenerator;
 import domain.Settings;
-import layers.web.vaadin.layout.buttons.download.listener.Downloader;
 import layers.web.vaadin.additional.NotificationBuilder;
+import layers.web.vaadin.layout.buttons.download.listener.Downloader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import utility.core.InformationalImage;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

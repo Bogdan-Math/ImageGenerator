@@ -6,7 +6,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import utility.system.ResourceReader;
+import system.ResourceReader;
 
 import java.util.HashMap;
 import java.util.Map;

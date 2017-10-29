@@ -20,4 +20,14 @@
     <name>ImageGeneratorApp</name>
     <packaging>war</packaging>
 
+    <dependencies>
+
+        <dependency>
+            <groupId>ImageGeneratorCore</groupId>
+            <artifactId>ImageGeneratorCore</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
+
 </project>

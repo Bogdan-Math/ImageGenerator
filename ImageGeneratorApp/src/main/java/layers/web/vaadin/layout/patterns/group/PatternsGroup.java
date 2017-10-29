@@ -2,12 +2,12 @@ package layers.web.vaadin.layout.patterns.group;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.RadioButtonGroup;
+import core.InformationalImage;
+import core.PatternType;
 import domain.Settings;
 import layers.service.CachedPatternsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import utility.core.InformationalImage;
-import utility.core.PatternType;
 
 import javax.annotation.PostConstruct;
 import java.awt.*;
@@ -16,8 +16,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.vaadin.ui.themes.ValoTheme.OPTIONGROUP_HORIZONTAL;
-import static utility.core.PatternType.FLAGS;
-import static utility.core.PatternType.valueOf;
+import static core.PatternType.FLAGS;
+import static core.PatternType.valueOf;
 
 @SpringComponent
 @Scope("session")

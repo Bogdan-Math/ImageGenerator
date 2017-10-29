@@ -20,17 +20,17 @@ public class PatternsRepositoryTest {
 
     @Test
     public void getCommons() throws Exception {
-        assertThat(repository.getCommons().size(), is(24));
+        assertThat(repository.getCommons().size(), is(3));
     }
 
     @Test
     public void getFlags() throws Exception {
-        assertThat(repository.getFlags().size(), is(189));
+        assertThat(repository.getFlags().size(), is(2));
     }
 
     @Test
     public void getPlains() throws Exception {
-        assertThat(repository.getPlains().size(), is(3));
+        assertThat(repository.getPlains().size(), is(1));
     }
 
 }

@@ -1,18 +1,18 @@
 package layers.repository;
 
+import core.InformationalImage;
+import core.PatternType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
-import utility.core.InformationalImage;
-import utility.core.PatternType;
-import utility.system.ObjectTypeConverter;
-import utility.system.ResourceReader;
+import system.ObjectTypeConverter;
+import system.ResourceReader;
 
 import java.awt.*;
 import java.util.Map;
 
+import static core.PatternType.*;
 import static java.util.stream.Collectors.toMap;
-import static utility.core.PatternType.*;
 
 @Repository
 @Scope("singleton")
