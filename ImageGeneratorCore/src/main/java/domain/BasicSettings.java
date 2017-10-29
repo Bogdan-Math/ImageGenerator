@@ -1,26 +1,16 @@
 package domain;
 
 import core.InformationalImage;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.awt.*;
 import java.util.Map;
 
-@Component
-@Scope("session")
 public class BasicSettings implements Settings {
 
     private InformationalImage incomeImage;
     private Map<Color, InformationalImage> patterns;
     private Integer expectedColumnsCount;
     private String imageFileName;
-
-    @PostConstruct
-    public void postConstruct() {
-        setExpectedColumnsCount(MAX_EXPECTED_COLUMNS_COUNT / 2);
-    }
 
     @Override
     public InformationalImage getIncomeImage() {

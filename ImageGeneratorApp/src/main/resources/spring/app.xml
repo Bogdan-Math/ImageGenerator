@@ -13,17 +13,24 @@
     <!--UI classes-->
     <context:component-scan base-package="layers.web.vaadin"/>
 
-    <!--DOMAIN classes-->
-    <context:component-scan base-package="domain"/>
-
     <!--SERVICE classes-->
     <context:component-scan base-package="layers.service"/>
 
     <!--REPOSITORY classes-->
     <context:component-scan base-package="layers.repository"/>
 
-    <!--SYSTEM classes-->
-    <context:component-scan base-package="system"/>
+    <!--CORE DOMAIN classes-->
+    <bean id="imageGenerator" class="domain.BasicImageGenerator" scope="session">
+        <property name="settings" ref="settings"/>
+    </bean>
+    <bean id="settings" class="domain.BasicSettings" scope="session">
+        <property name="expectedColumnsCount"
+                  value="#{T(domain.Settings).MAX_EXPECTED_COLUMNS_COUNT / 2}"/>
+    </bean>
+
+    <!--CORE SYSTEM classes-->
+    <bean class="system.ResourceReader"/>
+    <bean class="system.ObjectTypeConverter"/>
 
     <util:list id="notifications" value-type="java.lang.String"/>
 

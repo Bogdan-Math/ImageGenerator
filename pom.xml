@@ -195,6 +195,7 @@
             <scope>test</scope>
         </dependency>
 
+        <!--Lombok library (boilerplate code utility)-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -202,6 +203,7 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--Guava library (useful utilities)-->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>

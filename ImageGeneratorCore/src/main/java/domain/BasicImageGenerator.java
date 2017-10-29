@@ -3,9 +3,6 @@ package domain;
 import core.InformationalColor;
 import core.InformationalImage;
 import exception.MatrixSizeException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,11 +14,8 @@ import java.util.stream.Collectors;
 import static domain.Settings.PATTERN_HEIGHT;
 import static domain.Settings.PATTERN_WIDTH;
 
-@Component
-@Scope("session")
 public class BasicImageGenerator implements ImageGenerator {
 
-    @Autowired
     private Settings settings;
 
     @Override

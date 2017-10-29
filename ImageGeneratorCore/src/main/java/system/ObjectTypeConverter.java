@@ -1,14 +1,12 @@
 package system;
 
 import core.InformationalImage;
-import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 
 import static javax.imageio.ImageIO.read;
 
-@Component
 public class ObjectTypeConverter {
 
     public InformationalImage informationalImage(byte[] bytes) {
