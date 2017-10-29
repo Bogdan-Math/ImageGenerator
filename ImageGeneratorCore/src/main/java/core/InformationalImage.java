@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.util.stream.IntStream;
 
 public class InformationalImage extends BufferedImage {
+
     public static final int TYPE_INT_RGB = BufferedImage.TYPE_INT_RGB;
 
     public InformationalImage(BufferedImage bufferedImage) {

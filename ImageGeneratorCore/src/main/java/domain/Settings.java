@@ -6,6 +6,7 @@ import java.awt.*;
 import java.util.Map;
 
 public interface Settings {
+
     Integer MIN_EXPECTED_COLUMNS_COUNT = 0;
     Integer MAX_EXPECTED_COLUMNS_COUNT = 128;
 

@@ -19,7 +19,10 @@ public class InformationalColor extends Color {
     }
 
     private boolean almostEquals(int firstColor, int secondColor) {
+
+        //TODO: add description to delta
         BigDecimal delta        = valueOf(255.0).divide(valueOf(3.0), MathContext.DECIMAL32);
+
         BigDecimal firstValue   = valueOf(firstColor);
         BigDecimal secondValue  = valueOf(secondColor);
         BigDecimal smallerValue = (firstValue.compareTo(secondValue) < 0) ? firstValue : secondValue;
