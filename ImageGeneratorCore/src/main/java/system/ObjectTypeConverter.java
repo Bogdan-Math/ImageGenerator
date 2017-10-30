@@ -1,6 +1,6 @@
 package system;
 
-import core.InformationalImage;
+import domain.InformationalImage;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

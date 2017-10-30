@@ -1,7 +1,7 @@
 package layers.web.vaadin.layout.slider.listener;
 
-import static domain.Settings.MAX_EXPECTED_COLUMNS_COUNT;
-import static domain.Settings.MIN_EXPECTED_COLUMNS_COUNT;
+import static core.Settings.MAX_EXPECTED_COLUMNS_COUNT;
+import static core.Settings.MIN_EXPECTED_COLUMNS_COUNT;
 
 public interface ColumnsCountListener {
 

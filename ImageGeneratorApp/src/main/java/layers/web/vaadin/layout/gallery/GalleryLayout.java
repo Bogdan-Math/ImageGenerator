@@ -18,7 +18,7 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
-import static core.PatternType.COMMONS;
+import static domain.PatternType.COMMONS;
 
 @SpringComponent
 @Scope("session")

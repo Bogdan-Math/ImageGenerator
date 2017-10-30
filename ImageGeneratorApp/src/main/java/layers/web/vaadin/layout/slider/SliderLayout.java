@@ -2,7 +2,7 @@ package layers.web.vaadin.layout.slider;
 
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
-import domain.Settings;
+import core.Settings;
 import layers.web.vaadin.layout.slider.listener.ExpectedColumnsCountField;
 import layers.web.vaadin.layout.slider.listener.ExpectedColumnsCountLabel;
 import layers.web.vaadin.layout.slider.listener.ExpectedColumnsCountSlider;

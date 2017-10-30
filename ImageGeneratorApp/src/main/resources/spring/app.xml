@@ -20,12 +20,12 @@
     <context:component-scan base-package="layers.repository"/>
 
     <!--CORE DOMAIN classes-->
-    <bean id="imageGenerator" class="domain.BasicImageGenerator" scope="session">
+    <bean id="imageGenerator" class="core.BasicImageGenerator" scope="session">
         <property name="settings" ref="settings"/>
     </bean>
-    <bean id="settings" class="domain.BasicSettings" scope="session">
+    <bean id="settings" class="core.BasicSettings" scope="session">
         <property name="expectedColumnsCount"
-                  value="#{T(domain.Settings).MAX_EXPECTED_COLUMNS_COUNT / 2}"/>
+                  value="#{T(core.Settings).MAX_EXPECTED_COLUMNS_COUNT / 2}"/>
     </bean>
 
     <!--CORE SYSTEM classes-->

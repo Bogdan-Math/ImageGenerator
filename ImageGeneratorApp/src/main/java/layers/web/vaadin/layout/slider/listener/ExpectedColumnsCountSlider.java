@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 import static com.vaadin.ui.Notification.Type.HUMANIZED_MESSAGE;
-import static domain.Settings.MAX_EXPECTED_COLUMNS_COUNT;
-import static domain.Settings.MIN_EXPECTED_COLUMNS_COUNT;
+import static core.Settings.MAX_EXPECTED_COLUMNS_COUNT;
+import static core.Settings.MIN_EXPECTED_COLUMNS_COUNT;
 
 @Component
 @Scope("session")

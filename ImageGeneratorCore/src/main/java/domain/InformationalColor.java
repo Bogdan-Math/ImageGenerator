@@ -1,4 +1,4 @@
-package core;
+package domain;
 
 import java.awt.*;
 import java.math.BigDecimal;

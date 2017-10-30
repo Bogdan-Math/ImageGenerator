@@ -1,7 +1,7 @@
 package layers.service;
 
-import core.InformationalImage;
-import core.PatternType;
+import domain.InformationalImage;
+import domain.PatternType;
 
 import java.awt.*;
 import java.util.Map;

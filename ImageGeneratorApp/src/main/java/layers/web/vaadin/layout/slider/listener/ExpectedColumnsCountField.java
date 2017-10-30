@@ -11,8 +11,8 @@ import javax.annotation.PostConstruct;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.vaadin.ui.Notification.Type.HUMANIZED_MESSAGE;
-import static domain.Settings.MAX_EXPECTED_COLUMNS_COUNT;
-import static domain.Settings.MIN_EXPECTED_COLUMNS_COUNT;
+import static core.Settings.MAX_EXPECTED_COLUMNS_COUNT;
+import static core.Settings.MIN_EXPECTED_COLUMNS_COUNT;
 import static java.lang.Integer.valueOf;
 
 @Component

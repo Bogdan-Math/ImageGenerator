@@ -1,6 +1,6 @@
-package domain;
+package core;
 
-import core.InformationalImage;
+import domain.InformationalImage;
 
 import java.awt.*;
 import java.util.Map;

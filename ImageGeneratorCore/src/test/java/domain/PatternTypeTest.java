@@ -1,8 +1,8 @@
-package core;
+package domain;
 
 import org.junit.Test;
 
-import static core.PatternType.*;
+import static domain.PatternType.*;
 import static org.junit.Assert.assertEquals;
 
 public class PatternTypeTest {

@@ -1,14 +1,14 @@
 package exception;
 
-import core.InformationalImage;
-import domain.BasicImageGenerator;
-import domain.BasicSettings;
-import domain.ImageGenerator;
+import domain.InformationalImage;
+import core.BasicImageGenerator;
+import core.BasicSettings;
+import core.ImageGenerator;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import static core.InformationalImage.TYPE_INT_RGB;
+import static domain.InformationalImage.TYPE_INT_RGB;
 
 public class MatrixSizeExceptionTest {
 

@@ -4,15 +4,15 @@ import layers.repository.PatternsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import core.InformationalImage;
-import core.PatternType;
+import domain.InformationalImage;
+import domain.PatternType;
 
 import javax.annotation.PostConstruct;
 import java.awt.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static core.PatternType.*;
+import static domain.PatternType.*;
 
 @Service
 @Scope("singleton")

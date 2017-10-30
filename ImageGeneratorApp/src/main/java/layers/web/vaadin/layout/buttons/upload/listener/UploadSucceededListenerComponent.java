@@ -4,8 +4,8 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Upload.SucceededEvent;
-import core.InformationalImage;
-import domain.Settings;
+import domain.InformationalImage;
+import core.Settings;
 import layers.web.vaadin.additional.NotificationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,7 +15,7 @@ import system.ObjectTypeConverter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static domain.Settings.*;
+import static core.Settings.*;
 
 @SpringComponent
 @Scope("session")

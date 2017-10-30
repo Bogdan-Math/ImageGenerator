@@ -1,6 +1,6 @@
-package domain;
+package core;
 
-import core.InformationalImage;
+import domain.InformationalImage;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

@@ -1,6 +1,6 @@
-package domain;
+package core;
 
-import core.InformationalImage;
+import domain.InformationalImage;
 
 public interface ImageGenerator {
 

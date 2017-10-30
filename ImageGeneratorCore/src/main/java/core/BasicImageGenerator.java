@@ -1,7 +1,7 @@
-package domain;
+package core;
 
-import core.InformationalColor;
-import core.InformationalImage;
+import domain.InformationalColor;
+import domain.InformationalImage;
 import exception.MatrixSizeException;
 
 import java.awt.*;
@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static domain.Settings.PATTERN_HEIGHT;
-import static domain.Settings.PATTERN_WIDTH;
+import static core.Settings.PATTERN_HEIGHT;
+import static core.Settings.PATTERN_WIDTH;
 
 public class BasicImageGenerator implements ImageGenerator {
 

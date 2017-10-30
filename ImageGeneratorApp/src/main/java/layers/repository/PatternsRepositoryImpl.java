@@ -1,7 +1,7 @@
 package layers.repository;
 
-import core.InformationalImage;
-import core.PatternType;
+import domain.InformationalImage;
+import domain.PatternType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
@@ -11,7 +11,7 @@ import system.ResourceReader;
 import java.awt.*;
 import java.util.Map;
 
-import static core.PatternType.*;
+import static domain.PatternType.*;
 import static java.util.stream.Collectors.toMap;
 
 @Repository

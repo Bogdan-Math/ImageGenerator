@@ -1,4 +1,4 @@
-package core;
+package domain;
 
 import com.google.common.annotations.VisibleForTesting;
 

@@ -1,4 +1,4 @@
-package core;
+package domain;
 
 import org.junit.Before;
 import org.junit.Rule;

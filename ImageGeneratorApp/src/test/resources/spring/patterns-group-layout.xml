@@ -7,7 +7,7 @@
     <bean id="imagesLayout" class="layers.web.vaadin.layout.patterns.PatternsGroupLayout"/>
     <bean id="patternsGroup" class="layers.web.vaadin.layout.patterns.group.PatternsGroup"/>
     <bean id="basicSettings" class="org.mockito.Mockito" factory-method="mock">
-        <constructor-arg value="domain.BasicSettings"/>
+        <constructor-arg value="core.BasicSettings"/>
     </bean>
     <bean id="cachedPatternsService" class="org.mockito.Mockito" factory-method="mock">
         <constructor-arg value="layers.service.CachedPatternsService"/>
