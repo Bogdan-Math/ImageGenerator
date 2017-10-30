@@ -7,9 +7,7 @@ import org.junit.rules.ExpectedException;
 import system.ObjectTypeConverter;
 import system.ResourceReader;
 
-import java.awt.*;
-
-import static java.awt.Color.*;
+import static domain.InformationalColor.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.doThrow;
@@ -60,22 +58,22 @@ public class InformationalImageTest {
     @Test
     public void whiteAveragedColor() throws Exception {
         this.image = new ObjectTypeConverter().informationalImage(new ResourceReader().readFile("images/testable/1-white.jpg"));
-        Color white = image.averagedColor();
-        assertEquals(Color.WHITE, white);
+        InformationalColor white = image.averagedColor();
+        assertEquals(WHITE, white);
     }
 
     @Test
     public void grayAveragedColor() throws Exception {
         this.image = new ObjectTypeConverter().informationalImage(new ResourceReader().readFile("images/testable/2-gray.jpg"));
-        Color gray = image.averagedColor();
-        assertEquals(Color.GRAY, gray);
+        InformationalColor gray = image.averagedColor();
+        assertEquals(InformationalColor.GRAY, gray);
     }
 
     @Test
     public void blackAveragedColor() throws Exception {
         this.image = new ObjectTypeConverter().informationalImage(new ResourceReader().readFile("images/testable/3-black.jpg"));
-        Color black = image.averagedColor();
-        assertEquals(Color.BLACK, black);
+        InformationalColor black = image.averagedColor();
+        assertEquals(BLACK, black);
     }
 
     @Test

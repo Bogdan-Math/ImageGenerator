@@ -1,14 +1,14 @@
 package core;
 
+import domain.InformationalColor;
 import domain.InformationalImage;
 
-import java.awt.*;
 import java.util.Map;
 
 public class BasicSettings implements Settings {
 
     private InformationalImage incomeImage;
-    private Map<Color, InformationalImage> patterns;
+    private Map<InformationalColor, InformationalImage> patterns;
     private Integer expectedColumnsCount;
     private String imageFileName;
 
@@ -23,12 +23,12 @@ public class BasicSettings implements Settings {
     }
 
     @Override
-    public Map<Color, InformationalImage> getPatterns() {
+    public Map<InformationalColor, InformationalImage> getPatterns() {
         return patterns;
     }
 
     @Override
-    public void setPatterns(Map<Color, InformationalImage> patterns) {
+    public void setPatterns(Map<InformationalColor, InformationalImage> patterns) {
         this.patterns = patterns;
     }
 

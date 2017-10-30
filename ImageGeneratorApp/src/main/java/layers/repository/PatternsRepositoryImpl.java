@@ -1,5 +1,6 @@
 package layers.repository;
 
+import domain.InformationalColor;
 import domain.InformationalImage;
 import domain.PatternType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import system.ObjectTypeConverter;
 import system.ResourceReader;
 
-import java.awt.*;
 import java.util.Map;
 
 import static domain.PatternType.*;
@@ -25,21 +25,21 @@ public class PatternsRepositoryImpl implements PatternsRepository {
     private ObjectTypeConverter converter;
 
     @Override
-    public Map<Color, InformationalImage> getCommons() {
+    public Map<InformationalColor, InformationalImage> getCommons() {
         return initialize(COMMONS);
     }
 
     @Override
-    public Map<Color, InformationalImage> getFlags() {
+    public Map<InformationalColor, InformationalImage> getFlags() {
         return initialize(FLAGS);
     }
 
     @Override
-    public Map<Color, InformationalImage> getPlains() {
+    public Map<InformationalColor, InformationalImage> getPlains() {
         return initialize(PLAINS);
     }
 
-    private Map<Color, InformationalImage> initialize(PatternType patternType) {
+    private Map<InformationalColor, InformationalImage> initialize(PatternType patternType) {
         return resourceReader.readFiles(patternType.getLocation())
                              .stream()
                              .collect(toMap(file -> converter.informationalImage(file).averagedColor(),// put Color              as KEY   in map

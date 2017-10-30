@@ -75,18 +75,18 @@ public class BasicImageGenerator implements ImageGenerator {
     }
 
     private List<List<InformationalImage>> resultMatrix() {
-        List<List<InformationalColor>> matrix = averagedColorsMatrix();
-        Map<Color, InformationalImage> map    = settings.getPatterns();
-        List<List<InformationalImage>> result = new ArrayList<>();
+        List<List<InformationalColor>> matrix           = averagedColorsMatrix();
+        Map<InformationalColor, InformationalImage> map = settings.getPatterns();
+        List<List<InformationalImage>> result           = new ArrayList<>();
 
         for (List<InformationalColor> colors : matrix) {
             List<InformationalImage> resultRows = new ArrayList<>();
 
-            for (Color color : colors) {
-                InformationalImage minImg = null;
+            for (InformationalColor color : colors) {
                 int minColor              = Integer.MAX_VALUE;
+                InformationalImage minImg = null;
 
-                for (Color pColor : map.keySet()) {
+                for (InformationalColor pColor : map.keySet()) {
                     int dColor = Math.abs(color.getRed()   - pColor.getRed())   +
                                  Math.abs(color.getGreen() - pColor.getGreen()) +
                                  Math.abs(color.getBlue()  - pColor.getBlue());

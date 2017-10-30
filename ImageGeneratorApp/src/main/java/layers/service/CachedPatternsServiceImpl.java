@@ -1,14 +1,14 @@
 package layers.service;
 
+import domain.InformationalColor;
+import domain.InformationalImage;
+import domain.PatternType;
 import layers.repository.PatternsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import domain.InformationalImage;
-import domain.PatternType;
 
 import javax.annotation.PostConstruct;
-import java.awt.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -21,14 +21,14 @@ public class CachedPatternsServiceImpl implements CachedPatternsService {
     @Autowired
     private PatternsRepository repository;
 
-    private Map<PatternType, Map<Color, InformationalImage>> allPatterns;
+    private Map<PatternType, Map<InformationalColor, InformationalImage>> allPatterns;
 
     @Override
     @PostConstruct
     public void cacheAllPatterns() {
-        Map<Color, InformationalImage> commons = repository.getCommons();
-        Map<Color, InformationalImage> flags   = repository.getFlags();
-        Map<Color, InformationalImage> plains  = repository.getPlains();
+        Map<InformationalColor, InformationalImage> commons = repository.getCommons();
+        Map<InformationalColor, InformationalImage> flags   = repository.getFlags();
+        Map<InformationalColor, InformationalImage> plains  = repository.getPlains();
 
         allPatterns = new LinkedHashMap<>();
 
@@ -38,7 +38,7 @@ public class CachedPatternsServiceImpl implements CachedPatternsService {
     }
 
     @Override
-    public Map<PatternType, Map<Color, InformationalImage>> getAllPatterns() {
+    public Map<PatternType, Map<InformationalColor, InformationalImage>> getAllPatterns() {
         return allPatterns;
     }
 }

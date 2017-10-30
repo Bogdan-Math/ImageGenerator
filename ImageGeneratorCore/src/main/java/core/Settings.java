@@ -1,8 +1,8 @@
 package core;
 
+import domain.InformationalColor;
 import domain.InformationalImage;
 
-import java.awt.*;
 import java.util.Map;
 
 public interface Settings {
@@ -26,9 +26,9 @@ public interface Settings {
 
     void setIncomeImage(InformationalImage image);
 
-    Map<Color, InformationalImage> getPatterns();
+    Map<InformationalColor, InformationalImage> getPatterns();
 
-    void setPatterns(Map<Color, InformationalImage> patterns);
+    void setPatterns(Map<InformationalColor, InformationalImage> patterns);
 
     Integer getExpectedColumnsCount();
 

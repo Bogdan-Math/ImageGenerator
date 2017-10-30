@@ -3,7 +3,6 @@ package domain;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Random;
 
@@ -25,14 +24,14 @@ public class InformationalColorTest {
     public void almostEqualIsTrue() throws Exception {
         random100AllowedColors()
                 .forEach(color -> assertTrue(blackColor.almostEqualTo(color)));
-        assertTrue(blackColor.almostEqualTo(new Color(84,84,84)));
+        assertTrue(blackColor.almostEqualTo(new InformationalColor(84,84,84)));
     }
 
     @Test
     public void almostEqualIsFalse() throws Exception {
         random100DenyColors()
                 .forEach(color -> assertFalse(blackColor.almostEqualTo(color)));
-        assertFalse(blackColor.almostEqualTo(new Color(85,85,85)));
+        assertFalse(blackColor.almostEqualTo(new InformationalColor(85,85,85)));
     }
 
     private List<InformationalColor> random100AllowedColors() {

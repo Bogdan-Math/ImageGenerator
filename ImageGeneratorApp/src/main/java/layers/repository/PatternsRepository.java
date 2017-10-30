@@ -1,13 +1,13 @@
 package layers.repository;
 
+import domain.InformationalColor;
 import domain.InformationalImage;
 
-import java.awt.*;
 import java.util.Map;
 
 public interface PatternsRepository {
 
-    Map<Color, InformationalImage> getCommons();
-    Map<Color, InformationalImage> getFlags();
-    Map<Color, InformationalImage> getPlains();
+    Map<InformationalColor, InformationalImage> getCommons();
+    Map<InformationalColor, InformationalImage> getFlags();
+    Map<InformationalColor, InformationalImage> getPlains();
 }

@@ -2,15 +2,15 @@ package layers.web.vaadin.layout.patterns.group;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.RadioButtonGroup;
+import core.Settings;
+import domain.InformationalColor;
 import domain.InformationalImage;
 import domain.PatternType;
-import core.Settings;
 import layers.service.CachedPatternsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
-import java.awt.*;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -35,7 +35,7 @@ public class PatternsGroup extends RadioButtonGroup<String> {
         setValue(FLAGS.name());
         addStyleName(OPTIONGROUP_HORIZONTAL);
 
-        Map<PatternType, Map<Color, InformationalImage>> patterns = cachedPatternsService.getAllPatterns();
+        Map<PatternType, Map<InformationalColor, InformationalImage>> patterns = cachedPatternsService.getAllPatterns();
 
         settings.setPatterns(patterns.get(valueOf(getValue())));
 

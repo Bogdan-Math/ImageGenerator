@@ -1,5 +1,6 @@
 package core;
 
+import domain.InformationalColor;
 import domain.InformationalImage;
 import org.junit.Before;
 import org.junit.Rule;
@@ -13,10 +14,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import system.ObjectTypeConverter;
 import system.ResourceReader;
 
-import java.awt.*;
 import java.util.Map;
 
-import static java.awt.Color.*;
+import static domain.InformationalColor.*;
 import static java.util.stream.Collectors.toMap;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNotNull;
@@ -51,7 +51,7 @@ public class ImageGeneratorTest {
 
     @Before
     public void setUp() throws Exception {
-        Map<Color, InformationalImage> patterns = resourceReader.readFiles("images/colors").stream().collect(toMap(
+        Map<InformationalColor, InformationalImage> patterns = resourceReader.readFiles("images/colors").stream().collect(toMap(
                 file -> typeConverter.informationalImage(file).averagedColor(),
                 file -> typeConverter.informationalImage(file)
         ));

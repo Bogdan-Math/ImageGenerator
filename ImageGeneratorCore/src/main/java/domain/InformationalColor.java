@@ -8,11 +8,22 @@ import static java.math.BigDecimal.valueOf;
 
 public class InformationalColor extends Color {
 
+    public static final InformationalColor WHITE = new InformationalColor(Color.WHITE);
+    public static final InformationalColor GRAY  = new InformationalColor(Color.GRAY);
+    public static final InformationalColor BLACK = new InformationalColor(Color.BLACK);
+    public static final InformationalColor RED   = new InformationalColor(Color.RED);
+    public static final InformationalColor GREEN = new InformationalColor(Color.GREEN);
+    public static final InformationalColor BLUE  = new InformationalColor(Color.BLUE);
+
     InformationalColor(int red, int green, int blue) {
         super(red, green, blue);
     }
 
-    public boolean almostEqualTo(Color otherColor) {
+    private InformationalColor(Color color) {
+        this(color.getRed(), color.getGreen(), color.getBlue());
+    }
+
+    public boolean almostEqualTo(InformationalColor otherColor) {
         return almostEquals(this.getRed(), otherColor.getRed()) &&
                almostEquals(this.getGreen(), otherColor.getGreen()) &&
                almostEquals(this.getBlue(), otherColor.getBlue());
