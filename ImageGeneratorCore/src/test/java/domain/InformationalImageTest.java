@@ -66,7 +66,7 @@ public class InformationalImageTest {
     public void grayAveragedColor() throws Exception {
         this.image = new ObjectTypeConverter().informationalImage(new ResourceReader().readFile("images/testable/2-gray.jpg"));
         InformationalColor gray = image.averagedColor();
-        assertEquals(InformationalColor.GRAY, gray);
+        assertEquals(GRAY, gray);
     }
 
     @Test
