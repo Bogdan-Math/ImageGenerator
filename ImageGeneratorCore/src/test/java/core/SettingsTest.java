@@ -19,18 +19,19 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class SettingsTest {
 
-    private Settings settings = new BasicSettings();
-    private InformationalImage incomeImage;
+    private Settings settings              = new BasicSettings();
+    private InformationalImage incomeImage = mock(InformationalImage.class);
 
     @Before
     public void setUp() throws Exception {
-        incomeImage = mock(InformationalImage.class);
 
+        //set fields
         settings.setIncomeImage(incomeImage);
         settings.setPatterns(new HashMap<>());
-        settings.setExpectedColumnsCount(Settings.MAX_EXPECTED_COLUMNS_COUNT / 2);
+        settings.setExpectedColumnsCount(MAX_EXPECTED_COLUMNS_COUNT / 2);
         settings.setImageFileName("image-file-name.jpg");
 
+        //mock actions
         when(incomeImage.getWidth()).thenReturn(100);
         when(incomeImage.getHeight()).thenReturn(200);
         when(incomeImage.getSubImage(anyInt(), anyInt(), anyInt(), anyInt())).thenReturn(new InformationalImage(1, 1, InformationalImage.TYPE_INT_RGB));

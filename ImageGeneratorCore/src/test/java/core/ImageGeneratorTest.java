@@ -1,6 +1,5 @@
 package core;
 
-import domain.InformationalColor;
 import domain.InformationalImage;
 import org.junit.Before;
 import org.junit.Rule;
@@ -10,8 +9,6 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import system.ObjectTypeConverter;
 import system.ResourceReader;
-
-import java.util.Map;
 
 import static domain.InformationalColor.*;
 import static java.util.stream.Collectors.toMap;
@@ -24,13 +21,10 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ImageGeneratorTest {
 
-    private ImageGenerator imageGenerator = new BasicImageGenerator();
-
-    private Settings settings;
-
+    private ImageGenerator imageGenerator     = new BasicImageGenerator();
     private ResourceReader resourceReader     = new ResourceReader();
     private ObjectTypeConverter typeConverter = new ObjectTypeConverter();
-
+    private Settings settings                 = mock(BasicSettings.class);
     private InformationalImage incomeImage;
 
     @Rule
@@ -38,15 +32,15 @@ public class ImageGeneratorTest {
 
     @Before
     public void setUp() throws Exception {
-        settings = mock(BasicSettings.class);
+
+        //set fields
         imageGenerator.setSettings(settings);
 
-        Map<InformationalColor, InformationalImage> patterns = resourceReader.readFiles("images/colors").stream().collect(toMap(
+        //mock actions
+        when(settings.getPatterns()).thenReturn(resourceReader.readFiles("images/colors").stream().collect(toMap(
                 file -> typeConverter.informationalImage(file).averagedColor(),
                 file -> typeConverter.informationalImage(file)
-        ));
-
-        when(settings.getPatterns()).thenReturn(patterns);
+        )));
         when(settings.getExpectedColumnsCount()).thenReturn(31); //31 -  because we want to move into incrementing loop for image width
         when(settings.getSubImage(anyInt(), anyInt(), anyInt(), anyInt())).thenCallRealMethod();
     }
