@@ -7,10 +7,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import system.ObjectTypeConverter;
 import system.ResourceReader;
 
@@ -23,34 +20,27 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 
-@ContextConfiguration(locations = {
-        "classpath:spring/basic-image-generator.xml"
-})
-@DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class ImageGeneratorTest {
 
-    @Autowired
-    private ImageGenerator imageGenerator;
+    private ImageGenerator imageGenerator = new BasicImageGenerator();
 
-    @Autowired
     private Settings settings;
 
-    @Autowired
-    private ResourceReader resourceReader;
+    private ResourceReader resourceReader     = new ResourceReader();
+    private ObjectTypeConverter typeConverter = new ObjectTypeConverter();
 
-    @Autowired
-    private ObjectTypeConverter typeConverter;
-
-    private InformationalImage originalImage;
+    private InformationalImage incomeImage;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() throws Exception {
+        settings = mock(BasicSettings.class);
+        imageGenerator.setSettings(settings);
+
         Map<InformationalColor, InformationalImage> patterns = resourceReader.readFiles("images/colors").stream().collect(toMap(
                 file -> typeConverter.informationalImage(file).averagedColor(),
                 file -> typeConverter.informationalImage(file)
@@ -65,10 +55,10 @@ public class ImageGeneratorTest {
     public void generateWhiteImage() throws Exception {
 
         //Arrange
-        this.originalImage = typeConverter.informationalImage(resourceReader.readFile("images/testable/1-white.jpg"));
-        when(settings.getIncomeImage()).thenReturn(originalImage);
-        when(settings.getImageWidth()).thenReturn(originalImage.getWidth());
-        when(settings.getImageHeight()).thenReturn(originalImage.getHeight());
+        this.incomeImage = typeConverter.informationalImage(resourceReader.readFile("images/testable/1-white.jpg"));
+        when(settings.getIncomeImage()).thenReturn(incomeImage);
+        when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
+        when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
 
         //Act
         InformationalImage generatedImage = imageGenerator.generateImage();
@@ -85,10 +75,10 @@ public class ImageGeneratorTest {
     public void generateGrayImage() throws Exception {
 
         //Arrange
-        this.originalImage = typeConverter.informationalImage(resourceReader.readFile("images/testable/2-gray.jpg"));
-        when(settings.getIncomeImage()).thenReturn(originalImage);
-        when(settings.getImageWidth()).thenReturn(originalImage.getWidth());
-        when(settings.getImageHeight()).thenReturn(originalImage.getHeight());
+        this.incomeImage = typeConverter.informationalImage(resourceReader.readFile("images/testable/2-gray.jpg"));
+        when(settings.getIncomeImage()).thenReturn(incomeImage);
+        when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
+        when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
 
         //Act
         InformationalImage generatedImage = imageGenerator.generateImage();
@@ -105,10 +95,10 @@ public class ImageGeneratorTest {
     public void generateBlackImage() throws Exception {
 
         //Arrange
-        this.originalImage = typeConverter.informationalImage(resourceReader.readFile("images/testable/3-black.jpg"));
-        when(settings.getIncomeImage()).thenReturn(originalImage);
-        when(settings.getImageWidth()).thenReturn(originalImage.getWidth());
-        when(settings.getImageHeight()).thenReturn(originalImage.getHeight());
+        this.incomeImage = typeConverter.informationalImage(resourceReader.readFile("images/testable/3-black.jpg"));
+        when(settings.getIncomeImage()).thenReturn(incomeImage);
+        when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
+        when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
 
         //Act
         InformationalImage generatedImage = imageGenerator.generateImage();
@@ -125,10 +115,10 @@ public class ImageGeneratorTest {
     public void generate4x4Image() throws Exception {
 
         //Arrange
-        this.originalImage = typeConverter.informationalImage(resourceReader.readFile("images/testable/4x4.jpg"));
-        when(settings.getIncomeImage()).thenReturn(originalImage);
-        when(settings.getImageWidth()).thenReturn(originalImage.getWidth());
-        when(settings.getImageHeight()).thenReturn(originalImage.getHeight());
+        this.incomeImage = typeConverter.informationalImage(resourceReader.readFile("images/testable/4x4.jpg"));
+        when(settings.getIncomeImage()).thenReturn(incomeImage);
+        when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
+        when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
 
         //Act
         InformationalImage generatedImage = imageGenerator.generateImage();

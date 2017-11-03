@@ -1,14 +1,12 @@
 package core;
 
+import domain.InformationalImage;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import domain.InformationalImage;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import javax.annotation.Resource;
+import java.util.HashMap;
 
 import static core.Settings.MAX_EXPECTED_COLUMNS_COUNT;
 import static org.hamcrest.core.Is.is;
@@ -18,23 +16,24 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
-@ContextConfiguration(locations = {
-        "classpath:spring/basic-settings.xml"
-})
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class SettingsTest {
 
-    @Autowired
-    private Settings settings;
-
-    @Resource(name = "image")
-    private InformationalImage image;
+    private Settings settings = new BasicSettings();
+    private InformationalImage incomeImage;
 
     @Before
     public void setUp() throws Exception {
-        when(image.getWidth()).thenReturn(100);
-        when(image.getHeight()).thenReturn(200);
-        when(image.getSubImage(anyInt(), anyInt(), anyInt(), anyInt())).thenReturn(new InformationalImage(1, 1, InformationalImage.TYPE_INT_RGB));
+        incomeImage = mock(InformationalImage.class);
+
+        settings.setIncomeImage(incomeImage);
+        settings.setPatterns(new HashMap<>());
+        settings.setExpectedColumnsCount(Settings.MAX_EXPECTED_COLUMNS_COUNT / 2);
+        settings.setImageFileName("image-file-name.jpg");
+
+        when(incomeImage.getWidth()).thenReturn(100);
+        when(incomeImage.getHeight()).thenReturn(200);
+        when(incomeImage.getSubImage(anyInt(), anyInt(), anyInt(), anyInt())).thenReturn(new InformationalImage(1, 1, InformationalImage.TYPE_INT_RGB));
     }
 
     @Test
@@ -55,13 +54,13 @@ public class SettingsTest {
     @Test
     public void getImageWidth() throws Exception {
         assertThat(settings.getImageWidth(), is(100));
-        verify(image, times(1)).getWidth();
+        verify(incomeImage, times(1)).getWidth();
     }
 
     @Test
     public void getImageHeight() throws Exception {
         assertThat(settings.getImageHeight(), is(200));
-        verify(image, times(1)).getHeight();
+        verify(incomeImage, times(1)).getHeight();
     }
 
     @Test
@@ -69,7 +68,7 @@ public class SettingsTest {
         InformationalImage subImage = settings.getSubImage(1, 1, 1, 1);
 
         assertNotNull(subImage);
-        verify(image, times(1)).getSubImage(eq(1), eq(1), eq(1), eq(1));
+        verify(incomeImage, times(1)).getSubImage(eq(1), eq(1), eq(1), eq(1));
         assertThat(subImage.getWidth(), is(1));
         assertThat(subImage.getHeight(), is(1));
     }
