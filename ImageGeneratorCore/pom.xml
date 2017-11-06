@@ -20,4 +20,8 @@
     <name>ImageGeneratorCore</name>
     <packaging>jar</packaging>
 
+    <build>
+        <finalName>ImageGeneratorCore</finalName>
+    </build>
+
 </project>
