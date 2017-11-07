@@ -13,6 +13,7 @@
     <modules>
         <module>ImageGeneratorApp</module>
         <module>ImageGeneratorCore</module>
+        <!--TODO: add gallery module-->
     </modules>
 
     <!--packaging properties-->
