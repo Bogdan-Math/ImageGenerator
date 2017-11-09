@@ -22,9 +22,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
-@ContextConfiguration(locations = {
-        "classpath:spring/cached-patterns-service.xml"
-})
+@ContextConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 public class CachedPatternsServiceTest {
 
