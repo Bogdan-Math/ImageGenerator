@@ -11,9 +11,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
-@ContextConfiguration(locations = {
-        "classpath:spring/footer-layout.xml"
-})
+@ContextConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 public class FooterLayoutTest {
 
