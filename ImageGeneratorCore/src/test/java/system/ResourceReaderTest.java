@@ -27,9 +27,31 @@ public class ResourceReaderTest {
     }
 
     @Test
-    public void readFiles() throws Exception {
+    public void readCommonsImageFiles() throws Exception {
         String path = "images/colors";
         int patternsCount = 24;
+
+        List<File> fileList = resourceReader.readFiles(path);
+
+        assertThat(fileList, notNullValue());
+        assertThat(fileList.size(), equalTo(patternsCount));
+    }
+
+    @Test
+    public void readFlagsImageFiles() throws Exception {
+        String path = "images/flags";
+        int patternsCount = 196;
+
+        List<File> fileList = resourceReader.readFiles(path);
+
+        assertThat(fileList, notNullValue());
+        assertThat(fileList.size(), equalTo(patternsCount));
+    }
+
+    @Test
+    public void readPlainsImageFiles() throws Exception {
+        String path = "images/plains";
+        int patternsCount = 3;
 
         List<File> fileList = resourceReader.readFiles(path);
 
