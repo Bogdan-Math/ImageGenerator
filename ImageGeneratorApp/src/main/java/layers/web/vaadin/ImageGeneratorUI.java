@@ -4,8 +4,10 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
+import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 import layers.web.vaadin.layout.buttons.ButtonsLayout;
 import layers.web.vaadin.layout.footer.FooterLayout;
 import layers.web.vaadin.layout.gallery.GalleryLayout;
@@ -47,14 +49,24 @@ public class ImageGeneratorUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
 
         VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout.addComponent(headerLayout);
 
-        verticalLayout.addComponents(headerLayout,
-                                     sliderLayout,
-                                     patternsGroupLayout,
-                                     buttonsLayout,
-                                     imagesLayout,
-                                     footerLayout,
-                                     galleryLayout);
+        TabSheet tabsheet = new TabSheet();
+        tabsheet.addStyleName(ValoTheme.TABSHEET_CENTERED_TABS);
+        verticalLayout.addComponent(tabsheet);
+
+        VerticalLayout generatorTab = new VerticalLayout();
+        generatorTab.addComponents(sliderLayout,
+                           patternsGroupLayout,
+                           buttonsLayout,
+                           imagesLayout,
+                           footerLayout);
+        tabsheet.addTab(generatorTab, "Generator");
+
+        VerticalLayout galleryTab = new VerticalLayout();
+        galleryTab.addComponents(galleryLayout);
+        galleryTab.setCaption("Gallery");
+        tabsheet.addTab(galleryTab);
 
         setContent(verticalLayout);
     }

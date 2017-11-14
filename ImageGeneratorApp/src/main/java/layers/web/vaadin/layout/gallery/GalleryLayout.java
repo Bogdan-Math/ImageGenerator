@@ -28,7 +28,7 @@ public class GalleryLayout extends VerticalLayout {
     private ResourceReader resourceReader;
 
     private List<Image> layoutImages;
-    private Gallery gallery;
+//    private Gallery gallery;
 
     @PostConstruct
     public void postConstruct() {
@@ -45,29 +45,29 @@ public class GalleryLayout extends VerticalLayout {
 
         layoutImages.forEach(allImagesLayout::addComponent);
 
-        gallery = new Gallery();
-        layoutImages.forEach(img -> img.addClickListener(event -> {
-            List<Picture> galleryImages = layoutImages.stream()
-                                                      .map(this::buildGalleryImage)
-                                                      .collect(toList());
-
-            gallery.showGallery(buildGalleryImage(img), galleryImages);
-        }));
-
-        allImagesLayout.addComponent(gallery);
+//        gallery = new Gallery();
+//        layoutImages.forEach(img -> img.addClickListener(event -> {
+//            List<Picture> galleryImages = layoutImages.stream()
+//                                                      .map(this::buildGalleryImage)
+//                                                      .collect(toList());
+//
+//            gallery.showGallery(buildGalleryImage(img), galleryImages);
+//        }));
+//
+//        allImagesLayout.addComponent(gallery);
         addComponent(allImagesLayout);
     }
 
-    private Picture buildGalleryImage(Image layoutImage) {
-        return new Builder().href(getResourceURL(layoutImage, layoutImage.getCaption()))
-                            .thumbnail(getResourceURL(layoutImage, layoutImage.getCaption()))
-                            .build();
-    }
+//    private Picture buildGalleryImage(Image layoutImage) {
+//        return new Builder().href(getResourceURL(layoutImage, layoutImage.getCaption()))
+//                            .thumbnail(getResourceURL(layoutImage, layoutImage.getCaption()))
+//                            .build();
+//    }
 
-    private String getResourceURL(AbstractClientConnector connector, String fileName) {
-        String domain       = UI.getCurrent().getPage().getLocation().getSchemeSpecificPart();
-        Integer uiId        = connector.getUI().getUIId();
-        String connectorId  = connector.getConnectorId();
-        return domain + "APP/connector/" + uiId + "/" + connectorId + "/source/" + fileName;
-    }
+//    private String getResourceURL(AbstractClientConnector connector, String fileName) {
+//        String domain       = UI.getCurrent().getPage().getLocation().getSchemeSpecificPart();
+//        Integer uiId        = connector.getUI().getUIId();
+//        String connectorId  = connector.getConnectorId();
+//        return domain + "APP/connector/" + uiId + "/" + connectorId + "/source/" + fileName;
+//    }
 }
