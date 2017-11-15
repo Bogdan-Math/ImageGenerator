@@ -8,9 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.Assert.assertNotNull;
 
-@ContextConfiguration(locations = {
-        "classpath:spring/patterns-group-layout.xml"
-})
+@ContextConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 public class PatternsGroupLayoutTest {
 
@@ -20,6 +18,7 @@ public class PatternsGroupLayoutTest {
     @Test
     public void postConstruct() throws Exception {
         assertNotNull(patternsGroupLayout);
+        assertNotNull(patternsGroupLayout.getPatternsGroup());
     }
 
 }

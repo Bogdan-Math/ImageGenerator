@@ -9,9 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-@ContextConfiguration(locations = {
-        "classpath:spring/images-layout.xml"
-})
+@ContextConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ImagesLayoutTest {
 
