@@ -13,7 +13,6 @@
     <modules>
         <module>ImageGeneratorApp</module>
         <module>ImageGeneratorCore</module>
-        <!--TODO: add gallery module-->
     </modules>
 
     <!--packaging properties-->
@@ -72,13 +71,6 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
-        </dependency>
-
-        <!--TODO: add separated custom maven module in this app-->
-        <dependency>
-            <groupId>VaadinBlueImpGallery</groupId>
-            <artifactId>vaadin-blueimp-gallery</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
