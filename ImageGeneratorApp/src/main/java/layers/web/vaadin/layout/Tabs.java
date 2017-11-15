@@ -69,9 +69,7 @@ public class Tabs extends TabSheet {
     }
 
     private Layout newTab(Component... components) {
-        VerticalLayout newTab = new VerticalLayout();
-        newTab.addComponents(components);
-        return newTab;
+        return new VerticalLayout(components);
     }
 
 }
