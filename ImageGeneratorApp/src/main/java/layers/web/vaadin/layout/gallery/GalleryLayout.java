@@ -24,6 +24,8 @@ import static java.util.stream.IntStream.iterate;
 @Scope("session")
 public class GalleryLayout extends VerticalLayout {
 
+    private static final String GALLERY_STYLE = "gallery-image";
+
     @Autowired
     private ResourceReader resourceReader;
 
@@ -36,7 +38,7 @@ public class GalleryLayout extends VerticalLayout {
                 .stream()
                 .map(imgFile -> new Image() {{
                     setSource(new FileResource(imgFile));
-                    setStyleName("gallery-image");
+                    setStyleName(GALLERY_STYLE);
                 }}).collect(toList());
         Map<Integer, List<Image>> pagedGallery = pagedGallery(images, 6);
         pagedGallery.keySet().forEach(key -> allImagesLayout.addComponent(addNewLine(pagedGallery.get(key))));

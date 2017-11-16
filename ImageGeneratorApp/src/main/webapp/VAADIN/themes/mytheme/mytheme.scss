@@ -37,18 +37,19 @@
   //noinspection SassScssResolvedByNameOnly
   @include valo;
 
-  .v-image-bordered,
+  .bordered-image,
   .gallery-image {
     border: 3px solid gray;
     padding: 3px;
     border-radius: 15px;
   }
 
-  .v-image-bordered {
+  .bordered-image {
     min-height: 250px;
   }
 
   .gallery-image {
+    min-height: 25px;
     cursor: pointer;
   }
 

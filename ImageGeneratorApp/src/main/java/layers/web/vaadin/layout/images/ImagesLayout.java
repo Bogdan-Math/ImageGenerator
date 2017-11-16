@@ -14,6 +14,8 @@ import javax.annotation.PostConstruct;
 @Scope("session")
 public class ImagesLayout extends GridLayout {
 
+    private static final String BORDERED_IMAGE = "bordered-image";
+
     @Getter
     @Autowired
     @Qualifier(value = "originalImageView")
@@ -35,8 +37,8 @@ public class ImagesLayout extends GridLayout {
         originalImageView.setSizeFull();
         generatedImageView.setSizeFull();
 
-        originalImageView.setStyleName("bordered");
-        generatedImageView.setStyleName("bordered");
+        originalImageView.setStyleName(BORDERED_IMAGE);
+        generatedImageView.setStyleName(BORDERED_IMAGE);
 
         addComponents(originalImageView, generatedImageView);
     }
