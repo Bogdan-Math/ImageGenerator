@@ -40,8 +40,10 @@ public class GalleryLayout extends VerticalLayout {
                     setSource(new FileResource(imgFile));
                     setStyleName(GALLERY_STYLE);
                 }}).collect(toList());
+
         Map<Integer, List<Image>> pagedGallery = pagedGallery(images, 6);
         pagedGallery.keySet().forEach(key -> allImagesLayout.addComponent(addNewLine(pagedGallery.get(key))));
+
         addComponent(allImagesLayout);
     }
 
