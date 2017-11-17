@@ -18,8 +18,8 @@ public class ImagesLayoutTest {
 
     @Test
     public void postConstruct() throws Exception {
-        assertThat(imagesLayout.getOriginalImageView().getStyleName(), is("bordered"));
-        assertThat(imagesLayout.getGeneratedImageView().getStyleName(), is("bordered"));
+        assertThat(imagesLayout.getOriginalImageView().getStyleName(), is("bordered-image"));
+        assertThat(imagesLayout.getGeneratedImageView().getStyleName(), is("bordered-image"));
     }
 
 }
