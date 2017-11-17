@@ -1,30 +1,33 @@
 package layers.web.vaadin.layout.footer;
 
+import layers.web.vaadin.ImageGeneratorPageObject;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.title;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
 public class FooterLayoutUIIT {
 
+    private ImageGeneratorPageObject imageGeneratorPage;
+
     @Before
     public void setUp() throws Exception {
-        open("https://image-generator-app.herokuapp.com/");
+        this.imageGeneratorPage = new ImageGeneratorPageObject();
+        open(imageGeneratorPage.url());
     }
 
     @Test
-    public void javarushLinkSpecification() throws Exception {
-        $(By.id("javarush-link-id")).click();
+    public void javarushLink() throws Exception {
+        imageGeneratorPage.javarushLink().click();
         assertThat(title(), containsString("JavaRush"));
     }
 
     @Test
     public void flagsLink() throws Exception {
-        $(By.id("flags-link-id")).click();
+        imageGeneratorPage.flagsLink().click();
         assertThat(title(), containsString("IconDrawer"));
     }
 
