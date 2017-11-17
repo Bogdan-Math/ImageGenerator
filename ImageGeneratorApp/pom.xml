@@ -39,6 +39,7 @@
         <spring.test.version>4.3.3.RELEASE</spring.test.version>
         <selenium.firefox.driver.version>3.6.0</selenium.firefox.driver.version>
         <lombok.version>1.16.16</lombok.version>
+        <maven.failsafe.plugin.version>2.20.1</maven.failsafe.plugin.version>
     </properties>
 
     <build>
@@ -89,6 +90,20 @@
                         </fileset>
                     </filesets>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven.failsafe.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -175,17 +190,11 @@
             <scope>test</scope>
         </dependency>
 
-        <!--Selenium framework (tests)-->
+        <!--Selenide framework (tests) - UI tests (based on Selenium)-->
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-firefox-driver</artifactId>
-            <version>${selenium.firefox.driver.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-support</artifactId>
-            <version>${selenium.firefox.driver.version}</version>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>4.8</version>
             <scope>test</scope>
         </dependency>
 
