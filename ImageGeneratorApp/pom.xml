@@ -23,10 +23,11 @@
     <!--project properties and versions of modules-->
     <properties>
 
-        <!--app config for JETTY plugin-->
+        <!--JETTY plugin config for integration tests-->
         <maven.jetty.plugin.version>9.4.7.v20170914</maven.jetty.plugin.version>
         <maven.jetty.webapp.route>image-generator-app</maven.jetty.webapp.route>
-        <maven.jetty.webapp.port>8888</maven.jetty.webapp.port>
+        <maven.jetty.webapp.startPort>9090</maven.jetty.webapp.startPort>
+        <maven.jetty.webapp.stopPort>9191</maven.jetty.webapp.stopPort>
 
         <maven.war.plugin.version>2.6</maven.war.plugin.version>
         <maven.clean.plugin.version>3.0.0</maven.clean.plugin.version>
@@ -115,9 +116,27 @@
                         <contextPath>/${maven.jetty.webapp.route}</contextPath>
                     </webApp>
                     <httpConnector>
-                        <port>${maven.jetty.webapp.port}</port>
+                        <port>${maven.jetty.webapp.startPort}</port>
                     </httpConnector>
+                    <stopPort>${maven.jetty.webapp.stopPort}</stopPort>
+                    <stopKey>STOP</stopKey>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>start-jetty</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>stop-jetty</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

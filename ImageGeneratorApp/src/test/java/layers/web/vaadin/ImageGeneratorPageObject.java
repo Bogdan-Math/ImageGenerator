@@ -3,12 +3,15 @@ package layers.web.vaadin;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import static com.codeborne.selenide.Selenide.$;
 
 public class ImageGeneratorPageObject {
 
-    public String url() {
-        return "https://image-generator-app.herokuapp.com/";
+    public URL url() throws MalformedURLException {
+        return new URL("http", "localhost", 9090,"/image-generator-app");
     }
 
     public SelenideElement codacyLink() {

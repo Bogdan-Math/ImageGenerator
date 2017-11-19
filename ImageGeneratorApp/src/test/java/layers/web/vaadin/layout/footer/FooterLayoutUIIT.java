@@ -1,5 +1,6 @@
 package layers.web.vaadin.layout.footer;
 
+import com.codeborne.selenide.Configuration;
 import layers.web.vaadin.ImageGeneratorPageObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +16,7 @@ public class FooterLayoutUIIT {
 
     @Before
     public void setUp() throws Exception {
+        Configuration.browser = "chrome";
         this.imageGeneratorPage = new ImageGeneratorPageObject();
         open(imageGeneratorPage.url());
     }
