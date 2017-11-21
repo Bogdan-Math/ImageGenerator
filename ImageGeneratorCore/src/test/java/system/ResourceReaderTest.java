@@ -59,4 +59,8 @@ public class ResourceReaderTest {
         assertThat(fileList.size(), equalTo(patternsCount));
     }
 
+    @Test
+    public void readURL() throws Exception {
+        //TODO: add test
+    }
 }

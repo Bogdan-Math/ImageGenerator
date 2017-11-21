@@ -140,6 +140,7 @@
             </plugin>
         </plugins>
 
+        <!--Maven properties would be mapped to files in this path-->
         <testResources>
             <testResource>
                 <directory>src/test/resources</directory>

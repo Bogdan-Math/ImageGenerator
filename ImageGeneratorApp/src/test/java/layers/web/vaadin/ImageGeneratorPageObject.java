@@ -2,6 +2,7 @@ package layers.web.vaadin;
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+import system.ResourceReader;
 
 import java.net.URL;
 import java.util.Properties;
@@ -12,17 +13,15 @@ import static java.lang.Integer.valueOf;
 public class ImageGeneratorPageObject {
 
     public URL url() throws Exception {
-        Properties props = new Properties();
-        URL url          = getClass().getClassLoader()
-                                     .getResource("webapp-integration-tests.properties");
+        URL propertiesURL     = new ResourceReader().readURL("webapp-integration-tests.properties");
+        Properties properties = new Properties();
 
-        assert url != null;
-        props.load(url.openStream());
+        properties.load(propertiesURL.openStream());
 
-        String protocol = props.getProperty("webapp.protocol");
-        String host     = props.getProperty("webapp.host");
-        Integer port    = valueOf(props.getProperty("webapp.port"));
-        String route    = "/" + props.getProperty("webapp.route");
+        String protocol = properties.getProperty("webapp.protocol");
+        String host     = properties.getProperty("webapp.host");
+        Integer port    = valueOf(properties.getProperty("webapp.port"));
+        String route    = "/" + properties.getProperty("webapp.route");
 
         return new URL(protocol, host, port, route);
     }
