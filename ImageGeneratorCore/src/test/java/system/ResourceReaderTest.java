@@ -4,10 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.net.URL;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 public class ResourceReaderTest {
@@ -17,13 +17,6 @@ public class ResourceReaderTest {
     @Before
     public void setUp() throws Exception {
         this.resourceReader = new ResourceReader();
-    }
-
-    @Test
-    public void readFile() throws Exception {
-        assertTrue(resourceReader.readFile("images/testable/4x4.jpg").exists());
-        assertTrue(resourceReader.readFile("images/testable/4x4.jpg").isFile());
-        assertFalse(resourceReader.readFile("images/testable/4x4.jpg").isDirectory());
     }
 
     @Test
@@ -60,7 +53,18 @@ public class ResourceReaderTest {
     }
 
     @Test
+    public void readFile() throws Exception {
+        File file = resourceReader.readFile("images/testable/4x4.jpg");
+
+        assertTrue(file.exists());
+        assertTrue(file.isFile());
+        assertFalse(file.isDirectory());
+    }
+
+    @Test
     public void readURL() throws Exception {
-        //TODO: add test
+        URL url = resourceReader.readURL("images/testable/4x4.jpg");
+
+        assertThat(url, is(notNullValue()));
     }
 }
