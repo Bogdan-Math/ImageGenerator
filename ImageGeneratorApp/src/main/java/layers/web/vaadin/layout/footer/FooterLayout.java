@@ -17,6 +17,9 @@ import static layers.web.vaadin.additional.Reference.JAVARUSH;
 @Scope("session")
 public class FooterLayout extends HorizontalLayout {
 
+    public static final String JAVARUSH_LINK_ID = "javarush-link-id";
+    public static final String FLAGS_LINK_ID    = "flags-link-id";
+
     @Getter
     private Link javarushLink;
 
@@ -29,8 +32,8 @@ public class FooterLayout extends HorizontalLayout {
         javarushLink = JAVARUSH.link();
         flagsLink = FLAGS.link();
 
-        javarushLink.setId("javarush-link-id");
-        flagsLink.setId("flags-link-id");
+        javarushLink.setId(JAVARUSH_LINK_ID);
+        flagsLink.setId(FLAGS_LINK_ID);
 
         HorizontalLayout footerLinksLayout = footerLinksLayout(javarushLink, flagsLink);
 

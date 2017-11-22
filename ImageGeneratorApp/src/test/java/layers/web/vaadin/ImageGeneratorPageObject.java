@@ -1,5 +1,6 @@
 package layers.web.vaadin;
 
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 import system.ResourceReader;
@@ -9,8 +10,16 @@ import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.$;
 import static java.lang.Integer.valueOf;
+import static layers.web.vaadin.layout.footer.FooterLayout.FLAGS_LINK_ID;
+import static layers.web.vaadin.layout.footer.FooterLayout.JAVARUSH_LINK_ID;
+import static layers.web.vaadin.layout.header.HeaderLayout.CODACY_LINK_ID;
+import static layers.web.vaadin.layout.header.HeaderLayout.GITHUB_LINK_ID;
 
 public class ImageGeneratorPageObject {
+
+    public ImageGeneratorPageObject() {
+        Configuration.browser = "chrome";
+    }
 
     public URL url() throws Exception {
         URL propertiesURL     = new ResourceReader().readURL("webapp-integration-tests.properties");
@@ -27,18 +36,18 @@ public class ImageGeneratorPageObject {
     }
 
     public SelenideElement codacyLink() {
-        return $(By.id("codacy-link-id"));
+        return $(By.id(CODACY_LINK_ID));
     }
 
     public SelenideElement githubLink() {
-        return $(By.id("github-link-id"));
+        return $(By.id(GITHUB_LINK_ID));
     }
 
     public SelenideElement javarushLink() {
-        return $(By.id("javarush-link-id"));
+        return $(By.id(JAVARUSH_LINK_ID));
     }
 
     public SelenideElement flagsLink() {
-        return $(By.id("flags-link-id"));
+        return $(By.id(FLAGS_LINK_ID));
     }
 }

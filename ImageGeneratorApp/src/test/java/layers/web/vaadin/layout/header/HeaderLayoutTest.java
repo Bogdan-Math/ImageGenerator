@@ -11,6 +11,7 @@ import static com.vaadin.ui.Alignment.TOP_LEFT;
 import static com.vaadin.ui.Alignment.TOP_RIGHT;
 import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
@@ -28,8 +29,8 @@ public class HeaderLayoutTest {
 
         assertNotNull(headerLayout);
         assertThat(headerLayout.getComponentCount(), is(2));
-        assertThat(codacyLink.getId(), is("codacy-link-id"));
-        assertThat(githubLink.getId(), is("github-link-id"));
+        assertThat(codacyLink.getId(), is(notNullValue()));
+        assertThat(githubLink.getId(), is(notNullValue()));
         assertEquals(TOP_LEFT,  headerLayout.getComponentAlignment(codacyLink));
         assertEquals(TOP_RIGHT, headerLayout.getComponentAlignment(githubLink));
     }

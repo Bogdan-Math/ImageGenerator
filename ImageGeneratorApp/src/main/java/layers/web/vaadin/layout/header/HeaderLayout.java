@@ -16,6 +16,9 @@ import static layers.web.vaadin.additional.Reference.GITHUB;
 @Scope("session")
 public class HeaderLayout extends HorizontalLayout {
 
+    public static final String CODACY_LINK_ID = "codacy-link-id";
+    public static final String GITHUB_LINK_ID = "github-link-id";
+
     @Getter
     private Link codacyLink;
 
@@ -28,8 +31,8 @@ public class HeaderLayout extends HorizontalLayout {
         codacyLink = CODACY.link();
         githubLink = GITHUB.link();
 
-        codacyLink.setId("codacy-link-id");
-        githubLink.setId("github-link-id");
+        codacyLink.setId(CODACY_LINK_ID);
+        githubLink.setId(GITHUB_LINK_ID);
 
         addComponents(codacyLink, githubLink);
 

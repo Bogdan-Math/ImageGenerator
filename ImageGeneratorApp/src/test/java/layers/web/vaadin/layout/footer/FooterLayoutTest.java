@@ -8,7 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 @ContextConfiguration
@@ -23,9 +23,9 @@ public class FooterLayoutTest {
         Link javarushLink = footerLayout.getJavarushLink();
         Link flagsLink    = footerLayout.getFlagsLink();
 
-        assertNotNull(footerLayout);
-        assertThat(javarushLink.getId(), is("javarush-link-id"));
-        assertThat(flagsLink.getId(), is("flags-link-id"));
+        assertThat(footerLayout, is(notNullValue()));
+        assertThat(javarushLink.getId(), is(notNullValue()));
+        assertThat(flagsLink.getId(), is(notNullValue()));
     }
 
 }
