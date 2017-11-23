@@ -21,8 +21,8 @@ import javax.annotation.PostConstruct;
 @Scope("session")
 public class Tabs extends TabSheet {
 
-    private static final String GENERATOR = "GENERATOR";
-    private static final String GALLERY   = "GALLERY";
+    public static final String GENERATOR = "GENERATOR";
+    public static final String GALLERY   = "GALLERY";
 
     @Autowired
     private SliderLayout sliderLayout;

@@ -6,7 +6,10 @@ import org.openqa.selenium.By;
 
 import java.net.URL;
 
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
+import static layers.web.vaadin.layout.Tabs.GALLERY;
+import static layers.web.vaadin.layout.Tabs.GENERATOR;
 import static layers.web.vaadin.layout.footer.FooterLayout.FLAGS_LINK_ID;
 import static layers.web.vaadin.layout.footer.FooterLayout.JAVARUSH_LINK_ID;
 import static layers.web.vaadin.layout.header.HeaderLayout.CODACY_LINK_ID;
@@ -30,6 +33,14 @@ public class ImageGeneratorPageObject {
 
     public URL url() throws Exception {
         return new URL(protocol, host, port, route);
+    }
+
+    public SelenideElement generatorTab() {
+        return $(byText(GENERATOR));
+    }
+
+    public SelenideElement galleryTab() {
+        return $(byText(GALLERY));
     }
 
     public SelenideElement codacyLink() {
