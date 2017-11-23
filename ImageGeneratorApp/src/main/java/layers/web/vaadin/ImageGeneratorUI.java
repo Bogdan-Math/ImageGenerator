@@ -7,6 +7,7 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import layers.web.vaadin.layout.Tabs;
+import layers.web.vaadin.layout.footer.FooterLayout;
 import layers.web.vaadin.layout.header.HeaderLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -23,11 +24,14 @@ public class ImageGeneratorUI extends UI {
     @Autowired
     private Tabs tabs;
 
+    @Autowired
+    private FooterLayout footerLayout;
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         VerticalLayout verticalLayout = new VerticalLayout();
 
-        verticalLayout.addComponents(headerLayout, tabs);
+        verticalLayout.addComponents(headerLayout, tabs, footerLayout);
 
         setContent(verticalLayout);
     }

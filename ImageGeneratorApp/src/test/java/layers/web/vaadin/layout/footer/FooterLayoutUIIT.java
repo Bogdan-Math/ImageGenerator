@@ -23,7 +23,6 @@ public class FooterLayoutUIIT {
     @Before
     public void setUp() throws Exception {
         open(imageGeneratorPage.url());
-        imageGeneratorPage.generatorTab().click();
     }
 
     @Test

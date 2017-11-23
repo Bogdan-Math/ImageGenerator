@@ -7,7 +7,6 @@ import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import layers.web.vaadin.layout.buttons.ButtonsLayout;
-import layers.web.vaadin.layout.footer.FooterLayout;
 import layers.web.vaadin.layout.gallery.GalleryLayout;
 import layers.web.vaadin.layout.images.ImagesLayout;
 import layers.web.vaadin.layout.patterns.PatternsGroupLayout;
@@ -37,9 +36,6 @@ public class Tabs extends TabSheet {
     private ImagesLayout imagesLayout;
 
     @Autowired
-    private FooterLayout footerLayout;
-
-    @Autowired
     private GalleryLayout galleryLayout;
 
     @PostConstruct
@@ -54,8 +50,7 @@ public class Tabs extends TabSheet {
         Layout generatorTab = newTab(sliderLayout,
                                      patternsGroupLayout,
                                      buttonsLayout,
-                                     imagesLayout,
-                                     footerLayout);
+                                     imagesLayout);
 
         generatorTab.setCaption(GENERATOR);
         return generatorTab;
