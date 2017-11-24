@@ -13,7 +13,9 @@ import static com.codeborne.selenide.Selenide.title;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-@ContextConfiguration
+@ContextConfiguration(locations = {
+        "classpath*:layers/web/vaadin/UIIT-context.xml"
+})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class HeaderLayoutUIIT {
 
