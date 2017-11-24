@@ -12,12 +12,10 @@ import system.ResourceReader;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.Map;
 
 import static domain.PatternType.COMMONS;
 import static java.lang.Integer.min;
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
 import static java.util.stream.IntStream.iterate;
 
 @SpringComponent
@@ -41,16 +39,17 @@ public class GalleryLayout extends VerticalLayout {
                     setStyleName(GALLERY_STYLE);
                 }}).collect(toList());
 
-        Map<Integer, List<Image>> pagedGallery = pagedGallery(images, 6);
-        pagedGallery.keySet().forEach(key -> allImagesLayout.addComponent(addNewLine(pagedGallery.get(key))));
+        List<List<Image>> pagedGallery = pagedGallery(images, 3);
+        pagedGallery.forEach(list -> allImagesLayout.addComponent(addNewLine(list)));
 
         addComponent(allImagesLayout);
     }
 
-    private Map<Integer, List<Image>> pagedGallery(List<Image> list, int pageSize) {
+    private List<List<Image>> pagedGallery(List<Image> list, int pageSize) {
         return iterate(0, i -> i + pageSize).limit((list.size() + pageSize - 1) / pageSize)
                                                   .boxed()
-                                                  .collect(toMap(i -> i / pageSize, i -> list.subList(i, min(i + pageSize, list.size()))));
+                                                  .map(i -> list.subList(i, min(i + pageSize, list.size())))
+                                                  .collect(toList());
     }
 
     private HorizontalLayout addNewLine(List<Image> images) {
