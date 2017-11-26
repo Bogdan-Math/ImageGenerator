@@ -14,7 +14,7 @@
         <constructor-arg name="protocol" value="${webapp.protocol}"/>
         <constructor-arg name="host"     value="${webapp.host}"/>
         <constructor-arg name="port"     value="${webapp.port}"/>
-        <constructor-arg name="route"    value="${webapp.route}"/>
+        <constructor-arg name="route"    value="/${webapp.route}"/>
     </bean>
 
 </beans>
