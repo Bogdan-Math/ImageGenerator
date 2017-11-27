@@ -1,8 +1,8 @@
 package layers.web.vaadin.layout.slider.listener;
 
 import com.vaadin.ui.Slider;
-import layers.web.vaadin.layout.slider.publisher.ColumnsCountPublisher;
 import layers.web.vaadin.additional.NotificationBuilder;
+import layers.web.vaadin.layout.slider.publisher.ColumnsCountPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -36,8 +36,9 @@ public class ExpectedColumnsCountSlider extends Slider implements ColumnsCountLi
             Integer expectedColumnsNumber = event.getValue().intValue();
             if (expectedColumnsNumber < HINT_EXPECTED_COLUMNS_COUNT) {
                 setValue(HINT_EXPECTED_COLUMNS_COUNT.doubleValue());
-                notificationBuilder.add(HINT_COLUMNS_COUNT_MESSAGE);
-                notificationBuilder.showAsHtml(HUMANIZED_MESSAGE);
+                notificationBuilder.add(HINT_COLUMNS_COUNT_MESSAGE)
+                                   .build()
+                                   .showAsHtml(HUMANIZED_MESSAGE);
                 return;
             }
 

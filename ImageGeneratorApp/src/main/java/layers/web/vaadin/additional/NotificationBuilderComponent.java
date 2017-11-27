@@ -17,31 +17,47 @@ import static java.util.stream.Collectors.joining;
 public class NotificationBuilderComponent implements NotificationBuilder {
 
     private List<String> notifications;
+    private String message;
 
     @PostConstruct
     public void postConstruct() {
         this.notifications = new LinkedList<>();
+        this.message       = "";
     }
 
     @Override
-    public void add(String notification) {
+    public NotificationBuilder add(String notification) {
         notifications.add(notification);
+        return this;
+    }
+
+    @Override
+    public NotificationBuilder build() {
+        this.message = notifications.stream()
+                                    .map(notification -> "- " + notification)
+                                    .collect(joining("\n"));
+        return this;
     }
 
     @Override
     public void showAsString(Type type) {
-        Notification.show(notifications.stream()
-                                       .map(notification -> "- " + notification)
-                                       .collect(joining("\n")), type);
+        Notification.show(message, type);
         notifications.clear();
     }
 
     @Override
     public void showAsHtml(Type type) {
-        new Notification(notifications.stream()
-                                      .map(notification -> "- " + notification)
-                                      .collect(joining("\n")), "", type, true)
-            .show(getCurrent());
+        new Notification(message, "", type, true).show(getCurrent());
         notifications.clear();
+    }
+
+    //TODO: add test and use it there
+    public List<String> getNotifications() {
+        return notifications;
+    }
+
+    //TODO: add test and use it there
+    public String getMessage() {
+        return message;
     }
 }

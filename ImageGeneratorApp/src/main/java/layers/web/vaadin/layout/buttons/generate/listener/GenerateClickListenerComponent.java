@@ -3,9 +3,9 @@ package layers.web.vaadin.layout.buttons.generate.listener;
 import com.vaadin.server.StreamResource;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Image;
-import domain.InformationalImage;
 import core.ImageGenerator;
 import core.Settings;
+import domain.InformationalImage;
 import layers.web.vaadin.additional.NotificationBuilder;
 import layers.web.vaadin.layout.buttons.download.listener.Downloader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,8 +53,9 @@ public class GenerateClickListenerComponent implements GenerateClickListener {
 
             downloader.setFileDownloadResource(generatedImageView.getSource());
 
-            notificationBuilder.add("Your image was generated.");
-            notificationBuilder.showAsString(TRAY_NOTIFICATION);
+            notificationBuilder.add("Your image was generated.")
+                               .build()
+                               .showAsString(TRAY_NOTIFICATION);
         });
 
     }
