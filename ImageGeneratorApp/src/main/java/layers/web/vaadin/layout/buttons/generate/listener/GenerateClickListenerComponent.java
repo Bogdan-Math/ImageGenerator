@@ -6,7 +6,7 @@ import com.vaadin.ui.Image;
 import core.ImageGenerator;
 import core.Settings;
 import domain.InformationalImage;
-import layers.web.vaadin.additional.NotificationBuilder;
+import layers.web.vaadin.additional.NotificationManager;
 import layers.web.vaadin.layout.buttons.download.listener.Downloader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 
 import static com.vaadin.ui.Notification.Type.TRAY_NOTIFICATION;
 import static java.util.Optional.ofNullable;
+import static layers.web.vaadin.additional.NotificationManager.showAsString;
 
 @Component
 @Scope("session")
@@ -34,7 +35,7 @@ public class GenerateClickListenerComponent implements GenerateClickListener {
     private Image generatedImageView;
 
     @Autowired
-    private NotificationBuilder notificationBuilder;
+    private NotificationManager notificationManager;
 
     @Autowired
     private Downloader downloader;
@@ -53,9 +54,7 @@ public class GenerateClickListenerComponent implements GenerateClickListener {
 
             downloader.setFileDownloadResource(generatedImageView.getSource());
 
-            notificationBuilder.add("Your image was generated.")
-                               .build()
-                               .showAsString(TRAY_NOTIFICATION);
+            showAsString(notificationManager.add("Your image was generated.").build(), TRAY_NOTIFICATION);
         });
 
     }

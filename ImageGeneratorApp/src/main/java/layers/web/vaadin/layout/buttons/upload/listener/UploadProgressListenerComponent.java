@@ -1,7 +1,7 @@
 package layers.web.vaadin.layout.buttons.upload.listener;
 
 import com.vaadin.spring.annotation.SpringComponent;
-import layers.web.vaadin.additional.NotificationBuilder;
+import layers.web.vaadin.additional.NotificationManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
@@ -13,7 +13,7 @@ public class UploadProgressListenerComponent implements UploadProgressListener {
     private UploadStartedListener startedListener;
 
     @Autowired
-    private NotificationBuilder notificationBuilder;
+    private NotificationManager notificationManager;
 
     @Override
     public void updateProgress(long readBytes, long contentLength) {
@@ -22,7 +22,7 @@ public class UploadProgressListenerComponent implements UploadProgressListener {
         if (maxSize < contentLength) {
             startedListener.getUpload().interruptUpload();
 
-            notificationBuilder.add("Oh, no! File size can not be more then 10 MB.");
+            notificationManager.add("Oh, no! File size can not be more then 10 MB.");
         }
     }
 }

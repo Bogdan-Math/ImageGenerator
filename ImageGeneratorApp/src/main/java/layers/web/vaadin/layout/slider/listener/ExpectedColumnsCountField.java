@@ -1,7 +1,7 @@
 package layers.web.vaadin.layout.slider.listener;
 
 import com.vaadin.ui.TextField;
-import layers.web.vaadin.additional.NotificationBuilder;
+import layers.web.vaadin.additional.NotificationManager;
 import layers.web.vaadin.layout.slider.publisher.ColumnsCountPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -14,6 +14,7 @@ import static com.vaadin.ui.Notification.Type.HUMANIZED_MESSAGE;
 import static core.Settings.MAX_EXPECTED_COLUMNS_COUNT;
 import static core.Settings.MIN_EXPECTED_COLUMNS_COUNT;
 import static java.lang.Integer.valueOf;
+import static layers.web.vaadin.additional.NotificationManager.showAsHtml;
 
 @Component
 @Scope("session")
@@ -23,7 +24,7 @@ public class ExpectedColumnsCountField extends TextField implements ColumnsCount
     private ColumnsCountPublisher columnsCountPublisher;
 
     @Autowired
-    private NotificationBuilder notificationBuilder;
+    private NotificationManager notificationManager;
 
     @PostConstruct
     public void postConstruct() {
@@ -35,9 +36,7 @@ public class ExpectedColumnsCountField extends TextField implements ColumnsCount
             //Check EMPTY value
             if (isNullOrEmpty(newValue)) {
                 setValue(event.getOldValue());
-                notificationBuilder.add(EMPTY_COLUMNS_COUNT_MESSAGE)
-                                   .build()
-                                   .showAsHtml(HUMANIZED_MESSAGE);
+                show(EMPTY_COLUMNS_COUNT_MESSAGE);
                 return;
             }
 
@@ -47,16 +46,12 @@ public class ExpectedColumnsCountField extends TextField implements ColumnsCount
                 if (newExpectedColumnsCount < MIN_EXPECTED_COLUMNS_COUNT ||
                         newExpectedColumnsCount > MAX_EXPECTED_COLUMNS_COUNT) {
                     setValue(event.getOldValue());
-                    notificationBuilder.add(BOUNDS_COLUMNS_COUNT_MESSAGE)
-                                       .build()
-                                       .showAsHtml(HUMANIZED_MESSAGE);
+                    show(BOUNDS_COLUMNS_COUNT_MESSAGE);
                     return;
                 }
             } catch (NumberFormatException e) {
                 setValue(event.getOldValue());
-                notificationBuilder.add(NUMERIC_COLUMNS_COUNT_MESSAGE)
-                                   .build()
-                                   .showAsHtml(HUMANIZED_MESSAGE);
+                show(NUMERIC_COLUMNS_COUNT_MESSAGE);
                 return;
             }
 
@@ -64,15 +59,17 @@ public class ExpectedColumnsCountField extends TextField implements ColumnsCount
             Integer expectedColumnsCount = valueOf(event.getValue());
             if (expectedColumnsCount < HINT_EXPECTED_COLUMNS_COUNT) {
                 setValue(HINT_EXPECTED_COLUMNS_COUNT.toString());
-                notificationBuilder.add(HINT_COLUMNS_COUNT_MESSAGE)
-                                   .build()
-                                   .showAsHtml(HUMANIZED_MESSAGE);
+                show(HINT_COLUMNS_COUNT_MESSAGE);
                 return;
             }
 
             // publish newValue
             columnsCountPublisher.publishNewValue(expectedColumnsCount);
         });
+    }
+
+    private void show(String notifications) {
+        showAsHtml(notifications, HUMANIZED_MESSAGE);
     }
 
     @Override
