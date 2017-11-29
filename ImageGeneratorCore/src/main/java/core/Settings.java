@@ -40,7 +40,9 @@ public interface Settings {
 
     InformationalImage getSubImage(int x, int y, int width, int height);
 
+    //TODO: rename (should be more descriptive)
     String getImageFileName();
 
+    //TODO: rename (should be more descriptive)
     void setImageFileName(String imageFileName);
 }
