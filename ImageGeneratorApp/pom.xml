@@ -234,6 +234,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--PostgreSQL (DB)-->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.1.4</version><!--TODO: move it to properties-->
+        </dependency>
+
     </dependencies>
 
 </project>
