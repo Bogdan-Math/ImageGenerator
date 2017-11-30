@@ -45,7 +45,7 @@ public class PatternsRepositoryImpl implements PatternsRepository {
                              .collect(toMap(file -> converter.informationalImage(file).averagedColor(),// put Color              as KEY   in map
                                             file -> converter.informationalImage(file),                // put InformationalImage as VALUE in map
                                             (img_color_1, img_color_2) -> {
-                                                System.out.println("Two same average color: ");
+                                                System.out.println("Two same averaged colors: ");
                                                 System.out.println(img_color_1);
                                                 System.out.println(img_color_2);
 
