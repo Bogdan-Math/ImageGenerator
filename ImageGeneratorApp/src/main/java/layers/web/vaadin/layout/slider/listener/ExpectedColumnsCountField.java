@@ -1,7 +1,6 @@
 package layers.web.vaadin.layout.slider.listener;
 
 import com.vaadin.ui.TextField;
-import layers.web.vaadin.additional.NotificationManager;
 import layers.web.vaadin.layout.slider.publisher.ColumnsCountPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -23,12 +22,8 @@ public class ExpectedColumnsCountField extends TextField implements ColumnsCount
     @Autowired
     private ColumnsCountPublisher columnsCountPublisher;
 
-    @Autowired
-    private NotificationManager notificationManager;
-
     @PostConstruct
     public void postConstruct() {
-        columnsCountPublisher.addColumnsCountListener(this);
 
         addValueChangeListener(event -> {
             String newValue = event.getValue();

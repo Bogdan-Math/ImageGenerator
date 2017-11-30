@@ -12,20 +12,26 @@ import java.util.List;
 @Scope("session")
 public class ExpectedColumnsCountPublisher implements ColumnsCountPublisher {
 
+    private Integer oldValue;
     private List<ColumnsCountListener> listeners;
 
     @PostConstruct
     public void postConstruct() {
-        listeners = new LinkedList<>();
+        this.oldValue  = 0;
+        this.listeners = new LinkedList<>();
     }
 
     @Override
     public void publishNewValue(Integer newValue) {
-        listeners.forEach(listener -> listener.changeValueTo(newValue));
+        if (!oldValue.equals(newValue)) {
+            listeners.forEach(listener -> listener.changeValueTo(newValue));
+            oldValue = newValue;
+        }
     }
 
     @Override
-    public void addColumnsCountListener(ColumnsCountListener listener) {
+    public ColumnsCountPublisher addColumnsCountListener(ColumnsCountListener listener) {
         listeners.add(listener);
+        return this;
     }
 }

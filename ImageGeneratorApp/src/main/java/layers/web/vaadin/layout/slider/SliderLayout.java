@@ -3,6 +3,7 @@ package layers.web.vaadin.layout.slider;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import core.Settings;
+import layers.web.vaadin.layout.slider.listener.ExpectedColumnsCount;
 import layers.web.vaadin.layout.slider.listener.ExpectedColumnsCountField;
 import layers.web.vaadin.layout.slider.listener.ExpectedColumnsCountLabel;
 import layers.web.vaadin.layout.slider.listener.ExpectedColumnsCountSlider;
@@ -30,6 +31,9 @@ public class SliderLayout extends HorizontalLayout {
     private ExpectedColumnsCountField field;
 
     @Autowired
+    private ExpectedColumnsCount expectedColumnsCount;
+
+    @Autowired
     private ColumnsCountPublisher columnsCountPublisher;
 
     @PostConstruct
@@ -42,6 +46,10 @@ public class SliderLayout extends HorizontalLayout {
         setComponentAlignment(slider, Alignment.MIDDLE_CENTER);
         setComponentAlignment(field,  Alignment.MIDDLE_LEFT);
 
-        columnsCountPublisher.publishNewValue(settings.getExpectedColumnsCount());
+        columnsCountPublisher.addColumnsCountListener(label)
+                             .addColumnsCountListener(slider)
+                             .addColumnsCountListener(field)
+                             .addColumnsCountListener(expectedColumnsCount)
+                             .publishNewValue(settings.getExpectedColumnsCount());
     }
 }

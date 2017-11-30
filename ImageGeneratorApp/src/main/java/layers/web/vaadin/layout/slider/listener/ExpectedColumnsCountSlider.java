@@ -1,7 +1,6 @@
 package layers.web.vaadin.layout.slider.listener;
 
 import com.vaadin.ui.Slider;
-import layers.web.vaadin.additional.NotificationManager;
 import layers.web.vaadin.layout.slider.publisher.ColumnsCountPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -21,12 +20,8 @@ public class ExpectedColumnsCountSlider extends Slider implements ColumnsCountLi
     @Autowired
     private ColumnsCountPublisher columnsCountPublisher;
 
-    @Autowired
-    private NotificationManager notificationManager;
-
     @PostConstruct
     public void postConstruct() {
-        columnsCountPublisher.addColumnsCountListener(this);
 
         setSizeFull();
         setMin(MIN_EXPECTED_COLUMNS_COUNT);
@@ -37,7 +32,7 @@ public class ExpectedColumnsCountSlider extends Slider implements ColumnsCountLi
             Integer expectedColumnsNumber = event.getValue().intValue();
             if (expectedColumnsNumber < HINT_EXPECTED_COLUMNS_COUNT) {
                 setValue(HINT_EXPECTED_COLUMNS_COUNT.doubleValue());
-                showAsHtml(notificationManager.add(HINT_COLUMNS_COUNT_MESSAGE).build(), HUMANIZED_MESSAGE);
+                showAsHtml(HINT_COLUMNS_COUNT_MESSAGE, HUMANIZED_MESSAGE);
                 return;
             }
 

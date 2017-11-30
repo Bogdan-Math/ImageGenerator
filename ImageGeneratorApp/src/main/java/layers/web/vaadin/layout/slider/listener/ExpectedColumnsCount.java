@@ -1,15 +1,19 @@
 package layers.web.vaadin.layout.slider.listener;
 
-import com.vaadin.ui.Label;
+import core.Settings;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
 @Scope("session")
-public class ExpectedColumnsCountLabel extends Label implements ColumnsCountListener {
+public class ExpectedColumnsCount implements ColumnsCountListener {
+
+    @Autowired
+    private Settings settings;
 
     @Override
     public void changeValueTo(Integer newValue) {
-        setValue("Expected columns count: " + newValue);
+        settings.setExpectedColumnsCount(newValue);
     }
 }
