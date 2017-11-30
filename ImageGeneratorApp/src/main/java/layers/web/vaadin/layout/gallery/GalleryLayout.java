@@ -26,9 +26,12 @@ public class GalleryLayout extends VerticalLayout {
 
     @Autowired
     private ResourceReader resourceReader;
+    private int columnsCount;
 
     @PostConstruct
     public void postConstruct() {
+        this.columnsCount = 4;
+
         VerticalLayout allImagesLayout = new VerticalLayout();
         allImagesLayout.setSizeFull();
 
@@ -39,16 +42,16 @@ public class GalleryLayout extends VerticalLayout {
                     setStyleName(GALLERY_STYLE);
                 }}).collect(toList());
 
-        List<List<Image>> pagedGallery = pagedGallery(images, 3);
+        List<List<Image>> pagedGallery = pagedGallery(images);
         pagedGallery.forEach(list -> allImagesLayout.addComponent(addNewLine(list)));
 
         addComponent(allImagesLayout);
     }
 
-    private List<List<Image>> pagedGallery(List<Image> list, int pageSize) {
-        return iterate(0, i -> i + pageSize).limit((list.size() + pageSize - 1) / pageSize)
+    private List<List<Image>> pagedGallery(List<Image> list) {
+        return iterate(0, i -> i + columnsCount).limit((list.size() + columnsCount - 1) / columnsCount)
                                                   .boxed()
-                                                  .map(i -> list.subList(i, min(i + pageSize, list.size())))
+                                                  .map(i -> list.subList(i, min(i + columnsCount, list.size())))
                                                   .collect(toList());
     }
 
