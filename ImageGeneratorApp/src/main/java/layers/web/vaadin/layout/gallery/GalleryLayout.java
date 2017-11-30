@@ -31,21 +31,22 @@ public class GalleryLayout extends VerticalLayout {
     @PostConstruct
     public void postConstruct() {
         this.columnsCount = 4;
+        addComponent(allImagesLayout());
+    }
 
+    private VerticalLayout allImagesLayout() {
         VerticalLayout allImagesLayout = new VerticalLayout();
         allImagesLayout.setSizeFull();
 
-        List<Image> images = resourceReader.readFiles(COMMONS.getLocation())
+        pagedGallery(resourceReader.readFiles(COMMONS.getLocation())
                 .stream()
                 .map(imgFile -> new Image() {{
                     setSource(new FileResource(imgFile));
                     setStyleName(GALLERY_STYLE);
-                }}).collect(toList());
+                }})
+                .collect(toList())).forEach(list -> allImagesLayout.addComponent(addNewLine(list)));
 
-        List<List<Image>> pagedGallery = pagedGallery(images);
-        pagedGallery.forEach(list -> allImagesLayout.addComponent(addNewLine(list)));
-
-        addComponent(allImagesLayout);
+        return allImagesLayout;
     }
 
     private List<List<Image>> pagedGallery(List<Image> list) {
