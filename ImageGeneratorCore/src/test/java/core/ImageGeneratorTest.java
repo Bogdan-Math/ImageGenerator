@@ -37,10 +37,13 @@ public class ImageGeneratorTest {
         imageGenerator.setSettings(settings);
 
         //mock actions
-        when(settings.getPatterns()).thenReturn(resourceReader.readFiles("images/colors").stream().collect(toMap(
-                file -> typeConverter.informationalImage(file).averagedColor(),
-                file -> typeConverter.informationalImage(file)
-        )));
+        when(settings.getPatterns()).thenReturn(resourceReader.readFiles("images/colors")
+                .stream()
+                .map(file -> typeConverter.informationalImage(file))
+                .collect(toMap(
+                        InformationalImage::averagedColor,
+                        informationalImage -> informationalImage
+                )));
         when(settings.getExpectedColumnsCount()).thenReturn(31); //31 -  because we want to move into incrementing loop for image width
         when(settings.getSubImage(anyInt(), anyInt(), anyInt(), anyInt())).thenCallRealMethod();
     }

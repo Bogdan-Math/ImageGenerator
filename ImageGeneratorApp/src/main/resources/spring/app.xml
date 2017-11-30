@@ -29,8 +29,8 @@
     </bean>
 
     <!--CORE SYSTEM classes-->
-    <bean class="system.ResourceReader"/>
-    <bean class="system.ObjectTypeConverter"/>
+    <bean id="resourceReader" class="system.ResourceReader"/>
+    <bean id="typeConverter"  class="system.ObjectTypeConverter"/>
 
     <util:list id="notifications" value-type="java.lang.String"/>
 
