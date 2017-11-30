@@ -20,7 +20,8 @@ public class ResourceReader {
         return new File(readURL(resourceName).getFile());
     }
 
-    public URL readURL(String resourceName) {
+
+    private URL readURL(String resourceName) {
         return getClass().getClassLoader()
                          .getResource(resourceName);
     }
