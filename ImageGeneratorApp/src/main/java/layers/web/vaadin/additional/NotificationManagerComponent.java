@@ -1,5 +1,7 @@
 package layers.web.vaadin.additional;
 
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -7,6 +9,7 @@ import javax.annotation.PostConstruct;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.vaadin.server.Page.getCurrent;
 import static java.util.stream.Collectors.joining;
 
 @Component
@@ -27,11 +30,12 @@ public class NotificationManagerComponent implements NotificationManager {
     }
 
     @Override
-    public String build() {
+    public void showAs(Type type) {
         String message = notifications.stream()
-                                      .map(notification -> "- " + notification)
-                                      .collect(joining("\n"));
+                .map(notification -> "- " + notification)
+                .collect(joining("\n"));
+
+        new Notification(message, "", type, true).show(getCurrent());
         notifications.clear();
-        return message;
     }
 }
