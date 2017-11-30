@@ -14,8 +14,8 @@ import java.util.Map;
 import static domain.PatternType.*;
 import static java.util.stream.Collectors.toMap;
 
-@Repository
 @Scope("singleton")
+@Repository("patternsRepository")
 public class PatternsRepositoryImpl implements PatternsRepository {
 
     private ResourceReader resourceReader;
