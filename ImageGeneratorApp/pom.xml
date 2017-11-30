@@ -23,9 +23,9 @@
     <!--project properties and versions of modules-->
     <properties>
 
-        <!--JETTY plugin config for integration tests-->
+        <!--JETTY plugin configurations for integration tests-->
         <maven.jetty.plugin.version>9.4.7.v20170914</maven.jetty.plugin.version>
-        <maven.jetty.webapp.route>image-generator-app</maven.jetty.webapp.route>
+        <maven.jetty.webapp.route>/image-generator-app</maven.jetty.webapp.route>
         <maven.jetty.webapp.startPort>9090</maven.jetty.webapp.startPort>
         <maven.jetty.webapp.stopPort>9191</maven.jetty.webapp.stopPort>
 
@@ -43,10 +43,13 @@
         <maven.failsafe.plugin.version>2.20.1</maven.failsafe.plugin.version>
     </properties>
 
+    <!--build properties-->
     <build>
         <finalName>ImageGeneratorApp</finalName>
 
         <plugins>
+
+            <!--.war build plugin-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -58,6 +61,7 @@
                 </configuration>
             </plugin>
 
+            <!--VAADIN application builder plugin-->
             <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
@@ -75,24 +79,7 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>${maven.clean.plugin.version}</version>
-                <!--Clean up also any pre-compiled themes-->
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>src/main/webapp/VAADIN/themes</directory>
-                            <includes>
-                                <include>**/styles.css</include>
-                                <include>**/styles.scss.cache</include>
-                            </includes>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
-
+            <!--integration test runner plugin-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
@@ -107,13 +94,14 @@
                 </executions>
             </plugin>
 
+            <!--embedded web server JETTY manager plugin-->
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${maven.jetty.plugin.version}</version>
                 <configuration>
                     <webApp>
-                        <contextPath>/${maven.jetty.webapp.route}</contextPath>
+                        <contextPath>${maven.jetty.webapp.route}</contextPath>
                     </webApp>
                     <httpConnector>
                         <port>${maven.jetty.webapp.startPort}</port>
@@ -140,7 +128,7 @@
             </plugin>
         </plugins>
 
-        <!--Maven properties would be mapped to files in this path-->
+        <!--mapped properties (maven properties would be mapped to files in this path)-->
         <testResources>
             <testResource>
                 <directory>src/test/resources</directory>
