@@ -229,6 +229,13 @@
             <version>42.1.4</version><!--TODO: move it to properties-->
         </dependency>
 
+        <!--TODO: add description-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>4.3.3.RELEASE</version><!--TODO: move it to properties-->
+        </dependency>
+
     </dependencies>
 
 </project>
