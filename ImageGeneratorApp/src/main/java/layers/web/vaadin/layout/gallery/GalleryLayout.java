@@ -1,19 +1,21 @@
 package layers.web.vaadin.layout.gallery;
 
-import com.vaadin.server.FileResource;
+import com.vaadin.server.StreamResource;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.VerticalLayout;
+import layers.repository.GalleryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import system.ResourceReader;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Stream;
 
-import static domain.PatternType.COMMONS;
 import static java.lang.Integer.min;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.iterate;
@@ -23,6 +25,8 @@ import static java.util.stream.IntStream.iterate;
 public class GalleryLayout extends VerticalLayout {
 
     private static final String GALLERY_STYLE = "gallery-image";
+
+    private GalleryRepository galleryRepository;
 
     @Autowired
     private ResourceReader resourceReader;
@@ -38,10 +42,9 @@ public class GalleryLayout extends VerticalLayout {
         VerticalLayout allImagesLayout = new VerticalLayout();
         allImagesLayout.setSizeFull();
 
-        pagedGallery(resourceReader.readFiles(COMMONS.getLocation())
-                .stream()
-                .map(imgFile -> new Image() {{
-                    setSource(new FileResource(imgFile));
+        pagedGallery(Stream.of(galleryRepository.get("white.jpg"))
+                .map(informationalImage -> new Image() {{
+                    setSource(new StreamResource(informationalImage::asStream, "1"));
                     setStyleName(GALLERY_STYLE);
                 }})
                 .collect(toList())).forEach(list -> allImagesLayout.addComponent(addNewLine(list)));
@@ -64,5 +67,10 @@ public class GalleryLayout extends VerticalLayout {
         });
         newLine.setSizeFull();
         return newLine;
+    }
+
+    @Resource(name = "galleryRepository")
+    public void setGalleryRepository(GalleryRepository galleryRepository) {
+        this.galleryRepository = galleryRepository;
     }
 }
