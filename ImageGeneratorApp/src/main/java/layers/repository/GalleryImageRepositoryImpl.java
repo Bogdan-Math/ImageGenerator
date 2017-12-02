@@ -27,6 +27,9 @@ public class GalleryImageRepositoryImpl implements GalleryImageRepository {
     public List<GalleryImage> getAll() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(DATA_SOURCE);
         return jdbcTemplate.query("SELECT name, bytes FROM gallery_image",
-                (rs, rowNum) -> new GalleryImage(rs.getString(1), rs.getBytes(2)));
+                (rs, rowNum) -> new GalleryImage() {{
+                    setName(rs.getString(1));
+                    setBytes(rs.getBytes(2));
+                }});
     }
 }

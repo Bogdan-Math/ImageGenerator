@@ -7,7 +7,7 @@
     <bean id="cachedPatternsService" class="layers.service.CachedPatternsServiceImpl"/>
 
     <bean id="patternsRepository" class="org.mockito.Mockito" factory-method="mock">
-        <constructor-arg value="layers.repository.PatternsRepository"/>
+        <constructor-arg value="layers.repository.PatternImageRepository"/>
     </bean>
 
 </beans>
