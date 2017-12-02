@@ -37,7 +37,7 @@ public class ImageGeneratorTest {
         //mock actions
         when(settings.getPatterns()).thenReturn(resourceReader.readFiles("images/colors")
                 .stream()
-                .map(InformationalImage::from)
+                .map(InformationalImage::madeOf)
                 .collect(toMap(
                         InformationalImage::averagedColor,
                         informationalImage -> informationalImage
@@ -50,7 +50,7 @@ public class ImageGeneratorTest {
     public void generateWhiteImage() throws Exception {
 
         //Arrange
-        this.incomeImage = InformationalImage.from(resourceReader.readFile("images/testable/1-white.jpg"));
+        this.incomeImage = InformationalImage.madeOf(resourceReader.readFile("images/testable/1-white.jpg"));
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
@@ -70,7 +70,7 @@ public class ImageGeneratorTest {
     public void generateGrayImage() throws Exception {
 
         //Arrange
-        this.incomeImage = InformationalImage.from(resourceReader.readFile("images/testable/2-gray.jpg"));
+        this.incomeImage = InformationalImage.madeOf(resourceReader.readFile("images/testable/2-gray.jpg"));
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
@@ -90,7 +90,7 @@ public class ImageGeneratorTest {
     public void generateBlackImage() throws Exception {
 
         //Arrange
-        this.incomeImage = InformationalImage.from(resourceReader.readFile("images/testable/3-black.jpg"));
+        this.incomeImage = InformationalImage.madeOf(resourceReader.readFile("images/testable/3-black.jpg"));
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
@@ -110,7 +110,7 @@ public class ImageGeneratorTest {
     public void generate4x4Image() throws Exception {
 
         //Arrange
-        this.incomeImage = InformationalImage.from(resourceReader.readFile("images/testable/4x4.jpg"));
+        this.incomeImage = InformationalImage.madeOf(resourceReader.readFile("images/testable/4x4.jpg"));
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());

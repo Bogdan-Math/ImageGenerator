@@ -16,7 +16,7 @@ public class InformationalImage extends BufferedImage {
 
     public static final int TYPE_INT_RGB = BufferedImage.TYPE_INT_RGB;
 
-    public static InformationalImage from(byte[] bytes) {
+    public static InformationalImage madeOf(byte[] bytes) {
         try {
             return new InformationalImage(read(new ByteArrayInputStream(bytes)));
         }
@@ -25,7 +25,7 @@ public class InformationalImage extends BufferedImage {
         }
     }
 
-    public static InformationalImage from(File file) {
+    public static InformationalImage madeOf(File file) {
         try {
             return new InformationalImage(read(file));
         }

@@ -41,7 +41,7 @@ public class CachedPatternsServiceImpl implements CachedPatternsService {
 
     private Map<InformationalColor, InformationalImage> convert(List<PatternImage> patterns) {
         return patterns.stream()
-                .map(patternImage -> InformationalImage.from(patternImage.getBytes()))
+                .map(patternImage -> InformationalImage.madeOf(patternImage.getBytes()))
                 .collect(toMap(
                         InformationalImage::averagedColor,       // put InformationalColor as KEY   in map
                         informationalImage -> informationalImage,// put InformationalImage as VALUE in map
