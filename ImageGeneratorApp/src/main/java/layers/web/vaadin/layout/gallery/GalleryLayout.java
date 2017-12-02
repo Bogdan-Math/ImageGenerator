@@ -6,13 +6,12 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.VerticalLayout;
-import layers.repository.GalleryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import layers.repository.GalleryImageRepository;
 import org.springframework.context.annotation.Scope;
-import system.ResourceReader;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 import static java.lang.Integer.min;
@@ -25,10 +24,8 @@ public class GalleryLayout extends VerticalLayout {
 
     private static final String GALLERY_STYLE = "gallery-image";
 
-    private GalleryRepository galleryRepository;
+    private GalleryImageRepository galleryImageRepository;
 
-    @Autowired
-    private ResourceReader resourceReader;
     private int columnsCount;
 
     @PostConstruct
@@ -41,10 +38,10 @@ public class GalleryLayout extends VerticalLayout {
         VerticalLayout allImagesLayout = new VerticalLayout();
         allImagesLayout.setSizeFull();
 
-        pagedGallery(galleryRepository.getAll()
+        pagedGallery(galleryImageRepository.getAll()
                 .stream()
-                .map(informationalImage -> new Image() {{
-                    setSource(new StreamResource(informationalImage::asStream, "1"));
+                .map(galleryImage -> new Image() {{
+                    setSource(new StreamResource(() -> new ByteArrayInputStream(galleryImage.getBytes()), "1"));
                     setStyleName(GALLERY_STYLE);
                 }})
                 .collect(toList())).forEach(list -> allImagesLayout.addComponent(addNewLine(list)));
@@ -69,8 +66,8 @@ public class GalleryLayout extends VerticalLayout {
         return newLine;
     }
 
-    @Resource(name = "galleryRepository")
-    public void setGalleryRepository(GalleryRepository galleryRepository) {
-        this.galleryRepository = galleryRepository;
+    @Resource(name = "galleryImageRepository")
+    public void setGalleryImageRepository(GalleryImageRepository galleryImageRepository) {
+        this.galleryImageRepository = galleryImageRepository;
     }
 }

@@ -1,16 +1,15 @@
 package layers.repository;
 
-import domain.InformationalImage;
+import model.GalleryImage;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
-import system.ObjectTypeConverter;
 
 import javax.sql.DataSource;
 import java.util.List;
 
-@Repository("galleryRepository")
-public class GalleryRepositoryImpl implements GalleryRepository {
+@Repository("galleryImageRepository")
+public class GalleryImageRepositoryImpl implements GalleryImageRepository {
 
     private static final String DB_DRIVER = "org.postgresql.Driver";
     private static final String DB_CONNECTION = "jdbc:postgresql://ec2-107-20-214-99.compute-1.amazonaws.com:5432/dfm6o5autn88hj?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
@@ -25,20 +24,9 @@ public class GalleryRepositoryImpl implements GalleryRepository {
     }};
 
     @Override
-    public InformationalImage get(String imageName) {
+    public List<GalleryImage> getAll() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(DATA_SOURCE);
-        return jdbcTemplate.query("SELECT image FROM images WHERE name=" + "\'" + imageName + "\'", (rs, rowNum) -> {
-            ObjectTypeConverter typeConverter = new ObjectTypeConverter();
-            return typeConverter.informationalImage(rs.getBytes(1));
-        }).get(0);
-    }
-
-    @Override
-    public List<InformationalImage> getAll() {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(DATA_SOURCE);
-        return jdbcTemplate.query("SELECT image FROM images", (rs, rowNum) -> {
-            ObjectTypeConverter typeConverter = new ObjectTypeConverter();
-            return typeConverter.informationalImage(rs.getBytes(1));
-        });
+        return jdbcTemplate.query("SELECT name, bytes FROM gallery_image",
+                (rs, rowNum) -> new GalleryImage(rs.getString(1), rs.getBytes(2)));
     }
 }
