@@ -5,7 +5,6 @@ import domain.InformationalImage;
 import domain.PatternType;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
-import system.ObjectTypeConverter;
 import system.ResourceReader;
 
 import javax.annotation.Resource;
@@ -19,8 +18,6 @@ import static java.util.stream.Collectors.toMap;
 public class PatternsRepositoryImpl implements PatternsRepository {
 
     private ResourceReader resourceReader;
-
-    private ObjectTypeConverter typeConverter;
 
     @Override
     public Map<InformationalColor, InformationalImage> getCommons() {
@@ -40,7 +37,7 @@ public class PatternsRepositoryImpl implements PatternsRepository {
     private Map<InformationalColor, InformationalImage> initialize(PatternType patternType) {
         return resourceReader.readFiles(patternType.getLocation())
                              .stream()
-                             .map(file -> typeConverter.informationalImage(file))
+                             .map(InformationalImage::from)
                              .collect(toMap(InformationalImage::averagedColor,       // put Color              as KEY   in map
                                             informationalImage -> informationalImage,// put InformationalImage as VALUE in map
                                             (img_color_1, img_color_2) -> {
@@ -57,10 +54,5 @@ public class PatternsRepositoryImpl implements PatternsRepository {
     @Resource(name = "resourceReader")
     public void setResourceReader(ResourceReader resourceReader) {
         this.resourceReader = resourceReader;
-    }
-
-    @Resource(name = "typeConverter")
-    public void setTypeConverter(ObjectTypeConverter typeConverter) {
-        this.typeConverter = typeConverter;
     }
 }

@@ -4,13 +4,12 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Upload.SucceededEvent;
-import domain.InformationalImage;
 import core.Settings;
+import domain.InformationalImage;
 import layers.web.vaadin.additional.NotificationManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
-import system.ObjectTypeConverter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -23,9 +22,6 @@ public class UploadSucceededListenerComponent implements UploadSucceededListener
 
     @Autowired
     private UploadReceiver receiver;
-
-    @Autowired
-    private ObjectTypeConverter converter;
 
     @Autowired
     private Settings settings;
@@ -43,7 +39,7 @@ public class UploadSucceededListenerComponent implements UploadSucceededListener
         String timeNow                   = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"));
         String imageFileName             = succeededEvent.getFilename();
         byte[] uploadedBytes             = receiver.getUploadStream().toByteArray();
-        InformationalImage uploadedImage = converter.informationalImage(uploadedBytes);
+        InformationalImage uploadedImage = InformationalImage.from(uploadedBytes);
 
         if (uploadedImage.widthLessThan(INCOME_IMAGE_ALLOWED_MIN_WIDTH) || uploadedImage.heightLessThan(INCOME_IMAGE_ALLOWED_MIN_HEIGHT)) {
             notificationManager.add("Image resolution can't be less than " + INCOME_IMAGE_ALLOWED_MIN_WIDTH + " x " + INCOME_IMAGE_ALLOWED_MIN_HEIGHT + " (px)");

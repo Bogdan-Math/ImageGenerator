@@ -4,10 +4,14 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import system.ObjectTypeConverter;
 import system.ResourceReader;
 
+import java.io.File;
+
 import static domain.InformationalColor.*;
+import static java.nio.file.Files.readAllBytes;
+import static java.nio.file.Paths.get;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.doThrow;
@@ -16,13 +20,39 @@ import static org.mockito.Mockito.spy;
 public class InformationalImageTest {
 
     private InformationalImage image;
+    private File fileImage;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() throws Exception {
-        this.image = new ObjectTypeConverter().informationalImage(new ResourceReader().readFile("images/testable/4x4.jpg")); // 32 x 32 (px)
+        this.fileImage = new ResourceReader().readFile("images/testable/4x4.jpg");
+        this.image     = InformationalImage.from(fileImage); // 32 x 32 (px)
+    }
+
+    @Test
+    public void informationalImageFromBytes() throws Exception {
+        assertThat(InformationalImage.from(readAllBytes(get(fileImage.getAbsolutePath()))), notNullValue());
+    }
+
+    @Test
+    public void informationalImageFromBytesException() throws Exception {
+        thrown.expect(IllegalArgumentException.class);
+        InformationalImage.from((byte[]) null);
+        fail();
+    }
+
+    @Test
+    public void informationalImageFromFile() throws Exception {
+        assertThat(InformationalImage.from(fileImage), notNullValue());
+    }
+
+    @Test
+    public void informationalImageFromFileException() throws Exception {
+        thrown.expect(IllegalArgumentException.class);
+        InformationalImage.from((File) null);
+        fail();
     }
 
     @Test
@@ -57,28 +87,27 @@ public class InformationalImageTest {
 
     @Test
     public void whiteAveragedColor() throws Exception {
-        this.image = new ObjectTypeConverter().informationalImage(new ResourceReader().readFile("images/testable/1-white.jpg"));
+        this.image = InformationalImage.from(new ResourceReader().readFile("images/testable/1-white.jpg"));
         InformationalColor white = image.averagedColor();
         assertEquals(WHITE, white);
     }
 
     @Test
     public void grayAveragedColor() throws Exception {
-        this.image = new ObjectTypeConverter().informationalImage(new ResourceReader().readFile("images/testable/2-gray.jpg"));
+        this.image = InformationalImage.from(new ResourceReader().readFile("images/testable/2-gray.jpg"));
         InformationalColor gray = image.averagedColor();
         assertEquals(GRAY, gray);
     }
 
     @Test
     public void blackAveragedColor() throws Exception {
-        this.image = new ObjectTypeConverter().informationalImage(new ResourceReader().readFile("images/testable/3-black.jpg"));
+        this.image = InformationalImage.from(new ResourceReader().readFile("images/testable/3-black.jpg"));
         InformationalColor black = image.averagedColor();
         assertEquals(BLACK, black);
     }
 
     @Test
     public void getSubImage() throws Exception {
-        this.image = new ObjectTypeConverter().informationalImage(new ResourceReader().readFile("images/testable/4x4.jpg"));
 
         assertThat(image.getSubImage(0, 0, 8, 8).averagedColor().almostEqualTo(BLACK), is(true));
         assertThat(image.getSubImage(8, 0, 8, 8).averagedColor().almostEqualTo(WHITE), is(true));

@@ -6,6 +6,5 @@
 
     <bean id="basicSettings"  class="layers.repository.PatternsRepositoryImpl"/>
     <bean id="resourceReader" class="system.ResourceReader"/>
-    <bean id="typeConverter"  class="system.ObjectTypeConverter"/>
 
 </beans>
