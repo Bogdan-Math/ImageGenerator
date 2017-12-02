@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import system.ObjectTypeConverter;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 @Repository("galleryRepository")
 public class GalleryRepositoryImpl implements GalleryRepository {
@@ -30,5 +31,14 @@ public class GalleryRepositoryImpl implements GalleryRepository {
             ObjectTypeConverter typeConverter = new ObjectTypeConverter();
             return typeConverter.informationalImage(rs.getBytes(1));
         }).get(0);
+    }
+
+    @Override
+    public List<InformationalImage> getAll() {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(DATA_SOURCE);
+        return jdbcTemplate.query("SELECT image FROM images", (rs, rowNum) -> {
+            ObjectTypeConverter typeConverter = new ObjectTypeConverter();
+            return typeConverter.informationalImage(rs.getBytes(1));
+        });
     }
 }

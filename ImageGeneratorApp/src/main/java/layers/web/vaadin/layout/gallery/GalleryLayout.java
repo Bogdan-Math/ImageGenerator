@@ -14,7 +14,6 @@ import system.ResourceReader;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.stream.Stream;
 
 import static java.lang.Integer.min;
 import static java.util.stream.Collectors.toList;
@@ -42,7 +41,8 @@ public class GalleryLayout extends VerticalLayout {
         VerticalLayout allImagesLayout = new VerticalLayout();
         allImagesLayout.setSizeFull();
 
-        pagedGallery(Stream.of(galleryRepository.get("white.jpg"))
+        pagedGallery(galleryRepository.getAll()
+                .stream()
                 .map(informationalImage -> new Image() {{
                     setSource(new StreamResource(informationalImage::asStream, "1"));
                     setStyleName(GALLERY_STYLE);
