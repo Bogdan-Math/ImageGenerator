@@ -32,24 +32,24 @@ public class InformationalImageTest {
     }
 
     @Test
-    public void informationalImageFromBytes() throws Exception {
+    public void informationalImageMadeOfBytes() throws Exception {
         assertThat(InformationalImage.madeOf(readAllBytes(get(fileImage.getAbsolutePath()))), notNullValue());
     }
 
     @Test
-    public void informationalImageFromBytesException() throws Exception {
+    public void informationalImageMadeOfBytesException() throws Exception {
         thrown.expect(IllegalArgumentException.class);
         InformationalImage.madeOf((byte[]) null);
         fail();
     }
 
     @Test
-    public void informationalImageFromFile() throws Exception {
+    public void informationalImageMadeOfFile() throws Exception {
         assertThat(InformationalImage.madeOf(fileImage), notNullValue());
     }
 
     @Test
-    public void informationalImageFromFileException() throws Exception {
+    public void informationalImageMadeOfFileException() throws Exception {
         thrown.expect(IllegalArgumentException.class);
         InformationalImage.madeOf((File) null);
         fail();
