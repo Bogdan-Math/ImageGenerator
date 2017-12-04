@@ -7,7 +7,7 @@ import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import layers.web.vaadin.layout.buttons.ButtonsLayout;
-import layers.web.vaadin.layout.gallery.GalleryLayout;
+import layers.web.vaadin.layout.gallery.GalleryLayoutBuilder;
 import layers.web.vaadin.layout.images.ImagesLayout;
 import layers.web.vaadin.layout.patterns.PatternsGroupLayout;
 import layers.web.vaadin.layout.slider.SliderLayout;
@@ -36,7 +36,7 @@ public class Tabs extends TabSheet {
     private ImagesLayout imagesLayout;
 
     @Autowired
-    private GalleryLayout galleryLayout;
+    private GalleryLayoutBuilder galleryLayoutBuilder;
 
     @PostConstruct
     public void postConstruct() {
@@ -44,6 +44,13 @@ public class Tabs extends TabSheet {
 
         addTab(generatorTab());
         addTab(galleryTab());
+
+        addSelectedTabChangeListener((SelectedTabChangeListener) event -> {
+            if (GALLERY.equals(event.getTabSheet().getSelectedTab().getCaption())) {
+                galleryLayoutBuilder.buildGallery();
+            }
+        });
+
     }
 
     private Layout generatorTab () {
@@ -57,7 +64,7 @@ public class Tabs extends TabSheet {
     }
 
     private Layout galleryTab() {
-        Layout galleryTab = newTab(galleryLayout);
+        Layout galleryTab = newTab(galleryLayoutBuilder);
 
         galleryTab.setCaption(GALLERY);
         return galleryTab;

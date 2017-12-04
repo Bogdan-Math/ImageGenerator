@@ -18,38 +18,33 @@ import static java.util.stream.IntStream.iterate;
 
 @SpringComponent
 @Scope("session")
-public class GalleryLayout extends VerticalLayout {
+public class GalleryLayout extends VerticalLayout implements GalleryLayoutBuilder {
 
     private static final String GALLERY_STYLE = "gallery-image";
+    private static final int COLUMNS_COUNT    = 4;
 
     private GalleryImageService galleryImageService;
 
-    private int columnsCount;
-
     @PostConstruct
     public void postConstruct() {
-        this.columnsCount = 4;
-        addComponent(allImagesLayout());
+        setSizeFull();
     }
 
-    private VerticalLayout allImagesLayout() {
-        VerticalLayout allImagesLayout = new VerticalLayout();
-        allImagesLayout.setSizeFull();
-
+    @Override
+    public void buildGallery() {
+        removeAllComponents();
         pagedGallery(galleryImageService.getAll()
-                                        .stream()
-                                        .peek(image -> image.setStyleName(GALLERY_STYLE))
-                                        .collect(toList())
-        ).forEach(list -> allImagesLayout.addComponent(addNewLine(list)));
-
-        return allImagesLayout;
+                .stream()
+                .peek(image -> image.setStyleName(GALLERY_STYLE))
+                .collect(toList())
+        ).forEach(list -> this.addComponent(addNewLine(list)));
     }
 
     private List<List<Image>> pagedGallery(List<Image> list) {
-        return iterate(0, i -> i + columnsCount)
-                .limit((list.size() + columnsCount - 1) / columnsCount)
+        return iterate(0, i -> i + COLUMNS_COUNT)
+                .limit((list.size() + COLUMNS_COUNT - 1) / COLUMNS_COUNT)
                 .boxed()
-                .map(i -> list.subList(i, min(i + columnsCount, list.size())))
+                .map(i -> list.subList(i, min(i + COLUMNS_COUNT, list.size())))
                 .collect(toList());
     }
 
@@ -57,7 +52,7 @@ public class GalleryLayout extends VerticalLayout {
         HorizontalLayout newLine = new HorizontalLayout();
         images.forEach(image -> {
             newLine.addComponent(image);
-            newLine.setComponentAlignment(image, Alignment.TOP_CENTER);
+            newLine.setComponentAlignment(image, Alignment.MIDDLE_CENTER);
         });
         newLine.setSizeFull();
         return newLine;
