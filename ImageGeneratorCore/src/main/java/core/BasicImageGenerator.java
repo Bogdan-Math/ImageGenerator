@@ -121,7 +121,7 @@ public class BasicImageGenerator implements ImageGenerator {
         for (int i = 0; i < columns; i++) {
             for (int j = 0; j < rows; j++) {
                 averagedImg.getGraphics()
-                           .drawImage(resize(resultMatrix.get(i).get(j), imageWithMaxSize.getWidth(), imageWithMaxSize.getHeight()),
+                           .drawImage(resultMatrix.get(i).get(j).resizeTo(imageWithMaxSize.getWidth(), imageWithMaxSize.getHeight()),
                                    i * squareWidth,
                                    j * squareHeight,
                                    null);
@@ -129,14 +129,6 @@ public class BasicImageGenerator implements ImageGenerator {
         }
 
         return averagedImg;
-    }
-
-    private InformationalImage resize(InformationalImage oldImage, int newWidth, int newHeight) {
-        InformationalImage resizedImg = new InformationalImage(newWidth, newHeight, InformationalImage.TYPE_INT_RGB);
-        resizedImg.getGraphics()
-                  .drawImage(oldImage, 0, 0, resizedImg.getWidth(), resizedImg.getHeight(), null);
-
-        return resizedImg;
     }
 
     private InformationalImage findImageWithMaxSize(List<List<InformationalImage>> imgMatrix) {
