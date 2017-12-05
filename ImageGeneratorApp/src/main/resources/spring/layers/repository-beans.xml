@@ -10,6 +10,10 @@
     <!--DB connection (properties)-->
     <context:property-placeholder location="classpath*:db/db-connect.properties"/>
 
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg name="dataSource" ref="dataSource"/>
+    </bean>
+
     <!--DB connection (data source)-->
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
