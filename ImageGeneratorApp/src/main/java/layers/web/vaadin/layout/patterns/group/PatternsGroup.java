@@ -6,7 +6,7 @@ import core.Settings;
 import domain.InformationalColor;
 import domain.InformationalImage;
 import domain.PatternType;
-import layers.service.CachedPatternsService;
+import layers.service.PatternImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
@@ -27,7 +27,7 @@ public class PatternsGroup extends RadioButtonGroup<String> {
     private Settings settings;
 
     @Autowired
-    private CachedPatternsService cachedPatternsService;
+    private PatternImageService patternImageService;
 
     @PostConstruct
     public void postConstruct() {
@@ -35,7 +35,7 @@ public class PatternsGroup extends RadioButtonGroup<String> {
         setValue(FLAGS.name());
         addStyleName(OPTIONGROUP_HORIZONTAL);
 
-        Map<PatternType, Map<InformationalColor, InformationalImage>> patterns = cachedPatternsService.getAllPatterns();
+        Map<PatternType, Map<InformationalColor, InformationalImage>> patterns = patternImageService.getInformationalMaps();
 
         settings.setPatterns(patterns.get(valueOf(getValue())));
 

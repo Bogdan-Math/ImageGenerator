@@ -6,8 +6,8 @@ import domain.PatternType;
 
 import java.util.Map;
 
-public interface CachedPatternsService {
+public interface PatternImageService {
 
     void cacheAllPatterns();
-    Map<PatternType, Map<InformationalColor, InformationalImage>> getAllPatterns();
+    Map<PatternType, Map<InformationalColor, InformationalImage>> getInformationalMaps();
 }

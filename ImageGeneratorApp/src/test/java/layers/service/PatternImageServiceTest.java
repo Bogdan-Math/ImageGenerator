@@ -29,13 +29,13 @@ import static org.mockito.Mockito.when;
 
 @ContextConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-public class CachedPatternsServiceTest {
+public class PatternImageServiceTest {
 
     @Autowired
-    private CachedPatternsService patternsService;
+    private PatternImageService patternImageService;
 
     @Autowired
-    private PatternImageRepository repository;
+    private PatternImageRepository patternImageRepository;
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
@@ -47,7 +47,7 @@ public class CachedPatternsServiceTest {
                 .readFile("images/plains/white.jpg")
                 .getAbsolutePath()));
 
-        when(repository.getCommons()).thenReturn(new ArrayList<PatternImage>() {{
+        when(patternImageRepository.getCommons()).thenReturn(new ArrayList<PatternImage>() {{
             add(new PatternImage() {{
                 setBytes(bytes);
             }});
@@ -59,7 +59,7 @@ public class CachedPatternsServiceTest {
             }});
         }});
 
-        when(repository.getFlags()).thenReturn(new ArrayList<PatternImage>() {{
+        when(patternImageRepository.getFlags()).thenReturn(new ArrayList<PatternImage>() {{
             add(new PatternImage() {{
                 setBytes(bytes);
             }});
@@ -68,7 +68,7 @@ public class CachedPatternsServiceTest {
             }});
         }});
 
-        when(repository.getPlains()).thenReturn(new ArrayList<PatternImage>() {{
+        when(patternImageRepository.getPlains()).thenReturn(new ArrayList<PatternImage>() {{
             add(new PatternImage() {{
                 setBytes(bytes);
             }});
@@ -78,8 +78,8 @@ public class CachedPatternsServiceTest {
 
     @Test
     public void cacheAndGetAllPatterns() throws Exception {
-        patternsService.cacheAllPatterns();
-        Map<PatternType, Map<InformationalColor, InformationalImage>> allPatterns = patternsService.getAllPatterns();
+        patternImageService.cacheAllPatterns();
+        Map<PatternType, Map<InformationalColor, InformationalImage>> allPatterns = patternImageService.getInformationalMaps();
 
         assertThat(allPatterns.size(), is(3));
         assertThat(allPatterns.get(COMMONS).size(), is(1));
@@ -89,8 +89,8 @@ public class CachedPatternsServiceTest {
 
     @Test
     public void twoSameAveragedColors() throws Exception {
-        patternsService.cacheAllPatterns();
-        Map<PatternType, Map<InformationalColor, InformationalImage>> allPatterns = patternsService.getAllPatterns();
+        patternImageService.cacheAllPatterns();
+        Map<PatternType, Map<InformationalColor, InformationalImage>> allPatterns = patternImageService.getInformationalMaps();
 
         assertNotNull(allPatterns);
         assertThat(outContent.toString(), containsString("Two same averaged colors:"));

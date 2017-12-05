@@ -15,7 +15,7 @@ import static java.nio.file.Files.readAllBytes;
 import static java.util.stream.Collectors.toList;
 
 @Scope("singleton")
-@Repository("patternsRepository")
+@Repository("patternImageRepository")
 public class PatternImageRepositoryImpl implements PatternImageRepository {
 
     private ResourceReader resourceReader;

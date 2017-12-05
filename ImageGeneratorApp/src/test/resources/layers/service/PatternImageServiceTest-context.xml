@@ -4,9 +4,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="cachedPatternsService" class="layers.service.CachedPatternsServiceImpl"/>
+    <bean id="patternImageService" class="layers.service.PatternImageServiceImpl"/>
 
-    <bean id="patternsRepository" class="org.mockito.Mockito" factory-method="mock">
+    <bean id="patternImageRepository" class="org.mockito.Mockito" factory-method="mock">
         <constructor-arg value="layers.repository.PatternImageRepository"/>
     </bean>
 

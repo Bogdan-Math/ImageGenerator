@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="basicSettings"  class="layers.repository.PatternImageRepositoryImpl"/>
+    <bean class="layers.repository.PatternImageRepositoryImpl"/>
     <bean id="resourceReader" class="system.ResourceReader"/>
 
 </beans>

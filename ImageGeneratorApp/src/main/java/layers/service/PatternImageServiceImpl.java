@@ -5,7 +5,6 @@ import domain.InformationalImage;
 import domain.PatternType;
 import layers.repository.PatternImageRepository;
 import model.PatternImage;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -17,9 +16,8 @@ import java.util.Map;
 import static domain.PatternType.*;
 import static java.util.stream.Collectors.toMap;
 
-@Service
-@Scope("singleton")
-public class CachedPatternsServiceImpl implements CachedPatternsService {
+@Service("patternImageService")
+public class PatternImageServiceImpl implements PatternImageService {
 
     private PatternImageRepository repository;
 
@@ -56,11 +54,11 @@ public class CachedPatternsServiceImpl implements CachedPatternsService {
     }
 
     @Override
-    public Map<PatternType, Map<InformationalColor, InformationalImage>> getAllPatterns() {
+    public Map<PatternType, Map<InformationalColor, InformationalImage>> getInformationalMaps() {
         return allPatterns;
     }
 
-    @Resource(name = "patternsRepository")
+    @Resource(name = "patternImageRepository")
     public void setRepository(PatternImageRepository repository) {
         this.repository = repository;
     }
