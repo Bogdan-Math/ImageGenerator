@@ -23,6 +23,12 @@
     <!--project properties and versions of modules-->
     <properties>
 
+        <!--DB connection properties-->
+        <db.driver>org.postgresql.Driver</db.driver>
+        <db.url>jdbc:postgresql://ec2-107-20-214-99.compute-1.amazonaws.com:5432/dfm6o5autn88hj?ssl=true<![CDATA[&amp;]]>sslfactory=org.postgresql.ssl.NonValidatingFactory</db.url>
+        <db.user>mygtvnrgfvdksl</db.user>
+        <db.password>6e059618a1ecb27ef2d05001c0721c042d786d97879d699c22c3b7537b9f2a3e</db.password>
+
         <!--JETTY plugin configurations for integration tests-->
         <maven.jetty.plugin.version>9.4.7.v20170914</maven.jetty.plugin.version>
         <maven.jetty.webapp.route>/image-generator-app</maven.jetty.webapp.route>
@@ -128,7 +134,13 @@
             </plugin>
         </plugins>
 
-        <!--mapped properties (maven properties would be mapped to files in this path)-->
+        <!--Properties mapping (maven properties would be mapped to files in this paths)-->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <testResources>
             <testResource>
                 <directory>src/test/resources</directory>

@@ -10,6 +10,9 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
+    <!--DB connection (data source)-->
+    <import resource="db/db-connect.xml"/>
+
     <!--UI classes-->
     <context:component-scan base-package="layers.web.vaadin"/>
 
