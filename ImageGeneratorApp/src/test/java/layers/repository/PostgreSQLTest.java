@@ -2,12 +2,19 @@ package layers.repository;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import system.ResourceReader;
 
 import javax.sql.DataSource;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.List;
+
+import static java.nio.file.Files.readAllBytes;
+import static java.util.stream.Collectors.toList;
 
 @Ignore
 public class PostgreSQLTest {
@@ -24,31 +31,59 @@ public class PostgreSQLTest {
         setPassword(DB_PASSWORD);
     }};
 
-    class ImgFile {
+    class GalleryImage {
 
         String name;
         byte[] bytes;
 
-        ImgFile(String name, byte[] bytes) {
+        public void setName(String name) {
             this.name = name;
+        }
+
+        public void setBytes(byte[] bytes) {
             this.bytes = bytes;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public byte[] getBytes() {
+            return bytes;
         }
     }
 
     @Test
     public void name() throws Exception {
 
+        ResourceReader resourceReader = new ResourceReader();
+        List<GalleryImage> images = resourceReader.readFiles("images/colors")
+                .stream()
+                .map(file -> new GalleryImage() {{
+                    try {
+                        setBytes(readAllBytes(file.toPath()));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    setName(file.getName());
+                }}).collect(toList());
+
         JdbcTemplate jdbcTemplate = new JdbcTemplate(DATA_SOURCE);
-        jdbcTemplate.query("SELECT name, image FROM images", (rs, rowNum) ->
-                new ImgFile(rs.getString(1), rs.getBytes(2)))
-        .forEach(imgFile -> {
-            try {
-                new FileOutputStream(imgFile.name).write(imgFile.bytes);
-            } catch (IOException e) {
-                e.printStackTrace();
+//        jdbcTemplate.update("INSERT INTO gallery_image (name, bytes) VALUES (?, ?)", galleryImage.getName(), galleryImage.getBytes());
+        jdbcTemplate.batchUpdate("INSERT INTO gallery_image (name, bytes) VALUES (?, ?)", new BatchPreparedStatementSetter() {
+
+            @Override
+            public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
+                GalleryImage image = images.get(i);
+                preparedStatement.setString(1, image.getName());
+                preparedStatement.setBytes(2, image.getBytes());
+            }
+
+            @Override
+            public int getBatchSize() {
+                return images.size();
             }
         });
-
     }
 
 }
