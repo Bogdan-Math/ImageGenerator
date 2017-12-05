@@ -1,10 +1,10 @@
 package layers.service;
 
-import com.vaadin.ui.Image;
+import model.GalleryImage;
 
 import java.util.List;
 
 public interface GalleryImageService {
 
-    List<Image> getAll();
+    List<GalleryImage> getAll();
 }

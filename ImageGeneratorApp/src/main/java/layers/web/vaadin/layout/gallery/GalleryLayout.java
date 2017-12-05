@@ -1,5 +1,6 @@
 package layers.web.vaadin.layout.gallery;
 
+import com.vaadin.server.StreamResource;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 import static java.lang.Integer.min;
@@ -35,9 +37,12 @@ public class GalleryLayout extends VerticalLayout implements GalleryLayoutBuilde
         removeAllComponents();
         pagedGallery(galleryImageService.getAll()
                 .stream()
+                .map(galleryImage -> new Image() {{
+                    setSource(new StreamResource(() -> new ByteArrayInputStream(galleryImage.getBytes()),
+                                                                                galleryImage.getName()));
+                }})
                 .peek(image -> image.setStyleName(GALLERY_STYLE))
-                .collect(toList())
-        ).forEach(list -> this.addComponent(addNewLine(list)));
+                .collect(toList())).forEach(list -> this.addComponent(addNewLine(list)));
     }
 
     private List<List<Image>> pagedGallery(List<Image> list) {
