@@ -1,5 +1,6 @@
 package layers.repository;
 
+import domain.InformationalImage;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -8,12 +9,10 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import system.ResourceReader;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-import static java.nio.file.Files.readAllBytes;
 import static java.util.stream.Collectors.toList;
 
 @Ignore
@@ -54,15 +53,21 @@ public class PostgreSQLTest {
     }
 
     @Test
+    public void a1()throws Exception {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(DATA_SOURCE);
+        jdbcTemplate.execute("DELETE FROM gallery_image");
+    }
+
+    @Test
     public void name() throws Exception {
 
         ResourceReader resourceReader = new ResourceReader();
-        List<GalleryImage> images = resourceReader.readFiles("images/colors")
+        List<GalleryImage> images = resourceReader.readFiles("1")
                 .stream()
                 .map(file -> new GalleryImage() {{
                     try {
-                        setBytes(readAllBytes(file.toPath()));
-                    } catch (IOException e) {
+                        setBytes(InformationalImage.madeOf(file).resizeTo(250, 250).asBytes());
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     setName(file.getName());
