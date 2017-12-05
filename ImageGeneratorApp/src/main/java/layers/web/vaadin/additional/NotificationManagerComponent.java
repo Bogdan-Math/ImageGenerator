@@ -33,7 +33,7 @@ public class NotificationManagerComponent implements NotificationManager {
     public void showAs(Type type) {
         String message = notifications.stream()
                 .map(notification -> "- " + notification)
-                .collect(joining("\n"));
+                .collect(joining("<br>"));
 
         new Notification(message, "", type, true).show(getCurrent());
         notifications.clear();
