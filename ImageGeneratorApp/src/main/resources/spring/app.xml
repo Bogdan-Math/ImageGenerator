@@ -1,45 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-                           http://www.springframework.org/schema/beans/spring-beans.xsd
-                           http://www.springframework.org/schema/context
-                           http://www.springframework.org/schema/context/spring-context-4.3.xsd
-                           http://www.springframework.org/schema/util
-                           http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!--DB connection (data source)-->
-    <import resource="db/db-connect.xml"/>
-
-    <!--UI classes-->
-    <context:component-scan base-package="layers.web.vaadin"/>
-
-    <!--SERVICE classes-->
-    <context:component-scan base-package="layers.service"/>
-
-    <!--REPOSITORY classes-->
-    <context:component-scan base-package="layers.repository"/>
-
-    <!--CORE DOMAIN classes-->
-    <bean id="imageGenerator" class="core.BasicImageGenerator" scope="session">
-        <property name="settings" ref="settings"/>
-    </bean>
-    <bean id="settings" class="core.BasicSettings" scope="session">
-        <property name="expectedColumnsCount"
-                  value="#{T(core.Settings).MAX_EXPECTED_COLUMNS_COUNT / 2}"/>
-    </bean>
-
-    <!--CORE SYSTEM classes-->
-    <bean id="resourceReader" class="system.ResourceReader"/>
-
-    <util:list id="notifications" value-type="java.lang.String"/>
-
-    <bean id="originalImageView"
-          class="com.vaadin.ui.Image" scope="session"/>
-
-    <bean id="generatedImageView"
-          class="com.vaadin.ui.Image" scope="session"/>
+    <import resource="core/core-beans.xml"/>
+    <import resource="layers/*"/>
 
 </beans>

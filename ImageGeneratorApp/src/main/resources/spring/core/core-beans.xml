@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--CORE DOMAIN classes-->
+    <bean id="imageGenerator" class="core.BasicImageGenerator" scope="session">
+        <property name="settings" ref="settings"/>
+    </bean>
+    
+    <bean id="settings" class="core.BasicSettings" scope="session">
+        <property name="expectedColumnsCount"
+                  value="#{T(core.Settings).MAX_EXPECTED_COLUMNS_COUNT / 2}"/>
+    </bean>
+
+    <!--CORE SYSTEM classes-->
+    <bean id="resourceReader" class="system.ResourceReader"/>
+
+</beans>
