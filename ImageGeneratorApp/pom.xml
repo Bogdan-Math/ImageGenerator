@@ -43,10 +43,11 @@
         <vaadin.plugin.version>8.0.0</vaadin.plugin.version>
         <vaadin.spring.version>2.0.0</vaadin.spring.version>
         <servlet.api.version>3.1.0</servlet.api.version>
-        <spring.test.version>4.3.3.RELEASE</spring.test.version>
+        <spring.version>4.3.3.RELEASE</spring.version>
         <selenium.firefox.driver.version>3.6.0</selenium.firefox.driver.version>
         <lombok.version>1.16.16</lombok.version>
         <maven.failsafe.plugin.version>2.20.1</maven.failsafe.plugin.version>
+        <postgresql.version>42.1.4</postgresql.version>
     </properties>
 
     <!--build properties-->
@@ -214,7 +215,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>${spring.test.version}</version>
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -238,14 +239,14 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.1.4</version><!--TODO: move it to properties-->
+            <version>${postgresql.version}</version>
         </dependency>
 
-        <!--TODO: add description-->
+        <!--Spring JDBC (library over core JDBC API)-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-            <version>4.3.3.RELEASE</version><!--TODO: move it to properties-->
+            <version>${spring.version}</version>
         </dependency>
 
     </dependencies>
