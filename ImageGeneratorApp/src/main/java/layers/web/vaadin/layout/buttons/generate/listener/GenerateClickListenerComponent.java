@@ -6,8 +6,10 @@ import com.vaadin.ui.Image;
 import core.ImageGenerator;
 import core.Settings;
 import domain.InformationalImage;
+import layers.service.GalleryImageService;
 import layers.web.vaadin.additional.NotificationManager;
 import layers.web.vaadin.layout.buttons.download.listener.Downloader;
+import model.GalleryImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -39,6 +41,9 @@ public class GenerateClickListenerComponent implements GenerateClickListener {
     @Autowired
     private Downloader downloader;
 
+    @Autowired
+    private GalleryImageService galleryImageService;
+
     @Override
     public void buttonClick(ClickEvent event) {
 
@@ -55,7 +60,11 @@ public class GenerateClickListenerComponent implements GenerateClickListener {
 
             notificationManager.add("Your image was generated.")
                                .showAs(TRAY_NOTIFICATION);
-        });
 
+            new Thread(() -> galleryImageService.save(new GalleryImage() {{
+                setName(settings.getImageFileName());//TODO: add correct generated name
+                setBytes(generatedImage.resizeTo(250, 250).asBytes());//TODO: move variables to constants
+            }})).start();
+        });
     }
 }

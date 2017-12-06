@@ -12,9 +12,14 @@ public class GalleryImageServiceImpl implements GalleryImageService {
 
     private GalleryImageRepository galleryImageRepository;
 
-    @Override//TODO: add cache (maybe ecache lib)
+    @Override//TODO: add cache (maybe ehcache lib)
     public List<GalleryImage> getAll() {
         return galleryImageRepository.getAll();
+    }
+
+    @Override
+    public void save(GalleryImage galleryImage) {
+        galleryImageRepository.save(galleryImage);
     }
 
     @Resource(name = "galleryImageRepository")

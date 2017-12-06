@@ -21,6 +21,13 @@ public class GalleryImageRepositoryImpl implements GalleryImageRepository {
                 }});
     }
 
+    @Override
+    public void save(GalleryImage galleryImage) {
+        jdbcTemplate.update("INSERT INTO gallery_image (name, bytes) VALUES (?, ?)",
+                galleryImage.getName(),
+                galleryImage.getBytes());
+    }
+
     @Resource(name = "jdbcTemplate")
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
