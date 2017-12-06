@@ -1,6 +1,5 @@
 package domain;
 
-import com.google.common.annotations.VisibleForTesting;
 import net.coobird.thumbnailator.Thumbnails;
 
 import javax.imageio.ImageIO;
@@ -67,11 +66,6 @@ public class InformationalImage extends BufferedImage {
         }
     }
 
-    @VisibleForTesting//TODO: delete/refactor it
-    InputStream asUncheckedStream() throws Exception {
-        return new ByteArrayInputStream(asBytes());
-    }
-
     public byte[] asBytes() throws Exception {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         ImageIO.write(this, "jpg", stream);
@@ -123,6 +117,7 @@ public class InformationalImage extends BufferedImage {
         return new InformationalImage(getSubimage(x, y, width, height));
     }
 
+    //TODO: add tests on this method
     public InformationalImage resizeTo(int newWidth, int newHeight) {
         try {
             return new InformationalImage(Thumbnails.of(this).size(newWidth, newHeight).asBufferedImage());

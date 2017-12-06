@@ -73,10 +73,16 @@ public class InformationalImageTest {
     }
 
     @Test
-    public void inputStreamFromInformationalImageException() throws Exception {
-        String message              = "Message madeOf UNCHECKED exception!";
+    public void bytesFromInformationalImage() throws Exception {
+        //TODO: add test on asBytes() method
+    }
+
+    @Test
+    public void bytesFromInformationalImageException() throws Exception {
+        //TODO: refactor this test
+        String message              = "Message made of UNCHECKED exception!";
         InformationalImage spyImage = spy(image);
-        doThrow(new IllegalArgumentException(message)).when(spyImage).asUncheckedStream();
+        doThrow(new IllegalArgumentException(message)).when(spyImage).asBytes();
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage(message);
 
