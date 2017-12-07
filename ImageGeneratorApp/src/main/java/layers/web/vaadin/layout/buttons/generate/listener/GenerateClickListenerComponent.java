@@ -61,6 +61,7 @@ public class GenerateClickListenerComponent implements GenerateClickListener {
             notificationManager.add("Your image was generated.")
                                .showAs(TRAY_NOTIFICATION);
 
+            //TODO: add connection pool in configuration
             new Thread(() -> galleryImageService.save(new GalleryImage() {{
                 setName(settings.getImageFileName());//TODO: add correct generated name
                 setBytes(generatedImage.resizeTo(250, 250).asBytes());//TODO: move variables to constants
