@@ -18,6 +18,7 @@
         <property name="username"        value="${db.user}"/>
         <property name="password"        value="${db.password}"/>
         <property name="initialSize"     value="${db.connection.pool.size}"/>
+        <property name="maxTotal"        value="${db.connection.max.total}"/>
     </bean>
 
 </beans>
