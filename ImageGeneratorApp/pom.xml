@@ -28,6 +28,7 @@
         <db.url>jdbc:postgresql://ec2-107-20-214-99.compute-1.amazonaws.com:5432/dfm6o5autn88hj?ssl=true<![CDATA[&amp;]]>sslfactory=org.postgresql.ssl.NonValidatingFactory</db.url>
         <db.user>mygtvnrgfvdksl</db.user>
         <db.password>6e059618a1ecb27ef2d05001c0721c042d786d97879d699c22c3b7537b9f2a3e</db.password>
+        <db.connection.pool.size>10</db.connection.pool.size>
 
         <!--JETTY plugin configurations for integration tests-->
         <maven.jetty.plugin.version>9.4.7.v20170914</maven.jetty.plugin.version>
@@ -48,6 +49,7 @@
         <lombok.version>1.16.16</lombok.version>
         <maven.failsafe.plugin.version>2.20.1</maven.failsafe.plugin.version>
         <postgresql.version>42.1.4</postgresql.version>
+        <commons.dbcp2.version>2.0</commons.dbcp2.version>
     </properties>
 
     <!--build properties-->
@@ -247,6 +249,13 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+
+        <!--DB Connection Pool-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>${commons.dbcp2.version}</version>
         </dependency>
 
     </dependencies>

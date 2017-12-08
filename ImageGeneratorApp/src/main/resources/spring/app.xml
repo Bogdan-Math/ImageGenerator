@@ -5,6 +5,7 @@
                            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <import resource="core/core-beans.xml"/>
+    <import resource="db/db-beans.xml"/>
     <import resource="layers/*"/>
 
 </beans>

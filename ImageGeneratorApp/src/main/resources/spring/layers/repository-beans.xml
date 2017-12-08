@@ -7,20 +7,8 @@
                            http://www.springframework.org/schema/context
                            http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-    <!--DB connection (properties)-->
-    <context:property-placeholder location="classpath*:db/db-connect.properties"/>
-
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <constructor-arg name="dataSource" ref="dataSource"/>
-    </bean>
-
-    <!--DB connection (data source)-->
-    <bean id="dataSource"
-          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${db.driver}"/>
-        <property name="url"             value="${db.url}"/>
-        <property name="username"        value="${db.user}"/>
-        <property name="password"        value="${db.password}"/>
     </bean>
 
     <!--REPOSITORY classes-->
