@@ -2,6 +2,7 @@ package layers.service;
 
 import layers.repository.GalleryImageRepository;
 import model.GalleryImage;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,6 +19,7 @@ public class GalleryImageServiceImpl implements GalleryImageService {
     }
 
     @Override
+    @Async
     public void save(GalleryImage galleryImage) {
         galleryImageRepository.save(galleryImage);
     }
