@@ -5,10 +5,7 @@ import net.coobird.thumbnailator.Thumbnails;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.InputStream;
+import java.io.*;
 import java.util.stream.IntStream;
 
 import static javax.imageio.ImageIO.read;
@@ -63,17 +60,16 @@ public class InformationalImage extends BufferedImage {
         return new ByteArrayInputStream(asBytes());
     }
 
-    //TODO: add test
     public byte[] asBytes() {
         try {
-            return asUncheckedBytes();
+            return uncheckedAsBytes();
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
     }
 
-    @VisibleForTesting//TODO: add test
-    byte[] asUncheckedBytes() throws Exception {
+    @VisibleForTesting
+    byte[] uncheckedAsBytes() throws Exception {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         ImageIO.write(this, "jpg", stream);
         stream.flush();
@@ -124,12 +120,16 @@ public class InformationalImage extends BufferedImage {
         return new InformationalImage(getSubimage(x, y, width, height));
     }
 
-    //TODO: add tests on this method
     public InformationalImage resizeTo(int newWidth, int newHeight) {
         try {
-            return new InformationalImage(Thumbnails.of(this).size(newWidth, newHeight).asBufferedImage());
+            return uncheckedResizeTo(newWidth, newHeight);
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
+    }
+
+    @VisibleForTesting
+    InformationalImage uncheckedResizeTo(int newWidth, int newHeight) throws IOException {
+        return new InformationalImage(Thumbnails.of(this).size(newWidth, newHeight).asBufferedImage());
     }
 }

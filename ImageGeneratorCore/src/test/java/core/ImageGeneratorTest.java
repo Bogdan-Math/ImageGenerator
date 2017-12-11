@@ -20,9 +20,9 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ImageGeneratorTest {
 
-    private ImageGenerator imageGenerator     = new BasicImageGenerator();
-    private ResourceReader resourceReader     = new ResourceReader();
-    private Settings settings                 = mock(BasicSettings.class);
+    private ImageGenerator imageGenerator = new BasicImageGenerator();
+    private ResourceReader resourceReader = new ResourceReader();
+    private Settings settings             = mock(BasicSettings.class);
     private InformationalImage incomeImage;
 
     @Rule

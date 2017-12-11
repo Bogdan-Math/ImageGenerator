@@ -11,6 +11,7 @@ import java.io.File;
 import static domain.InformationalColor.*;
 import static java.nio.file.Files.readAllBytes;
 import static java.nio.file.Paths.get;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -68,25 +69,29 @@ public class InformationalImageTest {
     }
 
     @Test
-    public void inputStreamFromInformationalImage() {
+    public void informationalImageAsStream() {
         assertNotNull(image.asStream());
     }
 
     @Test
-    public void bytesFromInformationalImage() {
-        //TODO: add test on asBytes() method
+    public void informationalImageAsBytes() {
+        assertNotNull(image.asBytes());
     }
 
     @Test
-    public void bytesFromInformationalImageException() {
-        //TODO: refactor this test
-        String message              = "Message made of UNCHECKED exception!";
+    public void informationalImageUncheckedAsBytes() throws Exception {
+        assertNotNull(image.uncheckedAsBytes());
+    }
+
+    @Test
+    public void informationalImageUncheckedAsBytesException() throws Exception {
+        String message              = "Message made of UNCHECKED exception in uncheckedAsBytes method!";
         InformationalImage spyImage = spy(image);
-        doThrow(new IllegalArgumentException(message)).when(spyImage).asBytes();
+        doThrow(new IllegalArgumentException(message)).when(spyImage).uncheckedAsBytes();
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage(message);
 
-        spyImage.asStream();
+        spyImage.asBytes();
 
         fail();
     }
@@ -136,6 +141,36 @@ public class InformationalImageTest {
         assertThat(image.getSubImage(24, 24, 8, 8).averagedColor().almostEqualTo(BLACK), is(true));
 
         assertThat(image.getSubImage(24, 24, 8, 8).averagedColor().almostEqualTo(WHITE), is(false));
+    }
+
+    @Test
+    public void resizeTo() throws Exception {
+        int width  = 250;
+        int height = 250;
+        InformationalImage resized = image.resizeTo(width, height);
+
+        assertThat(resized.getWidth(),  equalTo(width));
+        assertThat(resized.getHeight(), equalTo(height));
+    }
+
+    @Test
+    public void informationalImageUncheckedResizeTo() throws Exception {
+        assertNotNull(image.uncheckedResizeTo(100, 100));
+    }
+
+    @Test
+    public void informationalImageUncheckedResizeToException() throws Exception {
+        String message = "Message made of UNCHECKED exception in uncheckedResizeTo method!";
+        int newWidth   = 100;
+        int newHeight  = 100;
+        InformationalImage spyImage = spy(image);
+        doThrow(new IllegalArgumentException(message)).when(spyImage).uncheckedResizeTo(newWidth, newHeight);
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage(message);
+
+        spyImage.resizeTo(newWidth, newHeight);
+
+        fail();
     }
 
 }
