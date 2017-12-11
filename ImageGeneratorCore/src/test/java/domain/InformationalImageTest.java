@@ -26,7 +26,7 @@ public class InformationalImageTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         this.fileImage = new ResourceReader().readFile("images/testable/4x4.jpg");
         this.image     = InformationalImage.madeOf(fileImage); // 32 x 32 (px)
     }
@@ -37,48 +37,48 @@ public class InformationalImageTest {
     }
 
     @Test
-    public void informationalImageMadeOfBytesException() throws Exception {
+    public void informationalImageMadeOfBytesException() {
         thrown.expect(IllegalArgumentException.class);
         InformationalImage.madeOf((byte[]) null);
         fail();
     }
 
     @Test
-    public void informationalImageMadeOfFile() throws Exception {
+    public void informationalImageMadeOfFile() {
         assertThat(InformationalImage.madeOf(fileImage), notNullValue());
     }
 
     @Test
-    public void informationalImageMadeOfFileException() throws Exception {
+    public void informationalImageMadeOfFileException() {
         thrown.expect(IllegalArgumentException.class);
         InformationalImage.madeOf((File) null);
         fail();
     }
 
     @Test
-    public void allowedWidth() throws Exception {
+    public void allowedWidth() {
         assertTrue(image.widthLessThan(33));
         assertTrue(image.widthMoreThan(0));
     }
 
     @Test
-    public void allowedHeight() throws Exception {
+    public void allowedHeight() {
         assertTrue(image.heightLessThan(33));
         assertTrue(image.heightMoreThan(0));
     }
 
     @Test
-    public void inputStreamFromInformationalImage() throws Exception {
+    public void inputStreamFromInformationalImage() {
         assertNotNull(image.asStream());
     }
 
     @Test
-    public void bytesFromInformationalImage() throws Exception {
+    public void bytesFromInformationalImage() {
         //TODO: add test on asBytes() method
     }
 
     @Test
-    public void bytesFromInformationalImageException() throws Exception {
+    public void bytesFromInformationalImageException() {
         //TODO: refactor this test
         String message              = "Message made of UNCHECKED exception!";
         InformationalImage spyImage = spy(image);
@@ -92,28 +92,28 @@ public class InformationalImageTest {
     }
 
     @Test
-    public void whiteAveragedColor() throws Exception {
+    public void whiteAveragedColor() {
         this.image = InformationalImage.madeOf(new ResourceReader().readFile("images/testable/1-white.jpg"));
         InformationalColor white = image.averagedColor();
         assertEquals(WHITE, white);
     }
 
     @Test
-    public void grayAveragedColor() throws Exception {
+    public void grayAveragedColor() {
         this.image = InformationalImage.madeOf(new ResourceReader().readFile("images/testable/2-gray.jpg"));
         InformationalColor gray = image.averagedColor();
         assertEquals(GRAY, gray);
     }
 
     @Test
-    public void blackAveragedColor() throws Exception {
+    public void blackAveragedColor() {
         this.image = InformationalImage.madeOf(new ResourceReader().readFile("images/testable/3-black.jpg"));
         InformationalColor black = image.averagedColor();
         assertEquals(BLACK, black);
     }
 
     @Test
-    public void getSubImage() throws Exception {
+    public void getSubImage() {
 
         assertThat(image.getSubImage(0, 0, 8, 8).averagedColor().almostEqualTo(BLACK), is(true));
         assertThat(image.getSubImage(8, 0, 8, 8).averagedColor().almostEqualTo(WHITE), is(true));
