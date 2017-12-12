@@ -11,14 +11,18 @@
     <context:property-placeholder location="classpath*:db/db-connect.properties"/>
 
     <!--DB connection (data source)-->
-    <bean id="dataSource"
-          class="org.apache.commons.dbcp2.BasicDataSource">
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
         <property name="driverClassName" value="${db.driver}"/>
         <property name="url"             value="${db.url}"/>
         <property name="username"        value="${db.user}"/>
         <property name="password"        value="${db.password}"/>
         <property name="initialSize"     value="${db.connection.pool.size}"/>
         <property name="maxTotal"        value="${db.connection.max.total}"/>
+    </bean>
+
+    <!--DB migration (configuration)-->
+    <bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate">
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 
 </beans>
