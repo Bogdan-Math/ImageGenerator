@@ -25,6 +25,9 @@ import static java.util.Optional.ofNullable;
 @Scope("session")
 public class GenerateClickListenerComponent implements GenerateClickListener {
 
+    private static final int NEW_WIDTH  = 250;
+    private static final int NEW_HEIGHT = 250;
+
     @Autowired
     private ImageGenerator imageGenerator;
 
@@ -51,10 +54,11 @@ public class GenerateClickListenerComponent implements GenerateClickListener {
 
             InformationalImage generatedImage = imageGenerator.generateImage();
             String timeNow                    = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"));
+            String generatedImageName         = String.join("_", "generated", timeNow, settings.getIncomeImageName());
 
             generatedImageView.setSource(new StreamResource(
                     generatedImage::asStream,
-                    String.join("_", "generated", timeNow, settings.getIncomeImageName())));
+                    generatedImageName));
 
             downloader.setFileDownloadResource(generatedImageView.getSource());
 
@@ -62,8 +66,9 @@ public class GenerateClickListenerComponent implements GenerateClickListener {
                                .showAs(TRAY_NOTIFICATION);
 
             galleryImageService.save(new GalleryImage() {{
-                setName(settings.getIncomeImageName());//TODO: add correct generated name
-                setBytes(generatedImage.resizeTo(250, 250).asBytes());//TODO: move variables to constants
+                setName(generatedImageName);
+                setBytes(generatedImage.resizeTo(NEW_WIDTH, NEW_HEIGHT)//TODO: move resize process to scheduler
+                                       .asBytes());
             }});
         });
     }
