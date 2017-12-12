@@ -25,8 +25,8 @@ import static java.util.Optional.ofNullable;
 @Scope("session")
 public class GenerateClickListenerComponent implements GenerateClickListener {
 
-    private static final int NEW_WIDTH  = 250;
-    private static final int NEW_HEIGHT = 250;
+    private static final int NEW_WIDTH  = 300;
+    private static final int NEW_HEIGHT = 300;
 
     @Autowired
     private ImageGenerator imageGenerator;
