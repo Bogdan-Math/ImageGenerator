@@ -9,7 +9,7 @@ public class CreatorTest {
 
     //"AAA" Pattern.
     @Test
-    public void description() throws Exception {
+    public void description() {
 
         //"A" - Arrange
         String creatorName = "Bogdan";

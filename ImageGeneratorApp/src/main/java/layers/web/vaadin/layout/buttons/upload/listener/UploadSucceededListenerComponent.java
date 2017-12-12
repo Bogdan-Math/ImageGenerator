@@ -51,12 +51,12 @@ public class UploadSucceededListenerComponent implements UploadSucceededListener
             return;
         }
 
-        settings.setImageFileName(imageFileName);
+        settings.setIncomeImageName(imageFileName);
         settings.setIncomeImage(uploadedImage);
 
         originalImageView.setSource(new StreamResource(() ->
                 settings.getIncomeImage().asStream(),
-                String.join("_", "original", timeNow, settings.getImageFileName())));
+                String.join("_", "original", timeNow, settings.getIncomeImageName())));
 
         notificationManager.add("Upload succeeded.");
     }

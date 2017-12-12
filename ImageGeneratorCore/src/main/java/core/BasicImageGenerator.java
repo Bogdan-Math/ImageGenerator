@@ -135,6 +135,6 @@ public class BasicImageGenerator implements ImageGenerator {
         return imgMatrix.stream()
                         .flatMap(List::stream)
                         .max(Comparator.comparing(img -> img.getWidth() * img.getHeight()))
-                        .orElse(null);
+                        .get();
     }
 }

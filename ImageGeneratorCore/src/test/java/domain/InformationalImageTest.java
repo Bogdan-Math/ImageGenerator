@@ -144,7 +144,7 @@ public class InformationalImageTest {
     }
 
     @Test
-    public void resizeTo() throws Exception {
+    public void resizeTo() {
         int width  = 250;
         int height = 250;
         InformationalImage resized = image.resizeTo(width, height);

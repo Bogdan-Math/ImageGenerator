@@ -15,12 +15,12 @@ public class ResourceReaderTest {
     private ResourceReader resourceReader;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         this.resourceReader = new ResourceReader();
     }
 
     @Test
-    public void readCommonsImageFiles() throws Exception {
+    public void readCommonsImageFiles() {
         String path = "images/colors";
         int patternsCount = 24;
 
@@ -31,7 +31,7 @@ public class ResourceReaderTest {
     }
 
     @Test
-    public void readFlagsImageFiles() throws Exception {
+    public void readFlagsImageFiles() {
         String path = "images/flags";
         int patternsCount = 196;
 
@@ -42,7 +42,7 @@ public class ResourceReaderTest {
     }
 
     @Test
-    public void readPlainsImageFiles() throws Exception {
+    public void readPlainsImageFiles() {
         String path = "images/plains";
         int patternsCount = 3;
 
@@ -53,7 +53,7 @@ public class ResourceReaderTest {
     }
 
     @Test
-    public void readFile() throws Exception {
+    public void readFile() {
         File file = resourceReader.readFile("images/testable/4x4.jpg");
 
         assertTrue(file.exists());

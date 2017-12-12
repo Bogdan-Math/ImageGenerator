@@ -23,13 +23,13 @@ public class SettingsTest {
     private InformationalImage incomeImage = mock(InformationalImage.class);
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
 
         //set fields
         settings.setIncomeImage(incomeImage);
         settings.setPatterns(new HashMap<>());
         settings.setExpectedColumnsCount(MAX_EXPECTED_COLUMNS_COUNT / 2);
-        settings.setImageFileName("image-file-name.jpg");
+        settings.setIncomeImageName("image-file-name.jpg");
 
         //mock actions
         when(incomeImage.getWidth()).thenReturn(100);
@@ -38,34 +38,34 @@ public class SettingsTest {
     }
 
     @Test
-    public void getImage() throws Exception {
+    public void getImage() {
         assertNotNull(settings.getIncomeImage());
     }
 
     @Test
-    public void getPatterns() throws Exception {
+    public void getPatterns() {
         assertNotNull(settings.getPatterns());
     }
 
     @Test
-    public void getExpectedColumnsCount() throws Exception {
+    public void getExpectedColumnsCount() {
         assertThat(settings.getExpectedColumnsCount(), is(MAX_EXPECTED_COLUMNS_COUNT / 2));
     }
 
     @Test
-    public void getImageWidth() throws Exception {
+    public void getImageWidth() {
         assertThat(settings.getImageWidth(), is(100));
         verify(incomeImage, times(1)).getWidth();
     }
 
     @Test
-    public void getImageHeight() throws Exception {
+    public void getImageHeight() {
         assertThat(settings.getImageHeight(), is(200));
         verify(incomeImage, times(1)).getHeight();
     }
 
     @Test
-    public void getSubImage() throws Exception {
+    public void getSubImage() {
         InformationalImage subImage = settings.getSubImage(1, 1, 1, 1);
 
         assertNotNull(subImage);
@@ -75,7 +75,7 @@ public class SettingsTest {
     }
 
     @Test
-    public void getImageFileName() throws Exception {
-        assertThat(settings.getImageFileName(), is("image-file-name.jpg"));
+    public void getImageFileName() {
+        assertThat(settings.getIncomeImageName(), is("image-file-name.jpg"));
     }
 }

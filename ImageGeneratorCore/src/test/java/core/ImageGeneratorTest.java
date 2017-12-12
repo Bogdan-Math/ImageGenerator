@@ -1,6 +1,7 @@
 package core;
 
 import domain.InformationalImage;
+import exception.MatrixSizeException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -29,7 +30,7 @@ public class ImageGeneratorTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
 
         //set fields
         imageGenerator.setSettings(settings);
@@ -47,7 +48,17 @@ public class ImageGeneratorTest {
     }
 
     @Test
-    public void generateWhiteImage() throws Exception {
+    public void exceptionMessage() {
+        doReturn(5).when(settings).getExpectedColumnsCount();
+        doReturn(3).when(settings).getImageWidth();
+        thrown.expect(MatrixSizeException.class);
+        thrown.expectMessage("Count of expected columns (is 5) could not be more than image width (is 3)");
+
+        imageGenerator.generateImage();
+    }
+
+    @Test
+    public void generateWhiteImage() {
 
         //Arrange
         this.incomeImage = InformationalImage.madeOf(resourceReader.readFile("images/testable/1-white.jpg"));
@@ -67,7 +78,7 @@ public class ImageGeneratorTest {
     }
 
     @Test
-    public void generateGrayImage() throws Exception {
+    public void generateGrayImage() {
 
         //Arrange
         this.incomeImage = InformationalImage.madeOf(resourceReader.readFile("images/testable/2-gray.jpg"));
@@ -87,7 +98,7 @@ public class ImageGeneratorTest {
     }
 
     @Test
-    public void generateBlackImage() throws Exception {
+    public void generateBlackImage() {
 
         //Arrange
         this.incomeImage = InformationalImage.madeOf(resourceReader.readFile("images/testable/3-black.jpg"));
@@ -107,7 +118,7 @@ public class ImageGeneratorTest {
     }
 
     @Test
-    public void generate4x4Image() throws Exception {
+    public void generate4x4Image() {
 
         //Arrange
         this.incomeImage = InformationalImage.madeOf(resourceReader.readFile("images/testable/4x4.jpg"));

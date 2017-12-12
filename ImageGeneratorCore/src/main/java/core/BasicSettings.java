@@ -10,7 +10,7 @@ public class BasicSettings implements Settings {
     private InformationalImage incomeImage;
     private Map<InformationalColor, InformationalImage> patterns;
     private Integer expectedColumnsCount;
-    private String imageFileName;
+    private String incomeImageName;
 
     @Override
     public InformationalImage getIncomeImage() {
@@ -58,13 +58,13 @@ public class BasicSettings implements Settings {
     }
 
     @Override
-    public String getImageFileName() {
-        return imageFileName;
+    public String getIncomeImageName() {
+        return incomeImageName;
     }
 
     @Override
-    public void setImageFileName(String imageFileName) {
-        this.imageFileName = imageFileName;
+    public void setIncomeImageName(String incomeImageName) {
+        this.incomeImageName = incomeImageName;
     }
 
 }

@@ -54,7 +54,7 @@ public class GenerateClickListenerComponent implements GenerateClickListener {
 
             generatedImageView.setSource(new StreamResource(
                     generatedImage::asStream,
-                    String.join("_", "generated", timeNow, settings.getImageFileName())));
+                    String.join("_", "generated", timeNow, settings.getIncomeImageName())));
 
             downloader.setFileDownloadResource(generatedImageView.getSource());
 
@@ -62,7 +62,7 @@ public class GenerateClickListenerComponent implements GenerateClickListener {
                                .showAs(TRAY_NOTIFICATION);
 
             galleryImageService.save(new GalleryImage() {{
-                setName(settings.getImageFileName());//TODO: add correct generated name
+                setName(settings.getIncomeImageName());//TODO: add correct generated name
                 setBytes(generatedImage.resizeTo(250, 250).asBytes());//TODO: move variables to constants
             }});
         });
