@@ -51,6 +51,7 @@
         <maven.failsafe.plugin.version>2.20.1</maven.failsafe.plugin.version>
         <postgresql.version>42.1.4</postgresql.version>
         <commons.dbcp2.version>2.0</commons.dbcp2.version>
+        <flyway.core.version>5.0.2</flyway.core.version>
     </properties>
 
     <!--build properties-->
@@ -257,6 +258,13 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-dbcp2</artifactId>
             <version>${commons.dbcp2.version}</version>
+        </dependency>
+
+        <!--Flyway - DB migration tool-->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway.core.version}</version>
         </dependency>
 
     </dependencies>
