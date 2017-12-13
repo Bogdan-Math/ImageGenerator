@@ -1,5 +1,6 @@
 package layers.service;
 
+import domain.InformationalImage;
 import model.GalleryImage;
 
 import java.util.List;
@@ -7,5 +8,5 @@ import java.util.List;
 public interface GalleryImageService {
 
     List<GalleryImage> getAll();
-    void save(GalleryImage galleryImage);
+    void save(String imageName, InformationalImage informationalImage);
 }
