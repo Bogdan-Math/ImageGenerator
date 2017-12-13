@@ -14,18 +14,18 @@ public class GalleryImageRepositoryImpl implements GalleryImageRepository {
 
     @Override
     public List<GalleryImage> getAll() {
-        return jdbcTemplate.query("SELECT name, bytes FROM gallery_image",
+        return jdbcTemplate.query("SELECT name, thumbnail_image FROM gallery_image WHERE thumbnail_image NOTNULL",
                 (rs, rowNum) -> new GalleryImage() {{
                     setName(rs.getString(1));
-                    setBytes(rs.getBytes(2));
+                    setThumbnailImage(rs.getBytes(2));
                 }});
     }
 
     @Override
     public void save(GalleryImage galleryImage) {
-        jdbcTemplate.update("INSERT INTO gallery_image (name, bytes) VALUES (?, ?)",
+        jdbcTemplate.update("INSERT INTO gallery_image (name, thumbnail_image) VALUES (?, ?)",
                 galleryImage.getName(),
-                galleryImage.getBytes());
+                galleryImage.getThumbnailImage());
     }
 
     @Resource(name = "jdbcTemplate")

@@ -67,9 +67,11 @@ public class GenerateClickListenerComponent implements GenerateClickListener {
 
             galleryImageService.save(new GalleryImage() {{
                 setName(generatedImageName);
-                setBytes(generatedImage.resizeTo(NEW_WIDTH, NEW_HEIGHT)//TODO: move resize process to scheduler
-                                       .asBytes());
+                setFullImage(generatedImage.asBytes());
+                setThumbnailImage(generatedImage.resizeTo(NEW_WIDTH, NEW_HEIGHT)//TODO: move resize process to scheduler
+                                                .asBytes());
             }});
+
         });
     }
 }

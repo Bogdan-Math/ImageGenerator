@@ -5,8 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AbstractImage {
+class AbstractImage {
 
     private String name;
-    private byte[] bytes;
+    private byte[] fullImage;
+    private byte[] thumbnailImage;
 }

@@ -39,7 +39,7 @@ public class PatternImageServiceImpl implements PatternImageService {
 
     private Map<InformationalColor, InformationalImage> convert(List<PatternImage> patterns) {
         return patterns.stream()
-                .map(patternImage -> InformationalImage.madeOf(patternImage.getBytes()))
+                .map(patternImage -> InformationalImage.madeOf(patternImage.getThumbnailImage()))
                 .collect(toMap(
                         InformationalImage::averagedColor,       // put InformationalColor as KEY   in map
                         informationalImage -> informationalImage,// put InformationalImage as VALUE in map

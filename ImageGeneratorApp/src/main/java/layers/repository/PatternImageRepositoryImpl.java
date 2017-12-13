@@ -41,7 +41,7 @@ public class PatternImageRepositoryImpl implements PatternImageRepository {
                              .map(file -> new PatternImage() {{
                                  setName(file.getName());
                                  try {
-                                     setBytes(readAllBytes(file.toPath()));
+                                     setThumbnailImage(readAllBytes(file.toPath()));
                                  } catch (IOException e) {
                                      e.printStackTrace();
                                  }
