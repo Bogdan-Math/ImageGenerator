@@ -19,7 +19,7 @@ public class GalleryImageServiceImpl implements GalleryImageService {
 
     @Override//TODO: add cache (maybe ehcache lib) and rename it
     public List<GalleryImage> getAll() {
-        return galleryImageRepository.getAll();
+        return galleryImageRepository.getAllThumbnails();
     }
 
     @Override

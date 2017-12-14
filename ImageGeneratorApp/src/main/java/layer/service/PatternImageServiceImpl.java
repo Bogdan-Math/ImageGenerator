@@ -19,16 +19,16 @@ import static java.util.stream.Collectors.toMap;
 @Service("patternImageService")
 public class PatternImageServiceImpl implements PatternImageService {
 
-    private PatternImageRepository repository;
+    private PatternImageRepository patternImageRepository;
 
     private Map<PatternType, Map<InformationalColor, InformationalImage>> allPatterns;
 
     @Override
     @PostConstruct
     public void cacheAllPatterns() {
-        List<PatternImage> commons = repository.getCommons();
-        List<PatternImage> flags   = repository.getFlags();
-        List<PatternImage> plains  = repository.getPlains();
+        List<PatternImage> commons = patternImageRepository.getCommons();
+        List<PatternImage> flags   = patternImageRepository.getFlags();
+        List<PatternImage> plains  = patternImageRepository.getPlains();
 
         allPatterns = new LinkedHashMap<>();
 
@@ -59,7 +59,7 @@ public class PatternImageServiceImpl implements PatternImageService {
     }
 
     @Resource(name = "patternImageRepository")
-    public void setRepository(PatternImageRepository repository) {
-        this.repository = repository;
+    public void setPatternImageRepository(PatternImageRepository patternImageRepository) {
+        this.patternImageRepository = patternImageRepository;
     }
 }

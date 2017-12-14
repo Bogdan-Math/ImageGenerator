@@ -13,7 +13,7 @@ public class GalleryImageRepositoryImpl implements GalleryImageRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<GalleryImage> getAll() {
+    public List<GalleryImage> getAllThumbnails() {
         return jdbcTemplate.query("SELECT name, thumbnail_image FROM gallery_image WHERE thumbnail_image NOTNULL",
                 (rs, rowNum) -> new GalleryImage() {{
                     setName(rs.getString(1));
