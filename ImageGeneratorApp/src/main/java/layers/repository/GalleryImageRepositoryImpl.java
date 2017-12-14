@@ -23,9 +23,10 @@ public class GalleryImageRepositoryImpl implements GalleryImageRepository {
 
     @Override
     public void save(GalleryImage galleryImage) {
-        jdbcTemplate.update("INSERT INTO gallery_image (name, thumbnail_image) VALUES (?, ?)",
+        jdbcTemplate.update("INSERT INTO gallery_image (name, full_image, thumbnail_image) VALUES (?, ?, ?)",
                 galleryImage.getName(),
-                galleryImage.getThumbnailImage());
+                galleryImage.getThumbnailImage(),
+                galleryImage.getFullImage());
     }
 
     @Resource(name = "jdbcTemplate")
