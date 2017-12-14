@@ -54,7 +54,7 @@ public class PatternImageServiceImpl implements PatternImageService {
     }
 
     @Override
-    public Map<PatternType, Map<InformationalColor, InformationalImage>> getInformationalMaps() {
+    public Map<PatternType, Map<InformationalColor, InformationalImage>> getAllPatterns() {
         return allPatterns;
     }
 

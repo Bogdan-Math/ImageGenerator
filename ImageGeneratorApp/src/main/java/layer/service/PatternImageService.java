@@ -11,5 +11,5 @@ public interface PatternImageService {
     void cacheAllPatterns();
 
     //TODO: rename this method
-    Map<PatternType, Map<InformationalColor, InformationalImage>> getInformationalMaps();
+    Map<PatternType, Map<InformationalColor, InformationalImage>> getAllPatterns();
 }

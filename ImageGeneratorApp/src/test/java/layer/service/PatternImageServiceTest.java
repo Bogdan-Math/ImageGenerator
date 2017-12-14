@@ -79,7 +79,7 @@ public class PatternImageServiceTest {
     @Test
     public void cacheAndGetAllPatterns() throws Exception {
         patternImageService.cacheAllPatterns();
-        Map<PatternType, Map<InformationalColor, InformationalImage>> allPatterns = patternImageService.getInformationalMaps();
+        Map<PatternType, Map<InformationalColor, InformationalImage>> allPatterns = patternImageService.getAllPatterns();
 
         assertThat(allPatterns.size(), is(3));
         assertThat(allPatterns.get(COMMONS).size(), is(1));
@@ -90,7 +90,7 @@ public class PatternImageServiceTest {
     @Test
     public void twoSameAveragedColors() throws Exception {
         patternImageService.cacheAllPatterns();
-        Map<PatternType, Map<InformationalColor, InformationalImage>> allPatterns = patternImageService.getInformationalMaps();
+        Map<PatternType, Map<InformationalColor, InformationalImage>> allPatterns = patternImageService.getAllPatterns();
 
         assertNotNull(allPatterns);
         assertThat(outContent.toString(), containsString("Two same averaged colors:"));

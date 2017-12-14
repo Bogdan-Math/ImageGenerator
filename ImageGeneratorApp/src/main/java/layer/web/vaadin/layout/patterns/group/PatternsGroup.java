@@ -35,7 +35,7 @@ public class PatternsGroup extends RadioButtonGroup<String> {
         setValue(FLAGS.name());
         addStyleName(OPTIONGROUP_HORIZONTAL);
 
-        Map<PatternType, Map<InformationalColor, InformationalImage>> patterns = patternImageService.getInformationalMaps();
+        Map<PatternType, Map<InformationalColor, InformationalImage>> patterns = patternImageService.getAllPatterns();
 
         settings.setPatterns(patterns.get(valueOf(getValue())));
 
