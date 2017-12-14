@@ -7,11 +7,14 @@
                            http://www.springframework.org/schema/context
                            http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <constructor-arg name="dataSource" ref="dataSource"/>
-    </bean>
+    <context:property-placeholder location="classpath*:webapp-integration-tests.properties"/>
 
-    <!--REPOSITORY classes-->
-    <context:component-scan base-package="layer.repository"/>
+    <bean id="imageGeneratorPageObject" class="layer.web.vaadin.ImageGeneratorPageObject">
+        <constructor-arg name="browser"  value="${webapp.browser}"/>
+        <constructor-arg name="protocol" value="${webapp.protocol}"/>
+        <constructor-arg name="host"     value="${webapp.host}"/>
+        <constructor-arg name="port"     value="${webapp.port}"/>
+        <constructor-arg name="route"    value="${webapp.route}"/>
+    </bean>
 
 </beans>

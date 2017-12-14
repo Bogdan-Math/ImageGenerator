@@ -11,7 +11,7 @@
                            http://www.springframework.org/schema/util/spring-util.xsd">
 
     <!--UI classes-->
-    <context:component-scan base-package="layers.web.vaadin"/>
+    <context:component-scan base-package="layer.web.vaadin"/>
 
     <bean id="originalImageView"
           class="com.vaadin.ui.Image" scope="session"/>
