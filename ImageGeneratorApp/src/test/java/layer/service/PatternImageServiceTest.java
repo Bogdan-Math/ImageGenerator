@@ -49,28 +49,28 @@ public class PatternImageServiceTest {
 
         when(patternImageRepository.getCommons()).thenReturn(new ArrayList<PatternImage>() {{
             add(new PatternImage() {{
-                setThumbnailImage(bytes);
+                fullImage = bytes;
             }});
             add(new PatternImage() {{
-                setThumbnailImage(bytes);
+                fullImage = bytes;
             }});
             add(new PatternImage() {{
-                setThumbnailImage(bytes);
+                fullImage = bytes;
             }});
         }});
 
         when(patternImageRepository.getFlags()).thenReturn(new ArrayList<PatternImage>() {{
             add(new PatternImage() {{
-                setThumbnailImage(bytes);
+                fullImage = bytes;
             }});
             add(new PatternImage() {{
-                setThumbnailImage(bytes);
+                fullImage = bytes;
             }});
         }});
 
         when(patternImageRepository.getPlains()).thenReturn(new ArrayList<PatternImage>() {{
             add(new PatternImage() {{
-                setThumbnailImage(bytes);
+                fullImage = bytes;
             }});
         }});
 

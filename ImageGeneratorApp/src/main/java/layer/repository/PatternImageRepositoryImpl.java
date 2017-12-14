@@ -39,9 +39,9 @@ public class PatternImageRepositoryImpl implements PatternImageRepository {
         return resourceReader.readFiles(patternType.getLocation())
                              .stream()
                              .map(file -> new PatternImage() {{
-                                 setName(file.getName());
                                  try {
-                                     setThumbnailImage(readAllBytes(file.toPath()));
+                                     fullImage     = readAllBytes(file.toPath());
+                                     fullImageName = file.getName();
                                  } catch (IOException e) {
                                      e.printStackTrace();
                                  }

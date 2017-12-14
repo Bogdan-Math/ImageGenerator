@@ -1,13 +1,7 @@
 package model;
 
-import lombok.Getter;
-import lombok.Setter;
+abstract class AbstractImage {
 
-@Getter
-@Setter
-class AbstractImage {
-
-    private String name;
-    private byte[] fullImage;
-    private byte[] thumbnailImage;
+    public byte[] fullImage;
+    public String fullImageName;
 }
