@@ -1,10 +1,10 @@
 package system;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -12,17 +12,8 @@ import java.util.stream.Stream;
 import static java.nio.file.Files.list;
 import static java.nio.file.Paths.get;
 import static java.util.Objects.requireNonNull;
-import static java.util.stream.Collectors.toList;
 
 public class ResourceReader {
-
-    //TODO: delete it after refactor
-    public List<File> readFiles(String path) {
-        return Arrays.stream(Optional.ofNullable(readFile(path).listFiles())
-                .orElseThrow(() -> new RuntimeException("Directory \'" + path + "\': is not exists or empty.")))
-                .filter(File::isFile)
-                .collect(toList());
-    }
 
     //TODO: delete it after refactor
     public File readFile(String resourceName) {
@@ -32,43 +23,77 @@ public class ResourceReader {
     //TODO: delete it after refactor
     private String fullPath(String resourceName) {
         return requireNonNull(getClass().getClassLoader()
-                .getResource(resourceName)).getFile();
+                                        .getResource(resourceName)).getFile();
     }
 
     //TODO: add test to all brand new functionality
-    public Resource read(String pathToDir) {
-        return new Resource(Optional.ofNullable(pathToDir)
-                                    .orElseThrow(() -> new RuntimeException("Path to dir COULD NOT be null !!!")));
+    public MultiResource readAll(String pathToDir) {
+        return new MultiResource(Optional.ofNullable(pathToDir)
+                                         .orElseThrow(() -> new RuntimeException("Path to directory COULD NOT be null !!!")));
     }
 
-    public class Resource {
+    //TODO: add test to all brand new functionality
+    public SingleResource readSingle(String pathToFile) {
+        return new SingleResource(Optional.ofNullable(pathToFile)
+                                          .orElseThrow(() -> new RuntimeException("Path to directory COULD NOT be null !!!")));
+    }
 
-        private Stream<Path> pathsToFiles;
+    public class SingleResource {
 
-        private Resource(String checkedPathToDir) {
-            this.pathsToFiles = ((UncheckedFunction<String, Stream<Path>>) path -> list(get(full(path)))).apply(checkedPathToDir);
+        private String fileName;
+
+        private SingleResource(String fileName) {
+            this.fileName = fileName;
         }
 
-        public Stream<File> asFiles() {
+        public File asFile() {
             UncheckedFunction<Path, File> toFile = Path::toFile;
             return convert(toFile);
         }
 
-        public Stream<byte[]> asByteArrays() {
+        public byte[] asByteArray() {
             UncheckedFunction<Path, byte[]> toByteArray = Files::readAllBytes;
             return convert(toByteArray);
         }
 
-        private String full(String uncheckedPath) {
-            return requireNonNull(getClass().getClassLoader()
-                    .getResource(uncheckedPath)).getFile();
+        private <R> R convert(UncheckedFunction<Path, R> uncheckedFunction) {
+            UncheckedFunction<String, Path> toFullPath = path -> get(full(path));
+            return Stream.of(fileName)
+                         .map(toFullPath)
+                         .map(uncheckedFunction)
+                         .findFirst()
+                         .orElseThrow(RuntimeException::new);//TODO: add Description
+        }
+    }
+
+    public class MultiResource {
+
+        private Stream<Path> pathsToFiles;
+
+        private MultiResource(String checkedPathToDir) {
+            this.pathsToFiles = ((UncheckedFunction<String, Stream<Path>>) path -> list(get(full(path)))).apply(checkedPathToDir);
+        }
+
+        public Stream<File> asFiles() {
+            UncheckedFunction<Path, File> toFiles = Path::toFile;
+            return convert(toFiles);
+        }
+
+        public Stream<byte[]> asByteArrays() {
+            UncheckedFunction<Path, byte[]> toByteArrays = Files::readAllBytes;
+            return convert(toByteArrays);
         }
 
         private <R> Stream<R> convert(UncheckedFunction<Path, R> uncheckedFunction) {
             return pathsToFiles.filter(Files::isRegularFile)
-                        .map(uncheckedFunction);
+                               .map(uncheckedFunction);
         }
 
+    }
+
+    private URI full(String uncheckedPath) throws URISyntaxException {
+        return requireNonNull(getClass().getClassLoader()
+                .getResource(uncheckedPath)).toURI();
     }
 
     @FunctionalInterface

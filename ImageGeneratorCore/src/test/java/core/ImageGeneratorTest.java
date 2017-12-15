@@ -36,7 +36,7 @@ public class ImageGeneratorTest {
         imageGenerator.setSettings(settings);
 
         //mock actions
-        when(settings.getPatterns()).thenReturn(resourceReader.read("images/colors")
+        when(settings.getPatterns()).thenReturn(resourceReader.readAll("images/colors")
                 .asFiles()
                 .map(InformationalImage::madeOf)
                 .collect(toMap(

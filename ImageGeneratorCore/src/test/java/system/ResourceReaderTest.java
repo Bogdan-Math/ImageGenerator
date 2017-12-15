@@ -24,7 +24,7 @@ public class ResourceReaderTest {
         String path = "images/colors";
         long patternsCount = 24;
 
-        Stream<File> files = resourceReader.read(path).asFiles();
+        Stream<File> files = resourceReader.readAll(path).asFiles();
 
         assertThat(files, notNullValue());
         assertThat(files.count(), equalTo(patternsCount));
@@ -35,7 +35,7 @@ public class ResourceReaderTest {
         String path = "images/flags";
         long patternsCount = 196;
 
-        Stream<File> files = resourceReader.read(path).asFiles();
+        Stream<File> files = resourceReader.readAll(path).asFiles();
 
         assertThat(files, notNullValue());
         assertThat(files.count(), equalTo(patternsCount));
@@ -46,7 +46,7 @@ public class ResourceReaderTest {
         String path = "images/plains";
         long patternsCount = 3;
 
-        Stream<File> files = resourceReader.read(path).asFiles();
+        Stream<File> files = resourceReader.readAll(path).asFiles();
 
         assertThat(files, notNullValue());
         assertThat(files.count(), equalTo(patternsCount));
@@ -54,7 +54,7 @@ public class ResourceReaderTest {
 
     @Test
     public void readFile() {
-        File file = resourceReader.readFile("images/testable/4x4.jpg");
+        File file = resourceReader.readSingle("images/testable/4x4.jpg").asFile();
 
         assertTrue(file.exists());
         assertTrue(file.isFile());

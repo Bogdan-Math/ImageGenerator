@@ -36,7 +36,7 @@ public class PatternImageRepositoryImpl implements PatternImageRepository {
     }
 
     private List<PatternImage> initialize(PatternType patternType) {
-        return resourceReader.read(patternType.getLocation())
+        return resourceReader.readAll(patternType.getLocation())
                              .asFiles()
                              .map(file -> new PatternImage() {{
                                  try {

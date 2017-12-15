@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import system.ResourceReader;
-import system.ResourceReader.Resource;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -54,13 +53,6 @@ public class PostgreSQLTest {
     }
 
     @Test
-    public void name11() {
-        ResourceReader resourceReader = new ResourceReader();
-        Resource resource = resourceReader.read(null);
-        resource.asFiles().forEach(System.out::println);
-    }
-
-    @Test
     public void a1()throws Exception {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(DATA_SOURCE);
         jdbcTemplate.execute("DELETE FROM gallery_image");
@@ -70,8 +62,8 @@ public class PostgreSQLTest {
     public void name() throws Exception {
 
         ResourceReader resourceReader = new ResourceReader();
-        Resource read = resourceReader.read("");
-        List<GalleryImage> images = resourceReader.read("1").asFiles()
+        List<GalleryImage> images = resourceReader.readAll("1")
+                .asFiles()
                 .map(file -> new GalleryImage() {{
                     try {
                         setBytes(InformationalImage.madeOf(file).resizeTo(250, 250).asBytes());

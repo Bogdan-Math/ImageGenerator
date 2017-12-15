@@ -43,9 +43,7 @@ public class PatternImageServiceTest {
     public void setUp() throws Exception {
         System.setOut(new PrintStream(outContent));
 
-        final byte[] bytes = readAllBytes(get(new ResourceReader()
-                .readFile("images/plains/white.jpg")
-                .getAbsolutePath()));
+        final byte[] bytes = new ResourceReader().readSingle("images/plains/white.jpg").asByteArray();
 
         when(patternImageRepository.getCommons()).thenReturn(new ArrayList<PatternImage>() {{
             add(new PatternImage() {{
