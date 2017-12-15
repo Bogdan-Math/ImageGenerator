@@ -53,7 +53,6 @@ public class PatternImageServiceTest {
                 new PatternImage(bytes)));
 
         when(patternImageRepository.getPlains()).thenReturn(Stream.of(
-                new PatternImage(bytes),
                 new PatternImage(bytes)));
     }
 
