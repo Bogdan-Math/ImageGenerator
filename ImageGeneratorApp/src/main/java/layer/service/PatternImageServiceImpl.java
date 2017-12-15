@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import static domain.PatternType.*;
 import static java.util.stream.Collectors.toMap;
@@ -26,9 +26,9 @@ public class PatternImageServiceImpl implements PatternImageService {
     @Override
     @PostConstruct
     public void cacheAllPatterns() {
-        List<PatternImage> commons = patternImageRepository.getCommons();
-        List<PatternImage> flags   = patternImageRepository.getFlags();
-        List<PatternImage> plains  = patternImageRepository.getPlains();
+        Stream<PatternImage> commons = patternImageRepository.getCommons();
+        Stream<PatternImage> flags   = patternImageRepository.getFlags();
+        Stream<PatternImage> plains  = patternImageRepository.getPlains();
 
         allPatterns = new LinkedHashMap<>();
 
@@ -37,8 +37,8 @@ public class PatternImageServiceImpl implements PatternImageService {
         allPatterns.put(PLAINS,  convert(plains));
     }
 
-    private Map<InformationalColor, InformationalImage> convert(List<PatternImage> patterns) {
-        return patterns.stream()
+    private Map<InformationalColor, InformationalImage> convert(Stream<PatternImage> patterns) {
+        return patterns
                 .map(patternImage -> InformationalImage.madeOf(patternImage.fullImage))
                 .collect(toMap(
                         InformationalImage::averagedColor,       // put InformationalColor as KEY   in map

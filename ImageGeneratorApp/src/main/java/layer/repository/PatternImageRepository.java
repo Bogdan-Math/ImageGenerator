@@ -2,11 +2,11 @@ package layer.repository;
 
 import model.PatternImage;
 
-import java.util.List;
+import java.util.stream.Stream;
 
 public interface PatternImageRepository {
 
-    List<PatternImage> getCommons();
-    List<PatternImage> getFlags();
-    List<PatternImage> getPlains();
+    Stream<PatternImage> getCommons();
+    Stream<PatternImage> getFlags();
+    Stream<PatternImage> getPlains();
 }

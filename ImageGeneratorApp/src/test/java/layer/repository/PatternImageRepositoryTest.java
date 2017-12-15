@@ -24,16 +24,19 @@ public class PatternImageRepositoryTest {
 
     @Test
     public void getCommons() throws Exception {
-        assertThat(repository.getCommons().size(), is(3));
+        long three = 3;
+        assertThat(repository.getCommons().count(), is(three));
     }
 
     @Test
     public void getFlags() throws Exception {
-        assertThat(repository.getFlags().size(), is(2));
+        long two = 2;
+        assertThat(repository.getFlags().count(), is(two));
     }
 
     @Test
     public void getPlains() throws Exception {
-        assertThat(repository.getPlains().size(), is(1));
+        long one = 1;
+        assertThat(repository.getPlains().count(), is(one));
     }
 }

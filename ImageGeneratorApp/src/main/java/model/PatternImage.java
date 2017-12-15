@@ -1,4 +1,12 @@
 package model;
 
-public class PatternImage extends AbstractImage {
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class PatternImage {
+
+    @NonNull
+    public byte[] fullImage;
+
 }

@@ -15,12 +15,10 @@ import system.ResourceReader;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import static domain.PatternType.*;
-import static java.nio.file.Files.readAllBytes;
-import static java.nio.file.Paths.get;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
@@ -45,33 +43,18 @@ public class PatternImageServiceTest {
 
         final byte[] bytes = new ResourceReader().readSingle("images/plains/white.jpg").asByteArray();
 
-        when(patternImageRepository.getCommons()).thenReturn(new ArrayList<PatternImage>() {{
-            add(new PatternImage() {{
-                fullImage = bytes;
-            }});
-            add(new PatternImage() {{
-                fullImage = bytes;
-            }});
-            add(new PatternImage() {{
-                fullImage = bytes;
-            }});
-        }});
+        when(patternImageRepository.getCommons()).thenReturn(Stream.of(
+                new PatternImage(bytes),
+                new PatternImage(bytes),
+                new PatternImage(bytes)));
 
-        when(patternImageRepository.getFlags()).thenReturn(new ArrayList<PatternImage>() {{
-            add(new PatternImage() {{
-                fullImage = bytes;
-            }});
-            add(new PatternImage() {{
-                fullImage = bytes;
-            }});
-        }});
+        when(patternImageRepository.getFlags()).thenReturn(Stream.of(
+                new PatternImage(bytes),
+                new PatternImage(bytes)));
 
-        when(patternImageRepository.getPlains()).thenReturn(new ArrayList<PatternImage>() {{
-            add(new PatternImage() {{
-                fullImage = bytes;
-            }});
-        }});
-
+        when(patternImageRepository.getPlains()).thenReturn(Stream.of(
+                new PatternImage(bytes),
+                new PatternImage(bytes)));
     }
 
     @Test
