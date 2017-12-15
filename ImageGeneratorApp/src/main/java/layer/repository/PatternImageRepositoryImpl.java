@@ -36,8 +36,8 @@ public class PatternImageRepositoryImpl implements PatternImageRepository {
     }
 
     private List<PatternImage> initialize(PatternType patternType) {
-        return resourceReader.readFiles(patternType.getLocation())
-                             .stream()
+        return resourceReader.read(patternType.getLocation())
+                             .asFiles()
                              .map(file -> new PatternImage() {{
                                  try {
                                      fullImage     = readAllBytes(file.toPath());

@@ -36,8 +36,8 @@ public class ImageGeneratorTest {
         imageGenerator.setSettings(settings);
 
         //mock actions
-        when(settings.getPatterns()).thenReturn(resourceReader.readFiles("images/colors")
-                .stream()
+        when(settings.getPatterns()).thenReturn(resourceReader.read("images/colors")
+                .asFiles()
                 .map(InformationalImage::madeOf)
                 .collect(toMap(
                         InformationalImage::averagedColor,

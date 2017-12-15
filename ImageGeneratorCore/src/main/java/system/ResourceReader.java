@@ -36,16 +36,17 @@ public class ResourceReader {
     }
 
     //TODO: add test to all brand new functionality
-    public Resource read(String path) {
-        return new Resource(path);
+    public Resource read(String pathToDir) {
+        return new Resource(Optional.ofNullable(pathToDir)
+                                    .orElseThrow(() -> new RuntimeException("Path to dir COULD NOT be null !!!")));
     }
 
     public class Resource {
 
-        private Stream<Path> paths;
+        private Stream<Path> pathsToFiles;
 
-        private Resource(String pathToDir) {
-            this.paths = ((UncheckedFunction<String, Stream<Path>>) uncheckedPath -> list(get(full(uncheckedPath)))).apply(pathToDir);
+        private Resource(String checkedPathToDir) {
+            this.pathsToFiles = ((UncheckedFunction<String, Stream<Path>>) path -> list(get(full(path)))).apply(checkedPathToDir);
         }
 
         public Stream<File> asFiles() {
@@ -64,25 +65,31 @@ public class ResourceReader {
         }
 
         private <R> Stream<R> convert(UncheckedFunction<Path, R> uncheckedFunction) {
-            return Optional.ofNullable(paths)
-                    .orElseThrow(RuntimeException::new)//TODO: add description
-                    .filter(Files::isRegularFile)
-                    .map(uncheckedFunction);
+            return pathsToFiles.filter(Files::isRegularFile)
+                        .map(uncheckedFunction);
         }
 
     }
 
+    @FunctionalInterface
     private interface UncheckedFunction<T, R> extends Function<T, R> {
+
+        R uncheckedApply(T t) throws Exception;
 
         @Override
         default R apply(T t) {
             try {
                 return uncheckedApply(t);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            } catch (Throwable throwable) {
+                throw new UncheckedFunctionException(throwable);
             }
         }
 
-        R uncheckedApply(T t) throws Exception;
+        class UncheckedFunctionException extends RuntimeException {
+            UncheckedFunctionException(Throwable throwable) {
+                super(throwable);
+            }
+        }
     }
 }
+

@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.List;
+import java.util.stream.Stream;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -22,34 +22,34 @@ public class ResourceReaderTest {
     @Test
     public void readCommonsImageFiles() {
         String path = "images/colors";
-        int patternsCount = 24;
+        long patternsCount = 24;
 
-        List<File> fileList = resourceReader.readFiles(path);
+        Stream<File> files = resourceReader.read(path).asFiles();
 
-        assertThat(fileList, notNullValue());
-        assertThat(fileList.size(), equalTo(patternsCount));
+        assertThat(files, notNullValue());
+        assertThat(files.count(), equalTo(patternsCount));
     }
 
     @Test
     public void readFlagsImageFiles() {
         String path = "images/flags";
-        int patternsCount = 196;
+        long patternsCount = 196;
 
-        List<File> fileList = resourceReader.readFiles(path);
+        Stream<File> files = resourceReader.read(path).asFiles();
 
-        assertThat(fileList, notNullValue());
-        assertThat(fileList.size(), equalTo(patternsCount));
+        assertThat(files, notNullValue());
+        assertThat(files.count(), equalTo(patternsCount));
     }
 
     @Test
     public void readPlainsImageFiles() {
         String path = "images/plains";
-        int patternsCount = 3;
+        long patternsCount = 3;
 
-        List<File> fileList = resourceReader.readFiles(path);
+        Stream<File> files = resourceReader.read(path).asFiles();
 
-        assertThat(fileList, notNullValue());
-        assertThat(fileList.size(), equalTo(patternsCount));
+        assertThat(files, notNullValue());
+        assertThat(files.count(), equalTo(patternsCount));
     }
 
     @Test
