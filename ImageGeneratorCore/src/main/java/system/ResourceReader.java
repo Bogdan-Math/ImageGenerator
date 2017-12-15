@@ -5,35 +5,29 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static java.nio.file.Files.list;
 import static java.nio.file.Paths.get;
 import static java.util.Objects.requireNonNull;
+import static java.util.Optional.ofNullable;
 
 public class ResourceReader {
 
     //TODO: add test to all brand new functionality
-    public MultiResource readAll(String pathToDir) {
-        return new MultiResource(Optional.ofNullable(pathToDir)
-                                         .orElseThrow(() -> new RuntimeException("Path to directory COULD NOT be null !!!")));
-    }
-
-    //TODO: add test to all brand new functionality
     public SingleResource readSingle(String pathToFile) {
-        return new SingleResource(Optional.ofNullable(pathToFile)
-                                          .orElseThrow(() -> new RuntimeException("Path to file COULD NOT be null !!!")));
+        return new SingleResource(ofNullable(pathToFile)
+                .orElseThrow(() -> new RuntimeException("Path to file COULD NOT be null !!!")));
     }
 
     public class SingleResource {
 
         private Path pathToFile;
 
-        private SingleResource(String fileName) {
+        private SingleResource(String checkedPathToFile) {
             UncheckedFunction<String, Path> toFullPath = path -> get(full(path));
-            this.pathToFile = toFullPath.apply(fileName);
+            this.pathToFile = toFullPath.apply(checkedPathToFile);
         }
 
         public File asFile() {
@@ -54,12 +48,19 @@ public class ResourceReader {
         }
     }
 
+    //TODO: add test to all brand new functionality
+    public MultiResource readAll(String pathToDir) {
+        return new MultiResource(ofNullable(pathToDir)
+                .orElseThrow(() -> new RuntimeException("Path to directory COULD NOT be null !!!")));
+    }
+
     public class MultiResource {
 
         private Stream<Path> pathsToFiles;
 
         private MultiResource(String checkedPathToDir) {
-            this.pathsToFiles = ((UncheckedFunction<String, Stream<Path>>) path -> list(get(full(path)))).apply(checkedPathToDir);
+            UncheckedFunction<String, Stream<Path>> toFullPaths = path -> list(get(full(path)));
+            this.pathsToFiles = toFullPaths.apply(checkedPathToDir);
         }
 
         public Stream<File> asFiles() {
@@ -105,4 +106,3 @@ public class ResourceReader {
         }
     }
 }
-
