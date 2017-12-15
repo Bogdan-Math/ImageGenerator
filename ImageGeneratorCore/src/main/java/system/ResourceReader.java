@@ -15,17 +15,6 @@ import static java.util.Objects.requireNonNull;
 
 public class ResourceReader {
 
-    //TODO: delete it after refactor
-    public File readFile(String resourceName) {
-        return new File(fullPath(resourceName));
-    }
-
-    //TODO: delete it after refactor
-    private String fullPath(String resourceName) {
-        return requireNonNull(getClass().getClassLoader()
-                                        .getResource(resourceName)).getFile();
-    }
-
     //TODO: add test to all brand new functionality
     public MultiResource readAll(String pathToDir) {
         return new MultiResource(Optional.ofNullable(pathToDir)
@@ -35,15 +24,16 @@ public class ResourceReader {
     //TODO: add test to all brand new functionality
     public SingleResource readSingle(String pathToFile) {
         return new SingleResource(Optional.ofNullable(pathToFile)
-                                          .orElseThrow(() -> new RuntimeException("Path to directory COULD NOT be null !!!")));
+                                          .orElseThrow(() -> new RuntimeException("Path to file COULD NOT be null !!!")));
     }
 
     public class SingleResource {
 
-        private String fileName;
+        private Path pathToFile;
 
         private SingleResource(String fileName) {
-            this.fileName = fileName;
+            UncheckedFunction<String, Path> toFullPath = path -> get(full(path));
+            this.pathToFile = toFullPath.apply(fileName);
         }
 
         public File asFile() {
@@ -57,12 +47,10 @@ public class ResourceReader {
         }
 
         private <R> R convert(UncheckedFunction<Path, R> uncheckedFunction) {
-            UncheckedFunction<String, Path> toFullPath = path -> get(full(path));
-            return Stream.of(fileName)
-                         .map(toFullPath)
+            return Stream.of(pathToFile)
                          .map(uncheckedFunction)
                          .findFirst()
-                         .orElseThrow(RuntimeException::new);//TODO: add Description
+                         .orElseThrow(() -> new RuntimeException("There are NO object here !!!"));
         }
     }
 
@@ -93,13 +81,13 @@ public class ResourceReader {
 
     private URI full(String uncheckedPath) throws URISyntaxException {
         return requireNonNull(getClass().getClassLoader()
-                .getResource(uncheckedPath)).toURI();
+                                        .getResource(uncheckedPath)).toURI();
     }
 
     @FunctionalInterface
     private interface UncheckedFunction<T, R> extends Function<T, R> {
 
-        R uncheckedApply(T t) throws Exception;
+        R uncheckedApply(T t) throws Throwable;
 
         @Override
         default R apply(T t) {

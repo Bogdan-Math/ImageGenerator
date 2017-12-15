@@ -61,7 +61,7 @@ public class ImageGeneratorTest {
     public void generateWhiteImage() {
 
         //Arrange
-        this.incomeImage = InformationalImage.madeOf(resourceReader.readFile("images/testable/1-white.jpg"));
+        this.incomeImage = InformationalImage.madeOf(resourceReader.readSingle("images/testable/1-white.jpg").asFile());
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
@@ -81,7 +81,7 @@ public class ImageGeneratorTest {
     public void generateGrayImage() {
 
         //Arrange
-        this.incomeImage = InformationalImage.madeOf(resourceReader.readFile("images/testable/2-gray.jpg"));
+        this.incomeImage = InformationalImage.madeOf(resourceReader.readSingle("images/testable/2-gray.jpg").asFile());
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
@@ -101,7 +101,7 @@ public class ImageGeneratorTest {
     public void generateBlackImage() {
 
         //Arrange
-        this.incomeImage = InformationalImage.madeOf(resourceReader.readFile("images/testable/3-black.jpg"));
+        this.incomeImage = InformationalImage.madeOf(resourceReader.readSingle("images/testable/3-black.jpg").asFile());
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
@@ -121,7 +121,7 @@ public class ImageGeneratorTest {
     public void generate4x4Image() {
 
         //Arrange
-        this.incomeImage = InformationalImage.madeOf(resourceReader.readFile("images/testable/4x4.jpg"));
+        this.incomeImage = InformationalImage.madeOf(resourceReader.readSingle("images/testable/4x4.jpg").asFile());
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());

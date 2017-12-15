@@ -28,7 +28,7 @@ public class InformationalImageTest {
 
     @Before
     public void setUp() {
-        this.fileImage = new ResourceReader().readFile("images/testable/4x4.jpg");
+        this.fileImage = new ResourceReader().readSingle("images/testable/4x4.jpg").asFile();
         this.image     = InformationalImage.madeOf(fileImage); // 32 x 32 (px)
     }
 
@@ -98,21 +98,21 @@ public class InformationalImageTest {
 
     @Test
     public void whiteAveragedColor() {
-        this.image = InformationalImage.madeOf(new ResourceReader().readFile("images/testable/1-white.jpg"));
+        this.image = InformationalImage.madeOf(new ResourceReader().readSingle("images/testable/1-white.jpg").asFile());
         InformationalColor white = image.averagedColor();
         assertEquals(WHITE, white);
     }
 
     @Test
     public void grayAveragedColor() {
-        this.image = InformationalImage.madeOf(new ResourceReader().readFile("images/testable/2-gray.jpg"));
+        this.image = InformationalImage.madeOf(new ResourceReader().readSingle("images/testable/2-gray.jpg").asFile());
         InformationalColor gray = image.averagedColor();
         assertEquals(GRAY, gray);
     }
 
     @Test
     public void blackAveragedColor() {
-        this.image = InformationalImage.madeOf(new ResourceReader().readFile("images/testable/3-black.jpg"));
+        this.image = InformationalImage.madeOf(new ResourceReader().readSingle("images/testable/3-black.jpg").asFile());
         InformationalColor black = image.averagedColor();
         assertEquals(BLACK, black);
     }
