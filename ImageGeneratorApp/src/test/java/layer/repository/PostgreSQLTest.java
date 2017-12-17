@@ -53,7 +53,7 @@ public class PostgreSQLTest {
     }
 
     @Test
-    public void a1()throws Exception {
+    public void a1() throws Exception {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(DATA_SOURCE);
         jdbcTemplate.execute("DELETE FROM gallery_image");
     }
@@ -63,14 +63,13 @@ public class PostgreSQLTest {
 
         ResourceReader resourceReader = new ResourceReader();
         List<GalleryImage> images = resourceReader.readAll("1")
-                .asFiles()
-                .map(file -> new GalleryImage() {{
+                .asByteArrays()
+                .map(byteArray -> new GalleryImage() {{
                     try {
-                        setBytes(InformationalImage.madeOf(file).resizeTo(250, 250).asBytes());
+                        setBytes(InformationalImage.madeOf(byteArray).resizeTo(250, 250).asBytes());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    setName(file.getName());
                 }}).collect(toList());
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(DATA_SOURCE);

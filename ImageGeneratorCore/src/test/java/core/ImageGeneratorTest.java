@@ -37,7 +37,7 @@ public class ImageGeneratorTest {
 
         //mock actions
         when(settings.getPatterns()).thenReturn(resourceReader.readAll("images/colors")
-                .asFiles()
+                .asByteArrays()
                 .map(InformationalImage::madeOf)
                 .collect(toMap(
                         InformationalImage::averagedColor,
@@ -61,7 +61,7 @@ public class ImageGeneratorTest {
     public void generateWhiteImage() {
 
         //Arrange
-        this.incomeImage = InformationalImage.madeOf(resourceReader.readSingle("images/testable/1-white.jpg").asFile());
+        this.incomeImage = InformationalImage.madeOf(resourceReader.readSingle("images/testable/1-white.jpg").asByteArray());
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
@@ -81,7 +81,7 @@ public class ImageGeneratorTest {
     public void generateGrayImage() {
 
         //Arrange
-        this.incomeImage = InformationalImage.madeOf(resourceReader.readSingle("images/testable/2-gray.jpg").asFile());
+        this.incomeImage = InformationalImage.madeOf(resourceReader.readSingle("images/testable/2-gray.jpg").asByteArray());
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
@@ -101,7 +101,7 @@ public class ImageGeneratorTest {
     public void generateBlackImage() {
 
         //Arrange
-        this.incomeImage = InformationalImage.madeOf(resourceReader.readSingle("images/testable/3-black.jpg").asFile());
+        this.incomeImage = InformationalImage.madeOf(resourceReader.readSingle("images/testable/3-black.jpg").asByteArray());
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
@@ -121,7 +121,7 @@ public class ImageGeneratorTest {
     public void generate4x4Image() {
 
         //Arrange
-        this.incomeImage = InformationalImage.madeOf(resourceReader.readSingle("images/testable/4x4.jpg").asFile());
+        this.incomeImage = InformationalImage.madeOf(resourceReader.readSingle("images/testable/4x4.jpg").asByteArray());
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());

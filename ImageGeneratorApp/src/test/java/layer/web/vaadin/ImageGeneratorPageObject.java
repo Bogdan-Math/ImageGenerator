@@ -23,7 +23,7 @@ public class ImageGeneratorPageObject {
     private String route;
 
     public ImageGeneratorPageObject(String browser, String protocol, String host, Integer port, String route) {
-        Configuration.timeout = 10000;//ms TODO: fix timeout wait
+        Configuration.timeout = 20000;//ms TODO: fix timeout wait
         Configuration.browser = browser;
 
         this.protocol = protocol;

@@ -6,11 +6,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import system.ResourceReader;
 
-import java.io.File;
-
 import static domain.InformationalColor.*;
-import static java.nio.file.Files.readAllBytes;
-import static java.nio.file.Paths.get;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.core.Is.is;
@@ -21,38 +17,26 @@ import static org.mockito.Mockito.spy;
 public class InformationalImageTest {
 
     private InformationalImage image;
-    private File fileImage;
+    private byte[] byteArray;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() {
-        this.fileImage = new ResourceReader().readSingle("images/testable/4x4.jpg").asFile();
-        this.image     = InformationalImage.madeOf(fileImage); // 32 x 32 (px)
+        this.byteArray = new ResourceReader().readSingle("images/testable/4x4.jpg").asByteArray();
+        this.image     = InformationalImage.madeOf(byteArray); // 32 x 32 (px)
     }
 
     @Test
     public void informationalImageMadeOfBytes() throws Exception {
-        assertThat(InformationalImage.madeOf(readAllBytes(get(fileImage.getAbsolutePath()))), notNullValue());
+        assertThat(byteArray, notNullValue());
     }
 
     @Test
     public void informationalImageMadeOfBytesException() {
         thrown.expect(IllegalArgumentException.class);
-        InformationalImage.madeOf((byte[]) null);
-        fail();
-    }
-
-    @Test
-    public void informationalImageMadeOfFile() {
-        assertThat(InformationalImage.madeOf(fileImage), notNullValue());
-    }
-
-    @Test
-    public void informationalImageMadeOfFileException() {
-        thrown.expect(IllegalArgumentException.class);
-        InformationalImage.madeOf((File) null);
+        InformationalImage.madeOf(null);
         fail();
     }
 
@@ -98,21 +82,21 @@ public class InformationalImageTest {
 
     @Test
     public void whiteAveragedColor() {
-        this.image = InformationalImage.madeOf(new ResourceReader().readSingle("images/testable/1-white.jpg").asFile());
+        this.image = InformationalImage.madeOf(new ResourceReader().readSingle("images/testable/1-white.jpg").asByteArray());
         InformationalColor white = image.averagedColor();
         assertEquals(WHITE, white);
     }
 
     @Test
     public void grayAveragedColor() {
-        this.image = InformationalImage.madeOf(new ResourceReader().readSingle("images/testable/2-gray.jpg").asFile());
+        this.image = InformationalImage.madeOf(new ResourceReader().readSingle("images/testable/2-gray.jpg").asByteArray());
         InformationalColor gray = image.averagedColor();
         assertEquals(GRAY, gray);
     }
 
     @Test
     public void blackAveragedColor() {
-        this.image = InformationalImage.madeOf(new ResourceReader().readSingle("images/testable/3-black.jpg").asFile());
+        this.image = InformationalImage.madeOf(new ResourceReader().readSingle("images/testable/3-black.jpg").asByteArray());
         InformationalColor black = image.averagedColor();
         assertEquals(BLACK, black);
     }

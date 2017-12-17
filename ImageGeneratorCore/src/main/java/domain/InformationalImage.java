@@ -5,7 +5,10 @@ import net.coobird.thumbnailator.Thumbnails;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.stream.IntStream;
 
 import static javax.imageio.ImageIO.read;
@@ -17,14 +20,6 @@ public class InformationalImage extends BufferedImage {
     public static InformationalImage madeOf(byte[] bytes) {
         try {
             return new InformationalImage(read(new ByteArrayInputStream(bytes)));
-        } catch (Exception e) {
-            throw new IllegalArgumentException(e);
-        }
-    }
-
-    public static InformationalImage madeOf(File file) {
-        try {
-            return new InformationalImage(read(file));
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
