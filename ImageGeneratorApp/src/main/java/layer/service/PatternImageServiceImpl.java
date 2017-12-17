@@ -19,32 +19,32 @@ import static java.util.stream.Collectors.toMap;
 @Service("patternImageService")
 public class PatternImageServiceImpl implements PatternImageService {
 
-    private PatternImageRepository patternImageRepository;
+    private PatternImageRepository repository;
 
     private Map<PatternType, Map<InformationalColor, InformationalImage>> allPatterns;
 
     @Override
     @PostConstruct
     public void cacheAllPatterns() {
-        Stream<PatternImage> commons = patternImageRepository.getCommons();
-        Stream<PatternImage> flags   = patternImageRepository.getFlags();
-        Stream<PatternImage> plains  = patternImageRepository.getPlains();
+        Stream<PatternImage> commons = repository.getCommons();
+        Stream<PatternImage> flags = repository.getFlags();
+        Stream<PatternImage> plains = repository.getPlains();
 
         allPatterns = new LinkedHashMap<>();
 
         allPatterns.put(COMMONS, convert(commons));
-        allPatterns.put(FLAGS,   convert(flags));
-        allPatterns.put(PLAINS,  convert(plains));
+        allPatterns.put(FLAGS, convert(flags));
+        allPatterns.put(PLAINS, convert(plains));
     }
 
     private Map<InformationalColor, InformationalImage> convert(Stream<PatternImage> patterns) {
         return patterns
-                .map(patternImage -> InformationalImage.madeOf(patternImage.fullImage))
+                .map(pattern -> InformationalImage.madeOf(pattern.inByteArray))
                 .collect(toMap(
                         InformationalImage::averagedColor,       // put InformationalColor as KEY   in map
                         informationalImage -> informationalImage,// put InformationalImage as VALUE in map
                         (img_color_1, img_color_2) -> {
-                            System.out.println("Two same averaged colors: ");
+                            System.out.println("Two same averaged colors: ");//TODO: add logs
                             System.out.println(img_color_1);
                             System.out.println(img_color_2);
 
@@ -60,6 +60,6 @@ public class PatternImageServiceImpl implements PatternImageService {
 
     @Resource(name = "patternImageRepository")
     public void setPatternImageRepository(PatternImageRepository patternImageRepository) {
-        this.patternImageRepository = patternImageRepository;
+        this.repository = patternImageRepository;
     }
 }

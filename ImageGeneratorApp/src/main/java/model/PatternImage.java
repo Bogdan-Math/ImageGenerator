@@ -7,6 +7,6 @@ import lombok.RequiredArgsConstructor;
 public class PatternImage {
 
     @NonNull
-    public byte[] fullImage;
+    public byte[] inByteArray;
 
 }
