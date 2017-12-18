@@ -4,9 +4,10 @@ import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.Thumbnails.Builder;
 import utility.UncheckedFunction;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.function.BiFunction;
 import java.util.stream.IntStream;
@@ -55,7 +56,18 @@ public class InformationalImage extends BufferedImage {
     }
 
     public byte[] asBytes() {
-        return ((DataBufferByte) getRaster().getDataBuffer()).getData();
+
+        UncheckedFunction<InformationalImage, byte[]> toByteArray = img -> {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            ImageIO.write(InformationalImage.this, "jpg", stream);
+            stream.flush();
+            byte[] byteArray = stream.toByteArray();
+            stream.close();
+
+            return byteArray;
+        };
+
+        return toByteArray.apply(this);
     }
 
     public InformationalColor averagedColor() {
