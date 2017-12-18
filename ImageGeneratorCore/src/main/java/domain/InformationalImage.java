@@ -1,13 +1,14 @@
 package domain;
 
 import net.coobird.thumbnailator.Thumbnails;
-import system.UncheckedBiFunction;
+import net.coobird.thumbnailator.Thumbnails.Builder;
 import system.UncheckedFunction;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.function.BiFunction;
 import java.util.stream.IntStream;
 
 import static javax.imageio.ImageIO.read;
@@ -100,8 +101,12 @@ public class InformationalImage extends BufferedImage {
     }
 
     public InformationalImage resizeTo(int newWidth, int newHeight) {
-        UncheckedBiFunction<Integer, Integer, InformationalImage> toResizedImage = (width, height) ->
-                new InformationalImage(Thumbnails.of(this).size(width, height).asBufferedImage());
+
+        UncheckedFunction<Builder, InformationalImage> toInformationalImage = builder
+                -> new InformationalImage(builder.asBufferedImage());
+
+        BiFunction<Integer, Integer, InformationalImage> toResizedImage = (width, height)
+                -> toInformationalImage.apply(Thumbnails.of(this).size(width, height));
 
         return toResizedImage.apply(newWidth, newHeight);
     }
