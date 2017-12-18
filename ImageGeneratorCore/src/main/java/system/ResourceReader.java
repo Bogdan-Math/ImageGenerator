@@ -1,15 +1,14 @@
 package system;
 
-import static java.nio.file.Files.isDirectory;
-import static java.nio.file.Paths.get;
 import static java.util.Optional.ofNullable;
 
 public class ResourceReader {
 
     //TODO: add test to all brand new functionality
+    //TODO: rename to readAllIn
     public MultiResource readAll(String pathToDir) {
         return new MultiResource(ofNullable(pathToDir)
-                .filter(path -> isDirectory(get(path)))
+                //TODO: add if DIRECTORY check
                 .orElseThrow(() -> new RuntimeException("Path to directory COULD NOT be null !!!")));
     }
 }

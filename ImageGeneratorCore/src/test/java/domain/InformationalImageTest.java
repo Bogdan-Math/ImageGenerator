@@ -4,7 +4,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import system.ResourceReader;
+
+import java.io.InputStream;
 
 import static domain.InformationalColor.*;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -15,21 +16,20 @@ import static org.junit.Assert.*;
 public class InformationalImageTest {
 
     private InformationalImage image;
-    private byte[] byteArray;
+    private InputStream inputStream;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() {
-        this.byteArray = new ResourceReader().readAll("images/testable/")
-                .take("4x4.jpg").asByteArrays().findFirst().get();
-        this.image     = InformationalImage.madeOf(byteArray); // 32 x 32 (px)
+        this.inputStream = getClass().getClassLoader().getResourceAsStream("images/testable/4x4.jpg");
+        this.image       = InformationalImage.madeOf(inputStream); // 32 x 32 (px)
     }
 
     @Test
     public void informationalImageMadeOfBytes() throws Exception {
-        assertThat(byteArray, notNullValue());
+        assertThat(inputStream, notNullValue());
     }
 
     @Test
@@ -56,21 +56,21 @@ public class InformationalImageTest {
 
     @Test
     public void whiteAveragedColor() {
-        this.image = InformationalImage.madeOf(new ResourceReader().readAll("images/testable/").take("1-white.jpg").asByteArrays().findFirst().get());
+        this.image = InformationalImage.madeOf(getClass().getClassLoader().getResourceAsStream("images/testable/1-white.jpg"));
         InformationalColor white = image.averagedColor();
         assertEquals(WHITE, white);
     }
 
     @Test
     public void grayAveragedColor() {
-        this.image = InformationalImage.madeOf(new ResourceReader().readAll("images/testable/").take("2-gray.jpg").asByteArrays().findFirst().get());
+        this.image = InformationalImage.madeOf(getClass().getClassLoader().getResourceAsStream("images/testable/2-gray.jpg"));
         InformationalColor gray = image.averagedColor();
         assertEquals(GRAY, gray);
     }
 
     @Test
     public void blackAveragedColor() {
-        this.image = InformationalImage.madeOf(new ResourceReader().readAll("images/testable/").take("3-black.jpg").asByteArrays().findFirst().get());
+        this.image = InformationalImage.madeOf(getClass().getClassLoader().getResourceAsStream("images/testable/3-black.jpg"));
         InformationalColor black = image.averagedColor();
         assertEquals(BLACK, black);
     }

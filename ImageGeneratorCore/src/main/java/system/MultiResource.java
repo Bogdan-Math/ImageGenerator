@@ -22,13 +22,6 @@ public class MultiResource {
         this.pathsToFiles = toFullPaths.apply(checkedPathToDir);
     }
 
-    public MultiResource take(String... fileNames) {
-        this.pathsToFiles = pathsToFiles
-                .filter(path -> Stream.of(fileNames)
-                        .anyMatch(name -> path.getFileName().toString().equals(name)));
-        return this;
-    }
-
     public Stream<byte[]> asByteArrays() {
         UncheckedFunction<Path, byte[]> toByteArrays = Files::readAllBytes;
         return convert(toByteArrays);

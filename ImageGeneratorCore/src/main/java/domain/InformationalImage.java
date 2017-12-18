@@ -19,10 +19,14 @@ public class InformationalImage extends BufferedImage {
     public static final int TYPE_INT_RGB = BufferedImage.TYPE_INT_RGB;
 
     public static InformationalImage madeOf(byte[] bytes) {
-        UncheckedFunction<byte[], InformationalImage> toInformationalImage = byteArr ->
-                new InformationalImage(read(new ByteArrayInputStream(byteArr)));
+        return madeOf(new ByteArrayInputStream(bytes));
+    }
 
-        return toInformationalImage.apply(bytes);
+    public static InformationalImage madeOf(InputStream inputStream) {
+        UncheckedFunction<InputStream, InformationalImage> toInformationalImage = stream ->
+                new InformationalImage(read(stream));
+
+        return toInformationalImage.apply(inputStream);
     }
 
     public InformationalImage(BufferedImage bufferedImage) {
