@@ -102,12 +102,12 @@ public class InformationalImage extends BufferedImage {
 
     public InformationalImage resizeTo(int newWidth, int newHeight) {
 
-        UncheckedFunction<Builder, InformationalImage> toInformationalImage = builder
-                -> new InformationalImage(builder.asBufferedImage());
+        BiFunction<Integer, Integer, Builder> toBuilder = (width, height) ->
+                Thumbnails.of(this).size(width, height);
 
-        BiFunction<Integer, Integer, InformationalImage> toResizedImage = (width, height)
-                -> toInformationalImage.apply(Thumbnails.of(this).size(width, height));
+        UncheckedFunction<Builder, InformationalImage> toImage = builder ->
+                new InformationalImage(builder.asBufferedImage());
 
-        return toResizedImage.apply(newWidth, newHeight);
+        return toImage.apply(toBuilder.apply(newWidth, newHeight));
     }
 }
