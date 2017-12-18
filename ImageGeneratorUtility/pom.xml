@@ -12,27 +12,17 @@
     </parent>
 
     <!--module version properties-->
-    <groupId>ImageGeneratorCore</groupId>
-    <artifactId>ImageGeneratorCore</artifactId>
+    <groupId>ImageGeneratorUtility</groupId>
+    <artifactId>ImageGeneratorUtility</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <!--packaging properties-->
-    <name>ImageGeneratorCore</name>
+    <name>ImageGeneratorUtility</name>
     <packaging>jar</packaging>
 
     <!--build properties-->
     <build>
-        <finalName>ImageGeneratorCore</finalName>
+        <finalName>ImageGeneratorUtility</finalName>
     </build>
-
-    <dependencies>
-
-        <dependency>
-            <groupId>ImageGeneratorUtility</groupId>
-            <artifactId>ImageGeneratorUtility</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-    </dependencies>
 
 </project>

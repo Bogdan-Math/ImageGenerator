@@ -1,4 +1,4 @@
-package system;
+package utility;
 
 import java.util.function.Function;
 
@@ -21,5 +21,4 @@ public interface UncheckedFunction<T, R> extends Function<T, R> {
             super(throwable);
         }
     }
-
 }

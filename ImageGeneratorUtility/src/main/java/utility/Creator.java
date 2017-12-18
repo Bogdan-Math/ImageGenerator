@@ -1,14 +1,14 @@
-package system;
+package utility;
 
 public class Creator {
 
     private String name;
 
-    public Creator(String name) {
+    Creator(String name) {
         this.name = name;
     }
 
-    public String getDescription() {
+    String getDescription() {
         return String.format("Hello, I'm %s - creator of ImageGenerator!", name);
     }
 

@@ -13,6 +13,7 @@
     <modules>
         <module>ImageGeneratorApp</module>
         <module>ImageGeneratorCore</module>
+        <module>ImageGeneratorUtility</module>
     </modules>
 
     <!--packaging properties-->
@@ -70,14 +71,14 @@
         </dependency>
 
         <!--Guava library (useful utilities)-->
-        <dependency>
+        <dependency><!--TODO: check usage for delete-->
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
 
         <!--Thumbnails library (to create correct resized images)-->
-        <dependency>
+        <dependency><!--TODO: move to core module-->
             <groupId>net.coobird</groupId>
             <artifactId>thumbnailator</artifactId>
             <version>${thumbnailator.version}</version>

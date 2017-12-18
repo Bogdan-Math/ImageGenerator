@@ -2,7 +2,7 @@ package domain;
 
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.Thumbnails.Builder;
-import system.UncheckedFunction;
+import utility.UncheckedFunction;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
