@@ -4,24 +4,24 @@ public enum PatternType {
 
     COMMONS {
         @Override
-        public String getLocation() {
+        public String location() {
             return "images/colors";
         }
     },
 
     FLAGS {
         @Override
-        public String getLocation() {
+        public String location() {
             return "images/flags";
         }
     },
 
     PLAINS {
         @Override
-        public String getLocation() {
+        public String location() {
             return "images/plains";
         }
     };
 
-    public abstract String getLocation();
+    public abstract String location();
 }

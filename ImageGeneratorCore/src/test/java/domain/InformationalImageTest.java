@@ -11,8 +11,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.spy;
 
 public class InformationalImageTest {
 
@@ -31,13 +29,6 @@ public class InformationalImageTest {
     @Test
     public void informationalImageMadeOfBytes() throws Exception {
         assertThat(byteArray, notNullValue());
-    }
-
-    @Test
-    public void informationalImageMadeOfBytesException() {
-        thrown.expect(IllegalArgumentException.class);
-        InformationalImage.madeOf(null);
-        fail();
     }
 
     @Test
@@ -60,24 +51,6 @@ public class InformationalImageTest {
     @Test
     public void informationalImageAsBytes() {
         assertNotNull(image.asBytes());
-    }
-
-    @Test
-    public void informationalImageUncheckedAsBytes() throws Exception {
-        assertNotNull(image.uncheckedAsBytes());
-    }
-
-    @Test
-    public void informationalImageUncheckedAsBytesException() throws Exception {
-        String message              = "Message made of UNCHECKED exception in uncheckedAsBytes method!";
-        InformationalImage spyImage = spy(image);
-        doThrow(new IllegalArgumentException(message)).when(spyImage).uncheckedAsBytes();
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage(message);
-
-        spyImage.asBytes();
-
-        fail();
     }
 
     @Test
@@ -136,25 +109,4 @@ public class InformationalImageTest {
         assertThat(resized.getWidth(),  equalTo(width));
         assertThat(resized.getHeight(), equalTo(height));
     }
-
-    @Test
-    public void informationalImageUncheckedResizeTo() throws Exception {
-        assertNotNull(image.uncheckedResizeTo(100, 100));
-    }
-
-    @Test
-    public void informationalImageUncheckedResizeToException() throws Exception {
-        String message = "Message made of UNCHECKED exception in uncheckedResizeTo method!";
-        int newWidth   = 100;
-        int newHeight  = 100;
-        InformationalImage spyImage = spy(image);
-        doThrow(new IllegalArgumentException(message)).when(spyImage).uncheckedResizeTo(newWidth, newHeight);
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage(message);
-
-        spyImage.resizeTo(newWidth, newHeight);
-
-        fail();
-    }
-
 }

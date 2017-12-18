@@ -3,12 +3,11 @@ package system;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
 import java.util.stream.Stream;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class ResourceReaderTest {
 
@@ -20,44 +19,35 @@ public class ResourceReaderTest {
     }
 
     @Test
-    public void readCommonsImageFiles() {
+    public void readCommonsImageByteArrays() {
         String path = "images/colors";
         long patternsCount = 24;
 
-        Stream<File> files = resourceReader.readAll(path).asFiles();
+        Stream<byte[]> commons = resourceReader.readAll(path).asByteArrays();
 
-        assertThat(files, notNullValue());
-        assertThat(files.count(), equalTo(patternsCount));
+        assertThat(commons, notNullValue());
+        assertThat(commons.count(), equalTo(patternsCount));
     }
 
     @Test
-    public void readFlagsImageFiles() {
+    public void readFlagsImageByteArrays() {
         String path = "images/flags";
         long patternsCount = 196;
 
-        Stream<File> files = resourceReader.readAll(path).asFiles();
+        Stream<byte[]> flags = resourceReader.readAll(path).asByteArrays();
 
-        assertThat(files, notNullValue());
-        assertThat(files.count(), equalTo(patternsCount));
+        assertThat(flags, notNullValue());
+        assertThat(flags.count(), equalTo(patternsCount));
     }
 
     @Test
-    public void readPlainsImageFiles() {
+    public void readPlainsImageByteArrays() {
         String path = "images/plains";
         long patternsCount = 3;
 
-        Stream<File> files = resourceReader.readAll(path).asFiles();
+        Stream<byte[]> plains = resourceReader.readAll(path).asByteArrays();
 
-        assertThat(files, notNullValue());
-        assertThat(files.count(), equalTo(patternsCount));
-    }
-
-    @Test
-    public void readFile() {
-        File file = resourceReader.readSingle("images/testable/4x4.jpg").asFile();
-
-        assertTrue(file.exists());
-        assertTrue(file.isFile());
-        assertFalse(file.isDirectory());
+        assertThat(plains, notNullValue());
+        assertThat(plains.count(), equalTo(patternsCount));
     }
 }

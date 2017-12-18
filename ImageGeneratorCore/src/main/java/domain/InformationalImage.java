@@ -1,13 +1,12 @@
 package domain;
 
-import com.google.common.annotations.VisibleForTesting;
 import net.coobird.thumbnailator.Thumbnails;
+import system.UncheckedBiFunction;
+import system.UncheckedFunction;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.stream.IntStream;
 
@@ -18,11 +17,10 @@ public class InformationalImage extends BufferedImage {
     public static final int TYPE_INT_RGB = BufferedImage.TYPE_INT_RGB;
 
     public static InformationalImage madeOf(byte[] bytes) {
-        try {
-            return new InformationalImage(read(new ByteArrayInputStream(bytes)));
-        } catch (Exception e) {
-            throw new IllegalArgumentException(e);
-        }
+        UncheckedFunction<byte[], InformationalImage> toInformationalImage = byteArr ->
+                new InformationalImage(read(new ByteArrayInputStream(byteArr)));
+
+        return toInformationalImage.apply(bytes);
     }
 
     public InformationalImage(BufferedImage bufferedImage) {
@@ -56,21 +54,7 @@ public class InformationalImage extends BufferedImage {
     }
 
     public byte[] asBytes() {
-        try {
-            return uncheckedAsBytes();
-        } catch (Exception e) {
-            throw new IllegalArgumentException(e);
-        }
-    }
-
-    @VisibleForTesting
-    byte[] uncheckedAsBytes() throws Exception {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        ImageIO.write(this, "jpg", stream);
-        stream.flush();
-        byte[] byteArray = stream.toByteArray();
-        stream.close();
-        return byteArray;
+        return ((DataBufferByte) getRaster().getDataBuffer()).getData();
     }
 
     public InformationalColor averagedColor() {
@@ -116,15 +100,9 @@ public class InformationalImage extends BufferedImage {
     }
 
     public InformationalImage resizeTo(int newWidth, int newHeight) {
-        try {
-            return uncheckedResizeTo(newWidth, newHeight);
-        } catch (Exception e) {
-            throw new IllegalArgumentException(e);
-        }
-    }
+        UncheckedBiFunction<Integer, Integer, InformationalImage> toResizedImage = (width, height) ->
+                new InformationalImage(Thumbnails.of(this).size(width, height).asBufferedImage());
 
-    @VisibleForTesting
-    InformationalImage uncheckedResizeTo(int newWidth, int newHeight) throws IOException {
-        return new InformationalImage(Thumbnails.of(this).size(newWidth, newHeight).asBufferedImage());
+        return toResizedImage.apply(newWidth, newHeight);
     }
 }
