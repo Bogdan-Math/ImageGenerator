@@ -22,7 +22,8 @@ public class InformationalImageTest {
 
     @Before
     public void setUp() {
-        this.byteArray = new ResourceReader().readSingle("images/testable/4x4.jpg").asByteArray();
+        this.byteArray = new ResourceReader().readAll("images/testable/")
+                .take("4x4.jpg").asByteArrays().findFirst().get();
         this.image     = InformationalImage.madeOf(byteArray); // 32 x 32 (px)
     }
 
@@ -55,21 +56,21 @@ public class InformationalImageTest {
 
     @Test
     public void whiteAveragedColor() {
-        this.image = InformationalImage.madeOf(new ResourceReader().readSingle("images/testable/1-white.jpg").asByteArray());
+        this.image = InformationalImage.madeOf(new ResourceReader().readAll("images/testable/").take("1-white.jpg").asByteArrays().findFirst().get());
         InformationalColor white = image.averagedColor();
         assertEquals(WHITE, white);
     }
 
     @Test
     public void grayAveragedColor() {
-        this.image = InformationalImage.madeOf(new ResourceReader().readSingle("images/testable/2-gray.jpg").asByteArray());
+        this.image = InformationalImage.madeOf(new ResourceReader().readAll("images/testable/").take("2-gray.jpg").asByteArrays().findFirst().get());
         InformationalColor gray = image.averagedColor();
         assertEquals(GRAY, gray);
     }
 
     @Test
     public void blackAveragedColor() {
-        this.image = InformationalImage.madeOf(new ResourceReader().readSingle("images/testable/3-black.jpg").asByteArray());
+        this.image = InformationalImage.madeOf(new ResourceReader().readAll("images/testable/").take("3-black.jpg").asByteArrays().findFirst().get());
         InformationalColor black = image.averagedColor();
         assertEquals(BLACK, black);
     }

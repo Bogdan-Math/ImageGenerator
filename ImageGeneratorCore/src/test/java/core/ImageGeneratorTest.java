@@ -61,7 +61,7 @@ public class ImageGeneratorTest {
     public void generateWhiteImage() {
 
         //Arrange
-        this.incomeImage = InformationalImage.madeOf(resourceReader.readSingle("images/testable/1-white.jpg").asByteArray());
+        this.incomeImage = InformationalImage.madeOf(resourceReader.readAll("images/testable/").take("1-white.jpg").asByteArrays().findFirst().get());
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
@@ -81,7 +81,7 @@ public class ImageGeneratorTest {
     public void generateGrayImage() {
 
         //Arrange
-        this.incomeImage = InformationalImage.madeOf(resourceReader.readSingle("images/testable/2-gray.jpg").asByteArray());
+        this.incomeImage = InformationalImage.madeOf(resourceReader.readAll("images/testable/").take("2-gray.jpg").asByteArrays().findFirst().get());
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
@@ -101,7 +101,7 @@ public class ImageGeneratorTest {
     public void generateBlackImage() {
 
         //Arrange
-        this.incomeImage = InformationalImage.madeOf(resourceReader.readSingle("images/testable/3-black.jpg").asByteArray());
+        this.incomeImage = InformationalImage.madeOf(resourceReader.readAll("images/testable/").take("3-black.jpg").asByteArrays().findFirst().get());
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
@@ -121,7 +121,7 @@ public class ImageGeneratorTest {
     public void generate4x4Image() {
 
         //Arrange
-        this.incomeImage = InformationalImage.madeOf(resourceReader.readSingle("images/testable/4x4.jpg").asByteArray());
+        this.incomeImage = InformationalImage.madeOf(resourceReader.readAll("images/testable/").take("4x4.jpg").asByteArrays().findFirst().get());
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
