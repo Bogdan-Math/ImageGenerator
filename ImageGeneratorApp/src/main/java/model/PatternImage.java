@@ -1,12 +1,10 @@
 package model;
 
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor
 public class PatternImage {
 
-    @NonNull
     public byte[] inByteArray;
 
+    public PatternImage(byte[] inByteArray) {
+        this.inByteArray = inByteArray;
+    }
 }
