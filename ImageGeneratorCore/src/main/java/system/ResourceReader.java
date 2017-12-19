@@ -15,23 +15,23 @@ import static java.util.Optional.ofNullable;
 public class ResourceReader {
 
     //TODO: add test to all brand new functionality
-    public MultiResource readAllIn(String resourceDir) {
+    public Resource readAllIn(String resourceDir) {
 
-        String checkedPathToDir = ofNullable(resourceDir)
+        String checkedResourceDir = ofNullable(resourceDir)
                 .orElseThrow(() -> new RuntimeException("Path to directory COULD NOT be null !!!"));
 
         UncheckedFunction<String, URI> toURI = this::uri;
-        Path checkedPath = Stream.of(toURI.apply(checkedPathToDir))
+        Path checkedPath = Stream.of(toURI.apply(checkedResourceDir))
                 .map(Paths::get)
                 .filter(Files::isDirectory)
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Path to directory COULD NOT be null !!!"));
+                .orElseThrow(() -> new RuntimeException("Path MUST BE directory !!!"));
 
-        return new MultiResource(checkedPath);
+        return new Resource(checkedPath);
     }
 
-    private URI uri(String uncheckedPath) throws URISyntaxException {
-        return requireNonNull(getClass().getClassLoader().getResource(uncheckedPath)).toURI();
+    private URI uri(String resourceName) throws URISyntaxException {
+        return requireNonNull(getClass().getClassLoader().getResource(resourceName)).toURI();
     }
 
 }

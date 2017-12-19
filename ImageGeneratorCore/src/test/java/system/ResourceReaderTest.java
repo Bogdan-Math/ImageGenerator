@@ -1,17 +1,20 @@
 package system;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
-import java.util.stream.Stream;
-
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 public class ResourceReaderTest {
 
     private ResourceReader resourceReader;
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() {
@@ -19,35 +22,32 @@ public class ResourceReaderTest {
     }
 
     @Test
-    public void readCommonsImageByteArrays() {
-        String resourceDir = "images/colors";
-        long patternsCount = 24;
+    public void readAllCorrect() {
+        String resourceDir = "images";
 
-        Stream<byte[]> commons = resourceReader.readAllIn(resourceDir).asByteArrays();
+        Resource resource = resourceReader.readAllIn(resourceDir);
 
-        assertThat(commons, notNullValue());
-        assertThat(commons.count(), equalTo(patternsCount));
+        assertThat(resource, notNullValue());
     }
 
     @Test
-    public void readFlagsImageByteArrays() {
-        String resourceDir = "images/flags";
-        long patternsCount = 196;
+    public void readAllWitNullResourceDir() {
+        thrown.expect(RuntimeException.class);
+        thrown.expectMessage("Path to directory COULD NOT be null !!!");
 
-        Stream<byte[]> flags = resourceReader.readAllIn(resourceDir).asByteArrays();
+        resourceReader.readAllIn(null);
 
-        assertThat(flags, notNullValue());
-        assertThat(flags.count(), equalTo(patternsCount));
+        fail();
     }
 
     @Test
-    public void readPlainsImageByteArrays() {
-        String resourceDir = "images/plains";
-        long patternsCount = 3;
+    public void readAllWithNoDir() {
+        String resourceFile = "images/testable/4x4.jpg";
+        thrown.expect(RuntimeException.class);
+        thrown.expectMessage("Path MUST BE directory !!!");
 
-        Stream<byte[]> plains = resourceReader.readAllIn(resourceDir).asByteArrays();
+        resourceReader.readAllIn(resourceFile);
 
-        assertThat(plains, notNullValue());
-        assertThat(plains.count(), equalTo(patternsCount));
+        fail();
     }
 }

@@ -7,11 +7,11 @@ import java.nio.file.Path;
 import java.util.stream.Stream;
 
 //TODO: add separated test
-public class MultiResource {
+public class Resource {
 
     private Stream<Path> pathsToFiles;
 
-    MultiResource(Path pathToDir) {
+    Resource(Path pathToDir) {
         UncheckedFunction<Path, Stream<Path>> toFullPaths = Files::list;
         this.pathsToFiles = toFullPaths.apply(pathToDir);
     }
