@@ -39,7 +39,7 @@ public class UploadSucceededListenerComponent implements UploadSucceededListener
         String timeNow                   = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss"));
         String imageFileName             = succeededEvent.getFilename();
         byte[] uploadedBytes             = receiver.getUploadStream().toByteArray();
-        InformationalImage uploadedImage = InformationalImage.madeOf(uploadedBytes);
+        InformationalImage uploadedImage = new InformationalImage(uploadedBytes);//TODO: check usage as InformationalImage type
 
         if (uploadedImage.widthLessThan(INCOME_IMAGE_ALLOWED_MIN_WIDTH) || uploadedImage.heightLessThan(INCOME_IMAGE_ALLOWED_MIN_HEIGHT)) {
             notificationManager.add("Image resolution can't be less than " + INCOME_IMAGE_ALLOWED_MIN_WIDTH + " x " + INCOME_IMAGE_ALLOWED_MIN_HEIGHT + " (px)");

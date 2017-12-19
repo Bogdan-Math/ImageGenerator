@@ -12,21 +12,16 @@ import java.io.InputStream;
 import java.util.function.BiFunction;
 import java.util.stream.IntStream;
 
-import static javax.imageio.ImageIO.read;
-
 public class InformationalImage extends BufferedImage {
 
     public static final int TYPE_INT_RGB = BufferedImage.TYPE_INT_RGB;
 
-    public static InformationalImage madeOf(byte[] bytes) {
-        return madeOf(new ByteArrayInputStream(bytes));
+    public InformationalImage(byte[] byteArray) {
+        this(new ByteArrayInputStream(byteArray));
     }
 
-    public static InformationalImage madeOf(InputStream inputStream) {
-        UncheckedFunction<InputStream, InformationalImage> toInformationalImage = stream ->
-                new InformationalImage(read(stream));
-
-        return toInformationalImage.apply(inputStream);
+    public InformationalImage(InputStream inputStream) {
+        this(((UncheckedFunction<InputStream, BufferedImage>) ImageIO::read).apply(inputStream));
     }
 
     public InformationalImage(BufferedImage bufferedImage) {

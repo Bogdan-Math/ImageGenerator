@@ -40,7 +40,7 @@ public class ImageGeneratorTest {
         //mock actions
         when(settings.getPatterns()).thenReturn(resourceReader.readAllIn("images/colors")
                 .asByteArrays()
-                .map(InformationalImage::madeOf)
+                .map(InformationalImage::new)
                 .collect(toMap(
                         InformationalImage::averagedColor,
                         informationalImage -> informationalImage
@@ -63,7 +63,7 @@ public class ImageGeneratorTest {
     public void generateWhiteImage() {
 
         //Arrange
-        this.incomeImage = InformationalImage.madeOf(streamOf("images/testable/1-white.jpg"));
+        this.incomeImage = new InformationalImage(streamOf("images/testable/1-white.jpg"));
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
@@ -83,7 +83,7 @@ public class ImageGeneratorTest {
     public void generateGrayImage() {
 
         //Arrange
-        this.incomeImage = InformationalImage.madeOf(streamOf("images/testable/2-gray.jpg"));
+        this.incomeImage = new InformationalImage(streamOf("images/testable/2-gray.jpg"));
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
@@ -103,7 +103,7 @@ public class ImageGeneratorTest {
     public void generateBlackImage() {
 
         //Arrange
-        this.incomeImage = InformationalImage.madeOf(streamOf("images/testable/3-black.jpg"));
+        this.incomeImage = new InformationalImage(streamOf("images/testable/3-black.jpg"));
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
@@ -123,7 +123,7 @@ public class ImageGeneratorTest {
     public void generate4x4Image() {
 
         //Arrange
-        this.incomeImage = InformationalImage.madeOf(streamOf("images/testable/4x4.jpg"));
+        this.incomeImage = new InformationalImage(streamOf("images/testable/4x4.jpg"));
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());

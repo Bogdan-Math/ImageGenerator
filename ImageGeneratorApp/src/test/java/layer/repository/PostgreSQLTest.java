@@ -66,7 +66,7 @@ public class PostgreSQLTest {
                 .asByteArrays()
                 .map(byteArray -> new GalleryImage() {{
                     try {
-                        setBytes(InformationalImage.madeOf(byteArray).resizeTo(250, 250).asByteArray());
+                        setBytes(new InformationalImage(byteArray).resizeTo(250, 250).asByteArray());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

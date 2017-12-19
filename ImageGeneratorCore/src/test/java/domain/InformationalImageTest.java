@@ -22,17 +22,17 @@ public class InformationalImageTest {
 
     @Before
     public void setUp() {
-        this.image = InformationalImage.madeOf(streamOf("images/testable/4x4.jpg")); // 32 x 32 (px)
+        this.image = new InformationalImage(streamOf("images/testable/4x4.jpg")); // 32 x 32 (px)
     }
 
     @Test
     public void informationalImageMadeOfByteArray() {
-        assertThat(InformationalImage.madeOf(image.asByteArray()), notNullValue());
+        assertThat(new InformationalImage(image.asByteArray()), notNullValue());
     }
 
     @Test
     public void informationalImageMadeOfInputStream() {
-        assertThat(InformationalImage.madeOf(image.asStream()), notNullValue());
+        assertThat(new InformationalImage(image.asStream()), notNullValue());
     }
 
     @Test
@@ -59,21 +59,21 @@ public class InformationalImageTest {
 
     @Test
     public void whiteAveragedColor() {
-        this.image = InformationalImage.madeOf(streamOf("images/testable/1-white.jpg"));
+        this.image = new InformationalImage(streamOf("images/testable/1-white.jpg"));
         InformationalColor white = image.averagedColor();
         assertEquals(WHITE, white);
     }
 
     @Test
     public void grayAveragedColor() {
-        this.image = InformationalImage.madeOf(streamOf("images/testable/2-gray.jpg"));
+        this.image = new InformationalImage(streamOf("images/testable/2-gray.jpg"));
         InformationalColor gray = image.averagedColor();
         assertEquals(GRAY, gray);
     }
 
     @Test
     public void blackAveragedColor() {
-        this.image = InformationalImage.madeOf(streamOf("images/testable/3-black.jpg"));
+        this.image = new InformationalImage(streamOf("images/testable/3-black.jpg"));
         InformationalColor black = image.averagedColor();
         assertEquals(BLACK, black);
     }
