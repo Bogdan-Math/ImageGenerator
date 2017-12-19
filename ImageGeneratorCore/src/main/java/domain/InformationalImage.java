@@ -35,6 +35,25 @@ public class InformationalImage extends BufferedImage {
             .drawImage(bufferedImage, 0, 0, getWidth(), getHeight(), null);
     }
 
+    public InputStream asStream() {
+        return new ByteArrayInputStream(asByteArray());
+    }
+
+    public byte[] asByteArray() {
+
+        UncheckedFunction<InformationalImage, byte[]> toByteArray = img -> {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            ImageIO.write(InformationalImage.this, "jpg", stream);
+            stream.flush();
+            byte[] byteArray = stream.toByteArray();
+            stream.close();
+
+            return byteArray;
+        };
+
+        return toByteArray.apply(this);
+    }
+
     public InformationalImage(int width, int height, int typeIntRgb) {
         super(width, height, typeIntRgb);
     }
@@ -53,25 +72,6 @@ public class InformationalImage extends BufferedImage {
 
     public boolean heightMoreThan(int allowedMaxHeight) {
         return getHeight() > allowedMaxHeight;
-    }
-
-    public InputStream asStream() {
-        return new ByteArrayInputStream(asBytes());
-    }
-
-    public byte[] asBytes() {
-
-        UncheckedFunction<InformationalImage, byte[]> toByteArray = img -> {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            ImageIO.write(InformationalImage.this, "jpg", stream);
-            stream.flush();
-            byte[] byteArray = stream.toByteArray();
-            stream.close();
-
-            return byteArray;
-        };
-
-        return toByteArray.apply(this);
     }
 
     public InformationalColor averagedColor() {

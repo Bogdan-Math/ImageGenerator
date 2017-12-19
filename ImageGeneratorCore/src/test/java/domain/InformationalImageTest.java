@@ -51,7 +51,7 @@ public class InformationalImageTest {
 
     @Test
     public void informationalImageAsBytes() {
-        assertNotNull(image.asBytes());
+        assertNotNull(image.asByteArray());
     }
 
     @Test
