@@ -14,7 +14,6 @@ import static java.util.Optional.ofNullable;
 
 public class ResourceReader {
 
-    //TODO: add test to all brand new functionality
     public Resource readAllIn(String resourceDir) {
 
         String checkedResourceDir = ofNullable(resourceDir)

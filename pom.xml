@@ -28,7 +28,6 @@
         <junit.version>4.12</junit.version>
         <mockito.version>2.8.47</mockito.version>
         <guava.version>23.0</guava.version>
-        <thumbnailator.version>0.4.8</thumbnailator.version>
     </properties>
 
     <!--build properties-->
@@ -68,20 +67,6 @@
             <artifactId>mockito-core</artifactId>
             <version>${mockito.version}</version>
             <scope>test</scope>
-        </dependency>
-
-        <!--Guava library (useful utilities)-->
-        <dependency><!--TODO: check usage for delete-->
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
-
-        <!--Thumbnails library (to create correct resized images)-->
-        <dependency><!--TODO: move to core module-->
-            <groupId>net.coobird</groupId>
-            <artifactId>thumbnailator</artifactId>
-            <version>${thumbnailator.version}</version>
         </dependency>
 
     </dependencies>

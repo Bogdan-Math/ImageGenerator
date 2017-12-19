@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
-//TODO: add separated test
 public class Resource {
 
     private Stream<Path> pathsToFiles;

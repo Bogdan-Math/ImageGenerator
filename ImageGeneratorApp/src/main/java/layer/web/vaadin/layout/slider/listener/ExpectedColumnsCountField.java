@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
-import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.vaadin.ui.Notification.Type.HUMANIZED_MESSAGE;
 import static core.Settings.MAX_EXPECTED_COLUMNS_COUNT;
 import static core.Settings.MIN_EXPECTED_COLUMNS_COUNT;
@@ -64,6 +63,10 @@ public class ExpectedColumnsCountField extends TextField implements ColumnsCount
             // publish newValue
             columnsCountPublisher.publishNewValue(expectedColumnsCount);
         });
+    }
+
+    private boolean isNullOrEmpty(String newValue) {
+        return null == newValue || "".equals(newValue);
     }
 
     private void show(String message) {
