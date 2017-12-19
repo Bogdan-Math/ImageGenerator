@@ -62,7 +62,7 @@ public class PostgreSQLTest {
     public void name() throws Exception {
 
         ResourceReader resourceReader = new ResourceReader();
-        List<GalleryImage> images = resourceReader.readAll("1")
+        List<GalleryImage> images = resourceReader.readAllIn("1")
                 .asByteArrays()
                 .map(byteArray -> new GalleryImage() {{
                     try {

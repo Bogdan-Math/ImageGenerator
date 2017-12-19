@@ -41,7 +41,7 @@ public class PatternImageServiceTest {
     public void setUp() throws Exception {
         System.setOut(new PrintStream(outContent));
 
-        final byte[] bytes = new ResourceReader().readAll("images/plains/").asByteArrays().findFirst()
+        final byte[] bytes = new ResourceReader().readAllIn("images/plains/").asByteArrays().findFirst()
                 .orElseThrow(() -> new RuntimeException("Oops, something WRONG happens in your test!"));
 
         when(patternImageRepository.getCommons()).thenReturn(Stream.of(

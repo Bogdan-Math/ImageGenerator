@@ -33,7 +33,7 @@ public class PatternImageRepositoryImpl implements PatternImageRepository {
     }
 
     private Stream<PatternImage> initialize(PatternType patternType) {
-        return resourceReader.readAll(patternType.location())
+        return resourceReader.readAllIn(patternType.location())
                 .asByteArrays()
                 .map(PatternImage::new);
     }

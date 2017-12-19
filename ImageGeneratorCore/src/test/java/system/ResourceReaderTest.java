@@ -20,10 +20,10 @@ public class ResourceReaderTest {
 
     @Test
     public void readCommonsImageByteArrays() {
-        String path = "images/colors";
+        String resourceDir = "images/colors";
         long patternsCount = 24;
 
-        Stream<byte[]> commons = resourceReader.readAll(path).asByteArrays();
+        Stream<byte[]> commons = resourceReader.readAllIn(resourceDir).asByteArrays();
 
         assertThat(commons, notNullValue());
         assertThat(commons.count(), equalTo(patternsCount));
@@ -31,10 +31,10 @@ public class ResourceReaderTest {
 
     @Test
     public void readFlagsImageByteArrays() {
-        String path = "images/flags";
+        String resourceDir = "images/flags";
         long patternsCount = 196;
 
-        Stream<byte[]> flags = resourceReader.readAll(path).asByteArrays();
+        Stream<byte[]> flags = resourceReader.readAllIn(resourceDir).asByteArrays();
 
         assertThat(flags, notNullValue());
         assertThat(flags.count(), equalTo(patternsCount));
@@ -42,10 +42,10 @@ public class ResourceReaderTest {
 
     @Test
     public void readPlainsImageByteArrays() {
-        String path = "images/plains";
+        String resourceDir = "images/plains";
         long patternsCount = 3;
 
-        Stream<byte[]> plains = resourceReader.readAll(path).asByteArrays();
+        Stream<byte[]> plains = resourceReader.readAllIn(resourceDir).asByteArrays();
 
         assertThat(plains, notNullValue());
         assertThat(plains.count(), equalTo(patternsCount));
