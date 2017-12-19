@@ -10,6 +10,8 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import system.ResourceReader;
 
+import java.io.InputStream;
+
 import static domain.InformationalColor.*;
 import static java.util.stream.Collectors.toMap;
 import static org.hamcrest.core.Is.is;
@@ -61,7 +63,7 @@ public class ImageGeneratorTest {
     public void generateWhiteImage() {
 
         //Arrange
-        this.incomeImage = InformationalImage.madeOf(getClass().getClassLoader().getResourceAsStream("images/testable/1-white.jpg"));
+        this.incomeImage = InformationalImage.madeOf(streamOf("images/testable/1-white.jpg"));
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
@@ -81,7 +83,7 @@ public class ImageGeneratorTest {
     public void generateGrayImage() {
 
         //Arrange
-        this.incomeImage = InformationalImage.madeOf(getClass().getClassLoader().getResourceAsStream("images/testable/2-gray.jpg"));
+        this.incomeImage = InformationalImage.madeOf(streamOf("images/testable/2-gray.jpg"));
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
@@ -101,7 +103,7 @@ public class ImageGeneratorTest {
     public void generateBlackImage() {
 
         //Arrange
-        this.incomeImage = InformationalImage.madeOf(getClass().getClassLoader().getResourceAsStream("images/testable/3-black.jpg"));
+        this.incomeImage = InformationalImage.madeOf(streamOf("images/testable/3-black.jpg"));
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
@@ -121,7 +123,7 @@ public class ImageGeneratorTest {
     public void generate4x4Image() {
 
         //Arrange
-        this.incomeImage = InformationalImage.madeOf(getClass().getClassLoader().getResourceAsStream("images/testable/4x4.jpg"));
+        this.incomeImage = InformationalImage.madeOf(streamOf("images/testable/4x4.jpg"));
         when(settings.getIncomeImage()).thenReturn(incomeImage);
         when(settings.getImageWidth()).thenReturn(incomeImage.getWidth());
         when(settings.getImageHeight()).thenReturn(incomeImage.getHeight());
@@ -156,5 +158,9 @@ public class ImageGeneratorTest {
         assertThat(generatedImage.getSubImage(600, 600, 200, 200).averagedColor().almostEqualTo(BLACK), is(true));
 
         assertThat(generatedImage.getSubImage(600, 600, 200, 200).averagedColor().almostEqualTo(WHITE), is(false));
+    }
+
+    private InputStream streamOf(String pathToImage) {
+        return getClass().getClassLoader().getResourceAsStream(pathToImage);
     }
 }

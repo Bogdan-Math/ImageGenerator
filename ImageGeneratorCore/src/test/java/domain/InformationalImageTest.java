@@ -16,20 +16,23 @@ import static org.junit.Assert.*;
 public class InformationalImageTest {
 
     private InformationalImage image;
-    private InputStream inputStream;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() {
-        this.inputStream = getClass().getClassLoader().getResourceAsStream("images/testable/4x4.jpg");
-        this.image       = InformationalImage.madeOf(inputStream); // 32 x 32 (px)
+        this.image = InformationalImage.madeOf(streamOf("images/testable/4x4.jpg")); // 32 x 32 (px)
     }
 
     @Test
-    public void informationalImageMadeOfBytes() throws Exception {
-        assertThat(inputStream, notNullValue());
+    public void informationalImageMadeOfByteArray() {
+        assertThat(InformationalImage.madeOf(image.asByteArray()), notNullValue());
+    }
+
+    @Test
+    public void informationalImageMadeOfInputStream() {
+        assertThat(InformationalImage.madeOf(image.asStream()), notNullValue());
     }
 
     @Test
@@ -56,21 +59,21 @@ public class InformationalImageTest {
 
     @Test
     public void whiteAveragedColor() {
-        this.image = InformationalImage.madeOf(getClass().getClassLoader().getResourceAsStream("images/testable/1-white.jpg"));
+        this.image = InformationalImage.madeOf(streamOf("images/testable/1-white.jpg"));
         InformationalColor white = image.averagedColor();
         assertEquals(WHITE, white);
     }
 
     @Test
     public void grayAveragedColor() {
-        this.image = InformationalImage.madeOf(getClass().getClassLoader().getResourceAsStream("images/testable/2-gray.jpg"));
+        this.image = InformationalImage.madeOf(streamOf("images/testable/2-gray.jpg"));
         InformationalColor gray = image.averagedColor();
         assertEquals(GRAY, gray);
     }
 
     @Test
     public void blackAveragedColor() {
-        this.image = InformationalImage.madeOf(getClass().getClassLoader().getResourceAsStream("images/testable/3-black.jpg"));
+        this.image = InformationalImage.madeOf(streamOf("images/testable/3-black.jpg"));
         InformationalColor black = image.averagedColor();
         assertEquals(BLACK, black);
     }
@@ -109,5 +112,9 @@ public class InformationalImageTest {
 
         assertThat(resized.getWidth(),  equalTo(width));
         assertThat(resized.getHeight(), equalTo(height));
+    }
+
+    private InputStream streamOf(String pathToImage) {
+        return getClass().getClassLoader().getResourceAsStream(pathToImage);
     }
 }

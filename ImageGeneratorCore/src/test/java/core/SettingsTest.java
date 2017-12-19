@@ -34,7 +34,8 @@ public class SettingsTest {
         //mock actions
         when(incomeImage.getWidth()).thenReturn(100);
         when(incomeImage.getHeight()).thenReturn(200);
-        when(incomeImage.getSubImage(anyInt(), anyInt(), anyInt(), anyInt())).thenReturn(new InformationalImage(1, 1, InformationalImage.TYPE_INT_RGB));
+        when(incomeImage.getSubImage(anyInt(), anyInt(), anyInt(), anyInt()))
+                .thenReturn(new InformationalImage(1, 1, InformationalImage.TYPE_INT_RGB));
     }
 
     @Test
