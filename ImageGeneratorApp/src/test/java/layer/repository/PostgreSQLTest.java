@@ -1,6 +1,6 @@
 package layer.repository;
 
-import model.PatternImage;
+import domain.InformationalImage;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -12,8 +12,6 @@ import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -32,6 +30,28 @@ public class PostgreSQLTest {
         setPassword(DB_PASSWORD);
     }};
 
+    class GalleryImage {
+
+        String name;
+        byte[] bytes;
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public void setBytes(byte[] bytes) {
+            this.bytes = bytes;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public byte[] getBytes() {
+            return bytes;
+        }
+    }
+
     @Test
     public void a1() throws Exception {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(DATA_SOURCE);
@@ -41,26 +61,33 @@ public class PostgreSQLTest {
     @Test
     public void name() throws Exception {
 
-        List<PatternImage> list = Stream.of("ua.png", "us.png").map(imgName -> new PatternImage() {{
-            name = imgName;
-            path = "images/flags";
-        }}).collect(Collectors.toList());
-
-        new JdbcTemplate(DATA_SOURCE)
-                .batchUpdate("INSERT INTO pattern_image (name, path) VALUES (?, ?)", new BatchPreparedStatementSetter() {
-
-                    @Override
-                    public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
-                        PatternImage patternImage = list.get(i);
-                        preparedStatement.setString(1, patternImage.name);
-                        preparedStatement.setString(2, patternImage.path);
+        ResourceReader resourceReader = new ResourceReader();
+        List<GalleryImage> images = resourceReader.readAllIn("1")
+                .asByteArrays()
+                .map(byteArray -> new GalleryImage() {{
+                    try {
+                        setBytes(new InformationalImage(byteArray).resizeTo(250, 250).asByteArray());
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+                }}).collect(toList());
 
-                    @Override
-                    public int getBatchSize() {
-                        return list.size();
-                    }
-                });
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(DATA_SOURCE);
+//        jdbcTemplate.update("INSERT INTO gallery_image (name, bytes) VALUES (?, ?)", galleryImage.getName(), galleryImage.getBytes());
+        jdbcTemplate.batchUpdate("INSERT INTO gallery_image (name, bytes) VALUES (?, ?)", new BatchPreparedStatementSetter() {
+
+            @Override
+            public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
+                GalleryImage image = images.get(i);
+                preparedStatement.setString(1, image.getName());
+                preparedStatement.setBytes(2, image.getBytes());
+            }
+
+            @Override
+            public int getBatchSize() {
+                return images.size();
+            }
+        });
     }
 
 }
