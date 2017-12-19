@@ -17,18 +17,14 @@ public class MultiResource {
 
     private Stream<Path> pathsToFiles;
 
-    MultiResource(String checkedPathToDir) {
+    MultiResource(String pathToDir) {
         UncheckedFunction<String, Stream<Path>> toFullPaths = path -> list(get(full(path)));
-        this.pathsToFiles = toFullPaths.apply(checkedPathToDir);
+        this.pathsToFiles = toFullPaths.apply(pathToDir);
     }
 
     public Stream<byte[]> asByteArrays() {
-        UncheckedFunction<Path, byte[]> toByteArrays = Files::readAllBytes;
-        return convert(toByteArrays);
-    }
-
-    private <R> Stream<R> convert(UncheckedFunction<Path, R> uncheckedFunction) {
-        return pathsToFiles.filter(Files::isRegularFile).map(uncheckedFunction);
+        UncheckedFunction<Path, byte[]> toByteArray = Files::readAllBytes;
+        return pathsToFiles.filter(Files::isRegularFile).map(toByteArray);
     }
 
     private URI full(String uncheckedPath) throws URISyntaxException {
