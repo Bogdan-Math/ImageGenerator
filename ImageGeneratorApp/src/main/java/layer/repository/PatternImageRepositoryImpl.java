@@ -3,6 +3,7 @@ package layer.repository;
 import domain.PatternType;
 import model.PatternImage;
 import org.springframework.context.annotation.Scope;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import system.ResourceReader;
 
@@ -16,6 +17,7 @@ import static domain.PatternType.*;
 public class PatternImageRepositoryImpl implements PatternImageRepository {
 
     private ResourceReader resourceReader;
+    private JdbcTemplate jdbcTemplate;
 
     @Override
     public Stream<PatternImage> getCommons() {
@@ -33,7 +35,12 @@ public class PatternImageRepositoryImpl implements PatternImageRepository {
     }
 
     private Stream<PatternImage> initialize(PatternType patternType) {
-        return resourceReader.readAllIn(patternType.location())
+
+        String location = jdbcTemplate.queryForObject("SELECT location FROM pattern WHERE type = ?",
+                new Object[] {patternType.name().replaceFirst(".$", "")},
+                String.class);
+
+        return resourceReader.readAllIn(location)
                 .asByteArrays()
                 .map(PatternImage::new);
     }
@@ -41,5 +48,10 @@ public class PatternImageRepositoryImpl implements PatternImageRepository {
     @Resource(name = "resourceReader")
     public void setResourceReader(ResourceReader resourceReader) {
         this.resourceReader = resourceReader;
+    }
+
+    @Resource(name = "jdbcTemplate")
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 }
