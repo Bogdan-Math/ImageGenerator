@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface GalleryImageService {
 
-    List<GalleryImage> getAll();
+    List<GalleryImage> getAllThumbnails();
     void save(String imageName, InformationalImage informationalImage);
 }
