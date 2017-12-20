@@ -38,7 +38,7 @@ public class GalleryLayout extends VerticalLayout implements GalleryLayoutBuilde
         pagedGallery(galleryImageService.getAll()
                 .stream()
                 .map(galleryImage -> new Image() {{
-                    setSource(new StreamResource(() -> new ByteArrayInputStream(galleryImage.thumbnailImage), galleryImage.thumbnailImageName));
+                    setSource(new StreamResource(() -> new ByteArrayInputStream(galleryImage.thumbnail), galleryImage.thumbnailName));
                 }})
                 .peek(image -> image.setStyleName(GALLERY_STYLE))
                 .collect(toList())).forEach(list -> this.addComponent(addNewLine(list)));

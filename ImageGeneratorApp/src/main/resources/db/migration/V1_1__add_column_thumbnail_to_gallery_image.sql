@@ -1,1 +1,0 @@
-ALTER TABLE gallery_image ADD COLUMN thumbnail BYTEA;

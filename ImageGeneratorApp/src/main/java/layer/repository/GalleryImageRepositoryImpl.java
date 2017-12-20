@@ -14,22 +14,22 @@ public class GalleryImageRepositoryImpl implements GalleryImageRepository {
 
     @Override
     public List<GalleryImage> getAllThumbnails() {
-        return jdbcTemplate.query("SELECT thumbnail_image, thumbnail_image_name FROM gallery_image " +
-                        "WHERE thumbnail_image NOTNULL",
+        return jdbcTemplate.query("SELECT thumbnail, thumbnail_name FROM gallery_image " +
+                        "WHERE thumbnail NOTNULL",
                 (rs, rowNum) -> new GalleryImage() {{
-                    thumbnailImage     = rs.getBytes(1);
-                    thumbnailImageName = rs.getString(2);
+                    thumbnail     = rs.getBytes(1);
+                    thumbnailName = rs.getString(2);
                 }});
     }
 
     @Override
     public void save(GalleryImage galleryImage) {
-        jdbcTemplate.update("INSERT INTO gallery_image (full_image, full_image_name, thumbnail_image, thumbnail_image_name) " +
+        jdbcTemplate.update("INSERT INTO gallery_image (real, real_name, thumbnail, thumbnail_name) " +
                         "VALUES (?, ?, ?, ?)",
-                galleryImage.fullImage,
-                galleryImage.fullImageName,
-                galleryImage.thumbnailImage,
-                galleryImage.thumbnailImageName);
+                galleryImage.real,
+                galleryImage.realName,
+                galleryImage.thumbnail,
+                galleryImage.thumbnailName);
     }
 
     @Resource(name = "jdbcTemplate")

@@ -30,10 +30,10 @@ public class GalleryImageServiceImpl implements GalleryImageService {
 
     private GalleryImage convert(String imageName, InformationalImage informationalImage) {
         return new GalleryImage() {{
-            fullImage          = informationalImage.asByteArray();
-            fullImageName      = imageName;
-            thumbnailImage     = informationalImage.resizeTo(NEW_WIDTH, NEW_HEIGHT).asByteArray();//TODO: move resize process to scheduler
-            thumbnailImageName = "thumbnail_" + imageName;
+            real          = informationalImage.asByteArray();
+            realName      = imageName;
+            thumbnail     = informationalImage.resizeTo(NEW_WIDTH, NEW_HEIGHT).asByteArray();//TODO: move resize process to scheduler
+            thumbnailName = "thumbnail_" + imageName;
         }};
     }
 
