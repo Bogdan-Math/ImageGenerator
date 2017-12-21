@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.io.ByteArrayInputStream;
 import java.util.List;
 
 import static java.lang.Integer.min;
@@ -22,8 +21,9 @@ import static java.util.stream.IntStream.iterate;
 @Scope("session")
 public class GalleryLayout extends VerticalLayout implements GalleryLayoutBuilder {
 
-    private static final String GALLERY_STYLE = "gallery-image";
-    private static final int COLUMNS_COUNT    = 3;
+    private static final String STREAM_RESOURCE_FILENAME = "";
+    private static final String GALLERY_STYLE            = "gallery-image";
+    private static final Integer COLUMNS_COUNT           = 4;
 
     private GalleryImageService galleryImageService;
 
@@ -37,7 +37,7 @@ public class GalleryLayout extends VerticalLayout implements GalleryLayoutBuilde
         removeAllComponents();
         pagedGallery(galleryImageService.getAll()
                 .stream()
-                .map(galleryImage -> new StreamResource(galleryImage::asStream, ""))
+                .map(galleryImage -> new StreamResource(galleryImage::asStream, STREAM_RESOURCE_FILENAME))
                 .map(resource -> new Image() {{ setSource(resource); }})
                 .peek(image -> image.setStyleName(GALLERY_STYLE))
                 .collect(toList())).forEach(list -> this.addComponent(addNewLine(list)));
