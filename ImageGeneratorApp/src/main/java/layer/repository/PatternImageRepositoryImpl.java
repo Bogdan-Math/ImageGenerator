@@ -12,8 +12,8 @@ import java.util.stream.Stream;
 import static model.PatternType.*;
 
 @Scope("singleton")
-@Repository("patternRepository")
-public class PatternRepositoryImpl implements PatternRepository {
+@Repository("patternImageRepository")
+public class PatternImageRepositoryImpl implements PatternImageRepository {
 
     private ResourceReader resourceReader;
 

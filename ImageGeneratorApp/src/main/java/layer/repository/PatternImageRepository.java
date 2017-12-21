@@ -4,7 +4,7 @@ import domain.InformationalImage;
 
 import java.util.stream.Stream;
 
-public interface PatternRepository {
+public interface PatternImageRepository {
 
     Stream<InformationalImage> getCommons();
     Stream<InformationalImage> getFlags();

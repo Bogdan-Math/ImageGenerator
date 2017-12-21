@@ -2,8 +2,8 @@ package layer.service;
 
 import domain.InformationalColor;
 import domain.InformationalImage;
+import layer.repository.PatternImageRepository;
 import model.PatternType;
-import layer.repository.PatternRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -16,18 +16,18 @@ import static model.PatternType.*;
 import static java.util.stream.Collectors.toMap;
 
 @Service("patternImageService")
-public class PatternServiceImpl implements PatternService {
+public class PatternImageServiceImpl implements PatternImageService {
 
-    private PatternRepository repository;
+    private PatternImageRepository patternImageRepository;
 
     private Map<PatternType, Map<InformationalColor, InformationalImage>> allPatterns;
 
     @Override
     @PostConstruct
     public void cacheAllPatterns() {
-        Stream<InformationalImage> commons = repository.getCommons();
-        Stream<InformationalImage> flags = repository.getFlags();
-        Stream<InformationalImage> plains = repository.getPlains();
+        Stream<InformationalImage> commons = patternImageRepository.getCommons();
+        Stream<InformationalImage> flags = patternImageRepository.getFlags();
+        Stream<InformationalImage> plains = patternImageRepository.getPlains();
 
         allPatterns = new LinkedHashMap<>();
 
@@ -54,8 +54,8 @@ public class PatternServiceImpl implements PatternService {
         return allPatterns;
     }
 
-    @Resource(name = "patternRepository")
-    public void setPatternImageRepository(PatternRepository patternRepository) {
-        this.repository = patternRepository;
+    @Resource(name = "patternImageRepository")
+    public void setPatternImageRepository(PatternImageRepository patternImageRepository) {
+        this.patternImageRepository = patternImageRepository;
     }
 }

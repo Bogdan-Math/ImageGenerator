@@ -12,10 +12,10 @@ import static org.junit.Assert.assertThat;
 
 @ContextConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-public class PatternRepositoryTest {
+public class PatternImageRepositoryTest {
 
     @Autowired
-    private PatternRepository repository;
+    private PatternImageRepository repository;
 
     @After
     public void tearDown() throws Exception {

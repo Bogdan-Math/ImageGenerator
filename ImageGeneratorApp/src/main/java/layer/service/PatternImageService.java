@@ -6,7 +6,7 @@ import model.PatternType;
 
 import java.util.Map;
 
-public interface PatternService {
+public interface PatternImageService {
 
     void cacheAllPatterns();
     Map<PatternType, Map<InformationalColor, InformationalImage>> getAllPatterns();
