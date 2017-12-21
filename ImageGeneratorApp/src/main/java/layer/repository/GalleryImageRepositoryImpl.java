@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Repository("galleryImageRepository")
@@ -18,21 +19,23 @@ public class GalleryImageRepositoryImpl implements GalleryImageRepository {
     }
 
     @Override
-    public List<InformationalImage> getAll() {
-        return jdbcTemplate.query("SELECT content FROM gallery_image ORDER BY upload_date DESC;",
+    public List<InformationalImage> getAllImages() {
+        return jdbcTemplate.query("SELECT content FROM gallery_image" +
+                        " WHERE content NOTNULL ORDER BY upload_date DESC;",
                 (rs, rowNum) -> new InformationalImage(rs.getBytes(1)));
     }
 
     @Override
-    public void save(InformationalImage galleryImage) {
+    public void add(InformationalImage newGalleryImage) {
         jdbcTemplate.update("INSERT INTO gallery_image (content) VALUES (?);",
-                new Object[] {galleryImage.asByteArray()});
+                new Object[] {newGalleryImage.asByteArray()});
     }
 
     @Override
-    public void deleteOldest() {
-        jdbcTemplate.update("DELETE FROM gallery_image " +
-                "WHERE upload_date = (SELECT min(upload_date) FROM gallery_image);");
+    public void replaceOldestBy(InformationalImage newGalleryImage) {
+        jdbcTemplate.update("UPDATE gallery_image SET content = ?, upload_date = ?" +
+                "WHERE upload_date = (SELECT min(upload_date) FROM gallery_image);",
+                newGalleryImage.asByteArray(), new Date());
     }
 
     @Resource(name = "jdbcTemplate")

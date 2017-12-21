@@ -20,16 +20,18 @@ public class GalleryImageServiceImpl implements GalleryImageService {
 
     @Override//TODO: add cache (maybe ehcache lib) and rename it
     public List<InformationalImage> getAll() {
-        return galleryImageRepository.getAll();
+        return galleryImageRepository.getAllImages();
     }
 
     @Override
     @Async
     public void save(InformationalImage informationalImage) {
-        if (galleryImageRepository.getImagesCount() >= MAX_IMAGES_COUNT_IN_GALLERY) {
-            galleryImageRepository.deleteOldest();
+        InformationalImage newGalleryImage = informationalImage.resizeTo(NEW_WIDTH, NEW_HEIGHT);
+        if (galleryImageRepository.getImagesCount() < MAX_IMAGES_COUNT_IN_GALLERY) {
+            galleryImageRepository.add(newGalleryImage);
+        } else {
+            galleryImageRepository.replaceOldestBy(newGalleryImage);
         }
-        galleryImageRepository.save(informationalImage.resizeTo(NEW_WIDTH, NEW_HEIGHT));
     }
 
     @Resource(name = "galleryImageRepository")
