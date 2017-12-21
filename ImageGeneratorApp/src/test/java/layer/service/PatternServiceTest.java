@@ -2,9 +2,8 @@ package layer.service;
 
 import domain.InformationalColor;
 import domain.InformationalImage;
-import domain.PatternType;
-import layer.repository.PatternImageRepository;
-import model.PatternImage;
+import model.PatternType;
+import layer.repository.PatternRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +17,7 @@ import java.io.PrintStream;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static domain.PatternType.*;
+import static model.PatternType.*;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
@@ -27,13 +26,13 @@ import static org.mockito.Mockito.when;
 
 @ContextConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-public class PatternImageServiceTest {
+public class PatternServiceTest {
 
     @Autowired
-    private PatternImageService patternImageService;
+    private PatternService patternService;
 
     @Autowired
-    private PatternImageRepository patternImageRepository;
+    private PatternRepository patternRepository;
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
@@ -41,26 +40,27 @@ public class PatternImageServiceTest {
     public void setUp() throws Exception {
         System.setOut(new PrintStream(outContent));
 
-        final byte[] bytes = new ResourceReader().readAllIn("images/plains/").asByteArrays().findFirst()
+        final byte[] imageByteArray = new ResourceReader().readAllIn("images/plains/").asByteArrays()
+                .findFirst()
                 .orElseThrow(() -> new RuntimeException("Oops, something WRONG happens in your test!"));
 
-        when(patternImageRepository.getCommons()).thenReturn(Stream.of(
-                new PatternImage(bytes),
-                new PatternImage(bytes),
-                new PatternImage(bytes)));
+        when(patternRepository.getCommons()).thenReturn(Stream.of(
+                new InformationalImage(imageByteArray),
+                new InformationalImage(imageByteArray),
+                new InformationalImage(imageByteArray)));
 
-        when(patternImageRepository.getFlags()).thenReturn(Stream.of(
-                new PatternImage(bytes),
-                new PatternImage(bytes)));
+        when(patternRepository.getFlags()).thenReturn(Stream.of(
+                new InformationalImage(imageByteArray),
+                new InformationalImage(imageByteArray)));
 
-        when(patternImageRepository.getPlains()).thenReturn(Stream.of(
-                new PatternImage(bytes)));
+        when(patternRepository.getPlains()).thenReturn(Stream.of(
+                new InformationalImage(imageByteArray)));
     }
 
     @Test
     public void cacheAndGetAllPatterns() throws Exception {
-        patternImageService.cacheAllPatterns();
-        Map<PatternType, Map<InformationalColor, InformationalImage>> allPatterns = patternImageService.getAllPatterns();
+        patternService.cacheAllPatterns();
+        Map<PatternType, Map<InformationalColor, InformationalImage>> allPatterns = patternService.getAllPatterns();
 
         assertThat(allPatterns.size(), is(3));
         assertThat(allPatterns.get(COMMONS).size(), is(1));
@@ -70,8 +70,8 @@ public class PatternImageServiceTest {
 
     @Test
     public void twoSameAveragedColors() throws Exception {
-        patternImageService.cacheAllPatterns();
-        Map<PatternType, Map<InformationalColor, InformationalImage>> allPatterns = patternImageService.getAllPatterns();
+        patternService.cacheAllPatterns();
+        Map<PatternType, Map<InformationalColor, InformationalImage>> allPatterns = patternService.getAllPatterns();
 
         assertNotNull(allPatterns);
         assertThat(outContent.toString(), containsString("Two same averaged colors:"));

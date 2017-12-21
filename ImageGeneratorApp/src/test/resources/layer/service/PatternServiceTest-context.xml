@@ -4,10 +4,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="patternImageService" class="layer.service.PatternImageServiceImpl"/>
+    <bean id="patternService" class="layer.service.PatternServiceImpl"/>
 
-    <bean id="patternImageRepository" class="org.mockito.Mockito" factory-method="mock">
-        <constructor-arg value="layer.repository.PatternImageRepository"/>
+    <bean id="patternRepository" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="layer.repository.PatternRepository"/>
     </bean>
 
 </beans>

@@ -1,7 +1,7 @@
 package layer.repository;
 
-import domain.PatternType;
-import model.PatternImage;
+import domain.InformationalImage;
+import model.PatternType;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import system.ResourceReader;
@@ -9,33 +9,33 @@ import system.ResourceReader;
 import javax.annotation.Resource;
 import java.util.stream.Stream;
 
-import static domain.PatternType.*;
+import static model.PatternType.*;
 
 @Scope("singleton")
-@Repository("patternImageRepository")
-public class PatternImageRepositoryImpl implements PatternImageRepository {
+@Repository("patternRepository")
+public class PatternRepositoryImpl implements PatternRepository {
 
     private ResourceReader resourceReader;
 
     @Override
-    public Stream<PatternImage> getCommons() {
+    public Stream<InformationalImage> getCommons() {
         return initialize(COMMONS);
     }
 
     @Override
-    public Stream<PatternImage> getFlags() {
+    public Stream<InformationalImage> getFlags() {
         return initialize(FLAGS);
     }
 
     @Override
-    public Stream<PatternImage> getPlains() {
+    public Stream<InformationalImage> getPlains() {
         return initialize(PLAINS);
     }
 
-    private Stream<PatternImage> initialize(PatternType patternType) {
+    private Stream<InformationalImage> initialize(PatternType patternType) {
         return resourceReader.readAllIn(patternType.location())
                 .asByteArrays()
-                .map(PatternImage::new);
+                .map(InformationalImage::new);
     }
 
     @Resource(name = "resourceReader")
