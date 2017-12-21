@@ -19,7 +19,7 @@ public class GalleryImageRepositoryImpl implements GalleryImageRepository {
 
     @Override
     public List<InformationalImage> getAll() {
-        return jdbcTemplate.query("SELECT content FROM gallery_image;",
+        return jdbcTemplate.query("SELECT content FROM gallery_image ORDER BY upload_date DESC;",
                 (rs, rowNum) -> new InformationalImage(rs.getBytes(1)));
     }
 
