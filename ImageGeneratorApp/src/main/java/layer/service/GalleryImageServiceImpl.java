@@ -14,6 +14,8 @@ public class GalleryImageServiceImpl implements GalleryImageService {
     private static final int NEW_WIDTH  = 300;
     private static final int NEW_HEIGHT = 300;
 
+    private static final int MAX_IMAGES_COUNT_IN_GALLERY = 16;
+
     private GalleryImageRepository galleryImageRepository;
 
     @Override//TODO: add cache (maybe ehcache lib) and rename it
@@ -24,6 +26,9 @@ public class GalleryImageServiceImpl implements GalleryImageService {
     @Override
     @Async
     public void save(InformationalImage informationalImage) {
+        if (galleryImageRepository.getImagesCount() >= MAX_IMAGES_COUNT_IN_GALLERY) {
+            galleryImageRepository.deleteOldest();
+        }
         galleryImageRepository.save(informationalImage.resizeTo(NEW_WIDTH, NEW_HEIGHT));
     }
 

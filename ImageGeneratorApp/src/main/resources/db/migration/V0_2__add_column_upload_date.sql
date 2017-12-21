@@ -1,0 +1,1 @@
+ALTER TABLE gallery_image ADD COLUMN upload_date TIMESTAMP DEFAULT NOW();
