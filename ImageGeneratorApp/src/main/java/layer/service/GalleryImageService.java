@@ -1,12 +1,11 @@
 package layer.service;
 
 import domain.InformationalImage;
-import model.GalleryImage;
 
 import java.util.List;
 
 public interface GalleryImageService {
 
-    List<InformationalImage> getAll();
+    List<InformationalImage> getAllImages();
     void save(InformationalImage informationalImage);
 }
