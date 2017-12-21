@@ -35,9 +35,9 @@ public class GalleryLayout extends VerticalLayout implements GalleryLayoutBuilde
     @Override
     public void buildGallery() {
         removeAllComponents();
-        pagedGallery(galleryImageService.getAllThumbnails()
+        pagedGallery(galleryImageService.getAll()
                 .stream()
-                .map(galleryImage -> new StreamResource(() -> new ByteArrayInputStream(galleryImage.thumbnail), galleryImage.thumbnailName))
+                .map(galleryImage -> new StreamResource(galleryImage::asStream, ""))
                 .map(resource -> new Image() {{ setSource(resource); }})
                 .peek(image -> image.setStyleName(GALLERY_STYLE))
                 .collect(toList())).forEach(list -> this.addComponent(addNewLine(list)));

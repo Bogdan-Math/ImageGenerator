@@ -2,7 +2,6 @@ package layer.service;
 
 import domain.InformationalImage;
 import layer.repository.GalleryImageRepository;
-import model.GalleryImage;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -18,23 +17,14 @@ public class GalleryImageServiceImpl implements GalleryImageService {
     private GalleryImageRepository galleryImageRepository;
 
     @Override//TODO: add cache (maybe ehcache lib) and rename it
-    public List<GalleryImage> getAllThumbnails() {
-        return galleryImageRepository.getAllThumbnails();
+    public List<InformationalImage> getAll() {
+        return galleryImageRepository.getAll();
     }
 
     @Override
     @Async
-    public void save(String imageName, InformationalImage informationalImage) {
-        galleryImageRepository.save(convert(imageName, informationalImage));
-    }
-
-    private GalleryImage convert(String imageName, InformationalImage informationalImage) {
-        return new GalleryImage() {{
-            real          = informationalImage.asByteArray();
-            realName      = imageName;
-            thumbnail     = informationalImage.resizeTo(NEW_WIDTH, NEW_HEIGHT).asByteArray();//TODO: move resize process to scheduler
-            thumbnailName = "thumbnail_" + imageName;
-        }};
+    public void save(InformationalImage informationalImage) {
+        galleryImageRepository.save(informationalImage.resizeTo(NEW_WIDTH, NEW_HEIGHT));
     }
 
     @Resource(name = "galleryImageRepository")

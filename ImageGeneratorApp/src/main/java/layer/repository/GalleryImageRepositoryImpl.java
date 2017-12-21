@@ -1,6 +1,6 @@
 package layer.repository;
 
-import model.GalleryImage;
+import domain.InformationalImage;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -13,23 +13,15 @@ public class GalleryImageRepositoryImpl implements GalleryImageRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<GalleryImage> getAllThumbnails() {
-        return jdbcTemplate.query("SELECT thumbnail, thumbnail_name FROM gallery_image " +
-                        "WHERE thumbnail NOTNULL",
-                (rs, rowNum) -> new GalleryImage() {{
-                    thumbnail     = rs.getBytes(1);
-                    thumbnailName = rs.getString(2);
-                }});
+    public List<InformationalImage> getAll() {
+        return jdbcTemplate.query("SELECT content FROM gallery_image",
+                (rs, rowNum) -> new InformationalImage(rs.getBytes(1)));
     }
 
     @Override
-    public void save(GalleryImage galleryImage) {
-        jdbcTemplate.update("INSERT INTO gallery_image (real, real_name, thumbnail, thumbnail_name) " +
-                        "VALUES (?, ?, ?, ?)",
-                galleryImage.real,
-                galleryImage.realName,
-                galleryImage.thumbnail,
-                galleryImage.thumbnailName);
+    public void save(InformationalImage galleryImage) {
+        jdbcTemplate.update("INSERT INTO gallery_image (content) VALUES (?)",
+                new Object[] {galleryImage.asByteArray()});
     }
 
     @Resource(name = "jdbcTemplate")

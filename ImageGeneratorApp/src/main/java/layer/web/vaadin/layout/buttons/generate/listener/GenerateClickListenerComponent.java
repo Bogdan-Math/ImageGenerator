@@ -61,7 +61,7 @@ public class GenerateClickListenerComponent implements GenerateClickListener {
             notificationManager.add("Your image was generated.")
                                .showAs(TRAY_NOTIFICATION);
 
-            galleryImageService.save(generatedImageName, generatedImage);
+            galleryImageService.save(generatedImage);
         });
     }
 }
