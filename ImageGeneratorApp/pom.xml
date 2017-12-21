@@ -154,9 +154,9 @@
                         <id>flyway database migration</id>
                         <phase>pre-integration-test</phase>
                         <goals>
-                            <goal>clean</goal><!--TODO: add description to this goal-->
-                            <goal>migrate</goal><!--TODO: add description to this goal-->
-                            <goal>info</goal><!--TODO: add description to this goal-->
+                            <!--<goal>clean</goal>--> <!--Drops all objects (tables, views, triggers, ...) in the configured schemas.-->
+                            <goal>migrate</goal><!--Migrates the schema to the latest version-->
+                            <goal>info</goal><!--Prints the details and status information about all the migrations.-->
                         </goals>
                     </execution>
                 </executions>
