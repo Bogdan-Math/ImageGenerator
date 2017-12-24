@@ -3,7 +3,6 @@ package layer.web.vaadin.layout.images;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Image;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -16,12 +15,10 @@ public class ImagesLayout extends GridLayout {
 
     private static final String BORDERED_IMAGE = "bordered-image";
 
-    @Getter
     @Autowired
     @Qualifier(value = "originalImageView")
     private Image originalImageView;
 
-    @Getter
     @Autowired
     @Qualifier(value = "generatedImageView")
     private Image generatedImageView;

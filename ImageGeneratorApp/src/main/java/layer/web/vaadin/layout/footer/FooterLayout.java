@@ -5,7 +5,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Link;
-import lombok.Getter;
 import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
@@ -20,10 +19,8 @@ public class FooterLayout extends HorizontalLayout {
     public static final String JAVARUSH_LINK_ID = "javarush-link-id";
     public static final String FLAGS_LINK_ID    = "flags-link-id";
 
-    @Getter
     private Link javarushLink;
 
-    @Getter
     private Link flagsLink;
 
     @PostConstruct
