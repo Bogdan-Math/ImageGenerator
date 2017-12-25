@@ -25,9 +25,9 @@
 
         <!--DB connection properties-->
         <db.driver>org.postgresql.Driver</db.driver>
-        <db.url>jdbc:postgresql://ec2-107-20-214-99.compute-1.amazonaws.com:5432/dfm6o5autn88hj?sslmode=require</db.url>
-        <db.user>mygtvnrgfvdksl</db.user>
-        <db.password>6e059618a1ecb27ef2d05001c0721c042d786d97879d699c22c3b7537b9f2a3e</db.password>
+        <db.url>jdbc:postgresql://ec2-54-83-3-101.compute-1.amazonaws.com:5432/dc5fi5culu6qch?sslmode=require</db.url>
+        <db.user>iauijnmqfekyxc</db.user>
+        <db.password>f06b19498d74b8ea8d3950d93d3e8ebed00757bc561f5daa1665993b7a22595a</db.password>
         <db.connection.pool.size>4</db.connection.pool.size>
         <db.connection.max.total>16</db.connection.max.total>
 

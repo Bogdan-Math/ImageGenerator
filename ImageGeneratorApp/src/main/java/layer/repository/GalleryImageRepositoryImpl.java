@@ -36,7 +36,7 @@ public class GalleryImageRepositoryImpl implements GalleryImageRepository {
     @Override
     public void replaceOldestBy(InformationalImage newGalleryImage) {
         jdbcTemplate.update("UPDATE gallery_image SET content = ?, upload_date = ?" +
-                "WHERE upload_date = (SELECT min(upload_date) FROM gallery_image);",
+                        "WHERE upload_date = (SELECT min(upload_date) FROM gallery_image);",
                 newGalleryImage.asByteArray(), new Date());
     }
 
