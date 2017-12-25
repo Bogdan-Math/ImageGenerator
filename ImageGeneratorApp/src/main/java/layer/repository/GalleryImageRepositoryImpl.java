@@ -14,7 +14,7 @@ public class GalleryImageRepositoryImpl implements GalleryImageRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public Integer getImagesCount() {
+    public Integer getTotalCount() {
         return jdbcTemplate.queryForObject("SELECT count(*) FROM gallery_image;",
                 Integer.class);
     }
@@ -23,6 +23,14 @@ public class GalleryImageRepositoryImpl implements GalleryImageRepository {
     public List<InformationalImage> getAllImages() {
         return jdbcTemplate.query("SELECT content FROM gallery_image" +
                         " WHERE content NOTNULL ORDER BY upload_date DESC;",
+                (rs, rowNum) -> new InformationalImage(rs.getBytes(1)));
+    }
+
+    @Override
+    public List<InformationalImage> get(Integer count) {
+        return jdbcTemplate.query("SELECT content FROM gallery_image" +
+                        " WHERE content NOTNULL ORDER BY upload_date DESC LIMIT ?;",
+                new Object[] {count},
                 (rs, rowNum) -> new InformationalImage(rs.getBytes(1)));
     }
 
