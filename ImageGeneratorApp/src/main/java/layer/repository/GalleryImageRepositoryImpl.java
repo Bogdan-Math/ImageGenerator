@@ -15,7 +15,8 @@ public class GalleryImageRepositoryImpl implements GalleryImageRepository {
 
     @Override
     public Integer getImagesCount() {
-        return jdbcTemplate.queryForObject("SELECT count(*) FROM gallery_image;", Integer.class);
+        return jdbcTemplate.queryForObject("SELECT count(*) FROM gallery_image;",
+                Integer.class);
     }
 
     @Override
