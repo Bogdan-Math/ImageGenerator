@@ -11,10 +11,10 @@ import java.util.List;
 @Service("galleryImageService")
 public class GalleryImageServiceImpl implements GalleryImageService {
 
-    private static final int NEW_WIDTH  = 300;
-    private static final int NEW_HEIGHT = 300;
+    private static final int NEW_WIDTH  = 275;
+    private static final int NEW_HEIGHT = 275;
 
-    private static final int MAX_COUNT_IN_DB      = 100;
+    private static final int MAX_COUNT_IN_DB      = 1000;
     private static final int MAX_COUNT_IN_GALLERY = 16;
 
     private GalleryImageRepository galleryImageRepository;
