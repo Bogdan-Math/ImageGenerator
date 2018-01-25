@@ -12,12 +12,16 @@ import javax.annotation.PostConstruct;
 @Scope("session")
 public class GenerateButton extends Button {
 
+    private static final String GENERATE_BUTTON_ID = "generate-button-id";
+    private static final String GENERATE           = "generate";
+
     @Autowired
     private GenerateClickListener clickListener;
 
     @PostConstruct
     public void postConstruct() {
-        setCaption("generate");
+        setId(GENERATE_BUTTON_ID);
+        setCaption(GENERATE);
         addClickListener(clickListener);
     }
 }

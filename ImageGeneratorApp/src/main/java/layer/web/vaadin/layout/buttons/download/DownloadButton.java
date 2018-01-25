@@ -12,12 +12,16 @@ import javax.annotation.PostConstruct;
 @Scope("session")
 public class DownloadButton extends Button {
 
+    private static final String DOWNLOAD_BUTTON_ID = "download-button-id";
+    private static final String DOWNLOAD_IMAGE     = "download image";
+
     @Autowired
     private Downloader downloader;
 
     @PostConstruct
     public void postConstruct() {
-        setCaption("download image");
+        setId(DOWNLOAD_BUTTON_ID);
+        setCaption(DOWNLOAD_IMAGE);
         downloader.extend(this);
     }
 }
