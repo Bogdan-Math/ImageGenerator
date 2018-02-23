@@ -26,8 +26,8 @@ public class PatternImageServiceImpl implements PatternImageService {
     @PostConstruct
     public void cacheAllPatterns() {
         Stream<InformationalImage> commons = patternImageRepository.getCommons();
-        Stream<InformationalImage> flags = patternImageRepository.getFlags();
-        Stream<InformationalImage> plains = patternImageRepository.getPlains();
+        Stream<InformationalImage> flags   = patternImageRepository.getFlags();
+        Stream<InformationalImage> plains  = patternImageRepository.getPlains();
 
         allPatterns = new LinkedHashMap<>();
 

@@ -14,10 +14,14 @@
     <context:component-scan base-package="layer.web.vaadin"/>
 
     <bean id="originalImageView"
-          class="com.vaadin.ui.Image" scope="session"/>
+          class="com.vaadin.ui.Image" scope="session">
+        <property name="id" value="original-image"/>
+    </bean>
 
     <bean id="generatedImageView"
-          class="com.vaadin.ui.Image" scope="session"/>
+          class="com.vaadin.ui.Image" scope="session">
+        <property name="id" value="generated-image"/>
+    </bean>
 
     <util:list id="notifications" value-type="java.lang.String"/>
 

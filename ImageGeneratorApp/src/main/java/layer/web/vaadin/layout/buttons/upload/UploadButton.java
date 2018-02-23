@@ -12,6 +12,9 @@ import javax.annotation.PostConstruct;
 @Scope("session")
 public class UploadButton extends Upload {
 
+    private static final String UPLOAD_BUTTON_ID = "upload-button-id";
+    private static final String UPLOAD_IMAGE     = "upload image";
+
     @Autowired
     private UploadReceiver receiver;
 
@@ -29,7 +32,8 @@ public class UploadButton extends Upload {
 
     @PostConstruct
     public void postConstruct() {
-        setButtonCaption("upload image");
+        setId(UPLOAD_BUTTON_ID);
+        setButtonCaption(UPLOAD_IMAGE);
         setReceiver(receiver);
         addStartedListener(startedListener);
         addProgressListener(progressListener);
