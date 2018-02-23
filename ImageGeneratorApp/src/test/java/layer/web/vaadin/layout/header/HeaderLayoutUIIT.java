@@ -28,13 +28,13 @@ public class HeaderLayoutUIIT {
     }
 
     @Test
-    public void codacyLink() throws Exception {
+    public void codacyLink() {
         imageGeneratorPage.codacyLink().click();
         assertThat(title(), containsString("ImageGenerator - Codacy - Dashboard"));
     }
 
     @Test
-    public void githubLink() throws Exception {
+    public void githubLink() {
         imageGeneratorPage.githubLink().click();
         assertThat(title(), containsString("GitHub - Bogdan-Math/ImageGenerator"));
     }
