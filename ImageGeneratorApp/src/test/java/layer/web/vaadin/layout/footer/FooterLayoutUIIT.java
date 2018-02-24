@@ -28,13 +28,13 @@ public class FooterLayoutUIIT {
     }
 
     @Test
-    public void javarushLink() throws Exception {
+    public void javarushLink() {
         imageGeneratorPage.javarushLink().click();
         assertThat(title(), containsString("JavaRush"));
     }
 
     @Test
-    public void flagsLink() throws Exception {
+    public void flagsLink() {
         imageGeneratorPage.flagsLink().click();
         assertThat(title(), containsString("IconDrawer"));
     }
