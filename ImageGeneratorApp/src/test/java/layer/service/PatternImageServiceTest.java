@@ -37,7 +37,7 @@ public class PatternImageServiceTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         System.setOut(new PrintStream(outContent));
 
         final byte[] imageByteArray = new ResourceReader().readAllIn("images/plains/").asByteArrays()
@@ -58,7 +58,7 @@ public class PatternImageServiceTest {
     }
 
     @Test
-    public void cacheAndGetAllPatterns() throws Exception {
+    public void cacheAndGetAllPatterns() {
         patternImageService.cacheAllPatterns();
         Map<PatternType, Map<InformationalColor, InformationalImage>> allPatterns = patternImageService.getAllPatterns();
 
@@ -69,7 +69,7 @@ public class PatternImageServiceTest {
     }
 
     @Test
-    public void twoSameAveragedColors() throws Exception {
+    public void twoSameAveragedColors() {
         patternImageService.cacheAllPatterns();
         Map<PatternType, Map<InformationalColor, InformationalImage>> allPatterns = patternImageService.getAllPatterns();
 
