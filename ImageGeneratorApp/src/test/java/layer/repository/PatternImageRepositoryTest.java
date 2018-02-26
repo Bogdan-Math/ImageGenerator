@@ -18,24 +18,24 @@ public class PatternImageRepositoryTest {
     private PatternImageRepository repository;
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         System.setOut(null);
     }
 
     @Test
-    public void getCommons() throws Exception {
+    public void getCommons() {
         long three = 3;
         assertThat(repository.getCommons().count(), is(three));
     }
 
     @Test
-    public void getFlags() throws Exception {
+    public void getFlags() {
         long two = 2;
         assertThat(repository.getFlags().count(), is(two));
     }
 
     @Test
-    public void getPlains() throws Exception {
+    public void getPlains() {
         long one = 1;
         assertThat(repository.getPlains().count(), is(one));
     }
